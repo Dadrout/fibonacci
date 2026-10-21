@@ -112,11 +112,20 @@ class BrainAI:
         temperature: float = 0.2,
         max_output_tokens: int = 4096,
         timeout: Optional[float] = None,
+        cache_key: Optional[Sequence[Any]] = None,
     ) -> T:
-        """Run prompt file `prompt` with `variables` and return a validated `schema` instance."""
+        """Run prompt file `prompt` with `variables` and return a validated `schema` instance.
+
+        `cache_key`: stable inputs that define the answer (e.g. the material, not volatile ids or
+        dates), so a recorded output replays across re-seeds and days. Defaults to the full prompt.
+        """
         system, template = load_prompt(prompt)
+        system = render(system, variables or {})
         user = render(template, variables or {})
-        key = self.cache.key(operation, system, user, [p.digest() for p in parts], schema.__name__)
+        material = list(cache_key) if cache_key is not None else [system, user]
+        # The prompt file's fingerprint is always part of the key: editing a prompt retires old recordings.
+        fingerprint = hashlib.sha256(f"{system}\n{template}".encode()).hexdigest()[:16]
+        key = self.cache.key(operation, fingerprint, *material, [p.digest() for p in parts], schema.__name__)
         demo = settings.DEMO_MODE
 
         if demo:
@@ -124,10 +133,10 @@ class BrainAI:
             if cached is not None:
                 return schema.model_validate(cached)
 
-        models = [model or settings.BRAIN_TEXT_MODEL]
-        fallback = settings.BRAIN_FALLBACK_MODEL
-        if fallback and fallback not in models:
-            models.append(fallback)
+        models: list[str] = []
+        for candidate in (model, settings.BRAIN_TEXT_MODEL, settings.BRAIN_FALLBACK_MODEL):
+            if candidate and candidate not in models:
+                models.append(candidate)
         last_error: Optional[Exception] = None
         if not demo or settings.GEMINI_API_KEY:
             cached = None if demo else self.cache.get_fast(operation, key)
@@ -142,8 +151,9 @@ class BrainAI:
                 except Exception as error:  # noqa: BLE001 — every failure falls through to the next option
                     last_error = error
                     status = getattr(getattr(error, "response", None), "status_code", None)
-                    logger.warning("brain_ai_failure operation=%s model=%s attempt=%d error_type=%s status=%s",
-                                   operation, model_name, attempt + 1, type(error).__name__, status)
+                    detail = str(error)[:200] if isinstance(error, ValueError) else ""
+                    logger.warning("brain_ai_failure operation=%s model=%s attempt=%d error_type=%s status=%s %s",
+                                   operation, model_name, attempt + 1, type(error).__name__, status, detail)
         cached = self.cache.get(operation, key)
         if cached is not None:
             logger.info("brain_ai_recorded_fallback operation=%s", operation)
@@ -195,21 +205,32 @@ class BrainAI:
         return response.json()
 
     def _generate_once(self, operation, model_name, system, user, schema, parts, temperature, max_tokens, timeout):
-        schema_text = json.dumps(schema.model_json_schema(), ensure_ascii=False, separators=(",", ":"))
-        text = f"{user}\n\nReturn only JSON matching this JSON Schema:\n{schema_text}"
+        # Native structured output constrains the reply to the schema; models that reject a
+        # schema (HTTP 400) get it embedded in the prompt instead.
+        json_schema = schema.model_json_schema()
         payload: dict[str, Any] = {
-            "contents": [{"role": "user", "parts": [*(p.to_api() for p in parts), {"text": text}]}],
+            "contents": [{"role": "user", "parts": [*(p.to_api() for p in parts), {"text": user}]}],
             "generationConfig": {
                 "temperature": temperature,
                 "maxOutputTokens": max_tokens,
                 "responseMimeType": "application/json",
+                "responseJsonSchema": json_schema,
             },
         }
         if system:
             payload["systemInstruction"] = {"parts": [{"text": system}]}
         started = time.perf_counter()
         deadline = timeout or settings.BRAIN_AI_TIMEOUT_SECONDS
-        data = self._post(f"{API_BASE}/{model_name}:generateContent", payload, deadline)
+        url = f"{API_BASE}/{model_name}:generateContent"
+        try:
+            data = self._post(url, payload, deadline)
+        except requests.HTTPError as error:
+            if getattr(error.response, "status_code", None) != 400:
+                raise
+            del payload["generationConfig"]["responseJsonSchema"]
+            schema_text = json.dumps(json_schema, ensure_ascii=False, separators=(",", ":"))
+            payload["contents"][0]["parts"][-1] = {"text": f"{user}\n\nReturn only JSON matching this JSON Schema:\n{schema_text}"}
+            data = self._post(url, payload, deadline)
         raw = "".join(
             part.get("text", "")
             for candidate in data.get("candidates", [])[:1]
@@ -224,8 +245,18 @@ class BrainAI:
         )
         try:
             return schema.model_validate_json(_json_candidate(raw))
-        except (ValidationError, json.JSONDecodeError) as error:
-            raise ValueError(f"{operation} returned invalid JSON for {schema.__name__}") from error
+        except ValidationError as error:
+            where = "; ".join(f"{'.'.join(str(p) for p in e['loc'])}:{e['type']}" for e in error.errors()[:3])
+            raise ValueError(f"{operation} returned JSON that failed {schema.__name__} validation at {where} "
+                             f"(finish={self._finish(data)}, thoughts={usage.get('thoughtsTokenCount')}, "
+                             f"output={usage.get('candidatesTokenCount')}, chars={len(raw)})") from error
+        except json.JSONDecodeError as error:
+            raise ValueError(f"{operation} returned invalid JSON (finish={self._finish(data)})") from error
+
+    @staticmethod
+    def _finish(data: dict[str, Any]) -> str:
+        candidates = data.get("candidates") or [{}]
+        return str(candidates[0].get("finishReason", "unknown"))
 
     def _embed_batch(self, texts: list[str], task_type: str) -> list[Optional[list[float]]]:
         model = settings.BRAIN_EMBED_MODEL

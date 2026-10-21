@@ -117,7 +117,8 @@ class Run:
     def finish(self, published: dict, gaps_before: set[str]) -> None:
         started = monotonic()
         catalog = Catalog(self.store, self.uid)
-        concept_ids = [c["id"] for c in published.get("concepts", [])]
+        # Link only concepts this item introduced; reused concepts already have their links.
+        concept_ids = [c["id"] for c in published.get("concepts", []) if c.get("new")]
         try:
             new_links = link_concepts(self.store, self.uid, concept_ids, catalog.courses, self.ai)
         except Exception:  # noqa: BLE001 — linking must never block filing

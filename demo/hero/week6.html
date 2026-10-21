@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page { size: A4; margin: 22mm 20mm; }
+body { font-family: "Noto Serif", Georgia, serif; font-size: 12.5pt; line-height: 1.55; color: #111; }
+h1 { font-size: 22pt; margin: 0 0 4mm; } h2 { font-size: 15pt; margin: 6mm 0 2mm; color: #1f3a68; }
+.meta { color: #555; font-size: 10.5pt; margin-bottom: 8mm; } .page { page-break-after: always; }
+.box { border: 1px solid #c8d0dc; padding: 3mm 4mm; background: #f6f8fb; margin: 3mm 0; }
+code, .f { font-family: "Noto Sans Mono", monospace; font-size: 11pt; }
+</style></head><body>
+<div class="page"><h1>ECON 301 — Week 6: Heteroskedasticity</h1>
+<div class="meta">Introductory Econometrics · Lecture notes · Week 6 of 14</div>
+<h2>1. Where we are</h2>
+<p>In Weeks 1–5 we built the multiple linear regression model and the Gauss–Markov assumptions MLR.1–MLR.5. Under MLR.1–MLR.4 the OLS estimators are unbiased; adding MLR.5 (homoskedasticity) makes OLS the best linear unbiased estimator (BLUE) and justifies the usual standard errors.</p>
+<h2>2. The assumption we now relax</h2>
+<div class="box">MLR.5 (homoskedasticity): Var(u | x₁, …, xₖ) = σ². The error variance is the same for every value of the regressors.</div>
+<p>Heteroskedasticity means the conditional variance of the error depends on the regressors: Var(uᵢ | xᵢ) = σᵢ². A classic example is income and consumption: households with higher income have more room for discretionary spending, so the spread of consumption around the regression line grows with income.</p></div>
+<div class="page"><h2>3. Consequences for OLS</h2>
+<p>Heteroskedasticity does <b>not</b> cause bias or inconsistency in the OLS coefficient estimates — unbiasedness only needs MLR.1–MLR.4. R² and adjusted R² are also unaffected as measures of fit.</p>
+<p>What breaks is inference. The usual formula Var(b₁) = σ² / SSTₓ is derived under homoskedasticity, so the usual OLS standard errors are biased. As a result the t statistics, F statistics and confidence intervals based on them are no longer valid, even in large samples. OLS is also no longer BLUE: a more efficient linear unbiased estimator exists.</p>
+<div class="box">Key exam point: heteroskedasticity leaves the coefficients unbiased but makes the usual standard errors — and therefore t and F tests — unreliable.</div></div>
+<div class="page"><h2>4. Heteroskedasticity-robust inference</h2>
+<p>White (1980) showed how to estimate Var(b₁) without knowing the form of heteroskedasticity. The heteroskedasticity-robust variance estimator replaces σ² with the squared OLS residuals ûᵢ² observation by observation:</p>
+<p class="f">Var̂(b₁) = Σ (xᵢ − x̄)² ûᵢ² / SSTₓ²</p>
+<p>Its square root is the robust (White, or "HC") standard error. Robust t statistics are computed in the usual way but with robust standard errors. They are valid in large samples whether or not the errors are homoskedastic, which is why many applied economists report them by default (in Stata: <code>regress y x, robust</code>).</p></div>
+<div class="page"><h2>5. Testing for heteroskedasticity</h2>
+<p><b>Breusch–Pagan test.</b> Estimate the model by OLS and save the squared residuals ûᵢ². Regress ûᵢ² on all regressors x₁, …, xₖ. Under the null of homoskedasticity the regressors should not explain ûᵢ²; test their joint significance with an F test or the LM statistic n·R² ~ χ²ₖ.</p>
+<p><b>White test.</b> Regress û² on the regressors, their squares and their cross-products (or, in the special version, on ŷ and ŷ²). Compare n·R² with a χ² distribution. The White test detects more general forms of heteroskedasticity than Breusch–Pagan, at the cost of using more degrees of freedom.</p>
+<div class="box">A large n·R² (small p-value) is evidence of heteroskedasticity. Failing to reject does not prove the errors are homoskedastic.</div></div>
+<div class="page"><h2>6. Weighted least squares (WLS)</h2>
+<p>If the form of heteroskedasticity is known up to a constant, Var(u | x) = σ²·h(x), we can restore efficiency. Divide every variable in the equation by √hᵢ; the transformed error has constant variance σ², so OLS on the transformed equation is BLUE. This is weighted least squares with weights 1/hᵢ: observations with a larger error variance get less weight.</p>
+<p>In practice h(x) is usually unknown and is estimated (feasible GLS), for example by modelling log(û²) as a linear function of the regressors. If the variance model is wrong, WLS is still consistent, but robust standard errors should be used for the WLS estimates too.</p></div>
+<div><h2>7. Summary and practice</h2>
+<p>• Heteroskedasticity: Var(u | x) varies with x. • OLS stays unbiased and consistent, but the usual standard errors, t tests and F tests are invalid. • Use robust standard errors for valid inference. • Detect with Breusch–Pagan or White tests. • If the variance function is known (or estimated), WLS is more efficient.</p>
+<div class="box"><b>Practice.</b> In a regression of food spending on income for 500 households, the Breusch–Pagan statistic is n·R² = 31.4 with 1 degree of freedom. (a) What do you conclude? (b) Which standard errors would you report for the income coefficient, and why? (c) Is the OLS estimate of the income effect biased?</div>
+<p>Next week (Week 7): multicollinearity and model specification.</p></div>
+</body></html>

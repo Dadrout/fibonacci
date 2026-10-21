@@ -1,0 +1,1977 @@
+{
+ "courses": [
+  {
+   "id": "00000000-0000-4000-8000-000000000101",
+   "title": "Econometrics",
+   "code": "ECON 301",
+   "color_index": 0,
+   "created_at": "2026-09-03T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000102",
+   "title": "Probability & Statistics",
+   "code": "MATH 251",
+   "color_index": 1,
+   "created_at": "2026-09-04T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000103",
+   "title": "Calculus II",
+   "code": "MATH 162",
+   "color_index": 2,
+   "created_at": "2026-09-11T09:00:00.000Z"
+  }
+ ],
+ "topics": [
+  {
+   "id": "00000000-0000-4000-8000-000000000201",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "title": "Simple linear regression",
+   "sequence": 1,
+   "sequence_kind": "week",
+   "created_at": "2026-09-03T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000202",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "title": "OLS assumptions (Gauss–Markov)",
+   "sequence": 2,
+   "sequence_kind": "week",
+   "created_at": "2026-09-10T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000203",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "title": "Multiple regression",
+   "sequence": 3,
+   "sequence_kind": "week",
+   "created_at": "2026-09-17T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000204",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "title": "Hypothesis testing: t and F",
+   "sequence": 4,
+   "sequence_kind": "week",
+   "created_at": "2026-09-24T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000205",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "title": "Dummy variables and interactions",
+   "sequence": 5,
+   "sequence_kind": "week",
+   "created_at": "2026-10-01T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000208",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "title": "Autocorrelation",
+   "sequence": 8,
+   "sequence_kind": "week",
+   "created_at": "2026-10-19T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000211",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "title": "Random variables",
+   "sequence": 1,
+   "sequence_kind": "lecture",
+   "created_at": "2026-09-04T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000212",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "title": "Expectation and variance",
+   "sequence": 2,
+   "sequence_kind": "lecture",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000213",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "title": "Common distributions",
+   "sequence": 3,
+   "sequence_kind": "lecture",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000214",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "title": "Covariance and correlation",
+   "sequence": 4,
+   "sequence_kind": "lecture",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000215",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "title": "Law of large numbers and the CLT",
+   "sequence": 5,
+   "sequence_kind": "lecture",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000216",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "title": "Estimation and confidence intervals",
+   "sequence": 6,
+   "sequence_kind": "lecture",
+   "created_at": "2026-10-09T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000221",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "title": "Integration by parts",
+   "sequence": 1,
+   "sequence_kind": "week",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000222",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "title": "Improper integrals",
+   "sequence": 2,
+   "sequence_kind": "week",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000223",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "title": "Sequences and series",
+   "sequence": 3,
+   "sequence_kind": "week",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000224",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "title": "Taylor series",
+   "sequence": 4,
+   "sequence_kind": "week",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  }
+ ],
+ "concepts": [
+  {
+   "id": "00000000-0000-4000-8000-000000000301",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "name": "Ordinary least squares",
+   "summary": "OLS picks the line that minimizes the sum of squared residuals.",
+   "created_at": "2026-09-03T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000302",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "name": "Slope = Cov(X,Y) / Var(X)",
+   "summary": "In simple regression the OLS slope equals the sample covariance of X and Y divided by the variance of X.",
+   "created_at": "2026-09-03T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000303",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "name": "Residuals",
+   "summary": "A residual is the gap between an observed value and the fitted value from the regression line.",
+   "created_at": "2026-09-03T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000304",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "name": "Gauss–Markov assumptions",
+   "summary": "Linearity, random sampling, no perfect collinearity, zero conditional mean, and constant error variance.",
+   "created_at": "2026-09-10T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000305",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "name": "Homoskedasticity",
+   "summary": "The error term has the same variance for every value of the regressors: Var(u|X) = σ².",
+   "created_at": "2026-09-10T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000306",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "name": "BLUE",
+   "summary": "Under Gauss–Markov, OLS is the best linear unbiased estimator: lowest variance among linear unbiased estimators.",
+   "created_at": "2026-09-10T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000307",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000203",
+   "name": "Omitted variable bias",
+   "summary": "Leaving out a variable that is correlated with X and affects Y biases the OLS slope.",
+   "created_at": "2026-09-17T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000308",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000203",
+   "name": "Partial effect",
+   "summary": "A coefficient in multiple regression measures the effect of one regressor holding the others fixed.",
+   "created_at": "2026-09-17T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000309",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "name": "t-statistic",
+   "summary": "t = (estimate − hypothesized value) / standard error, compared with a t distribution.",
+   "created_at": "2026-09-24T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000310",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "name": "F-test",
+   "summary": "The F-test checks whether several coefficients are jointly zero by comparing restricted and unrestricted fits.",
+   "created_at": "2026-09-24T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000311",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "name": "p-value",
+   "summary": "The probability, under the null hypothesis, of a test statistic at least as extreme as the one observed.",
+   "created_at": "2026-09-24T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000312",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000205",
+   "name": "Dummy variable trap",
+   "summary": "Including a dummy for every category plus an intercept creates perfect collinearity.",
+   "created_at": "2026-10-01T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000313",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000205",
+   "name": "Interaction term",
+   "summary": "A product of two regressors lets the effect of one depend on the level of the other.",
+   "created_at": "2026-10-01T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000314",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000208",
+   "name": "Autocorrelation",
+   "summary": "Errors in different time periods are correlated, so usual OLS standard errors are wrong.",
+   "created_at": "2026-10-19T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000315",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000208",
+   "name": "Durbin–Watson test",
+   "summary": "A test for first-order autocorrelation in regression residuals; values near 2 suggest none.",
+   "created_at": "2026-10-19T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000321",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000211",
+   "name": "Random variable",
+   "summary": "A function that assigns a number to each outcome of a random experiment.",
+   "created_at": "2026-09-04T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000322",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000211",
+   "name": "Probability mass function",
+   "summary": "For a discrete random variable, the PMF gives P(X = x) for each value x.",
+   "created_at": "2026-09-04T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000323",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000212",
+   "name": "Expected value",
+   "summary": "The probability-weighted average of a random variable: E[X] = Σ x·P(X = x).",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000324",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000212",
+   "name": "Variance",
+   "summary": "How far a random variable spreads around its mean: Var(X) = E[(X − μ)²] = E[X²] − (E[X])².",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000325",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000212",
+   "name": "Linearity of expectation",
+   "summary": "E[aX + bY] = aE[X] + bE[Y], whether or not X and Y are independent.",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000326",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000213",
+   "name": "Normal distribution",
+   "summary": "The bell-shaped distribution fully described by its mean μ and variance σ².",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000327",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000213",
+   "name": "Binomial distribution",
+   "summary": "The number of successes in n independent trials with success probability p.",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000328",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000214",
+   "name": "Covariance",
+   "summary": "Cov(X,Y) = E[(X − μX)(Y − μY)] measures how two variables move together.",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000329",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000214",
+   "name": "Correlation coefficient",
+   "summary": "Covariance rescaled to lie between −1 and 1.",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000330",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000215",
+   "name": "Law of large numbers",
+   "summary": "The sample mean converges to the population mean as the sample grows.",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000331",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000215",
+   "name": "Central limit theorem",
+   "summary": "The standardized sample mean is approximately normal for large n, whatever the population shape.",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000332",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000216",
+   "name": "Standard error",
+   "summary": "The standard deviation of an estimator’s sampling distribution.",
+   "created_at": "2026-10-09T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000333",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000216",
+   "name": "Confidence interval",
+   "summary": "A range built so that it covers the true parameter in a stated share of repeated samples.",
+   "created_at": "2026-10-09T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000341",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000221",
+   "name": "Integration by parts",
+   "summary": "∫u dv = uv − ∫v du, useful for products such as x·e^x.",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000342",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000222",
+   "name": "Improper integral",
+   "summary": "An integral over an infinite interval or with an unbounded integrand, defined as a limit.",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000343",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000222",
+   "name": "Comparison test",
+   "summary": "An improper integral converges if it is bounded by one that converges.",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000344",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000223",
+   "name": "Geometric series",
+   "summary": "Σ arⁿ converges to a/(1 − r) when |r| < 1.",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000345",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000223",
+   "name": "Ratio test",
+   "summary": "A series converges absolutely if the limit of |a(n+1)/a(n)| is below 1.",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000346",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000224",
+   "name": "Taylor polynomial",
+   "summary": "A polynomial that matches a function and its first n derivatives at a point.",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000347",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000224",
+   "name": "Remainder term",
+   "summary": "The error between a function and its Taylor polynomial, bounded by the next derivative.",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  }
+ ],
+ "items": [
+  {
+   "id": "00000000-0000-4000-8000-000000000401",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "ECON301 Lecture 1 — Simple linear regression.pdf",
+   "summary": "Lecture slides introducing the regression model, OLS, and fitted values.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 18,
+   "failure_code": null,
+   "captured_at": "2026-09-03T09:00:00.000Z",
+   "filed_at": "2026-09-03T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000402",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Whiteboard — deriving the OLS slope",
+   "summary": "Photo of the board derivation of the slope from the first-order conditions.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-04T09:00:00.000Z",
+   "filed_at": "2026-09-04T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000403",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Econometrics — Lecture 2: Simple Linear Regression (KeynesAcademy)",
+   "summary": "Video walk-through of the simple regression model and interpretation of the slope.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=CBa8frhRKMw",
+   "youtube_id": "CBa8frhRKMw",
+   "duration_sec": 887,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-05T09:00:00.000Z",
+   "filed_at": "2026-09-05T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000404",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "Gauss–Markov handout.pdf",
+   "summary": "Two-page handout listing the five Gauss–Markov assumptions.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 2,
+   "failure_code": null,
+   "captured_at": "2026-09-10T09:00:00.000Z",
+   "filed_at": "2026-09-10T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000405",
+   "kind": "text",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "My notes: when is OLS BLUE?",
+   "summary": "Short personal notes on which assumptions give unbiasedness versus efficiency.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-11T09:00:00.000Z",
+   "filed_at": "2026-09-11T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000406",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Gauss-Markov assumptions part 1 (Ben Lambert)",
+   "summary": "Short video explaining the first Gauss–Markov assumptions.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=NjTpHS5xLP8",
+   "youtube_id": "NjTpHS5xLP8",
+   "duration_sec": 322,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-12T09:00:00.000Z",
+   "filed_at": "2026-09-12T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000407",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Slide — omitted variable bias",
+   "summary": "Photo of the slide with the omitted variable bias formula.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000203",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-17T09:00:00.000Z",
+   "filed_at": "2026-09-17T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000408",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "ECON301 Lecture 3 — Multiple regression.pdf",
+   "summary": "Slides on multiple regression, partial effects, and goodness of fit.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000203",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 22,
+   "failure_code": null,
+   "captured_at": "2026-09-18T09:00:00.000Z",
+   "filed_at": "2026-09-18T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000409",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Simple Linear Regression — t tests of parameters (Stats4Everyone)",
+   "summary": "Video on testing whether a regression coefficient is zero.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=drnRNkmxn3E",
+   "youtube_id": "drnRNkmxn3E",
+   "duration_sec": 813,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-24T09:00:00.000Z",
+   "filed_at": "2026-09-24T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000410",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "Problem set 2.pdf",
+   "summary": "Problem set on t-tests, F-tests, and p-values.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 5,
+   "failure_code": null,
+   "captured_at": "2026-09-26T09:00:00.000Z",
+   "filed_at": "2026-09-26T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000411",
+   "kind": "audio",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Voice note — F-test intuition",
+   "summary": "A 50-second voice note recapping why the F-test compares two fits.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": 52,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-27T09:00:00.000Z",
+   "filed_at": "2026-09-27T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000412",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Slide — the dummy variable trap",
+   "summary": "Photo of the slide warning about including all category dummies.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000205",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-01T09:00:00.000Z",
+   "filed_at": "2026-10-01T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000413",
+   "kind": "web",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Interaction terms in regression — explained",
+   "summary": "Article on interpreting interaction terms.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000205",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://en.wikipedia.org/wiki/Interaction_(statistics)",
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-02T09:00:00.000Z",
+   "filed_at": "2026-10-02T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000414",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "ECON301 Lecture 8 — Time series and autocorrelation.pdf",
+   "summary": "Slides on serial correlation and the Durbin–Watson test.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000208",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 16,
+   "failure_code": null,
+   "captured_at": "2026-10-19T09:00:00.000Z",
+   "filed_at": "2026-10-19T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000415",
+   "kind": "youtube",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Autocorrelation — an introduction (Ben Lambert)",
+   "summary": "Video introducing autocorrelated errors in time series.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "topic_id": "00000000-0000-4000-8000-000000000208",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=jt5nl2VEpwg",
+   "youtube_id": "jt5nl2VEpwg",
+   "duration_sec": 399,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-20T09:00:00.000Z",
+   "filed_at": "2026-10-20T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000416",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH251 Lecture 1 — Random variables.pdf",
+   "summary": "Lecture notes defining random variables and probability mass functions.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000211",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 12,
+   "failure_code": null,
+   "captured_at": "2026-09-04T09:00:00.000Z",
+   "filed_at": "2026-09-04T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000417",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Notebook — dice example",
+   "summary": "Photo of handwritten notes on the PMF of the sum of two dice.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000211",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-05T09:00:00.000Z",
+   "filed_at": "2026-09-05T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000418",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Expected Value and Variance of Discrete Random Variables (jbstatistics)",
+   "summary": "Video deriving expectation and variance for discrete random variables.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000212",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=OvTEhNL96v0",
+   "youtube_id": "OvTEhNL96v0",
+   "duration_sec": 477,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-11T09:00:00.000Z",
+   "filed_at": "2026-09-11T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000419",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH251 Lecture 2 — Expectation and variance.pdf",
+   "summary": "Lecture notes on expectation, variance, and their properties.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000212",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 14,
+   "failure_code": null,
+   "captured_at": "2026-09-12T09:00:00.000Z",
+   "filed_at": "2026-09-12T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000420",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Whiteboard — Var(X) = E[X²] − (E[X])²",
+   "summary": "Photo of the board proof of the variance shortcut.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000212",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-13T09:00:00.000Z",
+   "filed_at": "2026-09-13T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000421",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH251 Lecture 3 — Common distributions.pdf",
+   "summary": "Notes on Bernoulli, binomial, Poisson, and normal distributions.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000213",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 20,
+   "failure_code": null,
+   "captured_at": "2026-09-18T09:00:00.000Z",
+   "filed_at": "2026-09-18T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000422",
+   "kind": "web",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Normal distribution — Wikipedia",
+   "summary": "Encyclopedia article on the normal distribution.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000213",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://en.wikipedia.org/wiki/Normal_distribution",
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-19T09:00:00.000Z",
+   "filed_at": "2026-09-19T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000423",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH251 Lecture 4 — Covariance and correlation.pdf",
+   "summary": "Notes on covariance, correlation, and the variance of sums.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000214",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 11,
+   "failure_code": null,
+   "captured_at": "2026-09-25T09:00:00.000Z",
+   "filed_at": "2026-09-25T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000424",
+   "kind": "text",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Pasted: correlation is not causation",
+   "summary": "Pasted paragraph from the seminar reading on correlation.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000214",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-26T09:00:00.000Z",
+   "filed_at": "2026-09-26T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000425",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "The Central Limit Theorem, Clearly Explained (StatQuest)",
+   "summary": "Video showing why sample means become normal.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000215",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=YAlJCEDH2uY",
+   "youtube_id": "YAlJCEDH2uY",
+   "duration_sec": 455,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-02T09:00:00.000Z",
+   "filed_at": "2026-10-02T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000426",
+   "kind": "audio",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Voice note — LLN vs CLT",
+   "summary": "A voice note distinguishing the law of large numbers from the CLT.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000215",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": 71,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-03T09:00:00.000Z",
+   "filed_at": "2026-10-03T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000427",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH251 Lecture 6 — Estimation.pdf",
+   "summary": "Notes on estimators, standard errors, and confidence intervals.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000216",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 15,
+   "failure_code": null,
+   "captured_at": "2026-10-09T09:00:00.000Z",
+   "filed_at": "2026-10-09T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000428",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Slide — interpreting a confidence interval",
+   "summary": "Photo of a slide on the meaning of 95% confidence.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000216",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-10T09:00:00.000Z",
+   "filed_at": "2026-10-10T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000429",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Slide — integration by parts formula",
+   "summary": "Photo of the slide stating the integration by parts formula.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000221",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-11T09:00:00.000Z",
+   "filed_at": "2026-09-11T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000430",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Integration By Parts (The Organic Chemistry Tutor)",
+   "summary": "Worked examples of integration by parts.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000221",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=sWSLLO3DS1I",
+   "youtube_id": "sWSLLO3DS1I",
+   "duration_sec": 1972,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-12T09:00:00.000Z",
+   "filed_at": "2026-09-12T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000431",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH162 Week 2 — Improper integrals.pdf",
+   "summary": "Notes on improper integrals and comparison tests.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000222",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 9,
+   "failure_code": null,
+   "captured_at": "2026-09-18T09:00:00.000Z",
+   "filed_at": "2026-09-18T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000432",
+   "kind": "pdf",
+   "channel": "web_drop",
+   "status": "filed",
+   "title": "MATH162 Week 3 — Series.pdf",
+   "summary": "Notes on geometric series and convergence tests.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000223",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": 13,
+   "failure_code": null,
+   "captured_at": "2026-09-25T09:00:00.000Z",
+   "filed_at": "2026-09-25T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000433",
+   "kind": "web",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Ratio test — Paul’s Online Notes",
+   "summary": "Web notes on the ratio test with examples.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000223",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://tutorial.math.lamar.edu/Classes/CalcII/RatioTest.aspx",
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-09-26T09:00:00.000Z",
+   "filed_at": "2026-09-26T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000434",
+   "kind": "youtube",
+   "channel": "web_paste",
+   "status": "filed",
+   "title": "Taylor series | Essence of calculus (3Blue1Brown)",
+   "summary": "Visual introduction to Taylor polynomials.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000224",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": "https://www.youtube.com/watch?v=3d6DsjIBzJ4",
+   "youtube_id": "3d6DsjIBzJ4",
+   "duration_sec": 1340,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-02T09:00:00.000Z",
+   "filed_at": "2026-10-02T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000435",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Whiteboard — Taylor remainder bound",
+   "summary": "Photo of the board with the Lagrange remainder bound.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000224",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-03T09:00:00.000Z",
+   "filed_at": "2026-10-03T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000436",
+   "kind": "photo",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Photo — handwritten notes",
+   "summary": "Blurry photo of handwritten notes about limits of integrals.",
+   "language": "en-US",
+   "course_id": "00000000-0000-4000-8000-000000000103",
+   "topic_id": "00000000-0000-4000-8000-000000000222",
+   "confidence": 0.48,
+   "alternatives": [
+    {
+     "course_id": "00000000-0000-4000-8000-000000000102",
+     "course_title": "Probability & Statistics",
+     "topic_id": "00000000-0000-4000-8000-000000000213",
+     "topic_title": "Common distributions",
+     "confidence": 0.36
+    },
+    {
+     "course_id": "00000000-0000-4000-8000-000000000103",
+     "course_title": "Calculus II",
+     "topic_id": "00000000-0000-4000-8000-000000000221",
+     "topic_title": "Integration by parts",
+     "confidence": 0.11
+    }
+   ],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-18T09:00:00.000Z",
+   "filed_at": "2026-10-18T09:00:36.000Z"
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000437",
+   "kind": "web",
+   "channel": "web_paste",
+   "status": "failed",
+   "title": "drive.google.com/file/d/…",
+   "summary": null,
+   "language": "en-US",
+   "course_id": null,
+   "topic_id": null,
+   "confidence": null,
+   "alternatives": [],
+   "source_url": "https://drive.google.com/file/d/private-example",
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": "fetch_failed",
+   "captured_at": "2026-10-20T09:00:00.000Z",
+   "filed_at": null
+  },
+  {
+   "id": "00000000-0000-4000-8000-000000000438",
+   "kind": "text",
+   "channel": "telegram",
+   "status": "filed",
+   "title": "Сообщение: доверительный интервал",
+   "summary": "Заметка на русском о ширине доверительного интервала.",
+   "language": "ru-RU",
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "topic_id": "00000000-0000-4000-8000-000000000216",
+   "confidence": 0.9,
+   "alternatives": [],
+   "source_url": null,
+   "youtube_id": null,
+   "duration_sec": null,
+   "page_count": null,
+   "failure_code": null,
+   "captured_at": "2026-10-20T21:00:00.000Z",
+   "filed_at": "2026-10-20T21:00:36.000Z"
+  }
+ ],
+ "chunks": [
+  {
+   "item_id": "00000000-0000-4000-8000-000000000401",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 6
+   },
+   "text": "The OLS estimates minimize the sum of squared residuals Σ(yᵢ − b₀ − b₁xᵢ)².",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000301",
+    "00000000-0000-4000-8000-000000000302",
+    "00000000-0000-4000-8000-000000000303"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000401",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 9
+   },
+   "text": "The slope estimate can be written as b₁ = Cov(x, y) / Var(x).",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000301",
+    "00000000-0000-4000-8000-000000000302",
+    "00000000-0000-4000-8000-000000000303"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000402",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": null
+   },
+   "text": "Set ∂/∂b₁ Σ(yᵢ − b₀ − b₁xᵢ)² = 0 → b₁ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)².",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000302"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000403",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 214,
+    "end_sec": 262
+   },
+   "text": "The slope tells us how much y changes on average when x goes up by one unit.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000301",
+    "00000000-0000-4000-8000-000000000303"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000403",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 512,
+    "end_sec": 560
+   },
+   "text": "The residual is what is left over: the actual value minus the fitted value.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000301",
+    "00000000-0000-4000-8000-000000000303"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000404",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 1
+   },
+   "text": "MLR.5 Homoskedasticity: Var(u | x₁, …, xₖ) = σ². The error variance does not depend on the regressors.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000304",
+    "00000000-0000-4000-8000-000000000305",
+    "00000000-0000-4000-8000-000000000306"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000404",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 2
+   },
+   "text": "Under MLR.1–MLR.5, OLS is BLUE: the best linear unbiased estimator.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000304",
+    "00000000-0000-4000-8000-000000000305",
+    "00000000-0000-4000-8000-000000000306"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000405",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "paragraph",
+    "paragraph": 1
+   },
+   "text": "Unbiased needs MLR.1–4. BLUE also needs homoskedasticity (MLR.5) — without it OLS is still unbiased but not the most efficient.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000305",
+    "00000000-0000-4000-8000-000000000306"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000406",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 61,
+    "end_sec": 118
+   },
+   "text": "The first assumption is that the population process is linear in parameters.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000304"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000407",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": 11
+   },
+   "text": "Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ is the slope from regressing x₂ on x₁.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000307"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000408",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 4
+   },
+   "text": "β₁ measures the effect of x₁ on y holding x₂ fixed — the ceteris paribus interpretation.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000307",
+    "00000000-0000-4000-8000-000000000308"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000408",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 15
+   },
+   "text": "Omitting a relevant variable that is correlated with x₁ makes b₁ biased.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000307",
+    "00000000-0000-4000-8000-000000000308"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000409",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 302,
+    "end_sec": 371
+   },
+   "text": "The test statistic is the estimate divided by its standard error, and we compare it to a t distribution with n − 2 degrees of freedom.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000309",
+    "00000000-0000-4000-8000-000000000311"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000410",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 3
+   },
+   "text": "Q4. Test H₀: β₂ = β₃ = 0 using the F statistic from the restricted and unrestricted R².",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000310"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000411",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 8,
+    "end_sec": 31
+   },
+   "text": "So the F test asks: if I force these coefficients to zero, how much worse does the fit get?",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000310"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000412",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": 6
+   },
+   "text": "With an intercept, include g − 1 dummies for g groups. Including all g creates perfect collinearity.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000312"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000413",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "section",
+    "heading": "In regression"
+   },
+   "text": "An interaction term lets the effect of one variable on the outcome depend on the value of another variable.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000313"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000414",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 7
+   },
+   "text": "With AR(1) errors, uₜ = ρuₜ₋₁ + eₜ, OLS remains unbiased but the usual standard errors are invalid.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000314",
+    "00000000-0000-4000-8000-000000000315"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000414",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 11
+   },
+   "text": "Durbin–Watson d ≈ 2(1 − ρ̂). Values near 2 indicate no first-order autocorrelation.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000314",
+    "00000000-0000-4000-8000-000000000315"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000415",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 95,
+    "end_sec": 152
+   },
+   "text": "Autocorrelation means that the error in this period is correlated with the error in the previous period.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000314"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000416",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 2
+   },
+   "text": "A random variable is a function X: Ω → ℝ assigning a number to every outcome.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000321",
+    "00000000-0000-4000-8000-000000000322"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000416",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 5
+   },
+   "text": "The PMF p(x) = P(X = x) satisfies p(x) ≥ 0 and Σ p(x) = 1.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000321",
+    "00000000-0000-4000-8000-000000000322"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000417",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": null
+   },
+   "text": "X = sum of two dice. P(X = 7) = 6/36, the most likely value.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000322"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000418",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 118,
+    "end_sec": 175
+   },
+   "text": "The expected value is a weighted average of the possible values, weighted by their probabilities.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000323",
+    "00000000-0000-4000-8000-000000000324"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000418",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 262,
+    "end_sec": 330
+   },
+   "text": "The variance is the expected squared distance from the mean, and a shortcut is E of X squared minus the mean squared.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000323",
+    "00000000-0000-4000-8000-000000000324"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000419",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 3
+   },
+   "text": "E[aX + b] = aE[X] + b, and more generally expectation is linear.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000323",
+    "00000000-0000-4000-8000-000000000324",
+    "00000000-0000-4000-8000-000000000325"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000419",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 8
+   },
+   "text": "Var(X) = E[(X − μ)²] = E[X²] − μ². Var(aX + b) = a²Var(X).",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000323",
+    "00000000-0000-4000-8000-000000000324",
+    "00000000-0000-4000-8000-000000000325"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000420",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": null
+   },
+   "text": "Var(X) = E[X² − 2μX + μ²] = E[X²] − 2μ² + μ² = E[X²] − μ².",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000324"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000421",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 6
+   },
+   "text": "X ~ Bin(n, p) has E[X] = np and Var(X) = np(1 − p).",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000326",
+    "00000000-0000-4000-8000-000000000327"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000421",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 14
+   },
+   "text": "The normal density f(x) = (1/σ√(2π)) exp(−(x − μ)²/2σ²) integrates to 1 over the real line.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000326",
+    "00000000-0000-4000-8000-000000000327"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000422",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "section",
+    "heading": "Standard normal distribution"
+   },
+   "text": "The simplest case of a normal distribution is the standard normal distribution, with mean 0 and variance 1.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000326"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000423",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 2
+   },
+   "text": "Cov(X, Y) = E[XY] − E[X]E[Y]. Independent variables have zero covariance.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000328",
+    "00000000-0000-4000-8000-000000000329"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000423",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 6
+   },
+   "text": "Var(X + Y) = Var(X) + Var(Y) + 2Cov(X, Y).",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000328",
+    "00000000-0000-4000-8000-000000000329"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000424",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "paragraph",
+    "paragraph": 1
+   },
+   "text": "ρ = Cov(X, Y) / (σX σY) always lies in [−1, 1]; ρ = ±1 only for an exact linear relationship.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000329"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000425",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 141,
+    "end_sec": 205
+   },
+   "text": "Even when the data come from a uniform distribution, the means of many samples are normally distributed.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000331"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000426",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 4,
+    "end_sec": 39
+   },
+   "text": "LLN says the average settles down to mu. CLT says how it wiggles around mu — normally, with spread sigma over root n.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000330",
+    "00000000-0000-4000-8000-000000000331"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000427",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 4
+   },
+   "text": "The standard error of the sample mean is σ/√n, estimated by s/√n.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000332",
+    "00000000-0000-4000-8000-000000000333"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000427",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 9
+   },
+   "text": "A 95% confidence interval for μ is x̄ ± 1.96·s/√n for large n.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000332",
+    "00000000-0000-4000-8000-000000000333"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000428",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": 14
+   },
+   "text": "95% of intervals built this way would contain μ — not “μ is in this interval with probability 0.95”.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000333"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000429",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": 3
+   },
+   "text": "∫u dv = uv − ∫v du. Choose u by LIATE: logs, inverse trig, algebraic, trig, exponential.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000341"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000430",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 95,
+    "end_sec": 160
+   },
+   "text": "For x times e to the x, let u be x and dv be e to the x dx.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000341"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000431",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 2
+   },
+   "text": "∫₁^∞ 1/xᵖ dx converges if and only if p > 1.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000342",
+    "00000000-0000-4000-8000-000000000343"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000431",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 6
+   },
+   "text": "If 0 ≤ f ≤ g and ∫g converges, then ∫f converges.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000342",
+    "00000000-0000-4000-8000-000000000343"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000432",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "page",
+    "page": 3
+   },
+   "text": "Σ_{n≥0} arⁿ = a/(1 − r) for |r| < 1, and diverges otherwise.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000344",
+    "00000000-0000-4000-8000-000000000345"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000432",
+   "ordinal": 1,
+   "anchor": {
+    "kind": "page",
+    "page": 9
+   },
+   "text": "Ratio test: L = lim |a(n+1)/a(n)|. L < 1 converges absolutely, L > 1 diverges.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000344",
+    "00000000-0000-4000-8000-000000000345"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000433",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "section",
+    "heading": "Ratio Test"
+   },
+   "text": "If L = 1 the ratio test is inconclusive and another test is needed.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000345"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000434",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "timestamp",
+    "start_sec": 380,
+    "end_sec": 455
+   },
+   "text": "Each new term lets the polynomial match one more derivative of the function at that point.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000346"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000435",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": null
+   },
+   "text": "|Rₙ(x)| ≤ M|x − a|ⁿ⁺¹ / (n + 1)!, where |f⁽ⁿ⁺¹⁾| ≤ M between a and x.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000347"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000436",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "slide",
+    "slide": null
+   },
+   "text": "lim b→∞ ∫₀ᵇ e^(−x) dx = 1",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000342"
+   ]
+  },
+  {
+   "item_id": "00000000-0000-4000-8000-000000000438",
+   "ordinal": 0,
+   "anchor": {
+    "kind": "paragraph",
+    "paragraph": 1
+   },
+   "text": "Чем больше выборка n, тем уже доверительный интервал: ширина пропорциональна 1/√n.",
+   "concept_ids": [
+    "00000000-0000-4000-8000-000000000333"
+   ]
+  }
+ ],
+ "links": [
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000302",
+   "target_concept_id": "00000000-0000-4000-8000-000000000328",
+   "strength": 0.91,
+   "relation": "builds_on",
+   "rationale": "The OLS slope is the covariance of X and Y scaled by the variance of X.",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000302",
+   "target_concept_id": "00000000-0000-4000-8000-000000000324",
+   "strength": 0.84,
+   "relation": "builds_on",
+   "rationale": "The denominator of the OLS slope is the variance of X.",
+   "created_at": "2026-09-12T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000309",
+   "target_concept_id": "00000000-0000-4000-8000-000000000332",
+   "strength": 0.86,
+   "relation": "builds_on",
+   "rationale": "The t-statistic divides an estimate by its standard error.",
+   "created_at": "2026-10-09T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000311",
+   "target_concept_id": "00000000-0000-4000-8000-000000000326",
+   "strength": 0.72,
+   "relation": "applies",
+   "rationale": "Large-sample p-values come from the normal distribution.",
+   "created_at": "2026-09-24T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000326",
+   "target_concept_id": "00000000-0000-4000-8000-000000000342",
+   "strength": 0.77,
+   "relation": "applies",
+   "rationale": "The normal density integrates to 1 over an infinite interval — an improper integral.",
+   "created_at": "2026-09-18T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000323",
+   "target_concept_id": "00000000-0000-4000-8000-000000000341",
+   "strength": 0.7,
+   "relation": "applies",
+   "rationale": "Expected values of continuous variables such as the exponential are computed with integration by parts.",
+   "created_at": "2026-09-12T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000331",
+   "target_concept_id": "00000000-0000-4000-8000-000000000309",
+   "strength": 0.74,
+   "relation": "builds_on",
+   "rationale": "The CLT justifies using t and normal critical values for regression coefficients.",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000305",
+   "target_concept_id": "00000000-0000-4000-8000-000000000304",
+   "strength": 0.88,
+   "relation": "builds_on",
+   "rationale": "Homoskedasticity is the fifth Gauss–Markov assumption.",
+   "created_at": "2026-09-10T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000306",
+   "target_concept_id": "00000000-0000-4000-8000-000000000305",
+   "strength": 0.82,
+   "relation": "builds_on",
+   "rationale": "OLS is BLUE only when errors are homoskedastic.",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000324",
+   "target_concept_id": "00000000-0000-4000-8000-000000000323",
+   "strength": 0.9,
+   "relation": "builds_on",
+   "rationale": "Variance is defined as an expected value of squared deviations.",
+   "created_at": "2026-09-11T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000328",
+   "target_concept_id": "00000000-0000-4000-8000-000000000324",
+   "strength": 0.83,
+   "relation": "builds_on",
+   "rationale": "Variance is the covariance of a variable with itself.",
+   "created_at": "2026-09-25T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000333",
+   "target_concept_id": "00000000-0000-4000-8000-000000000332",
+   "strength": 0.87,
+   "relation": "builds_on",
+   "rationale": "A confidence interval is the estimate plus or minus a multiple of its standard error.",
+   "created_at": "2026-10-09T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000314",
+   "target_concept_id": "00000000-0000-4000-8000-000000000305",
+   "strength": 0.68,
+   "relation": "contrasts",
+   "rationale": "Both break the Gauss–Markov error assumptions, one across observations and one in variance.",
+   "created_at": "2026-10-19T09:00:00.000Z"
+  },
+  {
+   "source_concept_id": "00000000-0000-4000-8000-000000000346",
+   "target_concept_id": "00000000-0000-4000-8000-000000000331",
+   "strength": 0.66,
+   "relation": "applies",
+   "rationale": "Taylor expansions are used in the delta method built on the CLT.",
+   "created_at": "2026-10-02T09:00:00.000Z"
+  }
+ ]
+}

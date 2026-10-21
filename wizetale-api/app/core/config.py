@@ -117,14 +117,14 @@ class Settings(BaseSettings):
     BRAIN_DEMO_EMAIL: str = "demo-student@fibonacci.local"
     BRAIN_TEXT_MODEL: str = "gemini-3.5-flash-lite"
     BRAIN_FALLBACK_MODEL: str = "gemini-flash-lite-latest"
-    BRAIN_VISION_MODEL: str = "gemini-3.5-flash"
-    BRAIN_PLAN_MODEL: str = "gemini-3.5-flash"
-    BRAIN_TRANSCRIBE_MODEL: str = "gemini-3.5-flash"
+    BRAIN_VISION_MODEL: str = "gemini-3.5-flash-lite"
+    BRAIN_PLAN_MODEL: str = "gemini-3.5-flash-lite"
+    BRAIN_TRANSCRIBE_MODEL: str = "gemini-3.5-flash-lite"
     BRAIN_EMBED_MODEL: str = "gemini-embedding-001"
     BRAIN_AI_TIMEOUT_SECONDS: float = Field(default=15, ge=3, le=120)
     BRAIN_AI_RECORD: bool = False  # write AI outputs to the recorded cache (demo preparation)
     BRAIN_LINK_CANDIDATE_SIMILARITY: float = Field(default=0.6, ge=0.3, le=0.99)
-    BRAIN_LINK_MIN_STRENGTH: float = Field(default=0.7, ge=0.5, le=0.99)
+    BRAIN_LINK_MIN_STRENGTH: float = Field(default=0.8, ge=0.5, le=0.99)
     TELEGRAM_BOT_TOKEN: Optional[str] = None
     TELEGRAM_BOT_USERNAME: Optional[str] = None
     TELEGRAM_MODE: str = "polling"  # polling | webhook | off

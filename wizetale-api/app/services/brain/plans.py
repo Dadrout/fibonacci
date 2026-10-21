@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from collections import defaultdict
 from datetime import date, timedelta
 from typing import Any, Literal, Optional
@@ -26,6 +27,15 @@ LANGUAGE_NAMES = {"en-US": "English", "ru-RU": "Russian", "kk-KZ": "Kazakh"}
 PASSAGE_BUDGET = 26000
 PER_ITEM = 4
 OPTION_IDS = ("a", "b", "c", "d")
+_PASSAGE_REFS = re.compile(r"\s*[\(\[]\s*P\d{1,3}(?:\s*[,;–-]\s*P?\d{1,3})*\s*[\)\]]")
+_BARE_REF = re.compile(r"\bP\d{1,3}\b")
+
+
+def clean(text: str) -> str:
+    """Remove internal passage ids that a model may leak into student-facing text."""
+    text = _PASSAGE_REFS.sub("", text)
+    text = _BARE_REF.sub("the source", text)
+    return " ".join(text.split())
 
 
 class NotEnoughMaterial(Exception):
@@ -36,48 +46,48 @@ class NotEnoughMaterial(Exception):
 
 class DraftTask(BaseModel):
     kind: Literal["read", "watch", "review", "flashcards", "quiz", "practice"] = "review"
-    title: str = Field(min_length=1, max_length=300)
-    minutes: int = Field(default=20, ge=5, le=240)
+    title: str = Field(min_length=1, max_length=600)
+    minutes: int = Field(default=20, ge=0, le=100000)
     topic_id: Optional[str] = None
     passage_ids: list[str] = Field(default_factory=list)
 
 
 class DraftDay(BaseModel):
     day: int = Field(ge=1)
-    focus: str = Field(min_length=1, max_length=300)
+    focus: str = Field(min_length=1, max_length=600)
     tasks: list[DraftTask] = Field(default_factory=list)
 
 
 class DraftBullet(BaseModel):
-    text: str = Field(min_length=1, max_length=600)
+    text: str = Field(min_length=1, max_length=2000)
     passage_ids: list[str] = Field(default_factory=list)
 
 
 class DraftNote(BaseModel):
-    heading: str = Field(min_length=1, max_length=200)
+    heading: str = Field(min_length=1, max_length=400)
     topic_id: Optional[str] = None
     bullets: list[DraftBullet] = Field(default_factory=list)
 
 
 class DraftCard(BaseModel):
-    front: str = Field(min_length=1, max_length=400)
-    back: str = Field(min_length=1, max_length=600)
+    front: str = Field(min_length=1, max_length=1000)
+    back: str = Field(min_length=1, max_length=2000)
     passage_ids: list[str] = Field(default_factory=list)
 
 
 class DraftQuestion(BaseModel):
-    prompt: str = Field(min_length=1, max_length=600)
-    options: list[str] = Field(min_length=4, max_length=4)
-    correct_index: int = Field(ge=0, le=3)
-    explanation: str = Field(min_length=1, max_length=800)
+    prompt: str = Field(min_length=1, max_length=1500)
+    options: list[str] = Field(min_length=2, max_length=8)
+    correct_index: int = Field(ge=0, le=7)
+    explanation: str = Field(min_length=1, max_length=2000)
     passage_ids: list[str] = Field(default_factory=list)
     explain_passage: str = ""
-    explain_reason: str = Field(default="", max_length=300)
+    explain_reason: str = Field(default="", max_length=1000)
     concepts: list[str] = Field(default_factory=list)
 
 
 class PlanDraft(BaseModel):
-    title: str = Field(min_length=1, max_length=300)
+    title: str = Field(min_length=1, max_length=600)
     days: list[DraftDay] = Field(default_factory=list)
     notes: list[DraftNote] = Field(default_factory=list)
     flashcards: list[DraftCard] = Field(default_factory=list)
@@ -99,7 +109,9 @@ def gather(store: BrainStore, uid: str, catalog: Catalog, course_id: str) -> tup
     for chunk in chunks:
         per_item[chunk["item_id"]].append(chunk)
     selected: list[dict] = []
-    for item in sorted(items, key=lambda i: i["captured_at"]):
+    # Deterministic order (by topic, then title) so passage numbers map to the same sources every time.
+    topic_order = {t["id"]: (t.get("sequence") if t.get("sequence") is not None else 999, t["title"]) for t in catalog.topics.values()}
+    for item in sorted(items, key=lambda i: (topic_order.get(i.get("topic_id") or "", (999, "")), i["title"], i["id"])):
         ranked = sorted(per_item[item["id"]], key=lambda c: (c["id"] not in with_concepts, c["ordinal"]))
         selected.extend(sorted(ranked[:PER_ITEM], key=lambda c: c["ordinal"]))
     # Cross-course pull: passages of concepts linked to this course from other courses.
@@ -117,7 +129,7 @@ def gather(store: BrainStore, uid: str, catalog: Catalog, course_id: str) -> tup
         foreign_chunks = store.chunks_by_ids(uid, [r["chunk_id"] for r in rows][:8])
         foreign_items = {i["id"]: i for i in store.items_by_ids(uid, [c["item_id"] for c in foreign_chunks])}
         item_by_id.update(foreign_items)
-        foreign = [c for c in foreign_chunks if c["item_id"] in foreign_items][:6]
+        foreign = sorted((c for c in foreign_chunks if c["item_id"] in foreign_items), key=lambda c: (c["item_id"], c["ordinal"]))[:6]
     passages, used = [], 0
     for chunk in selected + foreign:
         if used + len(chunk["body"]) > PASSAGE_BUDGET:
@@ -178,32 +190,37 @@ def assemble(uid: str, draft: PlanDraft, ids: dict[str, dict], items: dict[str, 
         for t_index, task in enumerate(day.tasks, start=1):
             sources = _refs(uid, task.passage_ids, ids, items)
             if sources:
-                tasks.append({"id": f"d{index}t{t_index}", "kind": task.kind, "title": task.title, "minutes": task.minutes,
+                tasks.append({"id": f"d{index}t{t_index}", "kind": task.kind, "title": clean(task.title)[:300], "minutes": max(5, min(task.minutes, 240)),
                               "topic_id": task.topic_id if task.topic_id in topics else None, "sources": sources})
         plan_days.append({"day": index, "date": (exam_date - timedelta(days=days - index + 1)).isoformat(),
-                          "focus": day.focus, "tasks": tasks})
+                          "focus": clean(day.focus), "tasks": tasks})
     notes = []
     for n_index, note in enumerate(draft.notes, start=1):
-        bullets = [{"text": b.text, "sources": s} for b in note.bullets if (s := _refs(uid, b.passage_ids, ids, items))]
+        bullets = [{"text": clean(b.text), "sources": s} for b in note.bullets if (s := _refs(uid, b.passage_ids, ids, items))]
         if bullets:
-            notes.append({"id": f"n{n_index}", "heading": note.heading,
+            notes.append({"id": f"n{n_index}", "heading": clean(note.heading),
                           "topic_id": note.topic_id if note.topic_id in topics else None, "bullets": bullets})
-    flashcards = [{"id": f"f{i}", "front": c.front, "back": c.back, "sources": s}
+    flashcards = [{"id": f"f{i}", "front": clean(c.front), "back": clean(c.back), "sources": s}
                   for i, c in enumerate(draft.flashcards, start=1) if (s := _refs(uid, c.passage_ids, ids, items))]
     quiz, answer_key = [], {}
     for q in draft.quiz:
         sources = _refs(uid, q.passage_ids, ids, items)
         options = [o.strip() for o in q.options]
-        if not sources or len({o.lower() for o in options}) != 4:
+        if len(options) > 4:  # keep the correct option plus the first other three
+            others = [o for i, o in enumerate(options) if i != q.correct_index][:3]
+            correct_text = options[q.correct_index]
+            options = others[:q.correct_index] + [correct_text] + others[q.correct_index:] if q.correct_index < 4 else others + [correct_text]
+            q = q.model_copy(update={"correct_index": options.index(correct_text)})
+        if not sources or len(options) != 4 or len({o.lower() for o in options}) != 4 or q.correct_index > 3:
             continue
         qid = f"q{len(quiz) + 1}"
         moment_refs = _refs(uid, [q.explain_passage], ids, items) or sources[:1]
-        quiz.append({"id": qid, "prompt": q.prompt, "options": [{"id": OPTION_IDS[i], "text": o} for i, o in enumerate(options)],
+        quiz.append({"id": qid, "prompt": clean(q.prompt), "options": [{"id": OPTION_IDS[i], "text": clean(o)} for i, o in enumerate(options)],
                      "concept_ids": [names[n.lower()] for n in q.concepts if n.lower() in names], "sources": sources})
-        answer_key[qid] = {"correct": OPTION_IDS[q.correct_index], "explanation": {"text": q.explanation, "sources": sources},
-                           "moment": {"source": moment_refs[0], "reason": q.explain_reason or q.explanation[:200],
+        answer_key[qid] = {"correct": OPTION_IDS[q.correct_index], "explanation": {"text": clean(q.explanation), "sources": sources},
+                           "moment": {"source": moment_refs[0], "reason": clean(q.explain_reason or q.explanation[:200]),
                                       "confidence": 0.85 if q.explain_passage else 0.6}}
-    content = {"title": draft.title, "days": plan_days, "notes": notes, "flashcards": flashcards, "quiz": quiz}
+    content = {"title": clean(draft.title), "days": plan_days, "notes": notes, "flashcards": flashcards, "quiz": quiz}
     return content, answer_key
 
 
@@ -254,7 +271,9 @@ def generate(uid: str, plan_id: str, *, store: BrainStore = brain_store, ai: Bra
                                 "language_name": LANGUAGE_NAMES[plan["language"]], "days": str(days),
                                 "quiz_count": "6" if days <= 3 else "8", "course_title": catalog.courses[course_id]["title"],
                                 "exam_date": plan["exam_date"], "topics": json.dumps(topics, ensure_ascii=False),
-                                "passages": text})
+                                "passages": text},
+                            cache_key=["v2", catalog.courses[course_id]["title"], days, plan["language"],
+                                       [t["title"] for t in topics], text])
         events.publish(uid, "plan.progress", plan_id=plan_id, stage="citing")
         content, answer_key = assemble(uid, draft, ids, items, catalog, course_id, days, date.fromisoformat(plan["exam_date"]))
         if not content["quiz"] and not any(d["tasks"] for d in content["days"]):

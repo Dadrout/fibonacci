@@ -11,13 +11,14 @@ import logging
 from typing import Any, Sequence
 
 from app.core.config import settings
-from app.domain.brain.pipeline import LinkVerdicts
+from app.domain.brain.pipeline import LinkVerdict, LinkVerdicts
 from app.services.brain.ai.client import AIUnavailable, BrainAI
 from app.services.brain.store import BrainStore
 
 logger = logging.getLogger(__name__)
 MAX_PAIRS = 12
 PER_CONCEPT = 4
+MAX_PER_NEW_CONCEPT = 2  # keep the graph readable: the best one or two links per new idea
 
 
 def _parse_vector(value: Any) -> list[float] | None:
@@ -53,24 +54,55 @@ def candidate_pairs(store: BrainStore, uid: str, concepts: Sequence[dict], cours
     return pairs[:MAX_PAIRS]
 
 
+def _side(concept: dict, courses: dict[str, dict]) -> dict:
+    return {"name": concept["name"], "summary": concept.get("summary", ""), "course": courses.get(concept["course_id"], {}).get("title")}
+
+
+def _pair_key(ai: BrainAI, a: dict, b: dict) -> str:
+    return ai.cache.key("brain_link_pair", "v1", a["name"].lower(), a["course"], b["name"].lower(), b["course"])
+
+
 def verify(pairs: list[dict], courses: dict[str, dict], ai: BrainAI) -> list[dict]:
+    """Verdicts are cached per concept pair, so a pair judged once replays offline in any batch."""
     if not pairs:
         return []
-    prompt_pairs = [{
-        "pair": index,
-        "a": {"name": p["a"]["name"], "summary": p["a"].get("summary", ""), "course": courses.get(p["a"]["course_id"], {}).get("title")},
-        "b": {"name": p["b"]["name"], "summary": p["b"].get("summary", ""), "course": courses.get(p["b"]["course_id"], {}).get("title")},
-    } for index, p in enumerate(pairs)]
-    verdicts = ai.generate(operation="brain_verify_links", prompt="verify_links", schema=LinkVerdicts,
-                           variables={"pairs": json.dumps(prompt_pairs, ensure_ascii=False)},
-                           model=settings.BRAIN_TEXT_MODEL, max_output_tokens=2048, temperature=0.1)
-    links = []
-    for verdict in verdicts.verdicts:
+    sides = [(_side(p["a"], courses), _side(p["b"], courses)) for p in pairs]
+    known: dict[int, LinkVerdict] = {}
+    unknown: list[int] = []
+    for index, (a, b) in enumerate(sides):
+        cached = ai.cache.get("brain_link_pair", _pair_key(ai, a, b))
+        if cached is not None:
+            known[index] = LinkVerdict.model_validate({**cached, "pair": index})
+        else:
+            unknown.append(index)
+    if unknown:
+        prompt_pairs = [{"pair": n, "a": sides[i][0], "b": sides[i][1]} for n, i in enumerate(unknown)]
+        try:
+            result = ai.generate(operation="brain_verify_links", prompt="verify_links", schema=LinkVerdicts,
+                                 variables={"pairs": json.dumps(prompt_pairs, ensure_ascii=False)},
+                                 model=settings.BRAIN_TEXT_MODEL, max_output_tokens=2048, temperature=0.1)
+        except AIUnavailable:
+            if not known:
+                raise
+            result = LinkVerdicts()
+        for verdict in result.verdicts:
+            if verdict.pair < len(unknown):
+                index = unknown[verdict.pair]
+                ai.cache.put("brain_link_pair", _pair_key(ai, *sides[index]), {**verdict.model_dump(), "pair": 0})
+                known[index] = verdict.model_copy(update={"pair": index})
+    verdicts = LinkVerdicts(verdicts=list(known.values()))
+    links: list[dict] = []
+    per_concept: dict[str, int] = {}
+    ranked = sorted(verdicts.verdicts, key=lambda v: (-(v.pair < len(pairs) and pairs[v.pair]["a"]["course_id"] != pairs[v.pair]["b"]["course_id"]), -v.strength))
+    for verdict in ranked:
         if verdict.pair >= len(pairs) or not verdict.related or not verdict.relation:
             continue
         if verdict.strength < settings.BRAIN_LINK_MIN_STRENGTH:
             continue
         pair = pairs[verdict.pair]
+        if per_concept.get(pair["a"]["id"], 0) >= MAX_PER_NEW_CONCEPT:
+            continue
+        per_concept[pair["a"]["id"]] = per_concept.get(pair["a"]["id"], 0) + 1
         source, target = (pair["a"], pair["b"]) if verdict.direction == "a_to_b" else (pair["b"], pair["a"])
         links.append({"source_concept_id": source["id"], "target_concept_id": target["id"],
                       "strength": round(verdict.strength, 3), "relation": verdict.relation,

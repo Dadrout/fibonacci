@@ -84,6 +84,8 @@ def classify(store: BrainStore, uid: str, item: dict, extraction: Extraction, gr
             "corrections": json.dumps(corrections(store.refile_events(uid, 8)), ensure_ascii=False),
             "kind": item["kind"], "name": extraction.title or item["title"], "passages": passages_text(extraction),
         },
+        # Same material + same course list → same filing, even after a re-seed (topic ids differ).
+        cache_key=["v1", item["kind"], passages_text(extraction), sorted(c["title"] for c in graph["courses"])],
     )
     result.placement = _sanitize(result.placement, graph)
     result.alternatives = [_sanitize(a, graph) for a in result.alternatives
