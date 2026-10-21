@@ -40,8 +40,28 @@ import { getMockBrain } from './brain-mocks'
 
 export type BrainApiMode = 'mock' | 'live'
 
-export const brainApiMode: BrainApiMode = process.env.NEXT_PUBLIC_BRAIN_API === 'mock' ? 'mock' : 'live'
 export const brainDemoEnabled = process.env.NEXT_PUBLIC_BRAIN_DEMO === '1'
+/** Build-time mode. Use `getBrainApiMode()` in the browser; it also honors the dev switch. */
+export const brainApiMode: BrainApiMode = process.env.NEXT_PUBLIC_BRAIN_API === 'mock' ? 'mock' : 'live'
+
+const MOCK_KEY = 'fibonacci.brain.mock'
+
+/**
+ * Mode in this browser. Outside production builds (or in demo builds), `?brain_mock=1` on any
+ * page switches this browser to mock data and `?brain_mock=0` switches back.
+ */
+export function getBrainApiMode(): BrainApiMode {
+  if (brainApiMode === 'mock') return 'mock'
+  if (typeof window === 'undefined' || (process.env.NODE_ENV === 'production' && !brainDemoEnabled)) return 'live'
+  try {
+    const flag = new URLSearchParams(window.location.search).get('brain_mock')
+    if (flag === '1') window.localStorage.setItem(MOCK_KEY, '1')
+    if (flag === '0') window.localStorage.removeItem(MOCK_KEY)
+    return window.localStorage.getItem(MOCK_KEY) === '1' ? 'mock' : 'live'
+  } catch {
+    return 'live'
+  }
+}
 
 /** Files accepted by capture, for the picker's `accept` attribute. */
 export const BRAIN_ACCEPT = 'image/*,application/pdf,.pdf,.docx,.txt,text/plain,audio/*,.m4a,.mp3,.ogg,.oga,.opus,.wav,.webm'
@@ -419,7 +439,7 @@ function createMockApi(): BrainApi {
 }
 
 /** Create a client. Pass the Supabase token getter from `useAuth()`. */
-export function createBrainApi(getToken: TokenGetter, mode: BrainApiMode = brainApiMode): BrainApi {
+export function createBrainApi(getToken: TokenGetter, mode: BrainApiMode = getBrainApiMode()): BrainApi {
   return mode === 'mock' ? createMockApi() : createLiveApi(getToken)
 }
 

@@ -44,3 +44,4 @@ docker-logs.txt
 # Brain local stack data
 /data/brain/
 /user-stats.html
+**/.venv3*/

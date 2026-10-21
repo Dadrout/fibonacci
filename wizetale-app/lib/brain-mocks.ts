@@ -763,7 +763,12 @@ export class MockBrain {
       for (const seedLink of HERO_LINKS.filter((l) => l.after === seed.n)) {
         await sleep(450)
         const link = this.addLink(seedLink)
-        if (link) this.emit({ type: 'link.created', link: clone(link), source: clone(this.concepts.get(link.source_concept_id) as BrainConcept), target: clone(this.concepts.get(link.target_concept_id) as BrainConcept) })
+        if (link) {
+          const source = this.concepts.get(link.source_concept_id) as BrainConcept
+          const target = this.concepts.get(link.target_concept_id) as BrainConcept
+          this.emit({ type: 'link.created', link: clone(link), source: clone(source), target: clone(target),
+            source_course: clone(this.courses.get(source.course_id) as BrainCourse), target_course: clone(this.courses.get(target.course_id) as BrainCourse) })
+        }
       }
     })()
     return clone(pending)

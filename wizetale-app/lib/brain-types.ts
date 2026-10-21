@@ -487,6 +487,9 @@ export type BrainEvent =
       link: ConceptLink
       source: BrainConcept
       target: BrainConcept
+      /** Courses of the two concepts (same object twice when the link is within one course). */
+      source_course: BrainCourse
+      target_course: BrainCourse
     })
   | (EventBase & { type: 'gap.detected'; gap: GapAlert })
   | (EventBase & { type: 'gap.resolved'; gap_id: string })

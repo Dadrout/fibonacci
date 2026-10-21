@@ -9,17 +9,25 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { BrainEvent } from '@/lib/brain-types'
-import { brainApiMode, brainDemoEnabled, createBrainApi, type BrainApi, type BrainApiMode } from '@/lib/brain-api'
+import { brainApiMode, brainDemoEnabled, createBrainApi, getBrainApiMode, type BrainApi, type BrainApiMode } from '@/lib/brain-api'
 import { useAuth } from './use-auth'
 
 /** Memoized API client bound to the current Supabase session. */
 export function useBrainApi(): BrainApi {
   const { getToken } = useAuth()
+  const mode = useBrainApiMode()
   // Keep the client stable across renders; read the latest token getter through a ref.
   const tokenRef = useRef(getToken)
   tokenRef.current = getToken
   const stableGetToken = useCallback(() => tokenRef.current(), [])
-  return useMemo(() => createBrainApi(stableGetToken), [stableGetToken])
+  return useMemo(() => createBrainApi(stableGetToken, mode), [stableGetToken, mode])
+}
+
+/** Build-time mode during SSR and the first render, then the browser's mode (hydration-safe). */
+export function useBrainApiMode(): BrainApiMode {
+  const [mode, setMode] = useState<BrainApiMode>(brainApiMode)
+  useEffect(() => { setMode(getBrainApiMode()) }, [])
+  return mode
 }
 
 /**
@@ -54,9 +62,10 @@ export interface BrainSession {
 
 export function useBrainSession(): BrainSession {
   const { user, loading } = useAuth()
+  const mode = useBrainApiMode()
   return useMemo(() => {
     let status: BrainSessionStatus
-    if (brainApiMode === 'mock') status = 'mock'
+    if (mode === 'mock') status = 'mock'
     else if (loading) status = 'loading'
     else if (user) status = 'signed_in'
     else if (brainDemoEnabled) status = 'demo'
@@ -64,8 +73,8 @@ export function useBrainSession(): BrainSession {
     return {
       status,
       canUse: status === 'signed_in' || status === 'demo' || status === 'mock',
-      mode: brainApiMode,
+      mode,
       demo: status === 'demo' || status === 'mock',
     }
-  }, [user, loading])
+  }, [user, loading, mode])
 }
