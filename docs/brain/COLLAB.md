@@ -159,8 +159,8 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 |---|---|---|---|
 | A1 | `docs/brain/DESIGN_BRAIN.md`: direction, key screens, motion, hero choreography | review | `docs/brain/DESIGN_BRAIN.md` |
 | A2 | Brain shell + nav entry + presentation mode (projector) | review | `wizetale-app/app/brain/page.tsx`, `wizetale-app/app/layout.tsx`, `wizetale-app/app/create/student-workspace-client.tsx`, `wizetale-app/components/study/study-shell.tsx`, `wizetale-app/components/brain/**` |
-| A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | review | `wizetale-app/components/brain/brain-capture-layer.tsx`, `brain-item-card.tsx`, `brain-workspace.tsx`, `wizetale-app/lib/copy.ts` |
-| A4 | Brain graph: force layout, zoom course → concept, animated cross-course links, node panel with sources (60 fps @ few hundred nodes) | todo | |
+| A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | doing | H2 review fixes — Astra: `wizetale-app/components/brain/brain-item-card.tsx`, `brain-workspace.tsx`, `brain.css`, UI state helpers, `wizetale-app/lib/copy.ts` |
+| A4 | Brain graph: force layout, zoom course → concept, animated cross-course links, node panel with sources (60 fps @ few hundred nodes) | doing | H2 — Astra: `wizetale-app/components/brain/brain-graph*`, `source-viewer*`, `scripts/brain-ui-*.test.mjs`, `docs/brain/DESIGN_BRAIN.md` |
 | A5 | Exam mode: N-days flow, day plan, notes, flashcards, quiz, citation chips → source viewer (YouTube seek, slide/page) | todo | |
 | A6 | Mistake → moment after a wrong answer | todo | |
 | A7 | Course view: ordered topics, source cards, inline gap alerts, one-tap re-file | todo | |
@@ -183,7 +183,9 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 
 _Format: `- H<n> (date) task → outcome (review result, commit)`_
 
-- **H1 (2026-10-21, ready for review)** A1 design doc, A2 Brain shell + presentation mode, A3 capture everywhere + live inbox, A9 onboarding — mock-mode UI and trilingual copy are implemented. Typecheck and all 18 frontend scripts pass. Production build and browser rehearsal remain unverified here: Next's TypeScript CLI child emits empty `--showConfig` output in this environment, and binding a local dev server fails with `EPERM`. Screenshots were not captured. → _Claude review pending_
+- **H2 (2026-10-21, paused, model gpt-6-astra)** H1 review fixes R1–R5, shared source viewer, A4 Brain graph (d3-force, live cross-course link animation, node panel). → **Paused: the owner's Codex usage limit was reached (resets 2026-10-22 04:27).** Partial work is on disk, uncommitted: `components/brain/brain-ui-state.ts` + `scripts/brain-ui-state.test.mjs`, edits to `brain-workspace.tsx` / `brain-item-card.tsx` / `DESIGN_BRAIN.md`. Claude added a **temporary stub** `components/brain/brain-graph.tsx` so the app builds — Astra replaces it when resuming (`codex exec resume`).
+
+- **H1 (2026-10-21, accepted)** A1 design doc, A2 Brain shell + presentation mode, A3 capture everywhere + live inbox, A9 onboarding — mock-mode UI and trilingual copy are implemented. Typecheck and all 18 frontend scripts pass. Production build and browser rehearsal remain unverified here: Next's TypeScript CLI child emits empty `--showConfig` output in this environment, and binding a local dev server fails with `EPERM`. Screenshots were not captured. → **Accepted by Claude** after typecheck, tests, production build, and a mock-mode hero run in Chromium. Commit `4aeb4e5`. Follow-ups in `docs/brain/reviews/H1.md`.
 
 ---
 
@@ -198,6 +200,7 @@ _Format: `- [open|answered] (from → to, date) question — answer (who)`_
 
 ## 7. Decisions log
 
+- **D11 (Claude, 2026-10-21) — Codex limit.** Codex usage ran out at ~23:50 and resets 04:27. Claude builds the P0 backend path directly meanwhile (pipeline, classifier, linker, routes, SSE, hero extractors). Queued for Codex after reset: Astra resumes H2 (graph) then A5–A8; worker W1 completes and tests the remaining extractors (audio, document, web with SSRF guard); worker W2 reviews and tests the Telegram bot; Astra does A11 (logo, via Codex image generation).
 - **D10 (Claude, 2026-10-21) — How Astra runs.** At the owner's request, Claude drives Astra through `codex exec -C ~/Fibonacci -s workspace-write`, one clear task at a time, in the background while Claude builds the backend. Role brief: `docs/brain/ROLE_ASTRA.md`. Astra edits only its own files and **does not run git**; Claude reviews each result (`git diff`, typecheck, tests, build, browser check), then commits it as `brain(ui): …` or sends a fix-up task. Every handoff is logged in section 5. If the owner also opens an interactive Codex session, it must claim a task on this board before starting so the two never edit the same files.
 - **D9 (Claude, 2026-10-21) — AI provider.** Gemini through the existing key: `gemini-3.1-flash-lite` for classification/verification, a vision-capable flash model for photo OCR, `gemini-embedding-001` at 768 dims for embeddings. Every call: own prompt file, JSON schema validation, timeout, one retry, then recorded cache. Final model picks are recorded here after latency tests.
 - **D8 (Claude) — Recorded AI outputs for the demo.** In `DEMO_MODE`, AI calls are cache-first: outputs recorded from real runs on the exact hero inputs are replayed when the network or provider fails. These are genuine model outputs for those inputs, not hand-written results; anything not in the cache runs live or fails visibly.

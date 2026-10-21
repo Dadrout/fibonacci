@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ffmpeg \
     fonts-noto-core \
+    tesseract-ocr \
+    tesseract-ocr-rus \
+    tesseract-ocr-kaz \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --system --uid 10001 --create-home --shell /usr/sbin/nologin app
 
@@ -19,7 +22,7 @@ COPY worker.py gunicorn.conf.py ./
 RUN pip install --no-cache-dir --upgrade pip==26.2.1 \
     && pip install --no-cache-dir -c constraints.txt gunicorn uvicorn \
     && pip install --no-cache-dir -c constraints.txt . \
-    && mkdir -p /app/static \
+    && mkdir -p /app/static /app/brain-media \
     && chown -R app:app /app
 
 RUN pip install --no-cache-dir --upgrade setuptools==83.0.0

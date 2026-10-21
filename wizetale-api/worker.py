@@ -19,4 +19,6 @@ celery_app.conf.include = [
     'app.services.teacher_presentation_video',
     'app.services.teacher_video_render',
     'app.services.presentation_visuals',
+    'app.services.brain.pipeline',
+    'app.services.brain.plans',
 ]

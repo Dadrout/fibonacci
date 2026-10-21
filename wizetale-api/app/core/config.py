@@ -102,6 +102,34 @@ class Settings(BaseSettings):
     CELERY_BROKER_URL: str = "redis://redis:6379/0"
     CELERY_RESULT_BACKEND: str = "redis://redis:6379/1"
 
+    # Fibonacci Brain
+    DEMO_MODE: bool = False
+    BRAIN_STORE: str = "supabase"  # supabase (hosted project) | local (docker-compose.brain.yml)
+    BRAIN_LOCAL_REST_URL: str = "http://brain-rest:3000"
+    BRAIN_LOCAL_SERVICE_KEY: Optional[str] = None
+    BRAIN_BLOB_STORE: str = "local"  # local disk volume | supabase (Storage bucket brain-captures)
+    BRAIN_MEDIA_DIR: str = "/app/brain-media"
+    BRAIN_MEDIA_SECRET: Optional[str] = None
+    BRAIN_MEDIA_TTL_SECONDS: int = Field(default=900, ge=60, le=86400)
+    BRAIN_MAX_UPLOAD_BYTES: int = Field(default=20 * 1024 * 1024, ge=1024, le=25 * 1024 * 1024)
+    BRAIN_DEMO_TOKEN: Optional[str] = None
+    BRAIN_DEMO_USER_ID: str = "00000000-0000-4000-8000-00000000d3e0"
+    BRAIN_DEMO_EMAIL: str = "demo-student@fibonacci.local"
+    BRAIN_TEXT_MODEL: str = "gemini-3.5-flash-lite"
+    BRAIN_FALLBACK_MODEL: str = "gemini-flash-lite-latest"
+    BRAIN_VISION_MODEL: str = "gemini-3.5-flash"
+    BRAIN_PLAN_MODEL: str = "gemini-3.5-flash"
+    BRAIN_TRANSCRIBE_MODEL: str = "gemini-3.5-flash"
+    BRAIN_EMBED_MODEL: str = "gemini-embedding-001"
+    BRAIN_AI_TIMEOUT_SECONDS: float = Field(default=15, ge=3, le=120)
+    BRAIN_AI_RECORD: bool = False  # write AI outputs to the recorded cache (demo preparation)
+    BRAIN_LINK_CANDIDATE_SIMILARITY: float = Field(default=0.6, ge=0.3, le=0.99)
+    BRAIN_LINK_MIN_STRENGTH: float = Field(default=0.7, ge=0.5, le=0.99)
+    TELEGRAM_BOT_TOKEN: Optional[str] = None
+    TELEGRAM_BOT_USERNAME: Optional[str] = None
+    TELEGRAM_MODE: str = "polling"  # polling | webhook | off
+    TELEGRAM_WEBHOOK_SECRET: Optional[str] = None
+
     model_config = SettingsConfigDict(
         case_sensitive=True,
         env_file=".env",
@@ -109,7 +137,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    @field_validator("DEBUG", mode="before")
+    @field_validator("DEBUG", "DEMO_MODE", "BRAIN_AI_RECORD", mode="before")
     @classmethod
     def parse_debug_flag(cls, value):
         if isinstance(value, bool):
@@ -194,6 +222,12 @@ class Settings(BaseSettings):
 
         if self.DEBUG:
             errors.append("DEBUG must be false")
+        if self.DEMO_MODE:
+            errors.append("DEMO_MODE must be false")
+        if self.BRAIN_STORE.strip().lower() != "supabase":
+            errors.append("BRAIN_STORE must be supabase")
+        if not is_configured(self.BRAIN_MEDIA_SECRET):
+            errors.append("BRAIN_MEDIA_SECRET")
 
         origins = [
             origin.strip()

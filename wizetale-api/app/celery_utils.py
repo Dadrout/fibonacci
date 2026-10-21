@@ -15,7 +15,7 @@ def create_celery_app() -> Celery:
         "worker",
         broker=settings.CELERY_BROKER_URL,
         backend=settings.CELERY_RESULT_BACKEND,
-        include=['app.api.v1.generate', 'app.services.document_worker', 'app.services.teacher_presentation_video', 'app.services.teacher_video_render', 'app.services.presentation_visuals']
+        include=['app.api.v1.generate', 'app.services.document_worker', 'app.services.teacher_presentation_video', 'app.services.teacher_video_render', 'app.services.presentation_visuals', 'app.services.brain.pipeline', 'app.services.brain.plans']
     )
     celery_app.conf.update(
         task_track_started=True,

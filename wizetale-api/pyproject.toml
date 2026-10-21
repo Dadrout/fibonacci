@@ -22,6 +22,9 @@ dependencies = [
     "edge-tts",
     "psutil",
     "boto3",
+    "youtube-transcript-api",
+    "trafilatura",
+    "pypdfium2",
 ]
 
 [project.optional-dependencies]

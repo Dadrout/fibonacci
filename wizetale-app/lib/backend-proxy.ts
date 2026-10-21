@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-function getBackendUrl() {
+export function getBackendUrl() {
   const configuredUrl = process.env.BACKEND_API_URL?.trim()
   if (!configuredUrl) throw new Error('BACKEND_API_URL is not configured')
 

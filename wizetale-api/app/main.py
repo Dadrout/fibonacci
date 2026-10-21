@@ -44,6 +44,7 @@ from app.api.v1 import teacher_documents
 from app.api.v1 import study_materials
 from app.api.v1 import teacher_presentation_renders
 from app.api.v1 import teacher_video_renders
+from app.api.brain import routes as brain_routes
 
 # Initialize Limiter with stricter limits
 limiter = Limiter(key_func=get_remote_address)
@@ -109,6 +110,8 @@ app.include_router(teacher.router, prefix="/api/v1")
 app.include_router(study_materials.router, prefix="/api/v1")
 app.include_router(teacher_presentation_renders.router, prefix="/api/v1")
 app.include_router(teacher_video_renders.router, prefix="/api/v1")
+app.include_router(brain_routes.router, prefix="/api/v1")
+app.add_exception_handler(brain_routes.BrainError, brain_routes.brain_error_handler)
 
 @app.get("/ping", status_code=200)
 @limiter.limit("100/minute")

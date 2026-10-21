@@ -41,14 +41,44 @@ services:
       - ./.env
       - ./.env.brain
     volumes:
-      - brain_media:/app/brain-media
+      - brain_media:/app/brain-media:z
+      # Recorded AI outputs (DEMO_MODE replays them; BRAIN_AI_RECORD=true writes new ones).
+      - ./wizetale-api/app/services/brain/ai/recorded:/app/app/services/brain/ai/recorded:z
 
   celery-worker:
     env_file:
       - ./.env
       - ./.env.brain
     volumes:
-      - brain_media:/app/brain-media
+      - brain_media:/app/brain-media:z
+      - ./wizetale-api/app/services/brain/ai/recorded:/app/app/services/brain/ai/recorded:z
+
+  telegram-bot:
+    image: talespark-api-local
+    init: true
+    restart: unless-stopped
+    command: ["python", "-m", "app.services.brain.telegram.poller"]
+    healthcheck:
+      disable: true
+    env_file:
+      - ./.env
+      - ./.env.brain
+    environment:
+      ENVIRONMENT: development
+      REDIS_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/1
+    depends_on:
+      redis:
+        condition: service_healthy
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    volumes:
+      - brain_media:/app/brain-media:z
+    networks:
+      - webnet
 
 volumes:
   brain_db:
