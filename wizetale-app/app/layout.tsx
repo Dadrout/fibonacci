@@ -7,7 +7,9 @@ import { copyText } from '@/lib/copy'
 import AnalyticsListener from "@/components/analytics-listener"
 import { LanguageContext, useLanguageState } from '@/hooks/use-language'
 import { AuthContext, useAuthState } from '@/hooks/use-auth'
+import { BrainCaptureLayer } from '@/components/brain/brain-capture-layer'
 import "./globals.css"
+import '@/components/brain/brain.css'
 
 const literata = localFont({
   src: "../public/fonts/Literata-Variable.ttf",
@@ -44,6 +46,7 @@ export default function RootLayout({
           <AuthContext.Provider value={authState}>
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={false}>
               <AnalyticsListener />
+              <BrainCaptureLayer />
               {children}
             </ThemeProvider>
           </AuthContext.Provider>

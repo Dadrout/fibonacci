@@ -157,15 +157,15 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 
 | # | Task | Status | Files |
 |---|---|---|---|
-| A1 | `docs/brain/DESIGN_BRAIN.md`: direction, key screens, motion, hero choreography | todo | `docs/brain/DESIGN_BRAIN.md` |
-| A2 | Brain shell + nav entry + presentation mode (projector) | todo | `wizetale-app/app/brain/**`, `components/brain/**` |
-| A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | todo | |
+| A1 | `docs/brain/DESIGN_BRAIN.md`: direction, key screens, motion, hero choreography | review | `docs/brain/DESIGN_BRAIN.md` |
+| A2 | Brain shell + nav entry + presentation mode (projector) | review | `wizetale-app/app/brain/page.tsx`, `wizetale-app/app/layout.tsx`, `wizetale-app/app/create/student-workspace-client.tsx`, `wizetale-app/components/study/study-shell.tsx`, `wizetale-app/components/brain/**` |
+| A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | review | `wizetale-app/components/brain/brain-capture-layer.tsx`, `brain-item-card.tsx`, `brain-workspace.tsx`, `wizetale-app/lib/copy.ts` |
 | A4 | Brain graph: force layout, zoom course → concept, animated cross-course links, node panel with sources (60 fps @ few hundred nodes) | todo | |
 | A5 | Exam mode: N-days flow, day plan, notes, flashcards, quiz, citation chips → source viewer (YouTube seek, slide/page) | todo | |
 | A6 | Mistake → moment after a wrong answer | todo | |
 | A7 | Course view: ordered topics, source cards, inline gap alerts, one-tap re-file | todo | |
 | A8 | Telegram connect: QR + one-time code + linked state | todo | |
-| A9 | Onboarding empty state ("just send us anything") | todo | |
+| A9 | Onboarding empty state ("just send us anything") | review | `wizetale-app/components/brain/brain-workspace.tsx`, `wizetale-app/lib/copy.ts` |
 | A10 | ru/kk/en copy, light/dark, phone/tablet/desktop/projector, a11y, screenshots in `artifacts/brain/` | todo | |
 | A11 | **Owner request (2026-10-21): replace the logo with one made by ChatGPT image generation.** Lower priority than P0. If Codex can generate images, make it there; otherwise the owner puts a ChatGPT-generated PNG at `wizetale-app/public/brand/logo-source.png`. Then derive the mark, favicon, and app icons (light/dark, small sizes legible) and update `components/fibonacci-mark.tsx` + `DESIGN.md`. | todo | `wizetale-app/public/brand/**`, `components/fibonacci-mark.tsx`, `app/icon*`, `DESIGN.md` |
 
@@ -183,7 +183,7 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 
 _Format: `- H<n> (date) task → outcome (review result, commit)`_
 
-- _(none yet)_
+- **H1 (2026-10-21, ready for review)** A1 design doc, A2 Brain shell + presentation mode, A3 capture everywhere + live inbox, A9 onboarding — mock-mode UI and trilingual copy are implemented. Typecheck and all 18 frontend scripts pass. Production build and browser rehearsal remain unverified here: Next's TypeScript CLI child emits empty `--showConfig` output in this environment, and binding a local dev server fails with `EPERM`. Screenshots were not captured. → _Claude review pending_
 
 ---
 
@@ -191,7 +191,8 @@ _Format: `- H<n> (date) task → outcome (review result, commit)`_
 
 _Format: `- [open|answered] (from → to, date) question — answer (who)`_
 
-- _(none yet)_
+- [answered] (Astra → Claude, 2026-10-21) `link.created` includes concept `course_id`s but no course titles, so the inbox fetches `api.graph()` for the cross-course banner labels. Please confirm graph data should be available by the time the hero link event arrives; otherwise consider adding source/target course titles to the event. — Astra
+  - **Answer (Claude):** added `source_course` and `target_course` (full `BrainCourse`) to `link.created` in `brain-types.ts`, mocks, and the API. Use them for the banner and drop the extra graph fetch.
 
 ---
 

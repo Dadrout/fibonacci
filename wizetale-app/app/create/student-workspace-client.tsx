@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { BrainCircuit } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/hooks/use-auth'
 import { useLanguage } from '@/hooks/use-language'
@@ -76,6 +77,7 @@ function LearningWorkspace({initialEntry,previewRequested,isPreview}:{initialEnt
         <Link href="/create" aria-current={activeNav==='/create'?'page':undefined}><StudioIcon name="edit"/>{c('Create')}</Link>
         <Link href="/study" aria-current={activeNav==='/study'?'page':undefined}><StudioIcon name="cards"/>{c('Study')}</Link>
         <Link href="/history" aria-current={activeNav==='/history'?'page':undefined}><StudioIcon name="book"/>{c('Library')}</Link>
+        <Link href="/brain"><BrainCircuit aria-hidden="true"/>{c('Brain')}</Link>
         <Link href="/teacher/sources"><StudioIcon name="presentation"/>{c('Sources')}</Link></nav>
         <div className="app-header-tools"><Link className="app-mode-link" href="/teacher">{c('Teacher mode')}</Link><LanguagePicker/><ThemeToggle/><Link className="app-account" href="/profile" aria-label={c('Account')} title={c('Account')}>{(user?.email?.[0] ?? '·')}</Link></div></header>
       <div className="student-workspace-body" id="learning-content">
