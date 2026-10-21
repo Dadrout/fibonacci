@@ -1,0 +1,36 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Both are tests for heteroskedasticity but differ in their approach, with the Goldfeld-Quandt test using variance comparison across subsamples."
+  },
+  {
+   "pair": 1,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Both are diagnostic procedures for detecting heteroskedasticity, providing alternative testing strategies."
+  },
+  {
+   "pair": 2,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "Both test for heteroskedasticity, where the Goldfeld-Quandt test relies on data ordering while the White test uses squared residuals and cross-products."
+  },
+  {
+   "pair": 3,
+   "related": true,
+   "relation": "applies",
+   "direction": "a_to_b",
+   "strength": 0.75,
+   "rationale": "The Goldfeld-Quandt test uses an F-statistic ratio to compare error variances, directly applying F-test principles."
+  }
+ ]
+}

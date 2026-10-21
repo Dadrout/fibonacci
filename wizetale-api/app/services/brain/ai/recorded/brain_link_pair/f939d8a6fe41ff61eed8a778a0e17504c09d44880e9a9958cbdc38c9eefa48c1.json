@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.95,
+ "rationale": "Weighted least squares is designed directly as a solution to remedy heteroskedasticity when its form is known."
+}

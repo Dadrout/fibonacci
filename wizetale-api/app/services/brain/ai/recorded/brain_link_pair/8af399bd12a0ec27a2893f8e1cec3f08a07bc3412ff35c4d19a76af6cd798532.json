@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.85,
+ "rationale": "Heteroskedasticity-robust standard errors build directly on the standard error concept by adjusting it for cases where the standard deviation of the error term varies across observations."
+}

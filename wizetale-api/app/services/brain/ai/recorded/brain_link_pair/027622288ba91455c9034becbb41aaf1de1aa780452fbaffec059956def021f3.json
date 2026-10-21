@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.75,
+ "rationale": "While the Breusch-Pagan test checks for non-constant error variance, the Durbin-Watson test checks for correlation between errors across time."
+}

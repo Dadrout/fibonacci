@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "b_to_a",
+ "strength": 0.75,
+ "rationale": "The White test detects heteroskedasticity, which helps determine whether you might need to use methods like weighted least squares if the form is identified."
+}

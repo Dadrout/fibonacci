@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.85,
+ "rationale": "Both are diagnostic procedures for detecting heteroskedasticity, providing alternative testing strategies."
+}

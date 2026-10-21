@@ -1,0 +1,57 @@
+{
+ "title": "Heteroskedasticity",
+ "summary": "This lecture material covers heteroskedasticity in the context of multiple linear regression, detailing its definition, consequences for OLS inference, detection methods, and corrective approaches such as robust standard errors and weighted least squares.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": null,
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 0.85
+ },
+ "alternatives": [
+  {
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "course_title": "Econometrics",
+   "course_code": "ECON 301",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "topic_title": "OLS assumptions (Gauss–Markov)",
+   "sequence": 2,
+   "sequence_kind": "week",
+   "confidence": 0.6
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Homoskedasticity",
+   "summary": "Homoskedasticity assumes that the error variance conditional on explanatory variables is constant, represented as Var(uᵢ | xᵢ) = σ².",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the error variance changes across observations with the explanatory variables, violating the standard Gauss-Markov assumptions.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Breusch-Pagan test",
+   "summary": "The Breusch-Pagan test is a diagnostic procedure used to detect heteroskedasticity in regression models.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "White test",
+   "summary": "The White test is a statistical test that detects heteroskedasticity without requiring a specific form for the variance of the errors.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}

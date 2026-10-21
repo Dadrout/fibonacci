@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "same_idea",
+ "direction": "a_to_b",
+ "strength": 0.95,
+ "rationale": "This is the exact same concept appearing under slightly different naming conventions."
+}

@@ -1,0 +1,181 @@
+{
+ "title": null,
+ "language": "en-US",
+ "segments": [
+  {
+   "start_sec": 0.0,
+   "end_sec": 7.0,
+   "text": "So in reality, we're looking for something a little bit like this in our residual plot. And this is what's called homoscedastic errors."
+  },
+  {
+   "start_sec": 7.0,
+   "end_sec": 24.0,
+   "text": "So whenever you run a regression, it's expecting the error terms or the residuals to be homoscedastic. It's it's expecting a nice, even spread of these error terms."
+  },
+  {
+   "start_sec": 24.0,
+   "end_sec": 33.0,
+   "text": "So if our regression violates this, we're going to have problems. So let's find out what problems we're going to have."
+  },
+  {
+   "start_sec": 33.0,
+   "end_sec": 44.0,
+   "text": "What do we care about this at all? Or more specifically, what happens if we just run the damn model and ignore the violation of this regression assumption?"
+  },
+  {
+   "start_sec": 44.0,
+   "end_sec": 51.0,
+   "text": "So, we've got heteroscedasticity and we run property price as a function of lot size."
+  },
+  {
+   "start_sec": 51.0,
+   "end_sec": 57.0,
+   "text": "Let's draw a line of best fit because that in reality is what a regression is."
+  },
+  {
+   "start_sec": 57.0,
+   "end_sec": 70.0,
+   "text": "Now, if you've just come to this video cold, you might want to have a look at my first few videos on regression, the basics of regression in this series."
+  },
+  {
+   "start_sec": 70.0,
+   "end_sec": 75.0,
+   "text": "So, um, feel free to have a look at those. I'm not going to double up on that material."
+  },
+  {
+   "start_sec": 75.0,
+   "end_sec": 83.0,
+   "text": "So, I'll take that as read. Imagine that our output from this regression is given below."
+  },
+  {
+   "start_sec": 83.0,
+   "end_sec": 95.0,
+   "text": "So, we have our estimates here, that's our coefficients. That's the the intercept here is 800,000,"
+  },
+  {
+   "start_sec": 95.0,
+   "end_sec": 100.0,
+   "text": "and our lot size, the coefficient of lot size is 455."
+  },
+  {
+   "start_sec": 100.0,
+   "end_sec": 121.0,
+   "text": "So if you run the model, your coefficients, those that I just read out, are still unbiased. And what that means is that it's still an accurate reflection of what it's trying to estimate."
+  },
+  {
+   "start_sec": 121.0,
+   "end_sec": 133.0,
+   "text": "Our best estimate for the true effect of lot size on house price is still 455.95."
+  },
+  {
+   "start_sec": 133.0,
+   "end_sec": 142.0,
+   "text": "That's the coefficient or the gradient of this line of best fit."
+  },
+  {
+   "start_sec": 142.0,
+   "end_sec": 178.0,
+   "text": "But what happens in the presence of heteroscedasticity is that the standard errors are incorrect. So, everything else in this output, you can't rely on. So these standard errors provided here, which in turn provide us the t-values and the p-values over here,"
+  },
+  {
+   "start_sec": 178.0,
+   "end_sec": 194.0,
+   "text": "these are suspect now. We can't rely on them. I mean, in reality, you can look at these p-values and you'll note that they're very, very, very small indeed."
+  },
+  {
+   "start_sec": 194.0,
+   "end_sec": 204.0,
+   "text": "So, we can be quite confident there's a positive relationship between lot size and house price."
+  },
+  {
+   "start_sec": 204.0,
+   "end_sec": 222.0,
+   "text": "But the principle still stands, we can't really rely statistically speaking on anything else in the output, and that's a problem, right?"
+  },
+  {
+   "start_sec": 222.0,
+   "end_sec": 236.0,
+   "text": "What tends to happen is that in the presence of heteroscedasticity, the standard errors are underrepresented."
+  },
+  {
+   "start_sec": 236.0,
+   "end_sec": 249.0,
+   "text": "Meaning that your output will give you smaller standard errors than should be the case."
+  },
+  {
+   "start_sec": 249.0,
+   "end_sec": 269.0,
+   "text": "I guess that means that if your variables turn out to be significant, you have to think to yourself, oh, maybe it's just the model making it seem more significant."
+  },
+  {
+   "start_sec": 269.0,
+   "end_sec": 277.0,
+   "text": "Because with lower standard errors, you're going to have more significant variables."
+  },
+  {
+   "start_sec": 277.0,
+   "end_sec": 283.0,
+   "text": "So you can see how it would get confusing."
+  },
+  {
+   "start_sec": 283.0,
+   "end_sec": 307.0,
+   "text": "So how do we detect heteroscedasticity? Well, you've already seen one of those methods of detection, which is just to look at the residual plot."
+  },
+  {
+   "start_sec": 307.0,
+   "end_sec": 320.0,
+   "text": "So if you saw one that looks a bit like this, you'd go, you know what, heteroscedasticity is not a problem."
+  },
+  {
+   "start_sec": 320.0,
+   "end_sec": 331.0,
+   "text": "But for our version, if you recall it from the previous slide, we did have a problem."
+  },
+  {
+   "start_sec": 331.0,
+   "end_sec": 343.0,
+   "text": "You can see quite clearly there was a sort of funnel effect for our residual plot."
+  },
+  {
+   "start_sec": 343.0,
+   "end_sec": 366.0,
+   "text": "If you want to get a little bit more statistical about your testing, you can conduct the Goldfeld-Quandt test, which was something created in 1965 by a couple of statisticians."
+  },
+  {
+   "start_sec": 366.0,
+   "end_sec": 372.0,
+   "text": "I'll give you the brief overview of how this works."
+  },
+  {
+   "start_sec": 372.0,
+   "end_sec": 395.0,
+   "text": "The first thing you're going to do is order the data by the offending variable, which in this case would be lot size, and you'll split the data into two separate segments."
+  },
+  {
+   "start_sec": 395.0,
+   "end_sec": 412.0,
+   "text": "So here we've got a segment here on the left-hand side and on the right-hand side. Now, you don't need to split it right in the middle, but maybe for ease's sake you just halve the data and put half of it on the left-hand side and half of it on the right-hand side of lot size."
+  },
+  {
+   "start_sec": 412.0,
+   "end_sec": 435.0,
+   "text": "Then what you're going to do is run separate regressions on each segment. So you can see here I've got a regression on the left and a regression on the right."
+  },
+  {
+   "start_sec": 435.0,
+   "end_sec": 447.0,
+   "text": "Now these two regressions need not meet up, and they also need not have the same variance of error terms around them."
+  },
+  {
+   "start_sec": 447.0,
+   "end_sec": 472.0,
+   "text": "And guess what you're going to do? You're going to compare the variance estimates for each of these regressions. So if the variance of our pink regression over here is a lot smaller than the variance of the observations around our yellow regression,"
+  },
+  {
+   "start_sec": 472.0,
+   "end_sec": 476.0,
+   "text": "then that might be"
+  }
+ ]
+}

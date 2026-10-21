@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.85,
+ "rationale": "The Breusch-Pagan test assumes a specific parametric form for heteroskedasticity, whereas the White test is general and does not require specifying that form."
+}

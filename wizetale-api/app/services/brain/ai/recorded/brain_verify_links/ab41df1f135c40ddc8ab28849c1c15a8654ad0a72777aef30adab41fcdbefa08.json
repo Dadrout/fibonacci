@@ -1,0 +1,68 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Running a White test helps you determine if your standard errors are biased by heteroskedasticity and need correction."
+  },
+  {
+   "pair": 1,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.3,
+   "rationale": ""
+  },
+  {
+   "pair": 2,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Detecting heteroskedasticity with the Breusch-Pagan test matters because heteroskedasticity invalidates the standard error formulas of OLS."
+  },
+  {
+   "pair": 3,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "The Breusch-Pagan test specifically checks whether the variance of the regression errors depends on the independent variables."
+  },
+  {
+   "pair": 4,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Heteroskedasticity and autocorrelation are the two primary violations of spherical errors in regression analysis that distort standard errors."
+  },
+  {
+   "pair": 5,
+   "related": true,
+   "relation": "applies",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "The Breusch-Pagan test utilizes an auxiliary regression evaluated via an LM test or an F-test to check for heteroskedasticity."
+  },
+  {
+   "pair": 6,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.75,
+   "rationale": "While the Breusch-Pagan test checks for non-constant error variance, the Durbin-Watson test checks for correlation between errors across time."
+  },
+  {
+   "pair": 7,
+   "related": true,
+   "relation": "applies",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "The White test is typically implemented by running an auxiliary regression and using an F-test (or LM test) to check the joint significance of the squared residuals."
+  }
+ ]
+}

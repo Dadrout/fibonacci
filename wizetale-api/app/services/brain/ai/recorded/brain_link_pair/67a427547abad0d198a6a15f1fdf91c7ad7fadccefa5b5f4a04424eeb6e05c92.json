@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "Heteroskedasticity is a specific condition regarding the variance of the error term depending on the regressors, directly extending the basic concept of variance."
+}

@@ -1,0 +1,36 @@
+{
+ "title": "Week 6 — Heteroskedasticity",
+ "summary": "This video introduces the concept of heteroskedasticity, explaining its definition and importance in econometric analysis.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": "4c576257-ef4a-44ad-91e0-232be969df4c",
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 0.95
+ },
+ "alternatives": [
+  {
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "course_title": "Econometrics",
+   "course_code": "ECON 301",
+   "topic_id": null,
+   "topic_title": "Heteroskedasticity",
+   "sequence": 6,
+   "sequence_kind": "week",
+   "confidence": 0.9
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the variance of the error terms varies across observations in a regression model.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "Heteroskedasticity-robust standard errors are often used after detecting the issue with tests like the White test."
+}

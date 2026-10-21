@@ -1,0 +1,36 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": true,
+   "relation": "same_idea",
+   "direction": "a_to_b",
+   "strength": 1.0,
+   "rationale": "These are identical concepts representing the Breusch-Pagan test for heteroskedasticity."
+  },
+  {
+   "pair": 1,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "The White test can be seen as a broader alternative to the Breusch-Pagan test because it does not assume normality and detects more general forms of heteroskedasticity."
+  },
+  {
+   "pair": 2,
+   "related": true,
+   "relation": "applies",
+   "direction": "b_to_a",
+   "strength": 0.75,
+   "rationale": "When the Breusch-Pagan test detects heteroskedasticity, you use heteroskedasticity-robust standard errors to fix your inference."
+  },
+  {
+   "pair": 3,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.9,
+   "rationale": "The Breusch-Pagan test is specifically designed to detect the presence of heteroskedasticity in your regression model."
+  }
+ ]
+}

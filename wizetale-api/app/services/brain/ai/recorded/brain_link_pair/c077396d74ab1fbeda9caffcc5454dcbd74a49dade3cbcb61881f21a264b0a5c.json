@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.85,
+ "rationale": "Weighted least squares restores BLUE properties by transforming a model with heteroskedasticity into one that satisfies homoskedastic Gauss-Markov assumptions."
+}

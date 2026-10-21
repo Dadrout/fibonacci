@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "Weighted least squares uses the inverse of error variance to weight observations, directly applying the concept of variance to improve estimation efficiency."
+}

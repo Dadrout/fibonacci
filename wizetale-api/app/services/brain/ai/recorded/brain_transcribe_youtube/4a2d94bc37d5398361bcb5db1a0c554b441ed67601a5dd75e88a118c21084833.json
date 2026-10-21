@@ -1,0 +1,31 @@
+{
+ "title": "Heteroskedasticity: Technical Definition",
+ "language": "en-US",
+ "segments": [
+  {
+   "start_sec": 0.0,
+   "end_sec": 21.0,
+   "text": "Hi guys, it's Justin Zilcer here from Z Statistics. Now doing a suite of videos looking at the assumptions underlying regression. And more to the point, what happens when we violate those assumptions? So this first video is to do with heteroskedasticity. That's the name of the game today."
+  },
+  {
+   "start_sec": 21.0,
+   "end_sec": 60.0,
+   "text": "And in this video, we're going to be looking at the technical definition of heteroskedasticity. We'll be asking ourselves why we care about it in the first place at all. Um, we'll discuss three different ways of detecting it in your data from very simple ways to more statistically robust means of detection. And then incidentally, we'll have three different remedies we can utilize to correct for heteroskedasticity. And finally, I'll provide you with a few real-world examples of where heteroskedasticity would exist."
+  },
+  {
+   "start_sec": 60.0,
+   "end_sec": 141.0,
+   "text": "So let's tuck in, shall we? Now, the example we're going to be using in this video is of Sydney property sale prices. And we got the sale price, the house sale price here on the left in millions of Australian dollars, and the lot size on the bottom here. The theory obviously being that for a greater lot size, you might expect a larger house price. But of course, there's a whole lot of other variables that would intervene in that relationship, such as location, for example. But we're going to keep it real simple in this video. We're just going to look at house price as a function of lot size."
+  },
+  {
+   "start_sec": 141.0,
+   "end_sec": 325.0,
+   "text": "So what's the technical definition of heteroskedasticity? Well, it's said to occur when the variance of Y given X is not constant. So looking back at our plot here on our left, that's our scatter plot of the house prices versus lot size. If we're going to assess the variance of Y given X, it's often good to put together a residual plot. So to do that, imagine you've drawn a line of best fit through our left plot over here, and in doing so, we create an expected value of Y along that line for a given value of X. Now if you take that line and kind of bend it sideways so that it's horizontal, you'll get what's called a residual plot. So these points here represent the distance from that line of best fit for each of the observations. And you can really get a sense that especially at the beginning, as you increase your value of X, the variance of Y, which is kind of like that vertical distance, the vertical spread, keeps increasing. Arguably it might sort of stop around here, but nonetheless, there appears to be this increasing variance of Y as X increases, across the vertical cross sections become more and more spread out. And that's known as heteroskedasticity. Hetero meaning more than one, and skedasticity meaning, well, variance for whatever reason. In fact, if you know where the word skedasticity comes from, feel free to write a comment down at the bottom of this video cuz I am keen to know cuz that's a ridiculous word. Nonetheless, this relationship suffers from heteroskedasticity."
+  },
+  {
+   "start_sec": 325.0,
+   "end_sec": 500.0,
+   "text": "I'm going to just provide you with a couple of other examples of heteroskedastic relationships between theoretical variables Y and X. So in our scatter plot on the left here, you can see you've almost got this positive relationship between Y and X, but if we were to look at the residuals, you definitely get a sense that there's a sort of bow tie effect where the smaller variances exist for sort of mean values of X, and as X gets a bit more extreme on both sides, you get a larger variance. And that's still heteroskedastic, although perhaps a different form than our property price example. You might see something like this, which is almost the reverse. You've got this funnel going the other way where if you look at our residual plot here, the variance is larger for small values of X. So I guess I'm just trying to show you that there's not one size fits all for heteroskedastic errors. This particular example has a kind of you might argue there's a constant variance up until a point, and then it blows out after a certain value of X. And that could happen in real life. I mean, say you're taking some measurements from a rocket or something like that, and at some speed, the rocket engages another engine. You can see I don't know anything about mechanics or engineering, but you can imagine that there would be some scenario where after a certain point of X, your variance blows out like this."
+  }
+ ]
+}

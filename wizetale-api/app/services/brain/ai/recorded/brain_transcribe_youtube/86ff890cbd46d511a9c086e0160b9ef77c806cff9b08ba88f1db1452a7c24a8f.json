@@ -1,0 +1,56 @@
+{
+ "title": "Heteroscedasticity",
+ "language": "en-US",
+ "segments": [
+  {
+   "start_sec": 0.0,
+   "end_sec": 38.0,
+   "text": "problems, if you log variables, the problems just disappear. And there's good reasons for that. Now, I'm not going to get too philosophical about it and get real deep in it, but there's clearly something that is quite helpful about logging variables. So let's just see what happens. I mean, have a look at the original scatter plot, which is price versus lot size. If I logged everything, look, it doesn't cure the problem completely, but you can see it already makes things a lot more sort of even across the whole across the board. These first few ones might still be the exception, but if you sort of start the regression around here, it kind of looks pretty even really."
+  },
+  {
+   "start_sec": 38.0,
+   "end_sec": 55.0,
+   "text": "Looking at the residuals, yeah, you really get that impression that where there was a definite funneling that happens in the original regression, a lot of that funneling has been mitigated if I've logged both variables."
+  },
+  {
+   "start_sec": 55.0,
+   "end_sec": 60.0,
+   "text": "So again, something you might want to consider if you've got a problem of heteroscedasticity in your model."
+  },
+  {
+   "start_sec": 60.0,
+   "end_sec": 82.0,
+   "text": "So finally now let's just have a look at some examples of heteroscedasticity that you might see in real life, because it's all because we can talk theoretically about things, but why bother learning about this stuff if it's never going to come up in your statistical adventures?"
+  },
+  {
+   "start_sec": 82.0,
+   "end_sec": 122.0,
+   "text": "Um, whenever you're looking at expenditure as a function of income, you'll tend to get heteroscedasticity as when your income increases, it allows for extra expenditure, but it doesn't necessitate extra expenditure expenditure. Income as a function of age might also exhibit that same heteroscedastic flavor because because people on when they're say 20-year-olds and 21-year-olds, there's only so much that they can possibly earn without much experience, right?"
+  },
+  {
+   "start_sec": 122.0,
+   "end_sec": 162.0,
+   "text": "But as your age increases, you get a lot of people that earn they can earn a lot more money, but again, you can get people that earn not so much money. So you'll get that variance increasing with increasing age. Um here's one that enters the realms of say physics, but if you're trying to measure the speed of something, the faster that thing goes, the more variance you'll have in your estimates of that speed because it's just harder to measure."
+  },
+  {
+   "start_sec": 162.0,
+   "end_sec": 179.0,
+   "text": "So say you're trying to measure the speed of a rocket or something, right? When it's lifting off, pretty easy to measure the speed when it's going quite slowly, and your margin of error will be quite small."
+  },
+  {
+   "start_sec": 179.0,
+   "end_sec": 199.0,
+   "text": "But after it's out in space, which is not only far away from you, but it's traveling at huge speeds, your margin of error of your speed estimates will be a lot larger."
+  },
+  {
+   "start_sec": 199.0,
+   "end_sec": 213.0,
+   "text": "There you have it. That is heteroscedasticity. If you've got any questions at all, feel free to post them down below in the comment section."
+  },
+  {
+   "start_sec": 213.0,
+   "end_sec": 220.0,
+   "text": "I'm Justin Zelzer. If you want to get in contact otherwise, here are my socials. I'll catch you around."
+  }
+ ]
+}

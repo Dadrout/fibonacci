@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "The White test can be seen as a broader alternative to the Breusch-Pagan test because it does not assume normality and detects more general forms of heteroskedasticity."
+}

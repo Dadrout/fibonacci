@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import io
 import logging
+import re
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -55,8 +56,10 @@ def _pages(data: bytes) -> tuple[list[str], Optional[str]]:
             raise ExtractionError("too_large", "PDF has more than 200 pages")
         texts = [(page.extract_text() or "").replace("\x00", "") for page in reader.pages]
         title = None
-        if reader.metadata and reader.metadata.title and len(reader.metadata.title.strip()) > 3:
-            title = reader.metadata.title.strip()[:300]
+        meta_title = (reader.metadata.title or "").strip() if reader.metadata else ""
+        # Ignore titles that are really file names or tool defaults ("week6.html", "Microsoft Word - x.docx").
+        if len(meta_title) > 3 and not re.search(r"\.(html?|docx?|pptx?|pdf|txt|tex)$|^(untitled|microsoft word|document\d*$)", meta_title, re.I):
+            title = meta_title[:300]
         return texts, title
     except ExtractionError:
         raise

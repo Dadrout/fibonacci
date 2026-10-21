@@ -1,0 +1,60 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": true,
+   "relation": "same_idea",
+   "direction": "a_to_b",
+   "strength": 0.95,
+   "rationale": "This is the exact same concept appearing under slightly different naming conventions."
+  },
+  {
+   "pair": 1,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "Heteroskedasticity-robust standard errors are often used after detecting the issue with tests like the White test."
+  },
+  {
+   "pair": 2,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "The Breusch-Pagan test assumes a specific parametric form for heteroskedasticity, whereas the White test is general and does not require specifying that form."
+  },
+  {
+   "pair": 3,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.95,
+   "rationale": "Heteroskedasticity-robust standard errors are directly built to solve the inference failure caused by heteroskedasticity."
+  },
+  {
+   "pair": 4,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "b_to_a",
+   "strength": 0.75,
+   "rationale": "The White test detects heteroskedasticity, which helps determine whether you might need to use methods like weighted least squares if the form is identified."
+  },
+  {
+   "pair": 5,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.95,
+   "rationale": "Weighted least squares is designed directly as a solution to remedy heteroskedasticity when its form is known."
+  },
+  {
+   "pair": 6,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Weighted least squares restores BLUE properties by transforming a model with heteroskedasticity into one that satisfies homoskedastic Gauss-Markov assumptions."
+  }
+ ]
+}

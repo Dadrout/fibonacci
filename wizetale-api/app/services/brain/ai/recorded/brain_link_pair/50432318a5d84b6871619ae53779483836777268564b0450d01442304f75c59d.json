@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "applies",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "The Breusch-Pagan test utilizes an auxiliary regression evaluated via an LM test or an F-test to check for heteroskedasticity."
+}

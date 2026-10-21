@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.95,
+ "rationale": "Heteroskedasticity-robust standard errors are directly built to solve the inference failure caused by heteroskedasticity."
+}

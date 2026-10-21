@@ -1,0 +1,100 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Heteroskedasticity-robust standard errors build directly on the standard error concept by adjusting it for cases where the standard deviation of the error term varies across observations."
+  },
+  {
+   "pair": 1,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "Heteroskedasticity is a specific condition regarding the variance of the error term depending on the regressors, directly extending the basic concept of variance."
+  },
+  {
+   "pair": 2,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.4,
+   "rationale": ""
+  },
+  {
+   "pair": 3,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.3,
+   "rationale": ""
+  },
+  {
+   "pair": 4,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.4,
+   "rationale": ""
+  },
+  {
+   "pair": 5,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.4,
+   "rationale": ""
+  },
+  {
+   "pair": 6,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "Weighted least squares uses the inverse of error variance to weight observations, directly applying the concept of variance to improve estimation efficiency."
+  },
+  {
+   "pair": 7,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.4,
+   "rationale": ""
+  },
+  {
+   "pair": 8,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.75,
+   "rationale": "Heteroskedasticity-robust standard errors rely on asymptotic normality justified by the central limit theorem to ensure valid statistical inference."
+  },
+  {
+   "pair": 9,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.95,
+   "rationale": "Heteroskedasticity describes errors with non-constant variance, serving as the direct opposition to homoskedasticity where error variance is constant."
+  },
+  {
+   "pair": 10,
+   "related": true,
+   "relation": "applies",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "The Breusch-Pagan test checks joint significance by using an auxiliary F-test or LM test, applying joint coefficient testing principles to heteroskedasticity."
+  },
+  {
+   "pair": 11,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.7,
+   "rationale": "Both are diagnostic tests for regression residuals, with the Breusch-Pagan test checking for heteroskedasticity and the Durbin-Watson test checking for autocorrelation."
+  }
+ ]
+}

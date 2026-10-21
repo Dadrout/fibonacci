@@ -1,0 +1,42 @@
+{
+ "title": "Heteroskedasticity",
+ "summary": "An introduction to heteroskedasticity in regression analysis, covering its technical definition, consequences for standard errors, detection methods such as residual plots and the Goldfeld–Quandt test, and remedies.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": "4c576257-ef4a-44ad-91e0-232be969df4c",
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 0.99
+ },
+ "alternatives": [],
+ "concepts": [
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the variance of the error term (or Y given X) is not constant across observations.",
+   "chunk_ordinals": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "Homoskedasticity",
+   "summary": "Homoskedasticity refers to regression error terms that have a constant variance and a nice, even spread.",
+   "chunk_ordinals": [
+    5
+   ]
+  },
+  {
+   "name": "Goldfeld–Quandt test",
+   "summary": "A statistical test for detecting heteroskedasticity by ordering data by an explanatory variable, splitting it into segments, running separate regressions, and comparing their error variances using an F-statistic ratio.",
+   "chunk_ordinals": [
+    9,
+    10
+   ]
+  }
+ ]
+}

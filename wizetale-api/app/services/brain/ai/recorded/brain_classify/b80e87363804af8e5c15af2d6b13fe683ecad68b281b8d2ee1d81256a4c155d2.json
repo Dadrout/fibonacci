@@ -1,0 +1,68 @@
+{
+ "title": "What is Heteroskedasticity?",
+ "summary": "This video explains the technical definition of heteroskedasticity, why it matters in regression analysis, how to detect it using residual plots and tests like Goldfeld-Quandt and Breusch-Pagan, and how to remedy it using robust standard errors.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": "67423c6d-bb94-4ba5-85d7-545d0f425a17",
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 1.0
+ },
+ "alternatives": [
+  {
+   "course_id": "00000000-0000-4000-8000-000000000102",
+   "course_title": "Probability & Statistics",
+   "course_code": "MATH 251",
+   "topic_id": null,
+   "topic_title": "Regression and Variance",
+   "sequence": null,
+   "sequence_kind": null,
+   "confidence": 0.2
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the variance of the error term (or Y given X) is not constant across observations.",
+   "chunk_ordinals": [
+    0,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "Homoskedasticity",
+   "summary": "Homoskedasticity refers to a regression model having a constant, even spread of error terms across all values of X.",
+   "chunk_ordinals": [
+    3
+   ]
+  },
+  {
+   "name": "Goldfeld-Quandt test",
+   "summary": "The Goldfeld-Quandt test evaluates the null hypothesis of homoscedasticity by comparing the ratio of mean squared errors from two separate regressions.",
+   "chunk_ordinals": [
+    8,
+    9,
+    10
+   ]
+  },
+  {
+   "name": "Breusch-Pagan test",
+   "summary": "The Breusch-Pagan test is a statistical test used to detect heteroskedasticity by examining whether the squared residuals depend on explanatory variables.",
+   "chunk_ordinals": [
+    11
+   ]
+  },
+  {
+   "name": "Heteroskedasticity-robust standard error",
+   "summary": "Heteroskedasticity-robust standard errors (such as White's standard errors) provide a remedy to make statistical inference reliable when heteroskedasticity is present.",
+   "chunk_ordinals": [
+    11
+   ]
+  }
+ ]
+}

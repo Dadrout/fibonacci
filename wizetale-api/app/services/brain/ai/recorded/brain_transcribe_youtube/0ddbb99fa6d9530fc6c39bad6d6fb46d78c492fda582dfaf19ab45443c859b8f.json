@@ -1,0 +1,26 @@
+{
+ "title": "Goldfeld-Quandt test (1965)",
+ "language": "en-US",
+ "segments": [
+  {
+   "start_sec": 0.0,
+   "end_sec": 45.0,
+   "text": "evidence of heteroscedasticity. So, technically what you're trying to find is this F statistic, which is the mean squared error of regression A and the mean squared error of regression B in a ratio. Now, just be aware that when I use the letters MSE in this video, and in fact in all of my videos, if I use MSE or SSE, the E stands for error, not explained. Um, it's very easy to confuse the two and I appreciate there's two different conventions that sort of go either way. Um, so I'll be very explicit here as to when I'm using letters like MSE and SSE, that the E stands for error."
+  },
+  {
+   "start_sec": 45.0,
+   "end_sec": 106.0,
+   "text": "So, indeed, likewise here, the E in SSE stands for the sum of squared errors of regression A, divided by the degrees of freedom of regression A, and the sum of squared errors of regression B divided by the degrees of freedom of regression B. So, that that is actually the mean squared error on top and bottom there, just expanding it out for you. And if I was to expand it out further, the degrees of freedom becomes n - p - 1, where p is just the number of x variables, which is going to be the same in both A and B regressions. P is just going to be one in both of those."
+  },
+  {
+   "start_sec": 106.0,
+   "end_sec": 147.0,
+   "text": "So, I'm just showing you that if you needed to, you could calculate this, well, almost by hand. You'd hopefully be given from your regression output SSE of regression A and SSE of regression B. But this equation, MSE of regression A divided by MSE of regression B, that is distributed that's distributed as an F statistic. So, you could use that to assess whether you would reject a null hypothesis of homoscedasticity."
+  },
+  {
+   "start_sec": 147.0,
+   "end_sec": 251.0,
+   "text": "So, in reality, you will find in all of your statistical software an ability to provide a Goldfeld-Quandt test on your data. You might have to provide a cut point that you want to use or something like that. It might also ask you for a cut-out region. The cut-out region would just be some kind of like no man's land in between that's neither in regression A or regression B. So, it gives a nice nice buffer between the two regressions. But if you specify that in your statistical software, it'll provide you with a Goldfeld-Quandt test. And in reality, all you need to do is look at that p-value that it's providing you. If it's less than 0.05, we know that heteroscedasticity is a problem, at least at the 5% level of significance."
+  }
+ ]
+}

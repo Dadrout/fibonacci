@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "applies",
+ "direction": "b_to_a",
+ "strength": 0.75,
+ "rationale": "When the Breusch-Pagan test detects heteroskedasticity, you use heteroskedasticity-robust standard errors to fix your inference."
+}

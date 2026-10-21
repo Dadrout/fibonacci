@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.75,
+ "rationale": "Heteroskedasticity-robust standard errors rely on asymptotic normality justified by the central limit theorem to ensure valid statistical inference."
+}

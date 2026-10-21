@@ -1,0 +1,8 @@
+{
+ "is_slide": true,
+ "slide_number": 7,
+ "title": "Heteroskedasticity",
+ "language": "en-US",
+ "text": "Homoskedasticity (MLR.5): Var(uᵢ | xᵢ) = σ²\nHeteroskedasticity: Var(uᵢ | xᵢ) = σᵢ² - error variance changes with x\nOLS estimates are still unbiased and consistent\nBUT the usual standard errors are biased\nso t-tests, F-tests and confidence intervals are invalid\nDetect: residual plot, Breusch-Pagan test, White test\nFix: heteroskedasticity-robust (White) standard errors, or WLS",
+ "legible": true
+}

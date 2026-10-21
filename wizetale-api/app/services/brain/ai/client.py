@@ -43,11 +43,13 @@ class Part:
     mime_type: Optional[str] = None
     data: Optional[bytes] = None
     file_uri: Optional[str] = None
+    #: Optional clip of a video file_uri, in seconds.
+    clip: Optional[tuple[int, int]] = None
 
     def digest(self) -> str:
         if self.data is not None:
             return "sha256:" + hashlib.sha256(self.data).hexdigest()
-        return "uri:" + (self.file_uri or "")
+        return "uri:" + (self.file_uri or "") + (f"#{self.clip[0]}-{self.clip[1]}" if self.clip else "")
 
     def to_api(self) -> dict[str, Any]:
         if self.data is not None:
@@ -56,7 +58,10 @@ class Part:
         payload: dict[str, Any] = {"file_uri": self.file_uri}
         if self.mime_type:
             payload["mime_type"] = self.mime_type
-        return {"file_data": payload}
+        part: dict[str, Any] = {"file_data": payload}
+        if self.clip:
+            part["video_metadata"] = {"start_offset": f"{self.clip[0]}s", "end_offset": f"{self.clip[1]}s"}
+        return part
 
 
 def load_prompt(name: str) -> tuple[str, str]:
@@ -86,6 +91,16 @@ def _json_candidate(text: str) -> str:
         return fenced.group(1).strip()
     start, end = stripped.find("{"), stripped.rfind("}")
     return stripped[start : end + 1] if 0 <= start < end else stripped
+
+
+def gemini_schema(node: Any) -> Any:
+    """Schema copy Gemini accepts: it rejects large array limits (e.g. maxItems 40); Pydantic still enforces them."""
+    if isinstance(node, dict):
+        return {k: gemini_schema(v) for k, v in node.items()
+                if not (k in ("maxItems", "minItems") and isinstance(v, int) and v > 20) and k != "default"}
+    if isinstance(node, list):
+        return [gemini_schema(v) for v in node]
+    return node
 
 
 def _normalize(vector: list[float]) -> list[float]:
@@ -207,7 +222,7 @@ class BrainAI:
     def _generate_once(self, operation, model_name, system, user, schema, parts, temperature, max_tokens, timeout):
         # Native structured output constrains the reply to the schema; models that reject a
         # schema (HTTP 400) get it embedded in the prompt instead.
-        json_schema = schema.model_json_schema()
+        json_schema = gemini_schema(schema.model_json_schema())
         payload: dict[str, Any] = {
             "contents": [{"role": "user", "parts": [*(p.to_api() for p in parts), {"text": user}]}],
             "generationConfig": {
@@ -217,13 +232,22 @@ class BrainAI:
                 "responseJsonSchema": json_schema,
             },
         }
+        if any(p.file_uri for p in parts):
+            payload["generationConfig"]["mediaResolution"] = "MEDIA_RESOLUTION_LOW"  # speech matters, not pixels
         if system:
             payload["systemInstruction"] = {"parts": [{"text": system}]}
         started = time.perf_counter()
         deadline = timeout or settings.BRAIN_AI_TIMEOUT_SECONDS
         url = f"{API_BASE}/{model_name}:generateContent"
         try:
-            data = self._post(url, payload, deadline)
+            try:
+                data = self._post(url, payload, deadline)
+            except requests.HTTPError as error:
+                # Overload spikes are usually brief: one quick retry on the same model.
+                if getattr(error.response, "status_code", None) not in (429, 503):
+                    raise
+                time.sleep(1.0)
+                data = self._post(url, payload, deadline)
         except requests.HTTPError as error:
             if getattr(error.response, "status_code", None) != 400:
                 raise

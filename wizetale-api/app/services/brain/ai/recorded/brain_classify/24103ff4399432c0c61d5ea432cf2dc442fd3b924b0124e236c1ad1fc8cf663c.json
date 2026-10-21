@@ -1,0 +1,64 @@
+{
+ "title": "ECON 301 — Week 6: Heteroskedasticity",
+ "summary": "This material covers heteroskedasticity in multiple linear regression models, explaining its consequences for OLS inference, robust standard errors (White), testing methods (Breusch–Pagan and White tests), and weighted least squares (WLS).",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": null,
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 1.0
+ },
+ "alternatives": [],
+ "concepts": [
+  {
+   "name": "Homoskedasticity",
+   "summary": "The assumption that the error variance conditional on the regressors is constant for every observation.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Heteroskedasticity",
+   "summary": "A violation of the homoskedasticity assumption where the conditional variance of the error depends on the regressors.",
+   "chunk_ordinals": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "Heteroskedasticity-robust standard error",
+   "summary": "Standard errors introduced by White (1980) that allow for valid statistical inference in the presence of unknown heteroskedasticity.",
+   "chunk_ordinals": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "Breusch–Pagan test",
+   "summary": "A statistical test for heteroskedasticity by regressing squared OLS residuals on the model regressors and checking joint significance.",
+   "chunk_ordinals": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "White test",
+   "summary": "A general test for heteroskedasticity that regresses squared residuals on regressors, their squares, and cross-products.",
+   "chunk_ordinals": [
+    3
+   ]
+  },
+  {
+   "name": "Weighted least squares",
+   "summary": "An efficient estimation method used when the form of heteroskedasticity is known by weighting observations inversely to their error variance.",
+   "chunk_ordinals": [
+    4,
+    5
+   ]
+  }
+ ]
+}
