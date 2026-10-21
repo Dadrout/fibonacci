@@ -11,6 +11,8 @@ from app.celery_utils import celery_app
 from app.core.config import settings
 from app.services.story_repository import story_repository
 from app.services.document_repository import document_repository
+from app.services.brain.blobs import blob_store as brain_blobs
+from app.services.brain.store import brain_store
 
 
 class AccountDeletionError(RuntimeError):
@@ -138,6 +140,10 @@ class AccountDeletionService:
             logout.raise_for_status()
             self.repository.delete_user_assets(user_id)
             document_repository.delete_user_assets(user_id)
+            # Brain originals and thumbnails; brain rows cascade with the auth user (or are
+            # removed here when the brain lives in the local database).
+            brain_blobs.delete_prefix(f"{user_id}/")
+            brain_store.delete_user_brain(user_id)
             deletion = self.session.delete(
                 f"{base_url}/admin/users/{quote(user_id, safe='')}",
                 headers={

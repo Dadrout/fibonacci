@@ -141,17 +141,17 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 | # | Task | Status | Files |
 |---|---|---|---|
 | C1 | Contracts: types, mocks, API client + mock mode, `useBrainSession` | done | `wizetale-app/lib/brain-{types,mocks,api,api-helpers}.ts`, `hooks/use-brain-api.ts`, `scripts/brain-mocks.test.mjs` |
-| C2 | `brain.sql` (tables, pgvector, RPCs, RLS) + local Postgres/PostgREST stack + RLS tests | todo | `supabase/brain.sql`, `supabase/tests/brain_rls.test.sql`, `docker-compose.brain.yml` |
-| C3 | AI client: prompts in files, JSON schema validation, timeout/retry, recorded cache + fallback | todo | `wizetale-api/app/services/brain/ai/**` |
-| C4 | Ingestion: photo OCR, PDF pages, YouTube transcript, audio transcript, web readable text, text | todo | `wizetale-api/app/services/brain/extract/**` |
-| C5 | Classifier (course/topic/concepts + confidence + alternatives, learns from re-files) | todo | `wizetale-api/app/services/brain/classify.py` |
-| C6 | Concept linker (embedding candidates + LLM verify, threshold) | todo | `wizetale-api/app/services/brain/link.py` |
-| C7 | API routes + SSE + media signing + Next proxy routes | todo | `wizetale-api/app/api/brain/**`, `wizetale-app/app/api/v1/brain/**` |
-| C8 | Exam plan + notes + flashcards + quiz with `source_refs`; answer → moment | todo | `wizetale-api/app/services/brain/generate.py` |
-| C9 | Gap detector, search, re-file | todo | `wizetale-api/app/services/brain/{gaps,search,refile}.py` |
-| C10 | Telegram bot: link code, capture all types, "Filed under …" reply | todo | `wizetale-api/app/services/brain/telegram/**` |
-| C11 | `DEMO_MODE`: seed (demo student, 3 courses, ~40 items, links), hero inputs, recorded AI, golden tests | todo | `wizetale-api/app/services/brain/demo/**`, `demo/hero/**` |
-| C12 | `docs/brain/DEMO_SCRIPT.md`, end-to-end rehearsals, offline check | todo | `docs/brain/**` |
+| C2 | `brain.sql` (tables, pgvector, RPCs, RLS) + local Postgres/PostgREST stack + RLS tests | done | `supabase/brain.sql`, `supabase/tests/brain_rls.test.sql` (42 checks), `docker-compose.brain.yml`, `supabase/local/*` |
+| C3 | AI client: prompts in files, JSON schema validation, timeout/retry, recorded cache + fallback | done | `wizetale-api/app/services/brain/ai/**` (prompts, structured output, 3-model chain, recorded cache) |
+| C4 | Ingestion: photo OCR, PDF pages, YouTube transcript, audio transcript, web readable text, text | done — tests pending (W1) | `wizetale-api/app/services/brain/extract/**` |
+| C5 | Classifier (course/topic/concepts + confidence + alternatives, learns from re-files) | done | `wizetale-api/app/services/brain/classify.py` |
+| C6 | Concept linker (embedding candidates + LLM verify, threshold) | done | `wizetale-api/app/services/brain/link.py` |
+| C7 | API routes + SSE + media signing + Next proxy routes | done | `wizetale-api/app/api/brain/routes.py` (24 endpoints), `wizetale-app/lib/brain-proxy.ts`, `wizetale-app/app/api/v1/brain/[...path]/route.ts` |
+| C8 | Exam plan + notes + flashcards + quiz with `source_refs`; answer → moment | done | `wizetale-api/app/services/brain/plans.py` |
+| C9 | Gap detector, search, re-file | done (gaps, search, re-file) | `views.py` (gaps), routes (search, refile), `brain.sql` (`brain_refile_item`) |
+| C10 | Telegram bot: link code, capture all types, "Filed under …" reply | built — needs bot token from owner; tests pending (W2) | `wizetale-api/app/services/brain/telegram/**` |
+| C11 | `DEMO_MODE`: seed (demo student, 3 courses, ~40 items, links), hero inputs, recorded AI, golden tests | done | `wizetale-api/app/services/brain/demo/**`, `demo/hero/**`, `ai/recorded/**` |
+| C12 | `docs/brain/DEMO_SCRIPT.md`, end-to-end rehearsals, offline check | doing | `docs/brain/DEMO_SCRIPT.md` |
 
 ### Astra (design, frontend)
 
@@ -200,6 +200,9 @@ _Format: `- [open|answered] (from → to, date) question — answer (who)`_
 
 ## 7. Decisions log
 
+- **D14 (Claude, 2026-10-22) — Live backend is ready; how to run it.** `supabase/local/setup.sh` once, then `docker compose -p talespark-local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.brain.yml up -d redis brain-db brain-rest api celery-worker telegram-bot`, then `docker exec talespark-local-api-1 python -m app.services.brain.demo.seed`. With `wizetale-app/.env.development.local` (`NEXT_PUBLIC_BRAIN_DEMO=1`, `BRAIN_DEMO_TOKEN`), `/brain` on the dev server shows the demo student on live data. Verified through the Next proxy: JSON, uploads, SSE with Last-Event-ID replay, signed media (tampered link → 404).
+- **D13 (Claude) — Recorded AI outputs make the demo network-proof.** Cache keys come from the material + the prompt file's fingerprint (not ids or dates); link verdicts are cached per concept pair; YouTube captions/metadata are recorded too. Verified with the Gemini key removed: hero items file in 2.6 s, the plan in 1 s. Editing a prompt retires its recordings → re-record before the finale (`BRAIN_AI_RECORD=true`, run the hero flow + plans).
+- **D12 (Claude) — Models (measured 2026-10-21, Gemini is overloaded tonight).** Primary `gemini-3.5-flash-lite` (1–2 s), fallback `gemini-flash-lite-latest`; `gemini-3.5-flash` and `gemini-3-flash-preview` returned 503s/timeouts repeatedly. Native `responseJsonSchema` structured output. The project key is **free tier**: parallel video clips hit 429s — use a paid key for the live demo.
 - **D11 (Claude, 2026-10-21) — Codex limit.** Codex usage ran out at ~23:50 and resets 04:27. Claude builds the P0 backend path directly meanwhile (pipeline, classifier, linker, routes, SSE, hero extractors). Queued for Codex after reset: Astra resumes H2 (graph) then A5–A8; worker W1 completes and tests the remaining extractors (audio, document, web with SSRF guard); worker W2 reviews and tests the Telegram bot; Astra does A11 (logo, via Codex image generation).
 - **D10 (Claude, 2026-10-21) — How Astra runs.** At the owner's request, Claude drives Astra through `codex exec -C ~/Fibonacci -s workspace-write`, one clear task at a time, in the background while Claude builds the backend. Role brief: `docs/brain/ROLE_ASTRA.md`. Astra edits only its own files and **does not run git**; Claude reviews each result (`git diff`, typecheck, tests, build, browser check), then commits it as `brain(ui): …` or sends a fix-up task. Every handoff is logged in section 5. If the owner also opens an interactive Codex session, it must claim a task on this board before starting so the two never edit the same files.
 - **D9 (Claude, 2026-10-21) — AI provider.** Gemini through the existing key: `gemini-3.1-flash-lite` for classification/verification, a vision-capable flash model for photo OCR, `gemini-embedding-001` at 768 dims for embeddings. Every call: own prompt file, JSON schema validation, timeout, one retry, then recorded cache. Final model picks are recorded here after latency tests.

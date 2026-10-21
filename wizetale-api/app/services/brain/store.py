@@ -91,6 +91,14 @@ class BrainStore:
         if self.local:
             self.rpc("brain_local_ensure_user", {"p_uid": uid, "p_email": email or f"{uid}@local.invalid"})
 
+    def delete_user_brain(self, uid: str) -> None:
+        """Local store only (hosted rows cascade from auth.users): remove every brain row of a user."""
+        if not self.local:
+            return
+        for table in ("brain_telegram_links", "brain_telegram_codes", "brain_study_plans", "brain_refile_events",
+                      "brain_items", "brain_courses"):
+            self.request("DELETE", table, params={"user_id": f"eq.{uid}"})
+
     def is_user_deleting(self, uid: str) -> bool:
         return bool(self._rows("account_deletion_locks", {"user_id": f"eq.{uid}", "select": "user_id", "limit": "1"}))
 
