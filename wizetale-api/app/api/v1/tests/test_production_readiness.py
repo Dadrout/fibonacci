@@ -37,6 +37,7 @@ def test_production_configuration_accepts_configured_active_providers():
         SUPABASE_URL="https://project.supabase.co",
         SUPABASE_PUBLISHABLE_KEY="publishable-test-key",
         SUPABASE_SERVICE_ROLE_KEY="service-test-key",
+        BRAIN_MEDIA_SECRET="brain-media-test-secret",
         GEMINI_API_KEY="gemini-test-key",
         GEMINI_BILLING_TIER="paid",
         AI_PROVIDER="gemini",
