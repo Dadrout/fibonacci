@@ -693,3 +693,4 @@ begin
     on conflict (id) do nothing;
   end if;
 end $$;
+notify pgrst, 'reload schema';

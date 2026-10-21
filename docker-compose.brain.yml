@@ -1,0 +1,55 @@
+# Fibonacci Brain local database: Postgres (pgvector, Supabase roles/auth schema) + PostgREST.
+# Used for development, RLS tests, and the offline demo (BRAIN_STORE=local).
+#   supabase/local/setup.sh      # once: creates .env.brain with local-only secrets
+#   docker compose -p talespark-local -f docker-compose.yml -f docker-compose.local.yml \
+#     -f docker-compose.brain.yml up -d --build redis brain-db brain-rest api celery-worker
+services:
+  brain-db:
+    image: supabase/postgres:17.6.1.178
+    restart: unless-stopped
+    env_file:
+      - ./.env.brain
+    volumes:
+      - brain_db:/var/lib/postgresql/data
+      - ./supabase:/brain-sql:ro,z
+      - ./supabase/local/zz-brain-init.sh:/docker-entrypoint-initdb.d/zz-brain-init.sh:ro,z
+    ports:
+      - "127.0.0.1:54329:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "supabase_admin", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    networks:
+      - webnet
+
+  brain-rest:
+    image: postgrest/postgrest:v14.18
+    restart: unless-stopped
+    env_file:
+      - ./.env.brain
+    depends_on:
+      brain-db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:54321:3000"
+    networks:
+      - webnet
+
+  api:
+    env_file:
+      - ./.env
+      - ./.env.brain
+    volumes:
+      - brain_media:/app/brain-media
+
+  celery-worker:
+    env_file:
+      - ./.env
+      - ./.env.brain
+    volumes:
+      - brain_media:/app/brain-media
+
+volumes:
+  brain_db:
+  brain_media:
