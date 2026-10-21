@@ -1,0 +1,27 @@
+# Loopback-only development endpoints. Use with docker-compose.yml and -p talespark-local.
+services:
+  redis:
+    command: ["redis-server", "--appendonly", "yes", "--protected-mode", "yes", "--requirepass", "${TALESPARK_LOCAL_REDIS_PASSWORD:?Set local Redis password in .env}"]
+    environment:
+      REDISCLI_AUTH: ${TALESPARK_LOCAL_REDIS_PASSWORD}
+    ports:
+      - "127.0.0.1:6380:6379"
+  api:
+    image: talespark-api-local
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      ENVIRONMENT: development
+      API_ALLOWED_ORIGINS: http://localhost:3001
+      MEDIA_STORAGE_PROVIDER: supabase
+      REDIS_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/1
+  celery-worker:
+    image: talespark-api-local
+    environment:
+      ENVIRONMENT: development
+      MEDIA_STORAGE_PROVIDER: supabase
+      REDIS_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/1

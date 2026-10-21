@@ -1,0 +1,202 @@
+{
+  "checks": [
+    {
+      "name": "Two disposable users: real password authentication and teacher onboarding",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid password rejected; real refresh-token exchange succeeds",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher lesson creation in English, Russian, and Kazakh",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher objectives: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher generation request idempotency",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher lesson_plan: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher quiz: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher test_paper: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher flashcards: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher lesson creation in English, Russian, and Kazakh",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher worksheet: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher exit_ticket: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher homework: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher presentation: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher video: generation, schema/preset, save/reload, conflict, cross-account isolation",
+      "status": "passed"
+    },
+    {
+      "name": "All ten teacher resource kinds tested",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher presentation: queue, duplicate suppression, worker, signed playback, authenticated download and isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Teacher video: queue, duplicate suppression, worker, signed playback, authenticated download and isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Edited teacher video invalidates old render and blocks stale download",
+      "status": "passed"
+    },
+    {
+      "name": "All fixture Auth accounts, owned data, storage, and temporary credentials removed",
+      "status": "passed"
+    }
+  ],
+  "resources": {
+    "objectives": {
+      "id": "9491d3ae-c556-4f47-9853-979559f68ac2",
+      "lesson_id": "24f845f1-94b7-4a5e-a510-f080b91c6131",
+      "language": "kk-KZ",
+      "revision": 2
+    },
+    "lesson_plan": {
+      "id": "b9b4e23b-dd24-478f-ae26-8b4b01381c38",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "quiz": {
+      "id": "4dade26e-86ef-4642-9efa-99c8edcf122f",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "test_paper": {
+      "id": "30a6f85a-a3f3-41e7-b9e6-9c299a1fcc63",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "flashcards": {
+      "id": "197278db-45ea-4225-a0eb-ffdea9d9cab0",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "worksheet": {
+      "id": "0759b6d4-3a83-405b-be6c-e382afca93f7",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "exit_ticket": {
+      "id": "9e64491c-4ed2-41a0-aeb5-5b1700aec2cf",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "homework": {
+      "id": "98d3e45e-0b2f-4e4f-8a30-58ec9e9e3dc9",
+      "lesson_id": "ba03e3bd-2cf0-44a2-a557-8f098efe25d7",
+      "language": "ru-RU",
+      "revision": 2
+    },
+    "presentation": {
+      "id": "389788bc-782d-4459-b596-e0e896bf55fe",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    },
+    "video": {
+      "id": "f8f492a8-387b-428c-97a1-6143cb2addea",
+      "lesson_id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "language": "en-US",
+      "revision": 2
+    }
+  },
+  "lessons": {
+    "en-US": {
+      "id": "44f936ce-6835-4aea-b7a6-ceb70479b162",
+      "user_id": "6cdafbf5-439c-463a-ac44-ae60c69465b4",
+      "subject": "science",
+      "grade": "5",
+      "topic": "The water cycle",
+      "language": "en-US",
+      "objectives": "Explain evaporation, condensation, and precipitation.",
+      "source_material": "",
+      "revision": 1,
+      "created_at": "2026-10-20T14:43:51.464249+00:00",
+      "updated_at": "2026-10-20T14:43:51.464249+00:00",
+      "source_document_ids": []
+    },
+    "ru-RU": {
+      "id": "ba03e3bd-2cf0-44a2-a557-8f098efe25d7",
+      "user_id": "6cdafbf5-439c-463a-ac44-ae60c69465b4",
+      "subject": "science",
+      "grade": "5",
+      "topic": "The water cycle",
+      "language": "ru-RU",
+      "objectives": "Explain evaporation, condensation, and precipitation.",
+      "source_material": "",
+      "revision": 1,
+      "created_at": "2026-10-20T14:43:54.069036+00:00",
+      "updated_at": "2026-10-20T14:43:54.069036+00:00",
+      "source_document_ids": []
+    },
+    "kk-KZ": {
+      "id": "24f845f1-94b7-4a5e-a510-f080b91c6131",
+      "user_id": "6cdafbf5-439c-463a-ac44-ae60c69465b4",
+      "subject": "science",
+      "grade": "5",
+      "topic": "The water cycle",
+      "language": "kk-KZ",
+      "objectives": "Explain evaporation, condensation, and precipitation.",
+      "source_material": "",
+      "revision": 1,
+      "created_at": "2026-10-20T14:43:55.854708+00:00",
+      "updated_at": "2026-10-20T14:43:55.854708+00:00",
+      "source_document_ids": []
+    }
+  },
+  "renders": {
+    "presentation": {
+      "id": "5a000a34-6be3-4836-af3d-ef5d61cff55b",
+      "duration": 108.04,
+      "bytes": 3677216
+    },
+    "video": {
+      "id": "fcb8b916-38d5-4d2d-ad52-c14c86c33e7a",
+      "duration": 154.32,
+      "bytes": 4245537
+    }
+  }
+}

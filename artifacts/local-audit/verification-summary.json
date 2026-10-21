@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-05",
+  "scope": "local verification; no deployment",
+  "api_tests_host": 154,
+  "api_tests_python_311_container": 154,
+  "frontend_regression_checks": 42,
+  "typecheck": "passed",
+  "production_build": "passed",
+  "compose": "passed",
+  "api_container": "built; non-root health and H264/AAC encoding passed",
+  "frontend_container": "built",
+  "real_stories": [
+    "English",
+    "Russian",
+    "Kazakh"
+  ],
+  "teacher_resource_kinds_verified": 8,
+  "source_formats": [
+    "PDF",
+    "DOCX",
+    "TXT",
+    "pasted text"
+  ],
+  "account_switching": "isolated; owned draft restored",
+  "fixture_cleanup": "Auth missing; story/document prefixes empty",
+  "bugbot": "no actionable material findings",
+  "limitations_report": "docs/LOCAL_PROJECT_AUDIT_2026-10-05.md",
+  "dependency_advisories": {
+    "frontend": 0,
+    "installed_python": 0,
+    "production_api_image": 0
+  }
+}

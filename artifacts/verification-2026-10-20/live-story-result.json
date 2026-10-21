@@ -1,0 +1,12 @@
+{
+  "story_id": "285c02a5-e95f-43aa-b663-8928fe874c40",
+  "task_id": "07924c4d-0a28-4b5f-b4be-27d43971b244",
+  "quiz_score": 3,
+  "video_bytes": 4632904,
+  "provider_summary": {
+    "tts": "edge_tts",
+    "text": "gemini",
+    "image": "cloudflare"
+  },
+  "fallbacks_used": []
+}

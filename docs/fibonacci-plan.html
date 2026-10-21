@@ -1,0 +1,580 @@
+<title>Fibonacci Transformation Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,450;0,600;1,450&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky contents rail + one reading column (~70ch); spacing follows the Fibonacci scale proposed for the product. */
+:root{
+  --ground:#f2f5f1; --surface:#fbfcfa; --ink:#14231c; --muted:#53635a; --line:#d3ddd6;
+  --primary:#1e5b45; --on-primary:#f6faf7; --pollen:#d99a1e; --pollen-soft:#f6e7c4;
+  --evidence:#2a6f97; --evidence-soft:#e1edf4; --risk:#a2412a; --risk-soft:#f6e3dc;
+  --display:"Alegreya", "Iowan Old Style", Georgia, serif;
+  --ui:"Golos Text", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --s3:3px; --s5:5px; --s8:8px; --s13:13px; --s21:21px; --s34:34px; --s55:55px; --s89:89px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ground:#0f1714; --surface:#16211c; --ink:#e6ede8; --muted:#a6b5ac; --line:#2f3f37;
+  --primary:#7cc4a4; --on-primary:#0f1714; --pollen:#f0bf5a; --pollen-soft:#3b3220;
+  --evidence:#7db4d8; --evidence-soft:#1c2f3b; --risk:#ec9a82; --risk-soft:#3a241e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ground:#0f1714; --surface:#16211c; --ink:#e6ede8; --muted:#a6b5ac; --line:#2f3f37;
+  --primary:#7cc4a4; --on-primary:#0f1714; --pollen:#f0bf5a; --pollen-soft:#3b3220;
+  --evidence:#7db4d8; --evidence-soft:#1c2f3b; --risk:#ec9a82; --risk-soft:#3a241e; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:400 16px/1.7 var(--ui);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--primary)} a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--pollen);outline-offset:2px;border-radius:3px}
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:var(--s55);padding-block:var(--s55) var(--s89)}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 21px);align-self:start;font-size:14px;line-height:1.5}
+nav.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:var(--s5)}
+nav.toc a{color:var(--muted);text-decoration:none;display:grid;grid-template-columns:24px 1fr}
+nav.toc a:hover{color:var(--ink)}
+nav.toc span{font-family:var(--mono);font-size:12px;padding-top:2px}
+main{min-width:0;max-width:760px}
+header.top{display:grid;gap:var(--s13);margin-bottom:var(--s55)}
+.brandline{display:flex;align-items:center;gap:var(--s13);color:var(--primary)}
+.brandline b{font:600 26px/1 var(--display);letter-spacing:-.01em}
+h1{font:450 clamp(36px,5vw,54px)/1.08 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.lede{font-size:18px;color:var(--muted);max-width:62ch;margin:0}
+.meta{font:12px/1.5 var(--mono);color:var(--muted);letter-spacing:.02em}
+section{padding-top:var(--s55);border-top:1px solid var(--line);margin-top:var(--s55)}
+h2{font:450 32px/1.2 var(--display);margin:0 0 var(--s21);display:flex;gap:var(--s13);align-items:baseline;text-wrap:balance}
+h2 .n{font:500 13px var(--mono);color:var(--pollen);min-width:2ch}
+h3{font:600 17px/1.4 var(--ui);margin:var(--s34) 0 var(--s8)}
+h4{font:600 15px/1.4 var(--ui);margin:var(--s21) 0 var(--s5)}
+p,li{max-width:68ch} ul,ol{padding-left:1.2em} li{margin-block:var(--s5)}
+.tag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;white-space:nowrap;vertical-align:2px}
+.found{background:var(--evidence-soft);color:var(--evidence)}
+.prop{background:var(--pollen-soft);color:var(--ink)}
+.warn{background:var(--risk-soft);color:var(--risk)}
+.callout{border-left:3px solid var(--pollen);padding:var(--s8) var(--s21);margin:var(--s21) 0;background:var(--surface)}
+.callout.risk{border-color:var(--risk)}
+.callout p{margin:var(--s5) 0}
+.tbl{overflow-x:auto;margin:var(--s21) 0;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px/1.4 var(--ui);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td b{font-weight:600}
+pre.wire{font:12.5px/1.45 var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:var(--s21);overflow-x:auto;color:var(--ink);margin:var(--s21) 0}
+code{font:13.5px var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:0 4px}
+.keep{color:var(--primary);font-weight:600}.drop{color:var(--risk);font-weight:600}
+.dirs{display:grid;gap:var(--s34);margin-top:var(--s21)}
+.dir{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:var(--s21) var(--s34) var(--s34)}
+.dir.rec{border:2px solid var(--primary)}
+.dir-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s13);flex-wrap:wrap}
+.dir-head h3{margin:var(--s8) 0;font:450 26px/1.2 var(--display)}
+.sw{display:flex;flex-wrap:wrap;gap:var(--s8);margin:var(--s13) 0}
+.sw div{display:grid;gap:3px;font:11px/1.3 var(--mono);color:var(--muted);width:88px}
+.sw i{display:block;height:44px;border-radius:5px;border:1px solid var(--line)}
+.marks{display:flex;gap:var(--s34);align-items:center;flex-wrap:wrap;margin:var(--s13) 0}
+.spec{font-size:30px;line-height:1.1}
+.journey{list-style:none;padding:0;display:grid;gap:0;counter-reset:j}
+.journey li{display:grid;grid-template-columns:34px 1fr;gap:var(--s13);padding:var(--s13) 0;border-bottom:1px dashed var(--line);max-width:none}
+.journey li::before{counter-increment:j;content:counter(j);font:500 13px/26px var(--mono);text-align:center;border:1px solid var(--primary);color:var(--primary);border-radius:50%;width:26px;height:26px}
+.journey b{display:block}
+.q{display:grid;gap:var(--s8);padding:var(--s13) 0;border-bottom:1px solid var(--line)}
+.q b{font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:var(--s13);margin:var(--s8) 0 var(--s21)}
+.cite{font:500 11px var(--mono);background:var(--evidence-soft);color:var(--evidence);padding:1px 5px;border-radius:3px}
+.src{background:linear-gradient(transparent 62%,var(--evidence-soft) 62%)}
+.expl{border-bottom:1.5px dashed var(--muted);font-style:italic}
+.sample{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:var(--s21);font-size:15px}
+.sample p{margin:var(--s8) 0}
+.sample small{display:block;color:var(--muted);font:12px var(--mono);margin-top:var(--s13)}
+footer{margin-top:var(--s89);color:var(--muted);font-size:13px}
+@media (max-width:900px){.shell{grid-template-columns:1fr;gap:var(--s21);padding-block:var(--s34) var(--s55)}nav.toc{position:static;border:1px solid var(--line);border-radius:8px;padding:var(--s13) var(--s21);background:var(--surface)}nav.toc ol{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
+@media (max-width:520px){h2{font-size:26px}.dir{padding:var(--s13) var(--s21) var(--s21)}body{font-size:15.5px}}
+@media (prefers-reduced-motion:no-preference){.seed circle{transition:fill .34s ease}}
+</style>
+
+<div class="shell">
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#audit"><span>01</span>Project audit</a></li>
+    <li><a href="#vision"><span>02</span>Product vision</a></li>
+    <li><a href="#market"><span>03</span>Competitive positioning</a></li>
+    <li><a href="#features"><span>04</span>Feature priorities</a></li>
+    <li><a href="#journey"><span>05</span>User journey</a></li>
+    <li><a href="#ia"><span>06</span>Information architecture</a></li>
+    <li><a href="#ux"><span>07</span>UI/UX strategy</a></li>
+    <li><a href="#brand"><span>08</span>Brand directions</a></li>
+    <li><a href="#landing"><span>09</span>Landing page</a></li>
+    <li><a href="#tech"><span>10</span>Technical architecture</a></li>
+    <li><a href="#roadmap"><span>11</span>Roadmap</a></li>
+    <li><a href="#decisions"><span>12</span>Risks and decisions</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="top">
+  <div class="brandline"><svg class="seed" id="logo" width="40" height="40" viewBox="-50 -50 100 100" aria-hidden="true"></svg><b>fibonacci</b></div>
+  <h1>From TaleSpark to Fibonacci: audit, direction and roadmap</h1>
+  <p class="lede">A planning document. Nothing in the application has been changed. It is based on a read of the code in <code>wizetale-app</code>, <code>wizetale-api</code> and <code>supabase</code>, the project docs, the 20 October 2026 verification report, and a short web search on competitors.</p>
+  <p class="meta">Prepared 20 Oct 2026 · Labels: <span class="tag found">Found</span> what the code or research shows · <span class="tag prop">Proposal</span> what I recommend · <span class="tag warn">Risk</span> something to act on</p>
+</header>
+
+<!-- 01 -->
+<section id="audit">
+<h2><span class="n">01</span>Existing project audit</h2>
+<p><span class="tag found">Found</span> TaleSpark is further along than "a video generator". It already has the core parts of a source-grounded learning product, mainly in teacher mode. The learner side is topic-only and does not read user material.</p>
+
+<h3>What exists</h3>
+<div class="tbl"><table>
+<tr><th>Area</th><th>What is there</th><th>State</th></tr>
+<tr><td>Frontend</td><td>Next.js 16, React 19, Tailwind 4, Radix, i18next (EN / RU / KK), next-themes. Route handlers proxy to the API, so the browser never sees the backend host or service keys.</td><td>Solid</td></tr>
+<tr><td>Backend</td><td>FastAPI with Celery and Redis, about 15k lines of Python, 321 passing tests. Per-user rate limits, idempotent generation, revision conflicts (409), production config checks at startup.</td><td>Solid</td></tr>
+<tr><td>Data</td><td>Supabase Postgres with Row Level Security, which was verified with real user tokens. Tables: stories, drafts, quiz results, knowledge entries, teacher lessons, resources, documents and chunks, study materials, renders.</td><td>Solid</td></tr>
+<tr><td>AI text</td><td>Gemini (<code>gemini-3.1-flash-lite</code> with a fallback model). JSON output is validated against Pydantic schemas.</td><td>Works, but only one provider</td></tr>
+<tr><td>Source ingestion</td><td>PDF (text layer only, 200 pages max), DOCX, TXT and pasted text. 10 MB and 200k characters max. Each chunk keeps its location (page, paragraph, table row). Processing runs in Celery with a 60-second limit.</td><td>Good base to build on</td></tr>
+<tr><td>Retrieval and citations</td><td>Postgres full-text search, built by OR-ing the lesson topic's words. At most 8 passages and 16k characters. <code>validate_grounded</code> rejects answers that cite passage IDs that were not supplied. Citations are attached to a whole resource, not to individual claims.</td><td>Right idea, too coarse for Q&amp;A</td></tr>
+<tr><td>Outputs</td><td>Learner: story script → video, plus flashcards (12), quiz (10) and presentation (8 slides). Teacher: 10 resource kinds, presentation video and topic video. Outputs are editable and printable.</td><td>Broad and working</td></tr>
+<tr><td>Video pipeline</td><td>Script → scenes → images (Gemini, fal or Cloudflare) → speech (Edge, Google, Azure or ElevenLabs) → subtitles → FFmpeg, producing 1280×720 MP4. Verified at 108–154 seconds per video.</td><td>Works, but expensive and slow</td></tr>
+<tr><td>Design system</td><td>The "field guide" look: Literata and Golos Text served locally with Kazakh glyphs checked, documented tokens, measured contrast, reduced-motion support.</td><td>Well made, but it is the TaleSpark brand</td></tr>
+</table></div>
+
+<h3>Problems and technical debt</h3>
+<div class="callout risk">
+<p><span class="tag warn">Risk</span> <b>A Google Cloud service-account private key is in the project root</b> (<code>time-capsule-d5a66-…json</code>, type <code>service_account</code>). It is listed in <code>.gitignore</code>, but <code>.git</code> is empty or broken, so I can't tell whether it was ever committed or pushed. Revoke the key in Google Cloud and delete the file before anything else.</p>
+<p><span class="tag warn">Risk</span> <b>Git history is missing.</b> <code>.git</code> contains only <code>info/</code>, so the project has no version control right now. Set this up before a rebrand that touches hundreds of files.</p>
+</div>
+<ul>
+<li><b>A single worker queue with concurrency 1.</b> One 150-second video render blocks every document upload behind it. This must be fixed before analysis jobs are added.</li>
+<li><b>Retrieval is keyword-only.</b> Kazakh uses the <code>simple</code> text-search config, with no stemming. That is acceptable for "find material for this lesson" but weak for questions in natural language.</li>
+<li><b>Code that does nothing:</b> <code>runware_service.py</code> and <code>azure_openai_service.py</code> are never imported. A Stability key setting remains. Firebase is still used by <code>lib/analytics.ts</code> and <code>lib/firebase.ts</code>. About 40 shadcn components in <code>components/ui</code> are never used, and neither are recharts, embla and cmdk. There is a duplicate <code>/landing</code> route tree.</li>
+<li><b>Clutter:</b> eight overlapping deployment docs, plus <code>updates.tar.gz</code>, <code>user-stats.html</code>, <code>nginx.conf.fixed</code>, <code>docker-logs.txt</code> and 13 <code>.chart-data-*</code> folders.</li>
+<li><b>Three names in use:</b> wizetale (code, domain, Docker images), TaleSpark (UI), wisetale (a logo file).</li>
+<li><b>Open launch gates</b> (<code>docs/PUBLIC_LAUNCH_GATES.md</code>): privacy notice, terms, and parental consent for ages 10–18. Google OAuth is disabled in Supabase. Real email delivery is not verified.</li>
+</ul>
+
+<h3>Keep, improve, repurpose, remove</h3>
+<div class="tbl"><table>
+<tr><th>Decision</th><th>What</th></tr>
+<tr><td class="keep">Keep</td><td>Auth and RLS ownership model, backend proxy, rate limits, idempotency and revisions, media storage (R2 / Supabase), account deletion, i18n, test suites and CI, the verification habit.</td></tr>
+<tr><td class="keep">Improve</td><td>Document ingestion (more source types, OCR, timestamps), retrieval (hybrid search, citations per claim), job status (named stages, partial results), worker queues.</td></tr>
+<tr><td class="keep">Repurpose</td><td>Teacher documents → Fibonacci <i>sources</i>. Study materials and teacher resources → <i>outputs</i> made from a project. Story video pipeline → "Explain as a video" for one concept. Knowledge base and topic-only flow → "Start from a topic" when the user has no material.</td></tr>
+<tr><td class="keep">Redesign</td><td>The visual identity, landing page, navigation, and the split between learner and teacher apps.</td></tr>
+<tr><td class="drop">Remove</td><td>Dead services, Firebase, unused UI components and dependencies, the duplicate landing route, stale docs and files, the "story first" framing.</td></tr>
+</table></div>
+<p><span class="tag prop">Proposal</span> <b>Don't rebuild.</b> The stack fits the new product. The main changes are a new data model (projects, sources, segments, outputs), a better retrieval and citation layer, and a new interface.</p>
+</section>
+
+<!-- 02 -->
+<section id="vision">
+<h2><span class="n">02</span>Refined product vision</h2>
+<p><span class="tag prop">Proposal</span> Here is where I would push back on the brief.</p>
+<div class="callout">
+<p><b>"Understand information from any source" describes NotebookLM.</b> Google gives it away free and has been adding to it all year, with video overviews and a Sources / Chat / Studio layout. Fibonacci can't win by supporting more file types or listing more outputs. It needs to do one thing NotebookLM doesn't.</p>
+</div>
+<p>My recommendation: <b>Fibonacci makes a path through your material.</b> Chat tools wait for you to know what to ask. Fibonacci reads the source, finds the ideas, puts them in the order they build on each other, and walks you through them. Each step explains one idea, shows the passage it comes from, and checks that you understood before moving on. The name fits literally: each step builds on the ones before it.</p>
+
+<h3>Positioning</h3>
+<p style="font:450 24px/1.35 var(--display);max-width:30ch">Fibonacci turns the material you have to learn into a path you can follow, with every step traced to its source.</p>
+
+<h3>Who it is for (first)</h3>
+<ul>
+<li><b>Primary: students aged 15–22</b> learning from material someone gave them, like a textbook chapter, lecture recording or assigned article, who need to understand it for an exam or assignment.</li>
+<li><b>Secondary: teachers</b> who turn their own material into lessons and practice. The existing teacher mode does this already, so the engine is shared.</li>
+<li><b>Later: independent learners and professionals</b> working through papers, reports or courses.</li>
+</ul>
+<p>The current 10–18 audience brings parental-consent and child-safety obligations that block a public launch. Whether to keep it is your decision; see <a href="#decisions">section 12</a>.</p>
+
+<h3>What Fibonacci is not</h3>
+<ul>
+<li>Not a general chatbot. If the sources don't say something, Fibonacci says so, then offers to explain from general knowledge, clearly labelled.</li>
+<li>Not a video generator first. Video is one output, and the most expensive one.</li>
+<li>Not a public library. Sources stay private to the user.</li>
+</ul>
+</section>
+
+<!-- 03 -->
+<section id="market">
+<h2><span class="n">03</span>Competitive positioning</h2>
+<p><span class="tag found">Found</span> From current product knowledge and a web search on 20 Oct 2026. Most coverage of 2026 features comes from third-party blogs, so treat details as indicative.</p>
+<div class="tbl"><table>
+<tr><th>Product</th><th>Does well</th><th>Falls short (reported or observed)</th><th>Lesson for Fibonacci</th></tr>
+<tr><td><b>NotebookLM</b></td><td>Answers grounded in sources, with inline citations. Many source types. One-click "Studio" outputs (audio and video overviews, mind maps, flashcards). Free. Three-column Sources / Chat / Studio layout (April 2026).</td><td>Users report deleted notebooks can't be recovered, data loss in a February 2026 outage, thin collaboration (no comments or roles), and per-notebook source caps. It declines when sources don't cover a question. Weak on tables.</td><td>Grounding is now expected, not a differentiator. Its outputs are separate artifacts, with no sequence or sense of what you have mastered.</td></tr>
+<tr><td><b>Perplexity</b></td><td>Fast web answers with numbered inline citations. Follow-up suggestions.</td><td>About the web, not your material. Not built for learning.</td><td>Copy how small and readable its citation chips are, and how an answer streams in before its sources finish loading.</td></tr>
+<tr><td><b>ChatGPT</b> (Projects, study mode)</td><td>Flexible. Accepts files. Study mode asks questions back.</td><td>Generalist. Citations to uploaded files are loose. Everything is a chat thread.</td><td>Asking the learner questions works. A chat thread makes a poor place to keep what you have learned.</td></tr>
+<tr><td><b>Quizlet, Anki</b></td><td>Retrieval practice and spaced review.</td><td>Drill without understanding. Cards are made by hand or detached from the source.</td><td>Make checks and cards from the path, linked back to their passages.</td></tr>
+<tr><td><b>Khanmigo</b></td><td>Tutoring that asks questions instead of giving answers.</td><td>Works with Khan Academy's content, not yours.</td><td>Use its pedagogy, applied to the learner's own material.</td></tr>
+</table></div>
+
+<h3>Where Fibonacci can be different</h3>
+<ol>
+<li><b>The path.</b> Ideas in the order they depend on each other, with "you need X before Y" made visible. None of the products above do this.</li>
+<li><b>Each sentence is labelled.</b> Every sentence in an answer is marked as coming from your source (with a page, paragraph or timestamp) or as Fibonacci's own explanation. NotebookLM cites, but doesn't separate explanation from evidence.</li>
+<li><b>Explanations in layers.</b> Each idea has a plain version, a precise version, and a worked example. The learner moves between them.</li>
+<li><b>It tracks understanding.</b> Short checks give each idea a status: new, shaky or understood. The overview shows that status, so the product remembers what you learned, not only what you generated.</li>
+<li><b>Russian and Kazakh at the same quality as English.</b> Kazakh is a real gap in the market. Fonts, prompts and tests for all three languages already exist.</li>
+<li><b>Outputs you can edit.</b> Every output can be edited, saved and printed, which this codebase already does well.</li>
+</ol>
+</section>
+
+<!-- 04 -->
+<section id="features">
+<h2><span class="n">04</span>Feature prioritization</h2>
+<p><span class="tag prop">Proposal</span> The rule: every MVP feature must work end to end for a student with one PDF or one web article. Anything that doesn't serve that waits.</p>
+<div class="tbl"><table>
+<tr><th>Capability</th><th>MVP</th><th>V1</th><th>Future</th></tr>
+<tr><td>Sources</td><td>PDF with a text layer, DOCX, pasted text, web article URL. Up to 10 sources per project.</td><td>YouTube (captions, then Gemini fallback). Audio and video upload with timestamps. OCR for scanned PDFs. PPTX.</td><td>EPUB, browser extension capture, Google Drive import</td></tr>
+<tr><td>Analysis</td><td>Overview, key ideas ordered into a path, glossary. All cited.</td><td>Links between sources (agree, extend, contradict)</td><td>Concept map you can edit</td></tr>
+<tr><td>Understanding</td><td>Layered explanation per idea. One check question per idea. Ask a question, with labelled citations. Source viewer that jumps to the cited passage.</td><td>Status per idea that persists. Spaced review.</td><td>Tutor mode that asks before it tells</td></tr>
+<tr><td>Outputs</td><td>Study guide, flashcards, quiz (existing generators, now grounded). Print and copy.</td><td>Presentation. "Explain as a video" for one idea. Export to PDF and Anki.</td><td>Audio summary, interactive simulations</td></tr>
+<tr><td>Teachers</td><td>Existing teacher mode keeps working</td><td>Teacher lessons become projects with teacher outputs</td><td>Classes, sharing with students</td></tr>
+<tr><td>Other</td><td>EN / RU / KK, light and dark themes, account deletion</td><td>Usage limits shown to the user</td><td>Collaboration, mobile app</td></tr>
+</table></div>
+<h4>Deliberately cut or deferred, and why</h4>
+<ul>
+<li><b>Whole books.</b> 200 pages already covers a textbook chapter. Whole books raise cost and copyright questions for little benefit. Ask the user to choose chapters.</li>
+<li><b>Video of a whole source in the MVP.</b> It takes minutes per render and costs the most of anything. Concept-sized videos in V1 are more useful and cheaper.</li>
+<li><b>Public sharing of projects.</b> It would republish copyrighted source text. Wait for a clear policy.</li>
+<li><b>A free-form chat tab.</b> "Ask" lives inside the workspace with the source alongside, not as a separate chat product.</li>
+</ul>
+</section>
+
+<!-- 05 -->
+<section id="journey">
+<h2><span class="n">05</span>Complete user journey</h2>
+<p><span class="tag prop">Proposal</span> The brief's flow was Landing → Create project → Add source → Analyze → Explore → Generate → Export. I would remove "Create project". Nobody arrives wanting a project; they arrive with a chapter. <b>The source is the first action, and the project is created around it</b> and named after the source.</p>
+<ol class="journey">
+<li><div><b>Arrive.</b> The hero has one field: "Paste a link or add a file". Next to it is a link to a real sample project.</div></li>
+<li><div><b>Add a source.</b> The URL or file is checked in the browser right away: type, size, URL format. Problems show inline, like "This PDF is 340 pages. Fibonacci reads up to 200; choose a chapter range."</div></li>
+<li><div><b>Sign in</b>, only when needed. The pending source is kept in session storage and resumes after sign-in, which can be Google or email. Nothing is processed anonymously because each job costs money.</div></li>
+<li><div><b>Watch it read.</b> Named stages: <i>Reading 48 pages → Finding the ideas → Ordering the path → Ready</i>. The overview appears as soon as it's ready, and the path fills in after. A typical chapter should be done in under 90 seconds. The user can leave and is notified in the app when it finishes.</div></li>
+<li><div><b>Get oriented.</b> The workspace opens on the overview: what the material is about, how many ideas it has, about how long the path will take, and a single action: <b>Start with idea 1</b>.</div></li>
+<li><div><b>Follow the path.</b> Each idea shows a plain explanation, the passages it comes from, then one check question. Answering marks it understood or shaky and moves on.</div></li>
+<li><div><b>Ask at any point.</b> The Ask bar is always at the bottom. Answers label each sentence as from the source or explanation. Clicking a citation opens the source at that page or timestamp.</div></li>
+<li><div><b>Make something.</b> The "Make" panel offers a study guide, flashcards or a quiz, scoped to the whole project or to the shaky ideas only.</div></li>
+<li><div><b>Come back.</b> The library shows each project with its path progress, like "7 of 12 understood". Returning lands on "Continue: idea 8".</div></li>
+</ol>
+<h3>Edge states to design up front</h3>
+<div class="tbl"><table>
+<tr><th>Situation</th><th>Behaviour</th></tr>
+<tr><td>Scanned PDF, no text</td><td>MVP: "This PDF is images of pages, so Fibonacci can't read it yet. Upload a text version or paste the text." V1: run OCR automatically and tell the user it was used.</td></tr>
+<tr><td>URL is paywalled, blocked or mostly script</td><td>Show what was extracted ("We got 140 words. That looks like a sign-in page.") and offer to paste the text instead. Never bypass a paywall.</td></tr>
+<tr><td>YouTube with no captions</td><td>Fall back to transcription for videos under a set length. Otherwise ask the user to upload the audio.</td></tr>
+<tr><td>Processing fails</td><td>Keep the source with a plain reason and a Retry button. The existing retry endpoint already does this.</td></tr>
+<tr><td>Question not covered by the sources</td><td>"Your sources don't cover this." Then a separate, clearly labelled general-knowledge answer that the user must ask for.</td></tr>
+<tr><td>Empty library</td><td>The same add-source field as the hero, plus the sample project. No empty grid.</td></tr>
+<tr><td>Usage limit reached</td><td>Show what remains and when it resets. The rate limiter's existing <code>Retry-After</code> header supports this.</td></tr>
+</table></div>
+</section>
+
+<!-- 06 -->
+<section id="ia">
+<h2><span class="n">06</span>Information architecture</h2>
+<p><span class="tag prop">Proposal</span> Four places. Nothing else at the top level.</p>
+<pre class="wire">/                      Landing (signed out) · redirects to /library when signed in
+/library               Projects + "Add a source" + sample project
+/p/[projectId]         Workspace (Path · Ask · Sources · Made) — the product
+   ?idea=8             deep link to an idea
+   ?source=s2&amp;at=p14   deep link to a passage / timestamp
+/settings              Account, languages, theme, usage, delete account
+/teacher/...           unchanged until Phase 6, then folded into projects</pre>
+<p>The current top navigation has Create, Study, My Work, Teacher prep and Account. These become the <b>Library</b> plus the workspace. "Study" and "My Work" collapse into a project's <i>Made</i> shelf. The old topic-only "Create" flow becomes a secondary option in the library, "No material? Start from a topic", so it isn't lost.</p>
+</section>
+
+<!-- 07 -->
+<section id="ux">
+<h2><span class="n">07</span>UI/UX strategy</h2>
+<h3>Principles</h3>
+<ol>
+<li><b>One obvious next step on every screen.</b> Landing: add a source. Library: continue or add. Workspace: the next idea.</li>
+<li><b>The evidence is always one click away.</b> Each claim links to its passage. The source viewer opens beside the explanation, never on another page.</li>
+<li><b>Show progress, not spinners.</b> Long jobs show named stages and partial results.</li>
+<li><b>Show advanced options when they're needed.</b> Output settings (count, difficulty, scope) stay hidden until "Make" is opened.</li>
+<li><b>Keep it calm.</b> Animation explains state changes only, like a path step filling in or a citation highlight. No decoration.</li>
+</ol>
+
+<h3>The workspace (the most important screen)</h3>
+<p>NotebookLM uses three equal columns. Fibonacci puts <b>the path in the centre</b>, with the source as a pane that opens beside it when needed. The source sits behind the learning, never in front of it.</p>
+<pre class="wire">┌─────────────────────────────────────────────────────────────────────────────┐
+│ ● fibonacci   Biology · Ch. 8 Photosynthesis            7/12 understood  ⚙ │
+├──────────────┬──────────────────────────────────────┬───────────────────────┤
+│ PATH         │  Idea 8 of 12                         │ SOURCE  (opens on     │
+│ ● 1 Light    │  The Calvin cycle                     │  citation click)      │
+│ ● 2 Pigments │  Needs: 6 ATP and NADPH ✓             │                       │
+│ ◐ 3 ...      │                                       │  OpenStax Biology 2e  │
+│ ○ 8 Calvin ◀ │  [Plain] [Precise] [Example]          │  p. 241 ▸ highlighted │
+│ ○ 9 ...      │  The Calvin cycle uses ATP and NADPH  │  "In stage 2, ATP and │
+│              │  to turn CO₂ into sugar ⟦p.241⟧. It's  │  NADPH are used to... │
+│ SOURCES      │  like a factory line that ...         │                       │
+│  Ch8.pdf     │  ·· Fibonacci's explanation ··        │                       │
+│  + Add       │                                       │                       │
+│              │  Check: Why does the cycle stop in    │                       │
+│ MADE         │  the dark?  [answer field]            │                       │
+│  Flashcards  │                     [ Check answer → ]│                       │
+│  + Make      ├──────────────────────────────────────┤                       │
+│              │  Ask about this material…         ⏎  │                       │
+└──────────────┴──────────────────────────────────────┴───────────────────────┘</pre>
+<ul>
+<li><b>Desktop (≥1200px):</b> path rail (240px) · idea (reading width, about 680px) · source pane (opens at 38% width, the golden-ratio split, and can be closed).</li>
+<li><b>Tablet:</b> the rail collapses to a drawer and the source opens as a full-height sheet.</li>
+<li><b>Phone:</b> one column with a bottom bar: Path · Ask · Sources · Made. A citation opens the source as a sheet over the content.</li>
+</ul>
+
+<h3>How evidence and explanation are shown</h3>
+<div class="legend"><span><span class="src">Highlighted text</span> = stated in your source</span><span><span class="expl">dashed italic</span> = Fibonacci's explanation</span><span><span class="cite">p. 241</span> = citation, opens the passage</span></div>
+<div class="sample" aria-label="Example answer">
+<p><span class="src">The Calvin cycle uses ATP and NADPH from the light reactions to fix carbon dioxide into sugar</span> <span class="cite">p. 241</span>. <span class="src">It takes place in the stroma of the chloroplast</span> <span class="cite">p. 240</span>.</p>
+<p><span class="expl">You can think of the light reactions as charging batteries, and the Calvin cycle as the machine that spends them.</span></p>
+<small>Example content, adapted from OpenStax Biology 2e (CC BY 4.0) for illustration</small>
+</div>
+<p>Colour is never the only signal. Source sentences also have a citation chip, and explanation sentences are italic. Screen readers hear "From source, page 241" or "Explanation".</p>
+
+<h3>Other screens</h3>
+<ul>
+<li><b>Library:</b> a list, not a card grid. Each row shows title, source types, path progress as a small seedhead (section 08), and last opened. The primary action is "Add a source".</li>
+<li><b>Source management:</b> inside the workspace rail. Each source shows status (reading, ready, failed with reason), can be renamed or removed, and can be excluded from answers.</li>
+<li><b>Make:</b> a panel listing the output types, each with one sentence on what you get. Settings stay folded away. Results open in the existing editors.</li>
+<li><b>Video:</b> appears under Make as "Explain this idea as a video". It shows an estimated time and only starts after the user confirms, as the current flow already does.</li>
+<li><b>Settings:</b> one page with account, interface language, material language, theme, usage, and delete account.</li>
+</ul>
+<h3>Accessibility targets</h3>
+<p>WCAG 2.2 AA. 44px minimum targets. Visible 3px focus rings, as today. Every path state shown by shape as well as colour (filled, half and empty dots). <code>aria-live</code> for job stages. Full keyboard support in the workspace: <code>j</code>/<code>k</code> move through ideas, <code>/</code> focuses Ask, <code>Esc</code> closes the source pane. Reduced-motion turns off all animation.</p>
+</section>
+
+<!-- 08 -->
+<section id="brand">
+<h2><span class="n">08</span>Three brand directions</h2>
+<p><span class="tag prop">Proposal</span> One constraint applies to all three: every typeface must cover Kazakh Cyrillic (Ә Ғ Қ Ң Ө Ұ Ү Һ І). Coverage must be confirmed by rendering a test page before committing. Golos Text is already confirmed, so it stays as the interface face in the recommended direction.</p>
+<p>All three use a <b>Fibonacci spacing scale</b> (3, 5, 8, 13, 21, 34, 55, 89px) instead of the current 4/8 grid. This page uses it too. It is the subtlest way to make the name part of the system.</p>
+
+<div class="dirs">
+<article class="dir">
+  <div class="dir-head"><h3>A · Golden Grid</h3><span class="tag found" style="background:var(--surface);border:1px solid var(--line);color:var(--muted)">precise, technical</span></div>
+  <p><b>Concept:</b> mathematical precision and nothing else. A Swiss-style grid with columns at a 1 : 1.618 ratio. The brand is the tiling of Fibonacci squares, never the spiral.</p>
+  <div class="sw">
+    <div><i style="background:#f6f7f5"></i>Paper #F6F7F5</div><div><i style="background:#16191d"></i>Graphite #16191D</div><div><i style="background:#2346d8"></i>Cobalt #2346D8</div><div><i style="background:#c9ced6"></i>Rule #C9CED6</div><div><i style="background:#0e7c66"></i>Proof #0E7C66</div>
+  </div>
+  <div class="marks"><svg width="104" height="64" viewBox="0 0 13 8" aria-label="Tiling mark: squares of 8, 5, 3, 2, 1 and 1"><g fill="none" stroke="currentColor" stroke-width=".18"><rect x="0" y="0" width="8" height="8"/><rect x="8" y="0" width="5" height="5"/><rect x="10" y="5" width="3" height="3"/><rect x="8" y="5" width="2" height="2"/><rect x="8" y="7" width="1" height="1"/><rect x="9" y="7" width="1" height="1" fill="#2346d8" stroke="none"/></g></svg>
+  <span class="spec" style="font-family:var(--ui);font-weight:600;letter-spacing:-.03em">Fibonacci</span></div>
+  <ul>
+    <li><b>Type:</b> Onest (Cyrillic, neo-grotesque) for display and UI, JetBrains Mono for citations and numbers.</li>
+    <li><b>Layout:</b> strict golden-ratio splits, wide margins, numbered sections that reflect real order.</li>
+    <li><b>Logo:</b> the 8-5-3-2-1-1 tiling with the smallest square filled cobalt, meaning "where you are".</li>
+    <li><b>Illustration and icons:</b> line drawings with a 1.5px stroke on the grid, diagrams rather than pictures.</li>
+    <li><b>Motion:</b> durations of 130, 210 and 340ms. Elements grow along one axis like squares being added.</li>
+    <li><b>Strengths:</b> trustworthy, scales well, cheap to build. <b>Weaknesses:</b> cold for teenagers, and close to many fintech and devtool brands.</li>
+  </ul>
+</article>
+
+<article class="dir rec">
+  <div class="dir-head"><h3>B · Seedhead</h3><span class="tag prop">Recommended</span></div>
+  <p><b>Concept:</b> patterns in nature, used as data. A sunflower places each seed 137.5° from the last, which is the golden angle. In Fibonacci, <b>each idea in a path is a seed</b>. The seedhead is the logo, the loading animation and the progress display. Seeds fill in as you understand them. It is the one visual idea in this plan that both means something and does a job.</p>
+  <div class="sw">
+    <div><i style="background:#f2f5f1"></i>Ground #F2F5F1</div><div><i style="background:#14231c"></i>Root #14231C</div><div><i style="background:#1e5b45"></i>Leaf #1E5B45</div><div><i style="background:#d99a1e"></i>Pollen #D99A1E</div><div><i style="background:#2a6f97"></i>River #2A6F97</div>
+    <div><i style="background:#0f1714"></i>Night #0F1714</div><div><i style="background:#7cc4a4"></i>Leaf dk #7CC4A4</div><div><i style="background:#f0bf5a"></i>Pollen dk #F0BF5A</div>
+  </div>
+  <div class="marks"><svg class="seed" id="seedA" width="88" height="88" viewBox="-50 -50 100 100" role="img" aria-label="Seedhead progress: 21 of 34 ideas understood"></svg><span class="spec" style="font-family:var(--display);font-weight:600">fibonacci</span>
+    <span class="spec" style="font-family:var(--display);font-style:italic;font-size:22px;color:var(--muted)">Әліппе · Қазақ · Ұғыну</span></div>
+  <ul>
+    <li><b>Colour roles:</b> Leaf for actions, Pollen for "understood" and focus (never a button colour), River only for source evidence, so blue always means "from your material". The ground is a cool green-white, not cream. That moves away from the current paper look and the overused cream-and-terracotta style.</li>
+    <li><b>Type:</b> Alegreya for display and learning content. It is a humanist serif with a calligraphic feel, has Cyrillic, and Kazakh coverage needs confirming. Golos Text for UI, already self-hosted and verified. JetBrains Mono for citations.</li>
+    <li><b>Layout:</b> the path is the backbone, one vertical column of steps. The source pane opens at the 38% golden split. Fibonacci spacing throughout. Content leads; surfaces have one border and no shadow stacks.</li>
+    <li><b>Logo:</b> 13 seeds on the golden angle beside a lowercase Alegreya wordmark. At favicon size it reduces to 5 seeds.</li>
+    <li><b>Illustration and icons:</b> generated, not drawn. Seedheads and phyllotaxis patterns come from the user's real data, such as idea counts. Icons are custom line icons on a 21px grid, extending the existing <code>studio-icon.tsx</code>. No stock imagery.</li>
+    <li><b>Motion:</b> one signature moment. While a source is being read, seeds appear one by one in golden-angle order, about one per idea found. That is real progress, not a spinner. Everything else is 130 to 210ms colour changes.</li>
+    <li><b>Strengths:</b> distinctive, warm without being childish, works from age 15 to adult, and the metaphor carries real meaning. <b>Weaknesses:</b> the seedhead must be used sparingly or it becomes a gimmick, and a nature palette needs discipline to avoid looking like a wellness brand.</li>
+  </ul>
+</article>
+
+<article class="dir">
+  <div class="dir-head"><h3>C · Marginalia</h3><span class="tag found" style="background:var(--surface);border:1px solid var(--line);color:var(--muted)">scholarly, evidence-first</span></div>
+  <p><b>Concept:</b> the citation is the hero. It borrows from annotated books: margin notes, brackets, underlines and footnote numbers. The interface looks like a well-annotated page.</p>
+  <div class="sw">
+    <div><i style="background:#fcfcfa"></i>Leaf #FCFCFA</div><div><i style="background:#1b1b1f"></i>Ink #1B1B1F</div><div><i style="background:#dff36b"></i>Marker #DFF36B</div><div><i style="background:#3d4bb8"></i>Note #3D4BB8</div><div><i style="background:#8a8a92"></i>Pencil #8A8A92</div>
+  </div>
+  <div class="marks"><span class="spec" style="font-family:var(--display);font-size:46px;color:var(--primary)">⟦f⟧</span><span class="spec" style="font-family:var(--display)">Fibonacci<sup style="font:500 14px var(--mono);color:var(--evidence)">13</sup></span></div>
+  <ul>
+    <li><b>Type:</b> Source Serif 4 for reading, IBM Plex Sans and Plex Mono for UI and notes. All have Cyrillic; Kazakh coverage needs confirming.</li>
+    <li><b>Layout:</b> a wide reading column with a real margin column for citations and notes, and footnote-style numbering.</li>
+    <li><b>Logo:</b> a lowercase "f" inside double brackets. The superscript 13 is the 7th Fibonacci number.</li>
+    <li><b>Motion:</b> highlighter strokes draw in under evidence when an answer appears.</li>
+    <li><b>Strengths:</b> communicates trust and evidence best, and suits university and research users. <b>Weaknesses:</b> close to the newspaper-column look common in AI-made design, academic for younger students, and a margin column fails on phones.</li>
+  </ul>
+</article>
+</div>
+<p><b>Why B.</b> It is the only direction where the name, the logo, the progress model and the main animation are the same idea. The other two put the name on the product; B makes it part of how the product works. It is also the best fit for the "path" positioning in section 02. I would take A's spacing scale and golden splits, and C's rule that evidence always has its own colour, as shown in the evidence example above.</p>
+</section>
+
+<!-- 09 -->
+<section id="landing">
+<h2><span class="n">09</span>Landing page blueprint</h2>
+<h3>Should the hero accept a link or file directly?</h3>
+<p><span class="tag prop">Proposal</span> <b>Yes, with sign-in before processing.</b> Pasting a link is the clearest possible demonstration of what the product does, and it starts the journey on the first action. Anonymous processing would be expensive and open to abuse, so the source is validated in the browser, kept in session storage, and processed only after sign-in. The sample project gives visitors who aren't ready to sign up an immediate result.</p>
+
+<div class="tbl"><table>
+<tr><th>Section</th><th>Content and copy</th><th>Visual and interaction</th></tr>
+<tr><td><b>1 · Header</b></td><td>Wordmark · How it works · What it reads · For teachers · Sign in</td><td>Plain bar, no sticky blur. Language picker and theme toggle kept.</td></tr>
+<tr><td><b>2 · Hero</b></td><td>
+<b>Headline (recommended):</b> "Bring what you have to learn. Leave understanding it."<br>
+Alternatives: "Every chapter has a path through it." / "Your material, in the order it makes sense."<br>
+<b>Supporting:</b> "Fibonacci reads your PDFs, articles and lecture videos, lays out the ideas in the order they build on each other, and shows where every answer came from."<br>
+<b>Field:</b> "Paste a link or add a file" · <b>CTA:</b> "Make my path"<br>
+<b>Secondary:</b> "Or open a sample: Photosynthesis, OpenStax Biology Ch. 8"</td>
+<td>Left: copy and field. Right: the real sample source page shown as text, not a screenshot. On load, seeds appear beside it in golden-angle order, each labelled with an idea from the page. Hovering a seed highlights its sentence. Reduced motion shows the finished state.</td></tr>
+<tr><td><b>3 · Try the sample</b></td><td>"Here's a real chapter, already read." Three tabs: <i>Path</i> · <i>Ask</i> · <i>Make</i>.</td><td>A working, read-only workspace with stored data from one real, openly licensed source, labelled as a sample. The Ask tab shows prepared questions with real citations. Nothing is generated live.</td></tr>
+<tr><td><b>4 · How answers work</b></td><td>"Know what came from your material." Shows one answer with source sentences and explanation sentences marked differently. "When your material doesn't say, Fibonacci tells you."</td><td>The evidence example from section 07, at full size. This section builds the trust that separates Fibonacci from a chatbot.</td></tr>
+<tr><td><b>5 · What it reads</b></td><td>PDF, Word, pasted text, web articles (available) · YouTube, audio and video (labelled "coming", not shown as available) · plain limits: "Up to 200 pages per PDF".</td><td>A compact list with a status for each type. Limits are stated up front.</td></tr>
+<tr><td><b>6 · What you can make</b></td><td>Study guide · Flashcards · Quiz · (V1: Presentation, video explanation). One sentence each, using real sample outputs.</td><td>Real output fragments from the sample project, like a flashcard front and back or a quiz item, rather than icons.</td></tr>
+<tr><td><b>7 · For teachers</b></td><td>"Turn your own material into a lesson, with every item linked to its source." → Teacher mode.</td><td>Full-width band on the Leaf colour.</td></tr>
+<tr><td><b>8 · Questions</b></td><td>Is my material private? Which languages? What can't it read? How long does it take? Who owns what I make? Is it free?</td><td>Native <code>&lt;details&gt;</code>, as today. Answers only after the facts are decided (section 12).</td></tr>
+<tr><td><b>9 · Final CTA</b></td><td>"What are you trying to understand?" plus the same field.</td><td>Repeats the hero field.</td></tr>
+</table></div>
+<p><b>Not included on purpose:</b> testimonials, user counts, logos of schools or partners, "trusted by", or pricing until it exists. None of these exist yet, and making them up would undercut the trust the product depends on.</p>
+<h4>Mobile</h4>
+<p>The hero stacks: headline, field (full width, with a separate "Add file" button because phones can't drag and drop), sample link, then the seedhead and source, cut down to 3 highlighted sentences. The sample tabs become a segmented control. Body text is at least 16px so iOS doesn't zoom into the field.</p>
+<h4>Accessibility</h4>
+<p>The field has a visible label. Errors are announced and linked with <code>aria-describedby</code>. The file input is a real button that works from the keyboard. The seedhead has a text alternative ("12 ideas found on this page"). Contrast is checked for both themes. Heading order runs h1 → h2 for each section.</p>
+<h4>Why this should convert</h4>
+<p>A visitor sees what Fibonacci does (the hero animation), tries it with no account (the sample), learns why to trust it (section 4), and starts with the same field they already saw. Each section answers one of the four questions in the brief: what it does, why it is useful, how to begin, and what you get.</p>
+</section>
+
+<!-- 10 -->
+<section id="tech">
+<h2><span class="n">10</span>Technical architecture</h2>
+<p><span class="tag prop">Proposal</span> Keep Next.js, FastAPI, Celery, Redis, Supabase and R2. Add a few small, justified dependencies. No new services in the MVP.</p>
+
+<h3>Data model</h3>
+<pre class="wire">projects        id, user_id, title, language, created/updated, last_idea
+sources         id, project_id, user_id, kind (pdf|docx|text|url|youtube|audio|video),
+                title, origin_url, storage_key, content_hash, status, stage, error, meta
+segments        id, source_id, user_id, ordinal, text, search_document (tsvector),
+                loc_page, loc_paragraph, loc_start_ms, loc_end_ms, loc_heading
+                [V1: embedding vector]
+analyses        id, project_id, version, overview, ideas jsonb
+                (id, title, depends_on[], explanation layers, segment_ids[], check)
+idea_progress   user_id, project_id, idea_id, state (new|shaky|understood), updated
+questions       id, project_id, question, answer jsonb (sentences[{text, kind, segment_ids}])
+outputs         id, project_id, kind, content jsonb, revision, segment_ids[]   ← generalises
+                student_study_materials + teacher_resources</pre>
+<p>Every table gets the same RLS ownership pattern the verification report already confirmed. <code>teacher_documents</code> and <code>teacher_document_chunks</code> migrate into <code>sources</code> and <code>segments</code>, and compatibility views keep the teacher routes working until Phase 6.</p>
+
+<h3>Ingestion, per source type</h3>
+<div class="tbl"><table>
+<tr><th>Kind</th><th>Method</th><th>Location stored</th><th>When</th></tr>
+<tr><td>PDF</td><td>Existing pypdf path. V1 adds OCR for pages with no text by sending page images to Gemini, with a page cap.</td><td>Page</td><td>MVP</td></tr>
+<tr><td>DOCX, text</td><td>Existing code</td><td>Paragraph, table row</td><td>MVP</td></tr>
+<tr><td>Web URL</td><td>Fetch on the server with an SSRF guard (below), then extract the main content with <code>trafilatura</code>, the one new dependency. It handles boilerplate and is well tested. Keep headings for locations.</td><td>Heading and paragraph, plus a URL text fragment for deep links</td><td>MVP</td></tr>
+<tr><td>YouTube</td><td><span class="tag found">Found</span> YouTube often blocks transcript requests from cloud server IPs. Free datacenter proxies are blocked too. Developers resort to residential proxies or paid transcript APIs. <span class="tag prop">Proposal</span> 1) A paid transcript provider behind an interface. 2) Fallback: pass the public URL to Gemini, which accepts YouTube links as video input, capped by duration. 3) Fallback: ask the user to upload the audio. Don't download media with yt-dlp; it breaks YouTube's terms and gets blocked.</td><td>Timestamp</td><td>V1</td></tr>
+<tr><td>Audio, video upload</td><td>Gemini audio transcription with timestamps, run in 10-minute pieces. Video goes through FFmpeg first to extract audio, using the existing service.</td><td>Timestamp</td><td>V1</td></tr>
+</table></div>
+<p>Segments: about 350 words with a 50-word overlap for documents, or 45-second windows for transcripts. Never split across a page boundary, so citations stay exact. Store <code>content_hash</code> so re-uploading the same file reuses the previous analysis.</p>
+
+<h3>Retrieval: start simple</h3>
+<p><span class="tag prop">Proposal</span> A typical MVP project, one chapter or about 30k words, fits in a Gemini context window many times over. So:</p>
+<ol>
+<li><b>Small projects (up to about 150k tokens): no retrieval.</b> Send every segment with its ID, and use Gemini context caching so repeated questions are cheap. This is the most accurate option and adds no new infrastructure.</li>
+<li><b>Large projects:</b> the existing Postgres full-text search, plus (V1) <code>pgvector</code> embeddings in the same Supabase database, combined with reciprocal rank fusion. Embedding quality for Kazakh must be tested before adopting it.</li>
+</ol>
+<p>This avoids adding a vector database and builds on what exists.</p>
+
+<h3>Citations and hallucination control</h3>
+<ol>
+<li>Each segment goes into the prompt with an ID like <code>[S41]</code>. The model must return structured JSON: <code>sentences: [{text, kind: "source"|"explanation", segment_ids}]</code>.</li>
+<li>The server checks that every cited ID was in the prompt, as <code>validate_grounded</code> already does but per sentence. For "source" sentences it also runs a cheap check that the key terms appear in the cited segment. A sentence that fails is relabelled as "explanation" or dropped, never shown as evidence.</li>
+<li>When nothing relevant is found, the reply is "not in your sources" and no answer is generated.</li>
+<li><b>Evaluation set before launch:</b> 30 questions per language over 3 real sources, including 10 the sources can't answer. Targets: at least 90% citation precision, and the model declines unanswerable questions at least 90% of the time. Run it in CI against recorded responses, and live before each model change.</li>
+</ol>
+
+<h3>Analysis job (the path)</h3>
+<p>Map, then reduce. Each group of about 20k tokens of segments yields candidate ideas with segment IDs. A reduce step merges duplicates and builds the "depends on" links, then orders the ideas topologically, falling back to source order when links are uncertain. Explanations and checks are generated lazily when an idea is first opened, not all up front. That halves analysis time and cost.</p>
+
+<h3>Background processing</h3>
+<ul>
+<li><b>Split the Celery queues:</b> <code>ingest</code> (concurrency 3), <code>analysis</code> (concurrency 2) and <code>render</code> (concurrency 1). This needs a second worker service in Compose, with no new infrastructure.</li>
+<li><b>Status:</b> a <code>stage</code> field on the source or job, polled every 1.5 seconds through the existing proxy. Server-sent events can come later; polling works through Vercel and Nginx today without changes.</li>
+<li><b>Limits:</b> the 60-second ingestion time limit rises to about 180 seconds for PDFs. A per-job token budget and a per-user daily budget are tracked in Redis, the same pattern as the existing rate limiter.</li>
+</ul>
+
+<h3>Security and privacy</h3>
+<ul>
+<li><b>SSRF:</b> resolve DNS, block private, loopback, link-local and metadata IP ranges, re-check every redirect (5 max), allow only http and https on ports 80 and 443, allow only text/HTML and PDF content types, 10 MB and 15-second caps. Test each of these.</li>
+<li><b>Prompt injection from sources:</b> source text is wrapped in delimiters and labelled as untrusted data. The model has no tools or side effects while reading sources. Output is schema-constrained JSON rendered as text (never as HTML). Links in output come only from source metadata. Include injection examples in the evaluation set.</li>
+<li><b>Uploads:</b> the existing size limits, zip-bomb check and parser-log suppression stay. Files are stored privately and served only through the authenticated proxy, as today.</li>
+<li><b>Privacy:</b> sources are private by default and never shared. Production already requires Gemini's paid tier; the privacy notice should state the provider's data-use terms.</li>
+<li><b>Copyright:</b> users add material for their own study. Fibonacci doesn't republish source text, the sample uses openly licensed content, and there is a takedown contact. Have a lawyer confirm this before public launch.</li>
+</ul>
+
+<h3>Cost</h3>
+<p>Gemini Flash-Lite is the right default. Rough cost per typical project: analysis about 40k input tokens, each question about 30k tokens (mostly cached), each output 10–20k. That should come to a few cents per project at current list prices, which need checking. A video render costs more than everything else combined, which is why it is opt-in and limited to one idea. Usage is logged per job (<code>usage_context</code> already exists) so real numbers replace these estimates within the first week.</p>
+</section>
+
+<!-- 11 -->
+<section id="roadmap">
+<h2><span class="n">11</span>Phased engineering roadmap</h2>
+<p><span class="tag prop">Proposal</span> Every phase ends with something a person can use from start to finish. Existing features keep working throughout.</p>
+<div class="tbl"><table>
+<tr><th>Phase</th><th>Delivers</th><th>Done when</th><th>Size and risk</th></tr>
+<tr><td><b>0 · Make it safe to change</b></td><td>Revoke and remove the service-account key. Initialise git and check history for secrets. Remove dead services, Firebase, unused UI components and dependencies, stale docs and files. Split Celery queues. Decide on internal naming (keep <code>wizetale-*</code> service names until DNS moves).</td><td>No secrets in the tree. All 321 API tests and 81 frontend tests pass. Build passes. A video render no longer delays an upload.</td><td>S · low</td></tr>
+<tr><td><b>1 · Brand system</b></td><td>Tokens (colour, Fibonacci spacing, type), fonts self-hosted with a Kazakh glyph test page, logo and seedhead component, updated <code>studio-icon</code>, all UI copy renamed TaleSpark → Fibonacci in three languages.</td><td>Contrast AA in both themes. Kazakh renders in every face. Existing screens restyled with no behaviour change.</td><td>M · low</td></tr>
+<tr><td><b>2 · Projects and sources</b></td><td>New tables and RLS, migration from teacher documents, web URL ingestion with SSRF guard, stages and polling, Library page, add-source field.</td><td>Upload or link → ready in under 60s for a 50-page PDF. SSRF and RLS tests pass. Teacher sources still work.</td><td>M · medium (migration)</td></tr>
+<tr><td><b>3 · Understanding core</b></td><td>Analysis job (overview and path), workspace with path, idea view, check question, Ask with labelled citations, source viewer that jumps to the passage.</td><td>Evaluation targets met in EN / RU / KK. A test user can finish a path for one chapter without help.</td><td>L · <b>highest</b>: answer quality</td></tr>
+<tr><td><b>4 · Make, and new landing</b></td><td>Study guide, flashcards and quiz grounded in project sources (reusing generators and editors), print and copy, sample project, new landing page, "Start from a topic" option.</td><td>Outputs cite segments. Landing passes Lighthouse accessibility at 95 or above. No invented claims.</td><td>M · low</td></tr>
+<tr><td><b>5 · Media and video</b></td><td>YouTube with fallbacks, audio and video upload, timestamp citations, "Explain this idea as a video" reusing the existing pipeline.</td><td>A 20-minute lecture is ready in under 3 minutes. Clicking a citation opens the right moment.</td><td>M · medium (YouTube access, cost)</td></tr>
+<tr><td><b>6 · V1</b></td><td>Saved idea progress and review, teacher lessons as projects, OCR, pgvector hybrid search, links between sources.</td><td>Teacher flows pass the existing verification script on the new model. Old teacher tables retired.</td><td>L · medium</td></tr>
+<tr><td><b>Launch gates</b></td><td>Privacy notice, terms, age policy, Google OAuth enabled, email verified, a production smoke test.</td><td>Owner and legal sign-off</td><td>Owner work, outside the code</td></tr>
+</table></div>
+<p>Phases 1 and 2 can run in parallel. Phase 3 is where the product succeeds or fails, so it gets the evaluation set first and the UI second.</p>
+<p><b>Testing for each phase:</b> extend the existing pytest suites (RLS, SSRF, ingestion fixtures in each language), the frontend regression suite, and the live verification script with a disposable account. Add the answer-quality evaluation set in Phase 3.</p>
+</section>
+
+<!-- 12 -->
+<section id="decisions">
+<h2><span class="n">12</span>Risks and open decisions</h2>
+<h3>Decisions I need from you</h3>
+<div class="q"><b>1. Who is it for at launch?</b><span>My recommendation is students aged 15 and up (exam prep, university) and teachers, instead of 10–18. Keeping under-16s means parental consent, age checks and child-safety processes before launch, which are open gates today.</span></div>
+<div class="q"><b>2. Can you use the name "Fibonacci"?</b><span>It is a common name, and many companies and products use it. Check the trademark in your target countries and confirm which domain you can get before spending on brand work. This is the largest non-technical risk.</span></div>
+<div class="q"><b>3. Brand direction:</b><span>B (Seedhead) recommended, or A or C?</span></div>
+<div class="q"><b>4. Positioning:</b><span>Do you agree that "a path through your material" is the core, with video demoted to one output? Or is video central to what you want?</span></div>
+<div class="q"><b>5. Teacher mode:</b><span>Should it merge into projects (recommended, Phase 6) or stay a separate product?</span></div>
+<div class="q"><b>6. Languages at launch:</b><span>EN, RU and KK, all to the same evaluation standard? Each language adds evaluation and copy work.</span></div>
+<div class="q"><b>7. Budget:</b><span>What monthly AI and API spend is acceptable, including a paid YouTube transcript provider? Will there be a free tier, and with what limits?</span></div>
+<div class="q"><b>8. Existing users and data:</b><span>Is TaleSpark live with real users? If so, data must be migrated and users told about the change. If not, the migration can be simpler.</span></div>
+
+<h3>Risks</h3>
+<div class="tbl"><table>
+<tr><th>Risk</th><th>Likelihood</th><th>Mitigation</th></tr>
+<tr><td>The path ordering feels arbitrary for some material</td><td>Medium</td><td>Fall back to source order, let users reorder ideas, and measure with real chapters in Phase 3 before building more on top</td></tr>
+<tr><td>Citation errors damage trust</td><td>Medium</td><td>Per-sentence validation, relabelling failed claims, evaluation set in CI</td></tr>
+<tr><td>YouTube blocks server access</td><td>High</td><td>Provider interface, Gemini URL fallback, upload fallback, YouTube not in the MVP</td></tr>
+<tr><td>NotebookLM ships a similar "learning path"</td><td>Medium</td><td>Lead on the parts it doesn't cover: Kazakh and Russian, teacher workflow, editable outputs, explanation labels</td></tr>
+<tr><td>A single model provider (Gemini)</td><td>Medium</td><td>Keep the provider interface (<code>ai/base.py</code>). Add a second text provider only when needed.</td></tr>
+<tr><td>A secret already leaked</td><td>Unknown</td><td>Rotate the key now. Treat it as exposed.</td></tr>
+</table></div>
+<h3>Next step</h3>
+<p>Once you answer the decisions above, I would start <b>Phase 0</b>, which is low-risk cleanup and safety work, then produce a detailed spec for Phases 1 to 3 before writing feature code.</p>
+</section>
+
+<footer>
+<p>Research sources: <a href="https://workspaceupdates.googleblog.com/2026/03/new-ways-to-customize-and-interact-with-your-content-in-NotebookLM.html">Google Workspace Updates, March 2026</a> · <a href="https://bibigpt.co/en/features/notebooklm-2026-update-explained">NotebookLM April 2026 update (third-party)</a> · <a href="https://vantaige.io/ai-tool/notebooklm">vantaige.io NotebookLM review</a> · <a href="https://atlasworkspace.ai/blog/notebooklm-limitations">NotebookLM limitations (Atlas)</a> · <a href="https://github.com/jdepoix/youtube-transcript-api/issues/593">youtube-transcript-api issue #593</a> · <a href="https://medium.com/@lhc1990/fixing-youtube-transcript-api-requestblocked-error-a-developers-guide-83c77c061e7b">RequestBlocked guide</a>. Codebase facts are from the local project as of 20 Oct 2026.</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var GA = Math.PI * (3 - Math.sqrt(5)); // golden angle, ~137.5°
+  function seedhead(svg, total, filled, size){
+    if(!svg) return;
+    var ns = "http://www.w3.org/2000/svg", scale = 44 / Math.sqrt(total);
+    for(var i = 0; i < total; i++){
+      var r = scale * Math.sqrt(i + 0.5), a = i * GA;
+      var c = document.createElementNS(ns, "circle");
+      c.setAttribute("cx", (r * Math.cos(a)).toFixed(2));
+      c.setAttribute("cy", (r * Math.sin(a)).toFixed(2));
+      c.setAttribute("r", size);
+      var done = i < filled;
+      c.setAttribute("fill", done ? "var(--pollen)" : "var(--surface)");
+      c.setAttribute("stroke", done ? "var(--pollen)" : "var(--primary)");
+      c.setAttribute("stroke-width", "1.6");
+      svg.appendChild(c);
+    }
+  }
+  seedhead(document.getElementById("logo"), 13, 13, 6.2);
+  seedhead(document.getElementById("seedA"), 34, 21, 4.4);
+})();
+</script>

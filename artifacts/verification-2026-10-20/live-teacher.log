@@ -1,0 +1,19 @@
+Temporary teacher accounts ready
+TXT upload via frontend, worker ingestion, original download passed
+PDF, DOCX, pasted text, malformed failure and retry passed
+Cross-account isolation and attachment revision checks passed
+quiz generated with Gemini, citations, duplicate prevention, save/reload passed
+flashcards generated with Gemini, citations, duplicate prevention, save/reload passed
+Source deletion, detach, and retained materials with removed references passed
+CHECK FAILED: DELETE http://localhost:8001/api/v1/account returned 503: {"detail":"Account deletion could not be completed. Please try again later."}
+Traceback (most recent call last):
+  File "/home/dadrout/WizeTale/wizetale-api/scripts/verify_teacher_sources.py", line 75, in <module>
+    call('DELETE','/account',token)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dadrout/WizeTale/wizetale-api/scripts/verify_teacher_sources.py", line 20, in call
+    def call(method,path,token,**kwargs):return req(method,BASE+path,headers={'Authorization':'Bearer '+token},**kwargs)
+                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dadrout/WizeTale/wizetale-api/scripts/verify_teacher_sources.py", line 17, in req
+    if r.status_code>=400: raise RuntimeError(f'{method} {url.split("?")[0]} returned {r.status_code}: '+r.text[:200])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: DELETE http://localhost:8001/api/v1/account returned 503: {"detail":"Account deletion could not be completed. Please try again later."}

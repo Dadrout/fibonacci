@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "name": "en-US female live speech",
+      "status": "passed",
+      "duration": 3.864,
+      "provider": "edge_tts"
+    },
+    {
+      "name": "en-US male live speech",
+      "status": "passed",
+      "duration": 3.576,
+      "provider": "edge_tts"
+    },
+    {
+      "name": "ru-RU female live speech",
+      "status": "passed",
+      "duration": 4.224,
+      "provider": "edge_tts"
+    },
+    {
+      "name": "ru-RU male live speech",
+      "status": "failed",
+      "error_type": "NoAudioReceived",
+      "http_status": null
+    },
+    {
+      "name": "kk-KZ female live speech",
+      "status": "passed",
+      "duration": 3.28,
+      "provider": "elevenlabs"
+    },
+    {
+      "name": "kk-KZ male live speech",
+      "status": "passed",
+      "duration": 3.44,
+      "provider": "elevenlabs"
+    },
+    {
+      "name": "ru-RU male live speech in actual API container",
+      "status": "passed",
+      "duration": 3.624,
+      "notes": "Succeeded after one empty-audio retry. Two host probes exhausted retries; provider intermittency remains recorded."
+    }
+  ],
+  "resources": {},
+  "lessons": {}
+}

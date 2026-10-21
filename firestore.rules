@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anonymous users to write feedback
+    match /feedback/{document} {
+      allow read: if false; // Only allow writes, not reads
+      allow write: if true; // Allow anyone to write feedback
+    }
+    
+    // Default rule - deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

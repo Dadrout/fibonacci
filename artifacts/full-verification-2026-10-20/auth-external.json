@@ -1,0 +1,7 @@
+{
+  "google_enabled": false,
+  "authorization_status": 400,
+  "authorization_host": null,
+  "completed_sign_in": "blocked",
+  "email_delivery": "unverified: requires real inbox"
+}

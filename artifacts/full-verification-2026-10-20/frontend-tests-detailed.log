@@ -1,0 +1,500 @@
+(node:22) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/dadrout/WizeTale/wizetale-app/lib/copy.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/dadrout/WizeTale/wizetale-app/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# Subtest: an old workspace never obtains another account token
+ok 1 - an old workspace never obtains another account token
+  ---
+  duration_ms: 52.67664
+  type: 'test'
+  ...
+# Subtest: the current workspace can obtain its own token
+ok 2 - the current workspace can obtain its own token
+  ---
+  duration_ms: 26.797462
+  type: 'test'
+  ...
+# Subtest: an expiring session is refreshed before an API request
+ok 3 - an expiring session is refreshed before an API request
+  ---
+  duration_ms: 24.5696
+  type: 'test'
+  ...
+# Subtest: a refresh cannot hand an old workspace another account token
+ok 4 - a refresh cannot hand an old workspace another account token
+  ---
+  duration_ms: 22.315336
+  type: 'test'
+  ...
+# Subtest: topic-video downloads preserve every binary byte through the frontend proxy
+ok 5 - topic-video downloads preserve every binary byte through the frontend proxy
+  ---
+  duration_ms: 7.754489
+  type: 'test'
+  ...
+# Subtest: rate limits preserve Retry-After through JSON and upload proxies
+ok 6 - rate limits preserve Retry-After through JSON and upload proxies
+  ---
+  duration_ms: 7.155253
+  type: 'test'
+  ...
+# Subtest: successful resource deletion remains 204 through the frontend proxy
+ok 7 - successful resource deletion remains 204 through the frontend proxy
+  ---
+  duration_ms: 0.704758
+  type: 'test'
+  ...
+# Subtest: multipart uploads keep their boundary and binary file bytes
+ok 8 - multipart uploads keep their boundary and binary file bytes
+  ---
+  duration_ms: 1.868424
+  type: 'test'
+  ...
+# Subtest: oversized uploads are rejected before reading the body
+ok 9 - oversized uploads are rejected before reading the body
+  ---
+  duration_ms: 1.058337
+  type: 'test'
+  ...
+# Subtest: the shared learning workspace gates private story and study views by learner identity
+ok 10 - the shared learning workspace gates private story and study views by learner identity
+  ---
+  duration_ms: 0.928286
+  type: 'test'
+  ...
+# Subtest: history and legacy story URLs open the shared learning workspace
+ok 11 - history and legacy story URLs open the shared learning workspace
+  ---
+  duration_ms: 0.422799
+  type: 'test'
+  ...
+# Subtest: story polling stays inside the authenticated shared workspace
+ok 12 - story polling stays inside the authenticated shared workspace
+  ---
+  duration_ms: 0.32712
+  type: 'test'
+  ...
+# Subtest: draft and job pointers are distinct for each learner
+ok 13 - draft and job pointers are distinct for each learner
+  ---
+  duration_ms: 0.235594
+  type: 'test'
+  ...
+# Subtest: clearing one learner pointer preserves another saved draft
+ok 14 - clearing one learner pointer preserves another saved draft
+  ---
+  duration_ms: 0.339828
+  type: 'test'
+  ...
+# Subtest: retry after a transport error resumes GET polling without rendering again
+ok 15 - retry after a transport error resumes GET polling without rendering again
+  ---
+  duration_ms: 34.878833
+  type: 'test'
+  ...
+# Subtest: new job clears the previous completed result before loading
+ok 16 - new job clears the previous completed result before loading
+  ---
+  duration_ms: 14.680276
+  type: 'test'
+  ...
+# Subtest: draft PATCH requests stay ordered and the latest saved script remains current
+ok 17 - draft PATCH requests stay ordered and the latest saved script remains current
+  ---
+  duration_ms: 24.562353
+  type: 'test'
+  ...
+# Subtest: render waits for autosave and submits the latest editor snapshot
+ok 18 - render waits for autosave and submits the latest editor snapshot
+  ---
+  duration_ms: 30.01569
+  type: 'test'
+  ...
+# Subtest: flushDraft persists the current editor snapshot before sign-out can continue
+ok 19 - flushDraft persists the current editor snapshot before sign-out can continue
+  ---
+  duration_ms: 16.119247
+  type: 'test'
+  ...
+# Subtest: flushDraft blocks sign-out when the latest script cannot be saved
+ok 20 - flushDraft blocks sign-out when the latest script cannot be saved
+  ---
+  duration_ms: 16.394979
+  type: 'test'
+  ...
+# Subtest: discard waits for an already queued PATCH before deleting the draft
+ok 21 - discard waits for an already queued PATCH before deleting the draft
+  ---
+  duration_ms: 18.666425
+  type: 'test'
+  ...
+# Subtest: discard removes the owned server draft and its active local pointer
+ok 22 - discard removes the owned server draft and its active local pointer
+  ---
+  duration_ms: 14.74528
+  type: 'test'
+  ...
+# Subtest: clearing the active pointer keeps a saved server draft available
+ok 23 - clearing the active pointer keeps a saved server draft available
+  ---
+  duration_ms: 16.876491
+  type: 'test'
+  ...
+# Subtest: discard conflict keeps the editable workspace and active pointer
+ok 24 - discard conflict keeps the editable workspace and active pointer
+  ---
+  duration_ms: 23.80938
+  type: 'test'
+  ...
+# Subtest: initial load errors remain distinct until a retry succeeds
+ok 25 - initial load errors remain distinct until a retry succeeds
+  ---
+  duration_ms: 0.324503
+  type: 'test'
+  ...
+# Subtest: append errors keep current stories and preserve the failed offset for retry
+ok 26 - append errors keep current stories and preserve the failed offset for retry
+  ---
+  duration_ms: 0.173305
+  type: 'test'
+  ...
+# Subtest: retry clears the append error and adds the recovered page once
+ok 27 - retry clears the append error and adds the recovered page once
+  ---
+  duration_ms: 0.159582
+  type: 'test'
+  ...
+# Subtest: a recovered page does not duplicate a story already on the shelf
+ok 28 - a recovered page does not duplicate a story already on the shelf
+  ---
+  duration_ms: 0.09365
+  type: 'test'
+  ...
+# Subtest: a not-yet-submitted quiz result restores as null
+ok 29 - a not-yet-submitted quiz result restores as null
+  ---
+  duration_ms: 0.260303
+  type: 'test'
+  ...
+# Subtest: a saved quiz result restores validated answers and score
+ok 30 - a saved quiz result restores validated answers and score
+  ---
+  duration_ms: 0.213995
+  type: 'test'
+  ...
+# Subtest: a quiz result with answers outside the current quiz is rejected
+ok 31 - a quiz result with answers outside the current quiz is rejected
+  ---
+  duration_ms: 0.165968
+  type: 'test'
+  ...
+# Subtest: a result with a mismatched total or answer set is rejected
+ok 32 - a result with a mismatched total or answer set is rejected
+  ---
+  duration_ms: 0.102345
+  type: 'test'
+  ...
+# Subtest: student workspace offers clear route navigation with active page semantics
+ok 33 - student workspace offers clear route navigation with active page semantics
+  ---
+  duration_ms: 0.458328
+  type: 'test'
+  ...
+# Subtest: story result routes keep Create selected in student navigation
+ok 34 - story result routes keep Create selected in student navigation
+  ---
+  duration_ms: 0.264192
+  type: 'test'
+  ...
+# Subtest: study library is fetched only after the study workspace or library is opened
+ok 35 - study library is fetched only after the study workspace or library is opened
+  ---
+  duration_ms: 0.374074
+  type: 'test'
+  ...
+# Subtest: story result heading can show its title or topic without exposing the task id
+ok 36 - story result heading can show its title or topic without exposing the task id
+  ---
+  duration_ms: 0.280787
+  type: 'test'
+  ...
+# Subtest: student styles use shared workspace tokens and do not reference undefined prep colors
+ok 37 - student styles use shared workspace tokens and do not reference undefined prep colors
+  ---
+  duration_ms: 0.308836
+  type: 'test'
+  ...
+# Subtest: story settings copy no longer asks students to repeat shared topic setup
+ok 38 - story settings copy no longer asks students to repeat shared topic setup
+  ---
+  duration_ms: 1.053509
+  type: 'test'
+  ...
+# Subtest: deep links select their format, item, or saved library with safe fallbacks
+ok 39 - deep links select their format, item, or saved library with safe fallbacks
+  ---
+  duration_ms: 0.26969
+  type: 'test'
+  ...
+# Subtest: each shared subject maps to an API subject and keeps topic and language
+ok 40 - each shared subject maps to an API subject and keeps topic and language
+  ---
+  duration_ms: 0.354773
+  type: 'test'
+  ...
+# Subtest: visual refresh preserves unsaved slide text and removes visuals removed on the server
+ok 41 - visual refresh preserves unsaved slide text and removes visuals removed on the server
+  ---
+  duration_ms: 0.230512
+  type: 'test'
+  ...
+# Subtest: student printing excludes answer keys and teacher notes without changing saved content
+ok 42 - student printing excludes answer keys and teacher notes without changing saved content
+  ---
+  duration_ms: 7.184304
+  type: 'test'
+  ...
+# Subtest: flashcard backs remain printable learning material
+ok 43 - flashcard backs remain printable learning material
+  ---
+  duration_ms: 0.322424
+  type: 'test'
+  ...
+# Subtest: removing a question keeps answer numbering matched
+ok 44 - removing a question keeps answer numbering matched
+  ---
+  duration_ms: 0.417366
+  type: 'test'
+  ...
+# Subtest: visual progress does not mark edited lesson text as dirty
+ok 45 - visual progress does not mark edited lesson text as dirty
+  ---
+  duration_ms: 0.442532
+  type: 'test'
+  ...
+# Subtest: refreshed visuals keep unsaved slide text while adopting the latest image
+ok 46 - refreshed visuals keep unsaved slide text while adopting the latest image
+  ---
+  duration_ms: 0.327544
+  type: 'test'
+  ...
+# Subtest: removing a visual on the server clears it from the open draft
+ok 47 - removing a visual on the server clears it from the open draft
+  ---
+  duration_ms: 0.214456
+  type: 'test'
+  ...
+# Subtest: interface copy has both translations and preserves template fields
+ok 48 - interface copy has both translations and preserves template fields
+  ---
+  duration_ms: 1.976658
+  type: 'test'
+  ...
+# Subtest: teacher screens translate every explicit static copy lookup
+ok 49 - teacher screens translate every explicit static copy lookup
+  ---
+  duration_ms: 0.941552
+  type: 'test'
+  ...
+# Subtest: source references appear only on the teacher printout
+ok 50 - source references appear only on the teacher printout
+  ---
+  duration_ms: 18.076479
+  type: 'test'
+  ...
+# Subtest: removed sources do not reveal their saved title in references
+ok 51 - removed sources do not reveal their saved title in references
+  ---
+  duration_ms: 1.659577
+  type: 'test'
+  ...
+# Subtest: Kazakh references translate page locations
+ok 52 - Kazakh references translate page locations
+  ---
+  duration_ms: 1.260303
+  type: 'test'
+  ...
+# Subtest: selection survives unrelated revision updates and resets for changed saved sources
+ok 53 - selection survives unrelated revision updates and resets for changed saved sources
+  ---
+  duration_ms: 3.040346
+  type: 'test'
+  ...
+# Subtest: polling refresh keeps the loaded range
+ok 54 - polling refresh keeps the loaded range
+  ---
+  duration_ms: 0.166403
+  type: 'test'
+  ...
+# Subtest: teacher navigation exposes the active route accessibly
+ok 55 - teacher navigation exposes the active route accessibly
+  ---
+  duration_ms: 0.17876
+  type: 'test'
+  ...
+# Subtest: teacher styles use one semantic workspace base with a role-aware button foreground
+ok 56 - teacher styles use one semantic workspace base with a role-aware button foreground
+  ---
+  duration_ms: 0.728721
+  type: 'test'
+  ...
+# Subtest: source library distinguishes loading, empty, and failed states and guides text length
+ok 57 - source library distinguishes loading, empty, and failed states and guides text length
+  ---
+  duration_ms: 0.19682
+  type: 'test'
+  ...
+# Subtest: teacher source and lesson flows explain the preparation sequence
+ok 58 - teacher source and lesson flows explain the preparation sequence
+  ---
+  duration_ms: 0.220093
+  type: 'test'
+  ...
+# Subtest: lesson fields lock during saves and resource removal names its item
+ok 59 - lesson fields lock during saves and resource removal names its item
+  ---
+  duration_ms: 0.153218
+  type: 'test'
+  ...
+# Subtest: teacher hover movement honors reduced motion and mobile resources do not nest-scroll
+ok 60 - teacher hover movement honors reduced motion and mobile resources do not nest-scroll
+  ---
+  duration_ms: 0.269756
+  type: 'test'
+  ...
+# Subtest: lesson source picker distinguishes loading and empty libraries with a recovery path
+ok 61 - lesson source picker distinguishes loading and empty libraries with a recovery path
+  ---
+  duration_ms: 0.152274
+  type: 'test'
+  ...
+# Subtest: test_video_resource_title_comes_from_script
+ok 62 - test_video_resource_title_comes_from_script
+  ---
+  duration_ms: 0.210949
+  type: 'test'
+  ...
+# Subtest: test_video_generation_sends_selected_duration_and_voice
+ok 63 - test_video_generation_sends_selected_duration_and_voice
+  ---
+  duration_ms: 0.142103
+  type: 'test'
+  ...
+# Subtest: test_video_render_is_hidden_after_script_revision_changes
+ok 64 - test_video_render_is_hidden_after_script_revision_changes
+  ---
+  duration_ms: 0.120503
+  type: 'test'
+  ...
+# Subtest: video render state stays with its lesson resource and stale requests are ignored
+ok 65 - video render state stays with its lesson resource and stale requests are ignored
+  ---
+  duration_ms: 0.21291
+  type: 'test'
+  ...
+# Subtest: video status polling schedules another attempt after a transient failure
+ok 66 - video status polling schedules another attempt after a transient failure
+  ---
+  duration_ms: 0.113469
+  type: 'test'
+  ...
+# Subtest: Literata and GolosText are bundled with their open font licenses
+ok 67 - Literata and GolosText are bundled with their open font licenses
+  ---
+  duration_ms: 0.341502
+  type: 'test'
+  ...
+# Subtest: the root layout loads both font families locally and applies their variables
+ok 68 - the root layout loads both font families locally and applies their variables
+  ---
+  duration_ms: 0.166401
+  type: 'test'
+  ...
+# Subtest: global styles define the shared font variables and both theme palettes
+ok 69 - global styles define the shared font variables and both theme palettes
+  ---
+  duration_ms: 0.414386
+  type: 'test'
+  ...
+# Subtest: home and create routes do not load a second copy of Inter
+ok 70 - home and create routes do not load a second copy of Inter
+  ---
+  duration_ms: 0.227948
+  type: 'test'
+  ...
+# Subtest: landing and workspace use shared typography and keep dark theme surfaces
+ok 71 - landing and workspace use shared typography and keep dark theme surfaces
+  ---
+  duration_ms: 0.345866
+  type: 'test'
+  ...
+# Subtest: decorative landing motion is disabled for reduced-motion preferences
+ok 72 - decorative landing motion is disabled for reduced-motion preferences
+  ---
+  duration_ms: 0.236749
+  type: 'test'
+  ...
+# Subtest: the landing uses a responsive content grid without absolute hero decoration
+ok 73 - the landing uses a responsive content grid without absolute hero decoration
+  ---
+  duration_ms: 0.289022
+  type: 'test'
+  ...
+# Subtest: the workspace intro leaves a gutter between its text and illustration on phones
+ok 74 - the workspace intro leaves a gutter between its text and illustration on phones
+  ---
+  duration_ms: 0.249911
+  type: 'test'
+  ...
+# Subtest: shared auth controls use readable text and comfortable touch targets
+ok 75 - shared auth controls use readable text and comfortable touch targets
+  ---
+  duration_ms: 0.213042
+  type: 'test'
+  ...
+# Subtest: auth routes use the shared theme page surface
+ok 76 - auth routes use the shared theme page surface
+  ---
+  duration_ms: 0.227645
+  type: 'test'
+  ...
+# Subtest: legacy story and history URLs share the themed learning workspace
+ok 77 - legacy story and history URLs share the themed learning workspace
+  ---
+  duration_ms: 0.297712
+  type: 'test'
+  ...
+# Subtest: the profile screen keeps the shared theme surfaces and readable copy
+ok 78 - the profile screen keeps the shared theme surfaces and readable copy
+  ---
+  duration_ms: 0.228144
+  type: 'test'
+  ...
+# Subtest: account and story actions keep visible keyboard focus
+ok 79 - account and story actions keep visible keyboard focus
+  ---
+  duration_ms: 0.203809
+  type: 'test'
+  ...
+# Subtest: workspace design tokens define both role accents for light and dark themes
+ok 80 - workspace design tokens define both role accents for light and dark themes
+  ---
+  duration_ms: 0.550784
+  type: 'test'
+  ...
+# Subtest: student workspace styles do not depend on undefined legacy prep tokens
+ok 81 - student workspace styles do not depend on undefined legacy prep tokens
+  ---
+  duration_ms: 0.196579
+  type: 'test'
+  ...
+1..81
+# tests 81
+# suites 0
+# pass 81
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1176.505023

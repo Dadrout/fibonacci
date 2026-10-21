@@ -1,0 +1,12 @@
+[
+  {
+    "base": "http://127.0.0.1:8001",
+    "status": 503,
+    "body": "{\"detail\":\"Authentication service is temporarily unavailable.\"}"
+  },
+  {
+    "base": "http://127.0.0.1:3001",
+    "status": 503,
+    "body": "{\"detail\":\"Authentication service is temporarily unavailable.\"}"
+  }
+]

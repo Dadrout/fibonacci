@@ -1,0 +1,12 @@
+[
+  {
+    "origin": "https://allowed.example.test",
+    "status": 200,
+    "allow_origin": "https://allowed.example.test"
+  },
+  {
+    "origin": "https://untrusted.example.test",
+    "status": 400,
+    "allow_origin": null
+  }
+]

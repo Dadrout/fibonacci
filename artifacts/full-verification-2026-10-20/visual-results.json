@@ -1,0 +1,18 @@
+[
+  {
+    "deck_type": "teacher",
+    "initial_ready_visuals": 3,
+    "signed_image_downloads": "passed",
+    "owner_isolation": "passed",
+    "retry": "passed",
+    "remove": "passed"
+  },
+  {
+    "deck_type": "student",
+    "initial_ready_visuals": 3,
+    "signed_image_downloads": "passed",
+    "owner_isolation": "passed",
+    "retry": "passed",
+    "remove": "passed"
+  }
+]

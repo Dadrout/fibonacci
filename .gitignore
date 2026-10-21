@@ -1,0 +1,46 @@
+# Secrets and local deployment state
+.env
+.env.*
+!.env.example
+/data/
+/backups/
+**/certbot/
+**/time-capsule-*.json
+**/*-service-account*.json
+
+# Local environments and generated artifacts
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.coverage
+**/node_modules/
+**/.pnpm-store/
+**/.next/
+**/*.tsbuildinfo
+**/.DS_Store
+
+# Local tool scratch and large generated media (kept on disk, not in git)
+/.chart-data-*/
+/.codex-build/
+/.codex-finalizer/
+/.superpowers/
+/.agents/
+/.aws/
+/.codex/
+**/.pnpm-store/
+wizetale-api/generated_audio/
+wizetale-api/generated_images/
+wizetale-api/generated_videos/
+wizetale-api/static/
+wizetale-app/dist/
+artifacts/**/*.mp4
+artifacts/**/*.mp3
+artifacts/**/*.pptx
+*.tar.gz
+docker-logs.txt
+
+# Brain local stack data
+/data/brain/
+/user-stats.html

@@ -1,0 +1,66 @@
+{
+  "title": "The Water Cycle: Journey of a Droplet",
+  "instructions": "Read the definitions provided, complete the matching activity, and answer the short-response questions to demonstrate your understanding of how water moves through our environment.",
+  "objectives": [
+    "Define evaporation, condensation, and precipitation.",
+    "Explain the role of the sun in the water cycle.",
+    "Identify the stages of the water cycle in a real-world context."
+  ],
+  "sections": [
+    {
+      "heading": "Key Vocabulary",
+      "body": "1. Evaporation: The process where liquid water turns into water vapor (gas) due to heat from the sun. 2. Condensation: The process where water vapor cools down and turns back into liquid water droplets, forming clouds. 3. Precipitation: When water falls from clouds to the Earth's surface as rain, snow, sleet, or hail."
+    },
+    {
+      "heading": "Part 1: Matching",
+      "body": "Match the term to the correct description by writing the number in the blank. A) ____ Water falling to the ground as rain or snow. B) ____ Liquid water turning into invisible gas. C) ____ Water vapor cooling to form clouds."
+    },
+    {
+      "heading": "Part 2: Short Response",
+      "body": "1. Why is the sun considered the 'engine' of the water cycle? 2. Imagine you are a water droplet in a puddle. Describe your journey as you go through evaporation and condensation."
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Match the term to the correct description: 1. Precipitation, 2. Evaporation, 3. Condensation. A) Water falling to the ground. B) Liquid water turning into gas. C) Water vapor forming clouds.",
+      "choices": [],
+      "points": 1
+    },
+    {
+      "prompt": "Why is the sun necessary for the water cycle to begin?",
+      "choices": [],
+      "points": 1
+    },
+    {
+      "prompt": "If you see a cloud forming in the sky, which part of the water cycle are you observing?",
+      "choices": [],
+      "points": 1
+    }
+  ],
+  "flashcards": [],
+  "slides": [],
+  "teacher_notes": [
+    {
+      "heading": "Teaching Guidance",
+      "body": "Start the lesson by asking students where rain comes from. Use a clear glass of ice water to demonstrate condensation (the 'sweat' on the outside of the glass) to make the concept concrete. Ensure students understand that energy from the sun is the primary driver for evaporation."
+    }
+  ],
+  "answer_key": [
+    {
+      "question_number": 1,
+      "answer": "A-1, B-2, C-3",
+      "explanation": "Precipitation is falling water, evaporation is liquid to gas, and condensation is gas to liquid (clouds)."
+    },
+    {
+      "question_number": 2,
+      "answer": "The sun provides the heat energy required to turn liquid water into water vapor (evaporation).",
+      "explanation": "Without the sun's heat, water would remain in its liquid or solid state and would not rise into the atmosphere."
+    },
+    {
+      "question_number": 3,
+      "answer": "Condensation",
+      "explanation": "Clouds are formed when water vapor cools and turns into tiny liquid droplets, which is the definition of condensation."
+    }
+  ],
+  "duration_minutes": 30
+}

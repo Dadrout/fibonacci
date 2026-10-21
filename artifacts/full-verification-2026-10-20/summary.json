@@ -1,0 +1,31 @@
+{
+  "scope": "local full-stack testing, normal mode; no production deployment",
+  "backend_python314": {
+    "passed": 321,
+    "failed": 0
+  },
+  "backend_python311_container": {
+    "passed": 321,
+    "failed": 0
+  },
+  "frontend_tests": {
+    "passed": 81,
+    "failed": 0,
+    "files": 17
+  },
+  "typecheck": "passed",
+  "production_build": "passed",
+  "production_npm_vulnerabilities": 0,
+  "teacher_resource_types_tested": 10,
+  "learner_material_types_tested": 3,
+  "teacher_presentation_video_seconds": 108.04,
+  "teacher_topic_video_seconds": 154.32,
+  "database_rls": "eight owner-scoped tables and server-only visuals tested with real JWTs",
+  "google_oauth": "blocked: provider disabled, HTTP 400",
+  "real_email_delivery": "pending owner test",
+  "provider_intermittency": [
+    "Russian male Edge voice exhausted host retries but succeeded in API container",
+    "One worksheet generation failed business validation; fresh generation passed"
+  ],
+  "cleanup": "all test accounts and owned storage removed; temporary credentials deleted"
+}

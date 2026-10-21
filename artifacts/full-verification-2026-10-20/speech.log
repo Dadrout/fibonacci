@@ -1,0 +1,8 @@
+PASS: en-US female live speech
+PASS: en-US male live speech
+PASS: ru-RU female live speech
+Speech provider interrupted; retrying attempt=2
+Speech provider interrupted; retrying attempt=3
+FAIL: ru-RU male NoAudioReceived None
+PASS: kk-KZ female live speech
+PASS: kk-KZ male live speech

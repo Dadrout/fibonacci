@@ -1,0 +1,116 @@
+TAP version 13
+# Subtest: topic-video downloads preserve every binary byte through the frontend proxy
+not ok 1 - topic-video downloads preserve every binary byte through the frontend proxy
+  ---
+  duration_ms: 7.651985
+  type: 'test'
+  location: '/home/dadrout/WizeTale/wizetale-app/scripts/backend-proxy.test.cjs:7:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + Uint8Array(14) [
+    - Uint8Array(8) [
+        0,
+    +   239,
+    +   191,
+    +   189,
+    +   239,
+    +   191,
+    +   189,
+    -   255,
+    -   128,
+        1,
+    +   239,
+    +   191,
+    +   189,
+    -   254,
+        10,
+        13,
+        0
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 255
+    2: 128
+    3: 1
+    4: 254
+    5: 10
+    6: 13
+    7: 0
+  actual:
+    0: 0
+    1: 239
+    2: 191
+    3: 189
+    4: 239
+    5: 191
+    6: 189
+    7: 1
+    8: 239
+    9: 191
+    10: 189
+    11: 10
+    12: 13
+    13: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (/home/dadrout/WizeTale/wizetale-app/scripts/backend-proxy.test.cjs:14:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: rate limits preserve Retry-After through JSON and upload proxies
+not ok 2 - rate limits preserve Retry-After through JSON and upload proxies
+  ---
+  duration_ms: 1.280016
+  type: 'test'
+  location: '/home/dadrout/WizeTale/wizetale-app/scripts/backend-proxy.test.cjs:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== '37'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '37'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/home/dadrout/WizeTale/wizetale-app/scripts/backend-proxy.test.cjs:26:44)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: successful resource deletion remains 204 through the frontend proxy
+ok 3 - successful resource deletion remains 204 through the frontend proxy
+  ---
+  duration_ms: 0.424755
+  type: 'test'
+  ...
+# Subtest: multipart uploads keep their boundary and binary file bytes
+ok 4 - multipart uploads keep their boundary and binary file bytes
+  ---
+  duration_ms: 3.567303
+  type: 'test'
+  ...
+# Subtest: oversized uploads are rejected before reading the body
+ok 5 - oversized uploads are rejected before reading the body
+  ---
+  duration_ms: 0.666777
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 3
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 26.701719

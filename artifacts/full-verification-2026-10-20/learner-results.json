@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "name": "Learner flashcards: ru-RU, live generation, ownership, persistence or quiz scoring",
+      "status": "passed"
+    },
+    {
+      "name": "Learner quiz: kk-KZ, live generation, ownership, persistence or quiz scoring",
+      "status": "passed"
+    },
+    {
+      "name": "Learner presentation: en-US, live generation, ownership, persistence or quiz scoring",
+      "status": "passed"
+    }
+  ],
+  "resources": {
+    "flashcards": {
+      "id": "577e8f81-457c-4ae0-8a7c-5ee792ef9272",
+      "language": "ru-RU"
+    },
+    "quiz": {
+      "id": "6b2a841d-8c45-4395-890b-41eb7b04d422",
+      "language": "kk-KZ"
+    },
+    "presentation": {
+      "id": "d97f09f4-5fab-4f32-8913-cf682d238f07",
+      "language": "en-US"
+    }
+  },
+  "lessons": {}
+}

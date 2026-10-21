@@ -1,0 +1,13 @@
+........................................................................ [ 22%]
+........................................................................ [ 44%]
+........................................................................ [ 67%]
+........................................................................ [ 89%]
+.................................                                        [100%]
+=============================== warnings summary ===============================
+app/api/v1/tests/test_account_deletion.py::test_account_route_requires_auth_and_applies_daily_limit
+app/api/v1/tests/test_account_deletion.py::test_account_route_requires_auth_and_applies_daily_limit
+  /home/dadrout/WizeTale/wizetale-api/.venv/lib64/python3.14/site-packages/slowapi/extension.py:720: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(func):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+321 passed, 2 warnings in 1.72s

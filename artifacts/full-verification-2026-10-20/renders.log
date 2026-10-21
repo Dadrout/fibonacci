@@ -1,0 +1,23 @@
+Queued presentation
+presentation processing narration 15
+presentation processing narration 17
+presentation processing narration 22
+presentation processing narration 27
+presentation processing narration 38
+presentation processing narration 41
+presentation processing narration 47
+presentation processing narration 53
+presentation processing narration 60
+presentation processing video_rendering 65
+presentation ready complete 100
+PASS: Teacher presentation: queue, duplicate suppression, worker, signed playback, authenticated download and isolation
+Queued video
+video processing topic_validation 5
+video processing scene_generation 35
+video processing audio_generation 50
+video processing image_generation 65
+video processing video_creation 85
+video processing video_creation 94
+video ready complete 100
+PASS: Teacher video: queue, duplicate suppression, worker, signed playback, authenticated download and isolation
+PASS: Edited teacher video invalidates old render and blocks stale download

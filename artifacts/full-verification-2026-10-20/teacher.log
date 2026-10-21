@@ -1,0 +1,24 @@
+PASS: Teacher lesson creation in English, Russian, and Kazakh
+PASS: Teacher objectives: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher generation request idempotency
+PASS: Teacher lesson_plan: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher quiz: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher test_paper: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher flashcards: generation, schema/preset, save/reload, conflict, cross-account isolation
+Traceback (most recent call last):
+  File "/tmp/talespark-full-check.py", line 55, in <module>
+    row=api('POST',path,json={'kind':kind,'request_id':rid,'target_duration_sec':180}).json();assert row['status']=='ready'
+        ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/talespark-full-check.py", line 31, in api
+    return require(r,expected)
+  File "/tmp/talespark-full-check.py", line 17, in require
+    elif not r.ok:raise RuntimeError(f'HTTP {r.status_code}: {r.text[:150]}')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: HTTP 503: {"detail":"Resource generation is temporarily unavailable. Please try again."}
+PASS: Teacher lesson creation in English, Russian, and Kazakh
+PASS: Teacher worksheet: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher exit_ticket: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher homework: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher presentation: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: Teacher video: generation, schema/preset, save/reload, conflict, cross-account isolation
+PASS: All ten teacher resource kinds tested

@@ -1,0 +1,461 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T17:40:39.871761+00:00",
+  "title": "Design System: TaleSpark",
+  "extensions": {
+    "colorMeta": {
+      "studio-paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f7f5ee",
+        "tonalRamp": [
+          "oklch(15% 0.00951 93.57)",
+          "oklch(26% 0.00951 93.57)",
+          "oklch(38% 0.00951 93.57)",
+          "oklch(49% 0.00951 93.57)",
+          "oklch(61% 0.00951 93.57)",
+          "oklch(72% 0.00951 93.57)",
+          "oklch(84% 0.00951 93.57)",
+          "oklch(95% 0.00951 93.57)"
+        ]
+      },
+      "studio-surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#fffef9",
+        "tonalRamp": [
+          "oklch(15% 0.00666 97.35)",
+          "oklch(26% 0.00666 97.35)",
+          "oklch(38% 0.00666 97.35)",
+          "oklch(49% 0.00666 97.35)",
+          "oklch(61% 0.00666 97.35)",
+          "oklch(72% 0.00666 97.35)",
+          "oklch(84% 0.00666 97.35)",
+          "oklch(95% 0.00666 97.35)"
+        ]
+      },
+      "studio-ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#252d29",
+        "tonalRamp": [
+          "oklch(15% 0.01329 163.87)",
+          "oklch(26% 0.01329 163.87)",
+          "oklch(38% 0.01329 163.87)",
+          "oklch(49% 0.01329 163.87)",
+          "oklch(61% 0.01329 163.87)",
+          "oklch(72% 0.01329 163.87)",
+          "oklch(84% 0.01329 163.87)",
+          "oklch(95% 0.01329 163.87)"
+        ]
+      },
+      "studio-muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#626a61",
+        "tonalRamp": [
+          "oklch(15% 0.01704 142.16)",
+          "oklch(26% 0.01704 142.16)",
+          "oklch(38% 0.01704 142.16)",
+          "oklch(49% 0.01704 142.16)",
+          "oklch(61% 0.01704 142.16)",
+          "oklch(72% 0.01704 142.16)",
+          "oklch(84% 0.01704 142.16)",
+          "oklch(95% 0.01704 142.16)"
+        ]
+      },
+      "studio-line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#d6dbcf",
+        "tonalRamp": [
+          "oklch(15% 0.01705 125.31)",
+          "oklch(26% 0.01705 125.31)",
+          "oklch(38% 0.01705 125.31)",
+          "oklch(49% 0.01705 125.31)",
+          "oklch(61% 0.01705 125.31)",
+          "oklch(72% 0.01705 125.31)",
+          "oklch(84% 0.01705 125.31)",
+          "oklch(95% 0.01705 125.31)"
+        ]
+      },
+      "studio-green": {
+        "role": "primary",
+        "displayName": "Green",
+        "canonical": "#234d3d",
+        "tonalRamp": [
+          "oklch(15% 0.05506 166.40)",
+          "oklch(26% 0.05506 166.40)",
+          "oklch(38% 0.05506 166.40)",
+          "oklch(49% 0.05506 166.40)",
+          "oklch(61% 0.05506 166.40)",
+          "oklch(72% 0.05506 166.40)",
+          "oklch(84% 0.05506 166.40)",
+          "oklch(95% 0.05506 166.40)"
+        ]
+      },
+      "studio-green-hover": {
+        "role": "primary",
+        "displayName": "Green Hover",
+        "canonical": "#183d2e",
+        "tonalRamp": [
+          "oklch(15% 0.05067 164.48)",
+          "oklch(26% 0.05067 164.48)",
+          "oklch(38% 0.05067 164.48)",
+          "oklch(49% 0.05067 164.48)",
+          "oklch(61% 0.05067 164.48)",
+          "oklch(72% 0.05067 164.48)",
+          "oklch(84% 0.05067 164.48)",
+          "oklch(95% 0.05067 164.48)"
+        ]
+      },
+      "studio-on-green": {
+        "role": "primary",
+        "displayName": "On Green",
+        "canonical": "#fffef5",
+        "tonalRamp": [
+          "oklch(15% 0.01186 101.47)",
+          "oklch(26% 0.01186 101.47)",
+          "oklch(38% 0.01186 101.47)",
+          "oklch(49% 0.01186 101.47)",
+          "oklch(61% 0.01186 101.47)",
+          "oklch(72% 0.01186 101.47)",
+          "oklch(84% 0.01186 101.47)",
+          "oklch(95% 0.01186 101.47)"
+        ]
+      },
+      "studio-accent": {
+        "role": "secondary",
+        "displayName": "Accent",
+        "canonical": "#ad4a32",
+        "tonalRamp": [
+          "oklch(15% 0.13555 34.89)",
+          "oklch(26% 0.13555 34.89)",
+          "oklch(38% 0.13555 34.89)",
+          "oklch(49% 0.13555 34.89)",
+          "oklch(61% 0.13555 34.89)",
+          "oklch(72% 0.13555 34.89)",
+          "oklch(84% 0.13555 34.89)",
+          "oklch(95% 0.13555 34.89)"
+        ]
+      },
+      "studio-sage": {
+        "role": "neutral",
+        "displayName": "Sage",
+        "canonical": "#e5eadc",
+        "tonalRamp": [
+          "oklch(15% 0.01938 122.85)",
+          "oklch(26% 0.01938 122.85)",
+          "oklch(38% 0.01938 122.85)",
+          "oklch(49% 0.01938 122.85)",
+          "oklch(61% 0.01938 122.85)",
+          "oklch(72% 0.01938 122.85)",
+          "oklch(84% 0.01938 122.85)",
+          "oklch(95% 0.01938 122.85)"
+        ]
+      },
+      "studio-map-ink": {
+        "role": "neutral",
+        "displayName": "Map Ink",
+        "canonical": "#435d43",
+        "tonalRamp": [
+          "oklch(15% 0.05220 144.65)",
+          "oklch(26% 0.05220 144.65)",
+          "oklch(38% 0.05220 144.65)",
+          "oklch(49% 0.05220 144.65)",
+          "oklch(61% 0.05220 144.65)",
+          "oklch(72% 0.05220 144.65)",
+          "oklch(84% 0.05220 144.65)",
+          "oklch(95% 0.05220 144.65)"
+        ]
+      },
+      "studio-dark-paper": {
+        "role": "neutral",
+        "displayName": "Dark Paper",
+        "canonical": "#18231e",
+        "tonalRamp": [
+          "oklch(15% 0.01823 165.31)",
+          "oklch(26% 0.01823 165.31)",
+          "oklch(38% 0.01823 165.31)",
+          "oklch(49% 0.01823 165.31)",
+          "oklch(61% 0.01823 165.31)",
+          "oklch(72% 0.01823 165.31)",
+          "oklch(84% 0.01823 165.31)",
+          "oklch(95% 0.01823 165.31)"
+        ]
+      },
+      "studio-dark-surface": {
+        "role": "neutral",
+        "displayName": "Dark Surface",
+        "canonical": "#202e26",
+        "tonalRamp": [
+          "oklch(15% 0.02394 159.38)",
+          "oklch(26% 0.02394 159.38)",
+          "oklch(38% 0.02394 159.38)",
+          "oklch(49% 0.02394 159.38)",
+          "oklch(61% 0.02394 159.38)",
+          "oklch(72% 0.02394 159.38)",
+          "oklch(84% 0.02394 159.38)",
+          "oklch(95% 0.02394 159.38)"
+        ]
+      },
+      "studio-dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark Ink",
+        "canonical": "#f1f1e4",
+        "tonalRamp": [
+          "oklch(15% 0.01719 106.72)",
+          "oklch(26% 0.01719 106.72)",
+          "oklch(38% 0.01719 106.72)",
+          "oklch(49% 0.01719 106.72)",
+          "oklch(61% 0.01719 106.72)",
+          "oklch(72% 0.01719 106.72)",
+          "oklch(84% 0.01719 106.72)",
+          "oklch(95% 0.01719 106.72)"
+        ]
+      },
+      "studio-dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark Muted",
+        "canonical": "#b6c1b4",
+        "tonalRamp": [
+          "oklch(15% 0.02171 140.89)",
+          "oklch(26% 0.02171 140.89)",
+          "oklch(38% 0.02171 140.89)",
+          "oklch(49% 0.02171 140.89)",
+          "oklch(61% 0.02171 140.89)",
+          "oklch(72% 0.02171 140.89)",
+          "oklch(84% 0.02171 140.89)",
+          "oklch(95% 0.02171 140.89)"
+        ]
+      },
+      "studio-dark-line": {
+        "role": "neutral",
+        "displayName": "Dark Line",
+        "canonical": "#425447",
+        "tonalRamp": [
+          "oklch(15% 0.03095 153.57)",
+          "oklch(26% 0.03095 153.57)",
+          "oklch(38% 0.03095 153.57)",
+          "oklch(49% 0.03095 153.57)",
+          "oklch(61% 0.03095 153.57)",
+          "oklch(72% 0.03095 153.57)",
+          "oklch(84% 0.03095 153.57)",
+          "oklch(95% 0.03095 153.57)"
+        ]
+      },
+      "studio-dark-green": {
+        "role": "primary",
+        "displayName": "Dark Green",
+        "canonical": "#b9d3a5",
+        "tonalRamp": [
+          "oklch(15% 0.06834 131.79)",
+          "oklch(26% 0.06834 131.79)",
+          "oklch(38% 0.06834 131.79)",
+          "oklch(49% 0.06834 131.79)",
+          "oklch(61% 0.06834 131.79)",
+          "oklch(72% 0.06834 131.79)",
+          "oklch(84% 0.06834 131.79)",
+          "oklch(95% 0.06834 131.79)"
+        ]
+      },
+      "studio-dark-green-hover": {
+        "role": "primary",
+        "displayName": "Dark Green Hover",
+        "canonical": "#c9e1b7",
+        "tonalRamp": [
+          "oklch(15% 0.06187 131.90)",
+          "oklch(26% 0.06187 131.90)",
+          "oklch(38% 0.06187 131.90)",
+          "oklch(49% 0.06187 131.90)",
+          "oklch(61% 0.06187 131.90)",
+          "oklch(72% 0.06187 131.90)",
+          "oklch(84% 0.06187 131.90)",
+          "oklch(95% 0.06187 131.90)"
+        ]
+      },
+      "studio-dark-on-green": {
+        "role": "primary",
+        "displayName": "Dark On Green",
+        "canonical": "#1a2b20",
+        "tonalRamp": [
+          "oklch(15% 0.03059 155.42)",
+          "oklch(26% 0.03059 155.42)",
+          "oklch(38% 0.03059 155.42)",
+          "oklch(49% 0.03059 155.42)",
+          "oklch(61% 0.03059 155.42)",
+          "oklch(72% 0.03059 155.42)",
+          "oklch(84% 0.03059 155.42)",
+          "oklch(95% 0.03059 155.42)"
+        ]
+      },
+      "studio-dark-accent": {
+        "role": "secondary",
+        "displayName": "Dark Accent",
+        "canonical": "#eea184",
+        "tonalRamp": [
+          "oklch(15% 0.10071 41.43)",
+          "oklch(26% 0.10071 41.43)",
+          "oklch(38% 0.10071 41.43)",
+          "oklch(49% 0.10071 41.43)",
+          "oklch(61% 0.10071 41.43)",
+          "oklch(72% 0.10071 41.43)",
+          "oklch(84% 0.10071 41.43)",
+          "oklch(95% 0.10071 41.43)"
+        ]
+      },
+      "studio-dark-sage": {
+        "role": "neutral",
+        "displayName": "Dark Sage",
+        "canonical": "#2c3f30",
+        "tonalRamp": [
+          "oklch(15% 0.03563 150.67)",
+          "oklch(26% 0.03563 150.67)",
+          "oklch(38% 0.03563 150.67)",
+          "oklch(49% 0.03563 150.67)",
+          "oklch(61% 0.03563 150.67)",
+          "oklch(72% 0.03563 150.67)",
+          "oklch(84% 0.03563 150.67)",
+          "oklch(95% 0.03563 150.67)"
+        ]
+      },
+      "studio-dark-map-ink": {
+        "role": "neutral",
+        "displayName": "Dark Map Ink",
+        "canonical": "#c0d4b1",
+        "tonalRamp": [
+          "oklch(15% 0.05218 131.82)",
+          "oklch(26% 0.05218 131.82)",
+          "oklch(38% 0.05218 131.82)",
+          "oklch(49% 0.05218 131.82)",
+          "oklch(61% 0.05218 131.82)",
+          "oklch(72% 0.05218 131.82)",
+          "oklch(84% 0.05218 131.82)",
+          "oklch(95% 0.05218 131.82)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Literata display",
+        "purpose": "Marketing headline with responsive wrapping."
+      },
+      "title": {
+        "displayName": "Literata story title",
+        "purpose": "Narrative title inside the sample story."
+      },
+      "body": {
+        "displayName": "Golos Text body",
+        "purpose": "Supporting description and practical interface copy."
+      },
+      "label": {
+        "displayName": "Golos Text action",
+        "purpose": "Primary editorial action labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "action-hover",
+        "value": "0 5px 15px #162b211f",
+        "purpose": "Landing primary action hover only; working surfaces stay flat."
+      },
+      {
+        "name": "light-action-hover",
+        "value": "0 4px 15px #0002",
+        "purpose": "Light action hover in the green teacher section."
+      }
+    ],
+    "motion": [
+      {
+        "name": "studio-motion",
+        "value": "180ms",
+        "purpose": "Short studio interaction feedback."
+      },
+      {
+        "name": "studio-ease",
+        "value": "cubic-bezier(.2,.7,.2,1)",
+        "purpose": "Shared studio easing token."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "landing-navigation",
+        "value": "850px"
+      },
+      {
+        "name": "learner-single-column",
+        "value": "800px"
+      },
+      {
+        "name": "landing-mobile",
+        "value": "650px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Deep green action used on the editorial introduction.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Start learning</button>",
+      "css": ".ds-primary{min-height:52px;padding:14px 22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body),sans-serif;transition:background var(--studio-motion),color var(--studio-motion);background:var(--studio-green);color:var(--studio-on-green)}.ds-primary:hover{background:var(--studio-green-hover);box-shadow:0 5px 15px #162b211f}.ds-primary:active{box-shadow:none}.ds-primary:focus-visible{outline:3px solid var(--studio-accent);outline-offset:4px;}.ds-primary:disabled{opacity:.5;cursor:wait} @media(prefers-reduced-motion:reduce){[class^=\"ds-\"]{transition:none!important}}"
+    },
+    {
+      "name": "Light action",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "Light action on a primary green section.",
+      "html": "<div class=\"ds-light-context\"><button class=\"ds-light\" type=\"button\">Prepare a lesson</button></div>",
+      "css": ".ds-light-context{background:var(--studio-green);padding:24px}.ds-light{min-height:52px;padding:14px 22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body),sans-serif;transition:background var(--studio-motion),color var(--studio-motion);background:var(--studio-on-green);color:var(--studio-green)}.ds-light:hover{box-shadow:0 4px 15px #0002}.ds-light:active{box-shadow:none}.ds-light:focus-visible{outline:3px solid var(--studio-accent);outline-offset:4px;} @media(prefers-reduced-motion:reduce){[class^=\"ds-\"]{transition:none!important}}"
+    },
+    {
+      "name": "Topic field",
+      "kind": "input",
+      "refersTo": "input-topic",
+      "description": "Explicitly labeled topic field from shared learner setup.",
+      "html": "<label class=\"ds-topic-label\" for=\"ds-topic\">Learning topic</label><input class=\"ds-topic\" id=\"ds-topic\" placeholder=\"What would you like to explore?\">",
+      "css": ".ds-topic-label{display:block;font-size:13px;font-weight:550;margin-bottom:10px;color:var(--studio-ink);font-family:var(--font-body),sans-serif;}.ds-topic{min-height:48px;border-radius:5px;font-size:14px;border:1px solid color-mix(in srgb,var(--studio-muted) 78%,var(--studio-surface));padding-inline:11px;background:var(--studio-surface);color:var(--studio-ink);font-family:var(--font-body),sans-serif;}.ds-topic::placeholder{color:var(--studio-muted);opacity:1}.ds-topic:hover{border-color:var(--studio-green)}.ds-topic:focus-visible{outline:3px solid var(--studio-accent);outline-offset:4px;} @media(prefers-reduced-motion:reduce){[class^=\"ds-\"]{transition:none!important}}"
+    },
+    {
+      "name": "Editorial navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Plain text links with comfortable interaction targets.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a href=\"#ds-process\">How it works</a><a href=\"#ds-teachers\">For teachers</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:28px;font-family:var(--font-body),sans-serif;}.ds-nav a{font-size:14px;font-weight:550;min-height:44px;display:inline-flex;align-items:center;color:var(--studio-ink);text-decoration:none;transition:background var(--studio-motion),color var(--studio-motion);}.ds-nav a:hover{color:var(--studio-accent)}.ds-nav a:focus-visible{outline:3px solid var(--studio-accent);outline-offset:4px;} @media(prefers-reduced-motion:reduce){[class^=\"ds-\"]{transition:none!important}}"
+    },
+    {
+      "name": "Learning story surface",
+      "kind": "card",
+      "refersTo": "story-card",
+      "description": "Quiet bordered paper surface with readable narrative typography.",
+      "html": "<article class=\"ds-story\"><p class=\"ds-story-label\">SAMPLE STORY</p><h2>A question becomes a learning story</h2><p>Review the draft, then choose the next step in your learning.</p></article>",
+      "css": ".ds-story{border:1px solid var(--studio-line);border-radius:10px;background:var(--studio-surface);color:var(--studio-ink);padding:26px 28px 18px;max-width:430px;font-family:var(--font-body),sans-serif;}.ds-story-label{font-size:10px;letter-spacing:.1em;color:var(--studio-green);font-weight:650}.ds-story h2{font-family:var(--font-heading),serif;font-size:27px;line-height:1.35;font-weight:450;letter-spacing:-.025em;margin:0 0 19px}.ds-story>p:last-child{font-size:14px;line-height:1.85;color:var(--studio-muted)} @media(prefers-reduced-motion:reduce){[class^=\"ds-\"]{transition:none!important}}"
+    },
+    {
+      "name": "Material choice",
+      "kind": "chip",
+      "refersTo": "material-choice",
+      "description": "Selected material choice uses both a pressed state and a visible selection mark.",
+      "html": "<button type=\"button\" class=\"ds-kind\" aria-pressed=\"true\"><span aria-hidden=\"true\">✓</span><strong>Story</strong></button>",
+      "css": ".ds-kind{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-height:87px;padding:13px 11px;border-radius:6px;border:1px solid var(--studio-green);box-shadow:inset 0 0 0 1px var(--studio-green);background:var(--studio-sage);color:var(--studio-green);cursor:pointer;font-family:var(--font-body),sans-serif;transition:background var(--studio-motion),color var(--studio-motion);}.ds-kind strong{font-size:12px;font-weight:550;line-height:1.4}.ds-kind:hover{border-color:var(--studio-green-hover)}.ds-kind:focus-visible{outline:3px solid var(--studio-accent);outline-offset:4px;} @media(prefers-reduced-motion:reduce){[class^=\"ds-\"]{transition:none!important}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Educational field guide",
+    "overview": "The interface borrows the clarity of an educational field guide: paper surfaces, deep green actions, a restrained vermilion accent, a readable serif for learning content, and practical sans-serif controls. Keep the supplied TaleSpark owl as the brand asset. Useful content and diagrams lead; omit stock photography, decoration-only illustration, moving tickers, and gradient ornament.",
+    "keyCharacteristics": [
+      "Headings and narrative emphasis: locally hosted Literata.",
+      "Body, navigation, controls: locally hosted Golos Text.",
+      "Working surfaces use a single quiet border and 10–12px radius. Controls use 5–6px radii. Avoid nested decorative cards."
+    ],
+    "rules": [],
+    "dos": [],
+    "donts": []
+  }
+}

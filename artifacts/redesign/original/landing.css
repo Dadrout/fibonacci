@@ -1,0 +1,283 @@
+@font-face{font-family:"TaleSpark Display";src:url("/fonts/talespark-display.ttf") format("truetype");font-style:normal;font-weight:900;font-display:swap}
+
+.slush-page{--ink:#050505;--paper:#fff;--sky:#dceeff;--blue:#4da2ff;--mint:#55db9c;--lavender:#e9ccff;--orange:#fb4903;--yellow:#ffd731;--violet:#5c4ade;color:var(--ink);background:var(--paper);font-family:var(--font-body),Arial,Helvetica,sans-serif;overflow-x:clip}
+.slush-page *{box-sizing:border-box}
+.slush-page a{text-decoration:none}
+.slush-page a:focus-visible,.slush-page button:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+.slush-container{width:min(100% - 64px,1360px);margin:0 auto}
+.slush-topline{height:28px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;font-size:10px;font-weight:800;letter-spacing:.16em}
+.slush-header{background:var(--paper);position:relative;z-index:20}
+.slush-header-inner{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.slush-brand{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;color:var(--ink);font-size:29px;line-height:1;font-weight:900;letter-spacing:-.075em}
+.slush-brand>span>span{color:var(--violet)}
+.slush-brand i{font-style:normal;color:var(--orange);font-size:20px;vertical-align:top;margin-left:1px}
+.slush-brand img{object-fit:contain}
+.slush-nav{display:flex;align-items:center;gap:4px;padding:5px;background:var(--paper);border:1px solid var(--ink);border-radius:100px}
+.slush-nav a{color:var(--ink);font-size:12px;font-weight:800;letter-spacing:.015em;padding:12px 16px;border-radius:100px;white-space:nowrap}
+.slush-nav a:hover{background:var(--sky)}
+.slush-nav-actions{display:flex;align-items:center;gap:12px}
+.slush-nav-actions button{border:1px solid var(--ink)!important;border-radius:100px!important;box-shadow:none!important;color:var(--ink)!important;background:var(--paper)!important}
+.slush-button{display:inline-flex;align-items:center;justify-content:center;gap:22px;border-radius:100px;border:1px solid var(--ink);min-height:49px;padding:0 22px;font-size:13px;font-weight:800;letter-spacing:.03em;white-space:nowrap;transition:background .2s ease,color .2s ease,transform .2s ease}
+.slush-button:hover{transform:translateY(-2px)}
+.slush-button-black{background:var(--ink);color:var(--paper)}
+.slush-button-black:hover{background:var(--violet);color:var(--paper)}
+.slush-button-outline{background:var(--paper);color:var(--ink)}
+.slush-button-outline:hover{background:var(--yellow)}
+.slush-menu-button,.slush-mobile-nav{display:none}
+.slush-language-picker{border-color:var(--ink);border-radius:100px;background:var(--paper);color:var(--ink);padding-inline:10px}
+.slush-language-picker select{font-size:12px;font-weight:800;min-height:40px}
+
+.slush-hero{background:var(--sky);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.slush-hero-inner{min-height:685px;position:relative;padding-top:35px;padding-bottom:28px;display:flex;flex-direction:column}
+.slush-hero-top,.slush-hero-footer{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:3;font-size:10px;font-weight:800;letter-spacing:.14em}
+.slush-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);border:1px solid var(--ink);border-radius:100px;padding:10px 14px;letter-spacing:.04em;font-size:11px}
+.slush-kicker>span{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.slush-hero-copy{position:relative;z-index:2;margin:auto 0;max-width:980px;padding:54px 0 70px}
+.slush-hero h1{margin:0 0 45px;font-family:"TaleSpark Display",Impact,sans-serif;text-transform:uppercase;font-weight:900;letter-spacing:-.025em;line-height:.78;font-size:clamp(100px,12.8vw,220px);max-width:900px}
+.slush-hero h1 span,.slush-hero h1 strong{display:block;font:inherit}
+.slush-hero h1 span{font-size:.67em;line-height:1.02;max-width:690px}
+.slush-hero h1 strong{white-space:nowrap}
+.slush-hero-bottom{display:flex;align-items:flex-end;gap:56px}
+.slush-hero-bottom>p{max-width:330px;margin:0;font-size:15px;font-weight:500;line-height:1.55}
+.slush-hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.slush-hero-actions .slush-button{min-height:57px}
+.slush-text-link{display:inline-flex;align-items:center;gap:10px;color:var(--ink);font-size:12px;font-weight:800;white-space:nowrap}
+.slush-text-link span{width:38px;height:38px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;background:var(--paper)}
+.slush-text-link:hover span{background:var(--yellow)}
+.slush-hero-footer{margin-top:auto}
+.slush-art{position:absolute;z-index:1;right:-105px;top:32px;width:min(53vw,700px);height:620px;pointer-events:none}
+.slush-ribbon{width:100%;height:100%;overflow:visible;transform:rotate(-10deg)}
+.slush-sticker{position:absolute;z-index:2;display:grid;place-items:center;border:1px solid var(--ink);font-family:Arial,sans-serif;line-height:1}
+.slush-sticker-sun{right:18%;top:6%;width:104px;height:104px;border-radius:50%;background:var(--yellow);color:var(--orange);font-size:75px;transform:rotate(13deg)}
+.slush-sticker-heart{right:5%;bottom:19%;width:80px;height:80px;border-radius:22px;background:var(--lavender);color:var(--orange);font-size:57px;transform:rotate(15deg)}
+.slush-sticker-star{left:9%;top:15%;width:76px;height:76px;border-radius:20px;background:var(--mint);color:var(--violet);font-size:55px;transform:rotate(-15deg)}
+.slush-art-label{position:absolute;right:19%;bottom:6%;background:var(--paper);border:1px solid var(--ink);padding:13px 16px;border-radius:14px;transform:rotate(-9deg);font-size:12px;line-height:1.1;font-weight:900;letter-spacing:.04em}
+.slush-ticker{height:58px;background:var(--blue);border-bottom:1px solid var(--ink);overflow:hidden;display:flex;align-items:center}
+.slush-ticker div{width:max-content;white-space:nowrap;font-family:"TaleSpark Display",Impact,sans-serif;font-size:30px;letter-spacing:.02em;animation:slush-scroll 28s linear infinite}
+.slush-ticker span{font-family:Arial,sans-serif;color:var(--yellow);font-size:24px;margin:0 18px;-webkit-text-stroke:1px var(--ink)}
+@keyframes slush-scroll{to{transform:translateX(-50%)}}
+
+@media(min-width:851px) and (max-width:1100px){
+  .slush-header-inner{gap:10px}
+  .slush-nav{gap:0;padding:3px}
+  .slush-nav a{padding:10px 8px;font-size:11px}
+  .slush-nav-actions{gap:8px}
+  .slush-nav-actions .slush-text-link{display:none}
+  .slush-nav-actions .slush-button{gap:10px;padding-inline:14px}
+  .slush-language-picker{gap:6px;padding-inline:8px}
+  .slush-language-picker select{max-width:5.25rem}
+}
+
+.slush-section{padding:120px 0;scroll-margin-top:24px}
+.slush-section-heading{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.7fr);align-items:end;gap:50px;margin-bottom:48px}
+.slush-eyebrow{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.slush-section h2,.slush-cta h2{font-family:"TaleSpark Display",Impact,sans-serif;text-transform:uppercase;font-size:clamp(64px,7vw,108px);font-weight:900;line-height:.86;letter-spacing:-.025em;margin:20px 0 0;max-width:980px}
+.slush-section-heading>p{font-size:17px;line-height:1.5;margin:0 0 5px;max-width:335px}
+.slush-how{background:var(--paper)}
+.slush-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.slush-step{min-height:435px;border:1px solid var(--ink);border-radius:30px;padding:25px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.slush-yellow{background:var(--yellow)}.slush-lavender{background:var(--lavender)}.slush-mint{background:var(--mint)}.slush-blue{background:var(--blue)}.slush-orange{background:var(--orange)}.slush-violet{background:var(--violet);color:var(--paper)}
+.slush-step-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:900;letter-spacing:.12em}
+.slush-step-graphic{flex:1;display:grid;place-items:center;font-size:178px;line-height:1;color:var(--ink);text-shadow:9px 9px 0 rgba(255,255,255,.52);transform:rotate(-10deg)}
+.slush-step:nth-child(2) .slush-step-graphic{transform:rotate(12deg)}
+.slush-step:nth-child(3) .slush-step-graphic{transform:rotate(-8deg)}
+.slush-step-copy{position:relative;z-index:1}
+.slush-step h3{font-size:26px;line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:0 0 9px}
+.slush-step p{font-size:14px;line-height:1.45;margin:0;max-width:295px}
+
+.slush-demo{background:var(--paper);padding:0 0 120px;scroll-margin-top:24px}
+.slush-demo-inner{border:1px solid var(--ink);border-radius:30px;background:var(--yellow);padding:40px;display:grid;grid-template-columns:.65fr 1fr;gap:45px;align-items:center}
+.slush-demo-copy{position:relative}
+.slush-demo h2{font-family:"TaleSpark Display",Impact,sans-serif;text-transform:uppercase;font-size:clamp(52px,5.3vw,80px);line-height:.88;letter-spacing:-.025em;margin:20px 0}
+.slush-demo-copy p{max-width:310px;font-size:15px;line-height:1.5;margin:0}
+.slush-demo-spark{position:absolute;font-size:80px;line-height:1;right:5%;bottom:-35px;color:var(--orange);-webkit-text-stroke:1px var(--ink);transform:rotate(-13deg)}
+.slush-video{border:1px solid var(--ink);border-radius:22px!important;box-shadow:none!important}
+.slush-video>div{background:var(--sky)!important}
+.slush-video>div>div:first-child{background:transparent!important}
+.slush-video>div>div:nth-of-type(2)>div{box-shadow:none!important;border:1px solid var(--ink);background:var(--paper)!important}
+.slush-video>div>div:nth-of-type(3){box-shadow:none!important;border:1px solid var(--ink);background:var(--paper)!important}
+
+.slush-features{background:var(--lavender);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.slush-features-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.slush-feature{position:relative;background:var(--paper);border:1px solid var(--ink);border-radius:24px;padding:24px;min-height:250px;display:flex;flex-direction:column;align-items:flex-start}
+.slush-feature-marker{display:grid;place-items:center;width:62px;height:62px;border:1px solid var(--ink);border-radius:18px;font-size:36px;font-weight:900;line-height:1}
+.slush-feature-number{position:absolute;top:30px;right:26px;font-size:11px;font-weight:900;letter-spacing:.09em}
+.slush-feature h3{font-size:24px;line-height:1.08;letter-spacing:-.04em;margin:auto 0 9px;font-weight:900}
+.slush-feature p{max-width:290px;margin:0;font-size:14px;line-height:1.45}
+.slush-feature-arrow{position:absolute;right:22px;bottom:24px}
+.slush-feature:hover{background:var(--sky)}
+
+.slush-interlude{background:var(--blue);border-bottom:1px solid var(--ink);overflow:hidden}
+.slush-interlude>.slush-container{min-height:350px;display:flex;align-items:center;justify-content:center;position:relative}
+.slush-interlude p{font-family:"TaleSpark Display",Impact,sans-serif;font-size:clamp(70px,10vw,165px);line-height:.83;letter-spacing:-.02em;text-align:center;margin:0}
+.slush-interlude em{font-style:normal;color:var(--paper)}
+.slush-interlude-star{position:absolute;left:0;top:30px;color:var(--yellow);font-size:110px;line-height:1;-webkit-text-stroke:1px var(--ink);transform:rotate(-20deg)}
+.slush-interlude-badge{position:absolute;right:3%;bottom:18px;width:145px;height:145px;border:1px solid var(--ink);border-radius:50%;background:var(--yellow);display:grid;place-items:center;text-align:center;line-height:1.1;font-size:14px;font-weight:900;transform:rotate(13deg)}
+
+.slush-pricing{background:#d1d1d1}
+.slush-pricing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:stretch}
+.slush-price-card{background:var(--paper);border:1px solid var(--ink);border-radius:30px;padding:35px;position:relative;display:flex;flex-direction:column;min-height:595px}
+.slush-price-premium{background:var(--sky)}
+.slush-plan-label{font-size:11px;font-weight:900;letter-spacing:.12em}
+.slush-price-card h3{font-size:40px;letter-spacing:-.06em;line-height:1;margin:28px 0 18px;font-weight:900}
+.slush-price{font-family:"TaleSpark Display",Impact,sans-serif;font-size:76px;line-height:1;display:flex;align-items:end;gap:12px}
+.slush-price small{font-family:Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:.02em;line-height:1.3;margin-bottom:8px}
+.slush-price-card>p{font-size:15px;line-height:1.5;margin:14px 0 25px}
+.slush-price-card ul{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:10px}
+.slush-price-card li{display:flex;gap:10px;align-items:center;font-size:14px;line-height:1.35}
+.slush-price-card li svg{flex:none}
+.slush-price-card>.slush-button{margin-top:auto;width:100%;justify-content:space-between}
+.slush-popular{position:absolute;right:24px;top:-17px;padding:9px 15px;border:1px solid var(--ink);border-radius:100px;background:var(--yellow);font-size:11px;font-weight:900;letter-spacing:.04em;transform:rotate(4deg)}
+.slush-pricing-note{display:flex;justify-content:center;align-items:center;gap:9px;margin:24px 0 0;font-size:13px;font-weight:700}
+
+.slush-testimonials{background:var(--sky);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.slush-quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.slush-quote{margin:0;background:var(--paper);border:1px solid var(--ink);border-radius:25px;padding:28px;min-height:330px;display:flex;flex-direction:column}
+.slush-quote-stars{display:flex;gap:4px;color:var(--orange)}
+.slush-quote blockquote{font-size:20px;line-height:1.35;letter-spacing:-.03em;font-weight:800;margin:30px 0}
+.slush-quote figcaption{display:flex;align-items:center;gap:12px;margin-top:auto}
+.slush-avatar{width:45px;height:45px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;flex:none}
+.slush-quote figcaption strong,.slush-quote figcaption small{display:block}
+.slush-quote figcaption strong{font-size:13px}.slush-quote figcaption small{font-size:11px;line-height:1.4;margin-top:3px}
+
+.slush-cta{background:var(--mint)}
+.slush-cta-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.7fr);align-items:center;gap:90px}
+.slush-cta h2{font-size:clamp(68px,8vw,120px);margin-bottom:25px}
+.slush-cta-inner>div:first-child>p{max-width:460px;font-size:17px;line-height:1.5;margin:0 0 30px}
+.slush-feedback-card{position:relative;background:var(--paper);border:1px solid var(--ink);border-radius:28px;padding:35px}
+.slush-feedback-card h3{font-size:27px;line-height:1.1;letter-spacing:-.05em;margin:0 0 24px;font-weight:900}
+.slush-feedback-sticker{position:absolute;right:25px;top:-31px;width:60px;height:60px;border:1px solid var(--ink);border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:40px;color:var(--orange);transform:rotate(10deg)}
+.slush-feedback-card form{max-width:none}
+.slush-feedback-card input,.slush-feedback-card textarea{background:var(--paper)!important;border:1px solid var(--ink)!important;border-radius:13px!important;color:var(--ink)!important;box-shadow:none!important}
+.slush-feedback-card form button{background:var(--ink)!important;color:var(--paper)!important;border:1px solid var(--ink)!important;border-radius:100px!important;box-shadow:none!important}
+.slush-feedback-card form button:hover{background:var(--violet)!important}
+
+.slush-script-preview{position:relative;z-index:1;background:var(--paper);border:1px solid var(--ink);border-radius:22px;padding:28px 30px;min-height:350px;display:flex;flex-direction:column;justify-content:center;box-shadow:8px 8px 0 var(--ink)}
+.slush-script-top,.slush-script-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:10px;font-weight:800;letter-spacing:.1em}
+.slush-script-top span:first-child{display:flex;align-items:center;gap:8px}
+.slush-script-top i{display:block;width:8px;height:8px;border-radius:50%;background:var(--mint);border:1px solid var(--ink)}
+.slush-script-question{font-size:clamp(22px,2.6vw,36px);font-weight:800;line-height:1.08;letter-spacing:-.045em;max-width:560px;margin:36px 0 18px}
+.slush-script-rule{width:100%;height:1px;background:var(--ink);margin-bottom:18px}
+.slush-script-preview>p:not(.slush-script-question){font-size:15px;line-height:1.6;max-width:590px;margin:0 0 auto}
+.slush-script-footer{border-top:1px solid var(--ink);margin-top:30px;padding-top:15px;font-size:9px}
+.slush-story-card{position:relative;min-height:280px;display:flex;flex-direction:column;justify-content:center;gap:22px;background:var(--paper);border:1px solid var(--ink);border-radius:28px;padding:36px;transform:rotate(2deg)}
+.slush-story-card-sticker{position:absolute;right:24px;top:-27px;width:60px;height:60px;display:grid;place-items:center;background:var(--yellow);border:1px solid var(--ink);border-radius:50%;font-size:38px;color:var(--orange);transform:rotate(12deg)}
+.slush-story-card>p{font-size:clamp(26px,3vw,42px);line-height:1.06;letter-spacing:-.045em;font-weight:800;margin:0;max-width:440px}
+.slush-story-card-bottom{font-size:10px;font-weight:800;letter-spacing:.1em;border-top:1px solid var(--ink);padding-top:16px}
+
+.slush-footer{background:var(--paper);border-top:1px solid var(--ink);padding:70px 0 25px}
+.slush-footer-main{display:grid;grid-template-columns:1.4fr .7fr 1fr;gap:60px;padding-bottom:70px}
+.slush-footer-main>div:first-child p{max-width:300px;font-size:14px;line-height:1.5;margin:22px 0 0}
+.slush-footer nav{display:grid;gap:11px;align-content:start}
+.slush-footer nav span,.slush-footer-join>span{font-size:11px;font-weight:900;letter-spacing:.12em;margin-bottom:8px}
+.slush-footer nav a{color:var(--ink);font-size:14px;font-weight:700}
+.slush-footer nav a:hover{text-decoration:underline}
+.slush-footer-join{display:flex;align-items:flex-start;flex-direction:column;gap:14px}
+.slush-footer-bottom{border-top:1px solid var(--ink);padding-top:22px;display:flex;justify-content:space-between;gap:24px;font-size:11px;font-weight:700;letter-spacing:.02em}
+
+@media(max-width:1150px){
+  .slush-container{width:min(100% - 48px,1360px)}
+  .slush-nav{gap:0}.slush-nav a{padding:11px 9px;font-size:11px}
+  .slush-brand{font-size:25px}.slush-brand img{width:64px;height:64px}
+  .slush-art{right:-110px;width:57vw;opacity:.9}
+  .slush-hero h1{font-size:clamp(94px,12.1vw,150px)}
+  .slush-hero-bottom{gap:25px}
+}
+@media(max-width:850px){
+  .slush-nav,.slush-nav-actions{display:none}
+  .slush-menu-button{display:grid;place-items:center;width:45px;height:45px;border:1px solid var(--ink);background:var(--paper);border-radius:50%;color:var(--ink)}
+  .slush-mobile-nav{display:grid;gap:0;padding:6px 24px 24px;border-top:1px solid var(--ink);background:var(--paper)}
+  .slush-mobile-nav>a{color:var(--ink);padding:15px 0;border-bottom:1px solid var(--ink);font-size:19px;font-weight:800;display:flex;justify-content:space-between}
+  .slush-mobile-nav>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:18px}
+  .slush-mobile-nav button{border:1px solid var(--ink)!important;border-radius:100px!important}
+  .slush-hero-inner{min-height:750px}
+  .slush-hero-copy{padding-bottom:260px;max-width:100%}
+  .slush-art{width:510px;height:480px;top:auto;bottom:45px;right:-150px;opacity:1}
+  .slush-hero h1{font-size:clamp(82px,13vw,130px);max-width:650px}
+  .slush-hero-bottom{align-items:flex-start;flex-direction:column;gap:20px}
+  .slush-section-heading{grid-template-columns:1fr;gap:20px}
+  .slush-section-heading>p{max-width:540px}
+  .slush-steps{gap:10px}.slush-step{min-height:390px;padding:18px}.slush-step-graphic{font-size:115px}
+  .slush-features-grid,.slush-quotes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slush-cta-inner{gap:35px;grid-template-columns:1fr 1fr}
+  .slush-demo-inner{grid-template-columns:1fr;gap:28px}
+  .slush-demo-copy p{max-width:550px}
+  .slush-demo-spark{right:7%;bottom:-12px}
+}
+@media(max-width:620px){
+  .slush-container{width:min(100% - 36px,1360px)}
+  .slush-header-inner{height:69px}
+  .slush-brand img{width:54px;height:54px}
+  .slush-hero-inner{min-height:820px;padding-top:22px}
+  .slush-hero-top>span:last-child{display:none}
+  .slush-hero-copy{margin:0;padding:68px 0 340px}
+  .slush-hero h1{font-size:clamp(48px,16.5vw,102px);line-height:.82;margin-bottom:24px;max-width:100%}
+  .slush-hero h1 span{font-size:.65em;line-height:1.05}
+  .slush-hero h1 strong{white-space:normal}
+  .slush-hero-bottom>p{font-size:14px;max-width:345px}
+  .slush-hero-actions{gap:13px}
+  .slush-hero-actions .slush-button{min-height:50px}
+  .slush-art{width:370px;height:380px;right:-70px;bottom:16px}
+  .slush-sticker-sun{width:65px;height:65px;font-size:50px}
+  .slush-sticker-heart{width:58px;height:58px;font-size:40px}
+  .slush-sticker-star{width:54px;height:54px;font-size:38px}
+  .slush-art-label{font-size:9px;right:22%;bottom:3%}
+  .slush-hero-footer{font-size:8px}
+  .slush-hero-footer svg{display:none}
+  .slush-section{padding:78px 0}
+  .slush-demo{padding-bottom:78px}
+  .slush-demo-inner{padding:24px;border-radius:23px}
+  .slush-demo h2{font-size:clamp(54px,12vw,75px)}
+  .slush-demo-spark{display:none}
+  .slush-section h2,.slush-cta h2{font-size:clamp(58px,13vw,84px)}
+  .slush-section-heading{margin-bottom:30px}
+  .slush-section-heading>p{font-size:15px}
+  .slush-steps,.slush-features-grid,.slush-pricing-grid,.slush-quotes,.slush-cta-inner{grid-template-columns:1fr}
+  .slush-steps{gap:13px}.slush-step{min-height:320px;padding:22px}.slush-step-graphic{font-size:110px}.slush-step h3{font-size:24px}
+  .slush-feature{min-height:200px}
+  .slush-interlude>.slush-container{min-height:260px}
+  .slush-interlude p{font-size:clamp(57px,12.5vw,90px)}
+  .slush-interlude-star{font-size:65px;top:10px}
+  .slush-interlude-badge{width:85px;height:85px;font-size:9px;bottom:4px;right:0}
+  .slush-price-card{min-height:unset;padding:28px}
+  .slush-price-card h3{font-size:35px}
+  .slush-price{font-size:65px}
+  .slush-quote{min-height:260px}
+  .slush-cta-inner{gap:55px}
+  .slush-feedback-card{padding:26px}
+  .slush-script-preview{min-height:320px;padding:23px;border-radius:20px;box-shadow:5px 5px 0 var(--ink)}
+  .slush-script-top,.slush-script-footer{font-size:8px}
+  .slush-script-question{font-size:27px;margin-top:28px}
+  .slush-story-card{min-height:230px;padding:27px;transform:rotate(1deg)}
+  .slush-footer-main{grid-template-columns:1fr 1fr;gap:34px;padding-bottom:50px}
+  .slush-footer-main>div:first-child{grid-column:1/-1}
+  .slush-footer-bottom{flex-direction:column;gap:8px}
+}
+@media(max-width:370px){.slush-hero h1{font-size:clamp(48px,16.5vw,60px)}.slush-hero-actions .slush-button{font-size:11px;padding:0 14px}.slush-text-link{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.slush-ticker div{animation:none}.slush-button{transition:none}}
+
+/* Shared TaleSpark typography and theme */
+.slush-page{--ink:#292538;--paper:#fffefa;--sky:#e7f3ff;--blue:#b8d9f3;--mint:#d8f1e2;--lavender:#e8e2fa;--orange:#b5472a;--yellow:#ffe08b;--violet:#5d4aca;color:var(--ink);background:var(--paper);font-family:var(--font-body),"Noto Sans",Arial,sans-serif}
+.slush-brand,.slush-hero h1,.slush-ticker div,.slush-interlude p{font-family:"TaleSpark Display",var(--font-heading),sans-serif}
+.slush-section h2,.slush-demo h2,.slush-cta h2,.slush-step h3,.slush-feature h3,.slush-price-card h3,.slush-feedback-card h3,.slush-script-question{font-family:var(--font-heading),"Noto Sans",Arial,sans-serif}
+.slush-price{font-family:var(--font-heading),"Noto Sans",Arial,sans-serif}
+.slush-sticker,.slush-price small{font-family:var(--font-body),"Noto Sans",Arial,sans-serif}
+.slush-nav a{font-size:13px}
+.slush-button{font-size:14px}
+.slush-section-heading>p,.slush-hero-bottom>p,.slush-demo-copy p,.slush-cta-inner>div:first-child>p{font-size:16px;line-height:1.6}
+.slush-step p,.slush-feature p,.slush-price-card>p,.slush-price-card li,.slush-script-preview>p:not(.slush-script-question),.slush-footer-main>div:first-child p{font-size:16px;line-height:1.55}
+.slush-price-card li{font-size:15px}
+.slush-eyebrow,.slush-step-top,.slush-plan-label,.slush-popular,.slush-pricing-note,.slush-footer nav a{font-size:12px}
+.slush-quote figcaption small,.slush-price small,.slush-art-label{font-size:12px}
+.slush-hero-footer{font-size:11px}
+.slush-page :is(a,button,input,textarea,select,summary):focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+.dark .slush-page{--ink:#f6f1fb;--paper:#211c2c;--sky:#2e3b50;--blue:#344c69;--mint:#27463b;--lavender:#403951;--orange:#93432e;--yellow:#65552e;--violet:#aa9cff;color:var(--ink);background:var(--paper)}
+.dark .slush-pricing{background:#2b2636}
+.dark .slush-page .slush-orange{background:#803b2a;color:#fffefa}
+.dark .slush-page .slush-violet{background:#4a3c86;color:#fffefa}
+.dark .slush-page .slush-yellow,.dark .slush-page .slush-mint,.dark .slush-page .slush-blue,.dark .slush-page .slush-lavender{color:var(--ink)}
+.dark .slush-page .slush-feedback-card input,.dark .slush-page .slush-feedback-card textarea{background:#2a2438!important;border-color:#686078!important;color:var(--ink)!important}
+@media(max-width:370px){.slush-hero-actions .slush-button,.slush-text-link{font-size:13px}}
+@media(max-width:620px){.slush-section-heading>p{font-size:16px}.slush-hero-footer{font-size:10px}.slush-art-label{font-size:11px}}
+@media(min-width:851px){.slush-hero-copy{max-width:760px}.slush-hero h1{font-size:clamp(88px,10vw,156px)}.slush-art{right:-135px;width:min(45vw,580px)}}
+@media(min-width:851px) and (max-width:1150px){.slush-hero h1{font-size:clamp(78px,10vw,115px)}.slush-art{right:-170px;width:48vw}}

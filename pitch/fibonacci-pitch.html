@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Fibonacci — питч</title>
+<style>
+@page { size: 297mm 167mm; margin: 14mm 18mm; }
+body { font-family: "Noto Sans", sans-serif; color: #16191D; font-size: 13pt; line-height: 1.45; }
+h1 { font-family: "Noto Serif", serif; font-size: 40pt; font-weight: normal; color: #16191D; margin: 0 0 6pt 0; }
+h2 { font-family: "Noto Serif", serif; font-size: 26pt; font-weight: normal; color: #2346D8; margin: 0 0 12pt 0; }
+.k { color: #2346D8; } .g { color: #A87400; font-weight: bold; }
+.lab { font-size: 9pt; letter-spacing: 2pt; color: #5A6170; text-transform: uppercase; margin: 0 0 6pt 0; }
+.big { font-size: 17pt; }
+.slide { page-break-after: always; }
+td { vertical-align: top; padding: 4pt 10pt 4pt 0; font-size: 12pt; }
+th { text-align: left; font-size: 10pt; color: #5A6170; padding: 3pt 10pt 3pt 0; border-bottom: 1px solid #D9DDE3; }
+ul { margin: 0; padding-left: 16pt; } li { margin: 3pt 0; }
+</style></head><body>
+
+<div class="slide">
+<p class="lab">EdTech · AI</p>
+<h1>fibonacci</h1>
+<h2>У каждой темы есть путь.</h2>
+<p class="big">Fibonacci превращает вопрос или ваш учебный материал в понятный путь: объяснение, ключевые идеи, тест, карточки, презентацию и короткое видео — на казахском, русском и английском.</p>
+<p><img src="screen.png" width="560"></p>
+</div>
+
+<div class="slide">
+<p class="lab">Проблема</p>
+<h2>Материала много — понимания мало</h2>
+<ul class="big">
+<li>Ученики получают учебники, конспекты и статьи, но не знают, <b>с чего начать</b> и как проверить, что поняли.</li>
+<li>ИИ-чаты отвечают уверенно, но <b>не показывают, откуда</b> взят ответ, и легко выдумывают.</li>
+<li>Учителя тратят часы на подготовку тестов, карточек и презентаций.</li>
+<li>Качественных интерактивных материалов на <b>казахском языке</b> очень мало.</li>
+</ul>
+</div>
+
+<div class="slide">
+<p class="lab">Решение</p>
+<h2>Вопрос или источник → путь к пониманию</h2>
+<table>
+<tr><td class="g">1</td><td><b>Принесите вопрос или материал.</b> Тема из урока или вставленный текст: конспект, отрывок учебника, статья. Учителя загружают PDF, Word и текст.</td></tr>
+<tr><td class="g">2</td><td><b>Разберите ключевые идеи.</b> Понятное объяснение по возрасту, которое можно редактировать, с главными идеями.</td></tr>
+<tr><td class="g">3</td><td><b>Проверьте понимание.</b> Тесты, карточки, презентации и видео-объяснения, построенные на вашем материале.</td></tr>
+<tr><td class="g">✓</td><td><b>Ответы с источником.</b> Материалы учителя указывают страницу или абзац источника; если в источниках нет данных — Fibonacci говорит об этом, а не угадывает.</td></tr>
+</table>
+</div>
+
+<div class="slide">
+<p class="lab">Что уже работает (MVP)</p>
+<h2>Рабочий продукт, а не макет</h2>
+<table>
+<tr><th>Ученик</th><th>Учитель</th></tr>
+<tr><td><ul>
+<li>История-объяснение по теме → видео с озвучкой и картинками</li>
+<li>Тесты, карточки, презентации</li>
+<li>Свой источник: вставленный текст становится основой материалов</li>
+<li>Библиотека сохранённых работ</li>
+</ul></td><td><ul>
+<li>10 видов материалов: план урока, тест, контрольная, карточки, рабочий лист, домашнее задание, презентация, видео и др.</li>
+<li>Библиотека источников (PDF, DOCX, текст) со ссылками на страницы</li>
+<li>Редактирование, печать, видео из презентации</li>
+</ul></td></tr>
+</table>
+<p>Интерфейс и материалы на <b>казахском, русском и английском</b>. Приватные аккаунты, 300+ автоматических тестов.</p>
+</div>
+
+<div class="slide">
+<p class="lab">Отличие</p>
+<h2>Почему Fibonacci, а не просто чат</h2>
+<table>
+<tr><th></th><th>ИИ-чаты</th><th>Fibonacci</th></tr>
+<tr><td>Структура</td><td>Ответ на один вопрос</td><td><b>Путь</b>: объяснение → идеи → проверка</td></tr>
+<tr><td>Доверие</td><td>Источник неизвестен</td><td>Опора на <b>ваш материал</b>, ссылки на страницы</td></tr>
+<tr><td>Языки</td><td>Казахский — слабо</td><td><b>Казахский</b> наравне с русским и английским</td></tr>
+<tr><td>Для учителя</td><td>Копировать и форматировать вручную</td><td>Готовые редактируемые материалы урока</td></tr>
+<tr><td>Формат</td><td>Текст</td><td>Тест, карточки, слайды, <b>видео</b></td></tr>
+</table>
+</div>
+
+<div class="slide">
+<p class="lab">Технологии и дальше</p>
+<h2>Что под капотом и куда идём</h2>
+<table><tr><td width="50%"><b>Стек</b><ul>
+<li>Next.js, React</li><li>FastAPI, Celery, Redis</li><li>Supabase (Postgres, защита данных на уровне строк)</li><li>Gemini, синтез речи, FFmpeg для видео</li></ul></td>
+<td><b>Следующие шаги</b><ul>
+<li>Путь обучения: идеи по порядку с отметкой «понял»</li>
+<li>Источники из ссылок на сайты и YouTube</li>
+<li>Ответы на вопросы со ссылкой на каждое предложение</li>
+<li>Классы: учитель делится материалами с учениками</li></ul></td></tr></table>
+<p class="big" style="margin-top:18pt"><span class="k">Fibonacci</span> — каждый шаг опирается на предыдущий.</p>
+</div>
+
+</body></html>

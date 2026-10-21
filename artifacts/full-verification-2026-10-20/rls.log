@@ -1,0 +1,8 @@
+PASS: direct RLS and denied client updates: teacher_profiles
+PASS: direct RLS and denied client updates: teacher_lessons
+PASS: direct RLS and denied client updates: teacher_resources
+PASS: direct RLS and denied client updates: teacher_documents
+PASS: direct RLS and denied client updates: teacher_document_chunks
+PASS: direct RLS and denied client updates: student_study_materials
+PASS: direct RLS and denied client updates: teacher_presentation_renders
+PASS: direct RLS and denied client updates: teacher_video_renders

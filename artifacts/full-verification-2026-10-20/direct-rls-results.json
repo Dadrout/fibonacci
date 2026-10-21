@@ -1,0 +1,62 @@
+[
+  {
+    "table": "teacher_profiles",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "teacher_lessons",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "teacher_resources",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "teacher_documents",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "teacher_document_chunks",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "student_study_materials",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "teacher_presentation_renders",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "teacher_video_renders",
+    "own_reads": "scoped",
+    "cross_account_rows": 0,
+    "client_update": 403,
+    "anonymous_read": 401
+  },
+  {
+    "table": "presentation_slide_visuals",
+    "direct_authenticated_read": 403
+  }
+]

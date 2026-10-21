@@ -1,0 +1,32 @@
+........................................................................ [ 22%]
+........................................................................ [ 44%]
+........................................................................ [ 67%]
+........................................................................ [ 89%]
+........F........................                                        [100%]
+=================================== FAILURES ===================================
+________ test_regular_video_rendering_keeps_its_existing_camera_motion _________
+
+    def test_regular_video_rendering_keeps_its_existing_camera_motion():
+        command = FFmpegService().build_command(
+            image_paths=["scene-1.png"],
+            scene_durations=[8.0],
+            audio_path="narration.mp3",
+            subtitles_path="captions.srt",
+            output_path="story.mp4",
+        )
+    
+        filters = command[command.index("-filter_complex") + 1]
+>       assert "zoompan" in filters
+E       AssertionError: assert 'zoompan' in '[0:v]split=2[bgsrc0][fgsrc0];[bgsrc0]scale=1280:720:force_original_aspect_ratio=increase:flags=lanczos,crop=1280:720,...=yuv420p,setsar=1,settb=AVTB,setpts=PTS-STARTPTS[v0];[v0]concat=n=1:v=1:a=0[vbase];[vbase]subtitles=captions.srt[vout]'
+
+app/api/v1/tests/test_teacher_presentation_video.py:142: AssertionError
+=============================== warnings summary ===============================
+app/api/v1/tests/test_account_deletion.py::test_account_route_requires_auth_and_applies_daily_limit
+app/api/v1/tests/test_account_deletion.py::test_account_route_requires_auth_and_applies_daily_limit
+  /home/dadrout/WizeTale/wizetale-api/.venv/lib64/python3.14/site-packages/slowapi/extension.py:720: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(func):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED app/api/v1/tests/test_teacher_presentation_video.py::test_regular_video_rendering_keeps_its_existing_camera_motion
+1 failed, 320 passed, 2 warnings in 3.35s

@@ -1,0 +1,4 @@
+story PROGRESS audio_generation 50
+story PROGRESS video_creation 85
+story PROGRESS video_creation 94
+story SUCCESS complete 100

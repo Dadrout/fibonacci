@@ -1,0 +1,55 @@
+[
+  {
+    "check": "anonymous /stories",
+    "status": 401
+  },
+  {
+    "check": "anonymous /study-materials",
+    "status": 401
+  },
+  {
+    "check": "anonymous /teacher/lessons",
+    "status": 401
+  },
+  {
+    "check": "anonymous /teacher/documents",
+    "status": 401
+  },
+  {
+    "check": "invalid input /teacher/lessons",
+    "status": 422
+  },
+  {
+    "check": "invalid input /teacher/lessons",
+    "status": 422
+  },
+  {
+    "check": "invalid input /study-materials",
+    "status": 422
+  },
+  {
+    "check": "authenticated API caching",
+    "cache_control": "private, no-store, max-age=0"
+  },
+  {
+    "check": "development wildcard CORS (explicit application behavior)",
+    "status": 200
+  },
+  {
+    "check": "onboarding rate limit",
+    "statuses": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      429
+    ],
+    "retry_after_present": true
+  }
+]
