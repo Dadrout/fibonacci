@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { AudioLines, Check, ChevronDown, FileText, Image as ImageIcon, Link2, RotateCw } from 'lucide-react'
 import { useCopy } from '@/hooks/use-copy'
+import { useLanguage } from '@/hooks/use-language'
+import { courseColorSlot } from './brain-ui-state'
 import type { BrainApi } from '@/lib/brain-api'
 import type { BrainItem, ItemStatus } from '@/lib/brain-types'
 
@@ -11,6 +13,7 @@ type BrainItemCardProps = {
   item: BrainItem
   api: BrainApi
   recentlyFiled?: boolean
+  courseColor?: number
   onItemChange: (item: BrainItem) => void
 }
 
@@ -56,8 +59,9 @@ function requestForAlternative(alt: BrainItem['alternatives'][number]) {
   }
 }
 
-export function BrainItemCard({ item, api, recentlyFiled = false, onItemChange }: BrainItemCardProps) {
+export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, onItemChange }: BrainItemCardProps) {
   const c = useCopy()
+  const { language } = useLanguage()
   const [action, setAction] = useState<'retry' | 'refile' | null>(null)
   const [actionError, setActionError] = useState('')
   const [showAlternatives, setShowAlternatives] = useState(false)
@@ -95,16 +99,16 @@ export function BrainItemCard({ item, api, recentlyFiled = false, onItemChange }
     }
   }
 
-  return <article className={`brain-item${recentlyFiled ? ' is-newly-filed' : ''}${item.status === 'failed' ? ' is-failed' : ''}`} aria-label={`${c(kindLabel(item.kind))}: ${item.title}`}>
+  return <article className={`brain-item${recentlyFiled ? ' is-newly-filed' : ''}${item.status === 'filed' ? ' is-filed' : ''}${item.status === 'failed' ? ' is-failed' : ''}`} data-course-color={courseColorSlot(courseColor)} aria-label={`${c(kindLabel(item.kind))}: ${item.title}`}>
     <div className="brain-item-main">
       <div className="brain-item-preview" aria-hidden={imageUrl ? undefined : true}>
         {imageUrl ? <Image src={imageUrl} alt={`${c('Preview of source')}: ${item.title}`} fill unoptimized sizes="(max-width: 700px) 68px, 88px" className="brain-item-image" /> : kindIcon(item.kind)}
       </div>
       <div className="brain-item-content">
-        <div className="brain-item-overline"><span className="brain-kind">{kindIcon(item.kind)}{c(kindLabel(item.kind))}</span><time dateTime={item.captured_at}>{new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }).format(new Date(item.captured_at))}</time></div>
-        <h2>{item.title}</h2>
-        {item.summary && <p className="brain-item-summary">{item.summary}</p>}
-        {item.source_url && <a className="brain-source-link" href={item.source_url} target="_blank" rel="noopener noreferrer">{c('Open original source')}<span aria-hidden="true">↗</span></a>}
+        <div className="brain-item-overline"><span className="brain-kind">{kindIcon(item.kind)}{c(kindLabel(item.kind))}</span><time dateTime={item.captured_at}>{new Intl.DateTimeFormat(language, { month: 'short', day: 'numeric' }).format(new Date(item.captured_at))}</time></div>
+        <h2>{item.status === 'filed' && item.source_url ? <a href={item.source_url} target="_blank" rel="noopener noreferrer" aria-label={`${item.title} · ${c('Open original source')}`}>{item.title}<span aria-hidden="true"> ↗</span></a> : item.title}</h2>
+        {item.status !== 'filed' && item.summary && <p className="brain-item-summary">{item.summary}</p>}
+        {item.status !== 'filed' && item.source_url && <a className="brain-source-link" href={item.source_url} target="_blank" rel="noopener noreferrer">{c('Open original source')}<span aria-hidden="true">↗</span></a>}
       </div>
       {item.status === 'filed' && <span className="brain-filed-mark" aria-label={c('Filed')}><Check size={19} aria-hidden="true" /></span>}
     </div>
@@ -112,37 +116,37 @@ export function BrainItemCard({ item, api, recentlyFiled = false, onItemChange }
     {item.status === 'failed' ? <div className="brain-failure" role="group" aria-label={c('Capture failed')}>
       <p>{failureText(item.failure_code, c)}</p>
       <button type="button" className="brain-secondary-button" disabled={action !== null} onClick={() => void retry()}><RotateCw size={16} aria-hidden="true" />{action === 'retry' ? c('Retrying…') : c('Retry')}</button>
-    </div> : <div className={`brain-pipeline${item.status === 'filed' ? ' is-complete' : ''}`}>
+    </div> : item.status !== 'filed' ? <div className="brain-pipeline">
       <div className="brain-progress-heading"><strong>{c(stages[Math.max(0, activeStageIndex)]?.label ?? 'Queued')}</strong><span>{percent}%</span></div>
       <div className="brain-progress-track" role="progressbar" aria-label={c('Processing progress')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}>
         <span style={{ transform: `scaleX(${progress})` }} />
       </div>
       <ol className="brain-stage-list" aria-label={c('Capture stages')}>
         {stages.map((stage, index) => {
-          const done = item.status === 'filed' || (activeStageIndex >= 0 && index < activeStageIndex)
-          const current = item.status !== 'filed' && index === activeStageIndex
+          const done = activeStageIndex >= 0 && index < activeStageIndex
+          const current = index === activeStageIndex
           return <li key={stage.status} className={`${done ? 'is-done' : ''}${current ? ' is-current' : ''}`} aria-current={current ? 'step' : undefined}>
             <span className="brain-stage-dot">{done ? <Check size={12} aria-hidden="true" /> : index + 1}</span>
             <span>{c(stage.label)}</span>
           </li>
         })}
       </ol>
-    </div>}
+    </div> : null}
 
     {item.status === 'filed' && <div className="brain-filing-result">
-      <div className="brain-filing-path"><span>{c('Filed under')}</span><strong>{item.course_title || c('Course not identified')} <span aria-hidden="true">→</span> {item.topic_title || c('No topic yet')}</strong></div>
+      <div className="brain-filing-path" role={recentlyFiled ? 'status' : undefined}><span><Check size={14} aria-hidden="true" />{c('Filed under')}</span><strong>{item.course_title || c('Course not identified')} <span aria-hidden="true">→</span> {item.topic_title || c('No topic yet')}</strong></div>
       {confidence !== null && <div className={`brain-confidence${needsReview ? ' needs-review' : ''}`}>
         <span>{needsReview ? c('Please review this match') : c('Filing confidence')}</span>
         <strong aria-label={`${c('Filing confidence')}: ${confidence}%`}>{confidence}%</strong>
       </div>}
-      {(item.alternatives.length > 0 || item.needs_review) && <details className="brain-refile" open={showAlternatives} onToggle={(event) => setShowAlternatives(event.currentTarget.open)}>
+      <details className="brain-refile" open={showAlternatives} onToggle={(event) => setShowAlternatives(event.currentTarget.open)}>
         <summary><span>{c('Not right?')}</span><ChevronDown size={16} aria-hidden="true" /></summary>
         <div className="brain-alternatives">
           {item.alternatives.length ? item.alternatives.map((alt, index) => <button type="button" key={`${alt.course_id ?? alt.course_title}-${alt.topic_id ?? alt.topic_title}-${index}`} disabled={action !== null} onClick={() => void refile(alt)}>
             <span>{alt.course_title}<span aria-hidden="true"> → </span>{alt.topic_title}</span><small>{Math.round(alt.confidence * 100)}% {c('match')}</small>
           </button>) : <p>{c('No other filing suggestions yet.')}</p>}
         </div>
-      </details>}
+      </details>
     </div>}
     {actionError && <p className="brain-item-action-error" role="alert">{actionError}</p>}
   </article>

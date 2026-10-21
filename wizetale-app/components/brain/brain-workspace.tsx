@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { Activity, BookOpen, BrainCircuit, Check, ChevronRight, FilePlus2, GitBranch, GraduationCap, Inbox, LoaderCircle, Presentation, Send, Sparkles, TriangleAlert } from 'lucide-react'
 import { useBrainApi, useBrainEvents, useBrainSession } from '@/hooks/use-brain-api'
 import { useCopy } from '@/hooks/use-copy'
@@ -12,8 +13,11 @@ import { LanguagePicker } from '@/components/language-picker'
 import { SignInPrompt } from '@/components/sign-in-prompt'
 import { StudioIcon } from '@/components/studio-icon'
 import { ThemeToggle } from '@/components/theme-toggle'
-import type { BrainEvent, BrainItem, BrainOverview, GapAlert } from '@/lib/brain-types'
-import { reduceItems } from '@/lib/brain-api-helpers'
+import type { BrainEvent, BrainGraph as GraphData, BrainItem, BrainOverview } from '@/lib/brain-types'
+import { reduceGraph, reduceItems } from '@/lib/brain-api-helpers'
+import { addConnection, groupGaps, updateOverview, withUiTimeout, type NewConnection } from './brain-ui-state'
+
+const BrainGraph = dynamic(() => import('./brain-graph').then(module => module.BrainGraph), { loading: () => <BrainLoading /> })
 
 type BrainTab = 'inbox' | 'graph' | 'courses' | 'exam' | 'telegram'
 
@@ -25,25 +29,13 @@ const tabs: Array<{ id: BrainTab; label: string; icon: typeof Inbox }> = [
   { id: 'telegram', label: 'Telegram', icon: Send },
 ]
 
-function gapText(gap: GapAlert, language: string, c: (text: string) => string) {
-  const labels: Record<GapAlert['sequence_kind'], string> = { week: 'Week', lecture: 'Lecture', chapter: 'Chapter', module: 'Module' }
-  const label = c(labels[gap.sequence_kind])
-  return language === 'kk'
-    ? `${gap.missing}-${label.toLocaleLowerCase('kk-KZ')} ${c('is missing')}`
-    : `${label} ${gap.missing} ${c('is missing')}`
-}
-
-function stageCounts(items: BrainItem[]) {
-  return items.filter((item) => !['filed', 'failed'].includes(item.status)).length
-}
-
 function BrainLoading() {
   const c = useCopy()
-  return <main className="brain-loading" aria-busy="true" aria-label={c('Loading your Brain')}>
+  return <div className="brain-loading" aria-busy="true" aria-label={c('Loading your Brain')}>
     <div className="brain-loading-mark"><FibonacciMark size={34} filled={8} /></div>
     <div className="brain-loading-lines"><span /><span /><span /></div>
     <div className="brain-loading-card" /><div className="brain-loading-card" />
-  </main>
+  </div>
 }
 
 export function BrainWorkspace() {
@@ -55,35 +47,49 @@ export function BrainWorkspace() {
   const [overview, setOverview] = useState<BrainOverview | null>(null)
   const [loadingOverview, setLoadingOverview] = useState(true)
   const [overviewError, setOverviewError] = useState(false)
-  const [courseNames, setCourseNames] = useState<Record<string, string>>({})
-  const courseNamesRef = useRef<Record<string, string>>({})
+  const [graph, setGraph] = useState<GraphData | null>(null)
+  const graphRef = useRef<GraphData | null>(null)
+  const [graphError, setGraphError] = useState(false)
+  const [focusRequest, setFocusRequest] = useState<{ id: string; token: number } | null>(null)
   const [newlyFiled, setNewlyFiled] = useState<string[]>([])
-  const [connection, setConnection] = useState<{ source: string; target: string; sourceCourseId: string; targetCourseId: string } | null>(null)
-  const connectionTimer = useRef<number | null>(null)
+  const filingTimers = useRef(new Map<string, number>())
+  const [connections, setConnections] = useState<NewConnection[]>([])
+  const seenEvents = useRef(new Set<string>())
+  const eventVersion = useRef(0)
+  const snapshotRequest = useRef(0)
+  const reconcileTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const reconcileGraph = useRef(false)
   const [simulating, setSimulating] = useState(false)
+  const [simulationError, setSimulationError] = useState(false)
   const [presentation, setPresentation] = useState(false)
   const [presentationReady, setPresentationReady] = useState(false)
 
-  const loadOverview = useCallback(async () => {
+  const loadOverview = useCallback(async (refreshGraph = true) => {
+    const request = ++snapshotRequest.current
     setLoadingOverview(true)
     setOverviewError(false)
-    try {
-      const data = await api.overview()
-      setOverview(data)
-    } catch {
-      setOverviewError(true)
-    } finally {
+    if (refreshGraph) setGraphError(false)
+    // A snapshot fetched across an event boundary can overwrite newer live data.
+    // Retry that read; keep the event-driven UI visible in the meantime.
+    while (snapshotRequest.current === request) {
+      const version = eventVersion.current
+      const [overviewResult, graphResult] = await Promise.allSettled([withUiTimeout(api.overview()), refreshGraph ? withUiTimeout(api.graph()) : Promise.resolve(null)])
+      if (snapshotRequest.current !== request) return
+      if (version !== eventVersion.current) continue
+      if (overviewResult.status === 'fulfilled') setOverview(overviewResult.value)
+      else setOverviewError(true)
+      if (graphResult.status === 'fulfilled' && graphResult.value) {
+        graphRef.current = graphResult.value
+        setGraph(graphResult.value)
+      } else if (graphResult.status === 'rejected') setGraphError(true)
       setLoadingOverview(false)
+      break
     }
-    void api.graph().then((graph) => {
-      const names = Object.fromEntries(graph.courses.map((course) => [course.id, course.title]))
-      courseNamesRef.current = names
-      setCourseNames(names)
-    }).catch(() => undefined)
   }, [api])
 
   useEffect(() => {
     if (session.canUse) void loadOverview()
+    return () => { snapshotRequest.current += 1 }
   }, [loadOverview, session.canUse])
 
   useEffect(() => {
@@ -105,49 +111,65 @@ export function BrainWorkspace() {
   }, [presentation, presentationReady])
 
   useEffect(() => () => {
-    if (connectionTimer.current !== null) window.clearTimeout(connectionTimer.current)
+    filingTimers.current.forEach(timer => window.clearTimeout(timer))
+    if (reconcileTimer.current !== null) clearTimeout(reconcileTimer.current)
   }, [])
 
   const handleEvent = useCallback((event: BrainEvent) => {
-    setOverview((current) => {
-      if (!current) return current
-      let gaps = current.gaps
-      if (event.type === 'gap.detected' && !gaps.some((gap) => gap.id === event.gap.id)) gaps = [...gaps, event.gap]
-      if (event.type === 'gap.resolved') gaps = gaps.filter((gap) => gap.id !== event.gap_id)
-      return { ...current, recent_items: reduceItems(current.recent_items, event), gaps }
-    })
+    if (seenEvents.current.has(event.id)) return
+    seenEvents.current.add(event.id)
+    if (seenEvents.current.size > 2000) seenEvents.current.delete(seenEvents.current.values().next().value!)
+    eventVersion.current += 1
+    let nextGraph = graphRef.current ? reduceGraph(graphRef.current, event) : null
+    if (nextGraph && event.type === 'link.created') {
+      // reduceGraph adds the concepts/edge; the event also supplies their course metadata.
+      const courses = new Map(nextGraph.courses.map(course => [course.id, course]))
+      courses.set(event.source_course.id, event.source_course)
+      courses.set(event.target_course.id, event.target_course)
+      nextGraph = { ...nextGraph, courses: [...courses.values()] }
+    }
+    if (nextGraph !== graphRef.current) { graphRef.current = nextGraph; setGraph(nextGraph) }
+    setOverview(current => current ? updateOverview(current, event, reduceItems(current.recent_items, event), nextGraph) : current)
+    setConnections(current => addConnection(current, event))
 
     if (event.type === 'item.filed') {
       setNewlyFiled((current) => [...current.filter((id) => id !== event.item.id), event.item.id])
-      window.setTimeout(() => setNewlyFiled((current) => current.filter((id) => id !== event.item.id)), 2600)
+      window.clearTimeout(filingTimers.current.get(event.item.id))
+      filingTimers.current.set(event.item.id, window.setTimeout(() => {
+        setNewlyFiled(current => current.filter(id => id !== event.item.id))
+        filingTimers.current.delete(event.item.id)
+      }, 4200))
     }
 
-    if (event.type === 'link.created' && event.link.cross_course) {
-      const names = courseNamesRef.current
-      setConnection({
-        source: event.source.name,
-        target: event.target.name,
-        sourceCourseId: event.source.course_id,
-        targetCourseId: event.target.course_id,
-      })
-      if (connectionTimer.current !== null) window.clearTimeout(connectionTimer.current)
-      connectionTimer.current = window.setTimeout(() => setConnection(null), 12_000)
+    if (['item.filed', 'item.refiled', 'item.deleted', 'link.created'].includes(event.type)) {
+      // Reconcile items outside the 20-row window and any replay after a reconnect.
+      // Debounce the burst; counters and graph have already updated immediately.
+      if (reconcileTimer.current !== null) clearTimeout(reconcileTimer.current)
+      reconcileGraph.current ||= event.type === 'item.refiled' || event.type === 'item.deleted' || !nextGraph
+      reconcileTimer.current = setTimeout(() => {
+        const refreshGraph = reconcileGraph.current
+        reconcileGraph.current = false
+        void loadOverview(refreshGraph)
+      }, 1000)
     }
-  }, [])
+  }, [loadOverview])
 
   const { connected } = useBrainEvents(handleEvent, session.canUse)
   const itemUpdate = useCallback((updated: BrainItem) => {
-    setOverview((current) => current ? {
-      ...current,
-      recent_items: current.recent_items.some((item) => item.id === updated.id)
-        ? current.recent_items.map((item) => item.id === updated.id ? updated : item)
-        : [updated, ...current.recent_items].slice(0, 20),
-    } : current)
+    const event: BrainEvent = { type: 'item.refiled', item: updated, id: `local:${updated.id}`, at: new Date().toISOString() }
+    setOverview(current => current ? updateOverview(current, event, reduceItems(current.recent_items, event), graphRef.current) : current)
   }, [])
 
   const orderedItems = useMemo(() => overview?.recent_items ?? [], [overview?.recent_items])
   const isEmpty = Boolean(overview && overview.counts.items === 0 && overview.counts.processing === 0 && orderedItems.length === 0)
   const presentationActive = presentationReady && presentation
+  const gaps = useMemo(() => groupGaps(overview?.gaps ?? []), [overview?.gaps])
+  const courseColors = useMemo(() => new Map(graph?.courses.map(course => [course.id, course.color_index]) ?? []), [graph?.courses])
+  const simulate = async () => {
+    setSimulating(true)
+    setSimulationError(false)
+    try { await api.simulateHeroDemo() } catch { setSimulationError(true) } finally { setSimulating(false) }
+  }
   const tabKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return
     event.preventDefault()
@@ -161,7 +183,7 @@ export function BrainWorkspace() {
   if (session.status === 'loading') return <BrainLoading />
   if (!session.canUse) return <SignInPrompt title="Sign in to your Brain" message="Your study materials are private. Sign in to keep building your Brain." />
 
-  return <main className={`brain-app app-content-page${presentationActive ? ' is-presentation' : ''}`} data-workspace-role="student">
+  return <main className={`brain-app app-content-page${presentationActive ? ' is-presentation' : ''}`} data-workspace-role="student" data-brain-tab={tab}>
     <a className="brain-skip" href="#brain-content">{c('Skip to content')}</a>
     <header className="brain-header prep-screen">
       <Link href="/create" className="brain-brand" aria-label={c('Fibonacci home')}><FibonacciLogo size={30} /></Link>
@@ -199,34 +221,39 @@ export function BrainWorkspace() {
       <div className="brain-tabs-row">
         <div className="brain-tabs" role="tablist" aria-label={c('Brain sections')} onKeyDown={tabKeyDown}>
           {tabs.map(({ id, label, icon: Icon }) => <button key={id} id={`brain-tab-${id}`} type="button" role="tab" aria-selected={tab === id} aria-controls={`brain-panel-${id}`} tabIndex={tab === id ? 0 : -1} onClick={() => setTab(id)}>
-            <Icon size={17} aria-hidden="true" /><span>{c(label)}</span>{id === 'inbox' && overview && stageCounts(overview.recent_items) > 0 && <span className="brain-tab-count">{stageCounts(overview.recent_items)}</span>}
+            <Icon size={17} aria-hidden="true" /><span>{c(label)}</span>{id === 'inbox' && overview && overview.counts.processing > 0 && <span className="brain-tab-count">{overview.counts.processing}</span>}
           </button>)}
         </div>
         <div className="brain-live-status" role="status"><span className={connected ? 'is-connected' : ''} />{connected ? c('Live') : c('Reconnecting')}</div>
       </div>
 
       <div className="brain-tab-panel" id={`brain-panel-${tab}`} role="tabpanel" aria-labelledby={`brain-tab-${tab}`} tabIndex={0}>
+        {(tab === 'inbox' || tab === 'graph') && <>
+          <div className="brain-live-actions">
+            <span className="brain-processing-count" role="status"><Activity size={16} aria-hidden="true" />{overview ? `${overview.counts.processing} ${c('in progress')}` : c('Loading sources')}</span>
+            {api.mode === 'mock' && <button type="button" className="brain-simulate-button" disabled={simulating || loadingOverview} onClick={() => void simulate()}><Sparkles size={15} aria-hidden="true" />{simulating ? c('Simulating…') : c('Simulate Telegram demo')}</button>}
+          </div>
+          {simulationError && <p role="alert">{c('Check your connection and try again.')}</p>}
+          <div className="brain-connections" aria-live="polite" aria-relevant="additions">
+            {connections.map(connection => <aside className="brain-connection-banner" key={connection.link.id}>
+              <span className="brain-connection-symbol"><GitBranch size={23} aria-hidden="true" /></span>
+              <span className="brain-connection-copy"><strong>{c('New cross-course connection')}</strong><span>{connection.source.name} <b aria-hidden="true">↔</b> {connection.target.name}</span><small>{connection.source_course.title} ↔ {connection.target_course.title}</small></span>
+              <button type="button" aria-label={`${c('Dismiss')}: ${connection.source.name} ↔ ${connection.target.name}`} onClick={() => setConnections(current => current.filter(entry => entry.link.id !== connection.link.id))}>×</button>
+            </aside>)}
+          </div>
+        </>}
         {tab === 'inbox' ? <>
           <div className="brain-inbox-heading">
             <div><p className="brain-section-kicker">{c('Automatically filed')}</p><h2>{c('Your sources, finding their place')}</h2><p>{c('New material moves from capture to course while you keep studying.')}</p></div>
-            <div className="brain-inbox-actions">
-              <span className="brain-processing-count"><Activity size={16} aria-hidden="true" />{overview ? `${overview.counts.processing} ${c('in progress')}` : c('Loading sources')}</span>
-              {api.mode === 'mock' && <button type="button" className="brain-simulate-button" disabled={simulating} onClick={async () => { setSimulating(true); try { await api.simulateHeroDemo() } catch { /* The mock control is best-effort only. */ } finally { window.setTimeout(() => setSimulating(false), 800) } }}>
-                <Sparkles size={15} aria-hidden="true" />{simulating ? c('Simulating…') : c('Simulate Telegram demo')}
-              </button>}
-            </div>
           </div>
-
-          {connection && <aside className="brain-connection-banner" role="status" aria-live="polite">
-            <span className="brain-connection-symbol"><GitBranch size={23} aria-hidden="true" /></span>
-            <span className="brain-connection-copy"><strong>{c('New cross-course connection')}</strong><span>{connection.source} <b aria-hidden="true">↔</b> {connection.target}</span><small>{courseNames[connection.sourceCourseId] || c('Across courses')}{courseNames[connection.targetCourseId] ? ` · ${courseNames[connection.targetCourseId]}` : ''}</small></span>
-            <button type="button" aria-label={c('Dismiss')} onClick={() => setConnection(null)}>×</button>
-          </aside>}
-
-          {overview?.gaps.map((gap) => <aside className="brain-gap-alert" key={gap.id}>
+          {gaps.map(gap => <aside className="brain-gap-alert" key={gap.id}>
             <span className="brain-gap-icon"><TriangleAlert size={19} aria-hidden="true" /></span>
-            <div><strong>{gapText(gap, language, c)}</strong><span>{c('There is a gap in')} {gap.course_title}.</span></div>
-            <button type="button" className="brain-text-button" onClick={() => setTab('courses')}>{c('View course')}<ChevronRight size={16} aria-hidden="true" /></button>
+            <div><strong>{gap.title}</strong><span>{gap.sequences.map(sequence => {
+              const keys = { week: 'Missing weeks: {numbers}', lecture: 'Missing lectures: {numbers}', chapter: 'Missing chapters: {numbers}', module: 'Missing modules: {numbers}' }
+              const numbers = new Intl.ListFormat(language, { style: 'long', type: 'conjunction' }).format(sequence.missing.map(String))
+              return c(keys[sequence.kind]).replace('{numbers}', numbers)
+            }).join(' · ')}</span></div>
+            <button type="button" className="brain-text-button" onClick={() => { setFocusRequest({ id: `course:${gap.id}`, token: Date.now() }); setTab('graph') }}>{c('View course')}<ChevronRight size={16} aria-hidden="true" /></button>
           </aside>)}
 
           {loadingOverview && !overview ? <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading sources')}>
@@ -238,10 +265,10 @@ export function BrainWorkspace() {
             </div>
             <ol className="brain-onboarding-steps"><li><span>1</span>{c('Drop files anywhere')}</li><li><span>2</span>{c('Paste a link, text, or photo')}</li><li><span>3</span>{c('Fibonacci files it for you')}</li></ol>
           </section> : <div className="brain-item-list" aria-label={c('Recent captures')}>
-            {orderedItems.map((item) => <BrainItemCard key={item.id} item={item} api={api} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
+            {orderedItems.map((item) => <BrainItemCard key={item.id} item={item} api={api} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
             {orderedItems.length === 0 && !loadingOverview && <p className="brain-no-recent">{c('No recent sources yet.')}</p>}
           </div>}
-        </> : <BrainPlaceholder tab={tab} c={c} />}
+        </> : tab === 'graph' ? <BrainGraph graph={graph} api={api} loading={loadingOverview} error={graphError} onRetry={loadOverview} connections={connections} presentation={presentationActive} focusRequest={focusRequest} /> : <BrainPlaceholder tab={tab} c={c} />}
       </div>
 
       <footer className="brain-footer"><span><Check size={15} aria-hidden="true" />{c('Every source stays yours.')}</span><span>{c('The Brain grows with every class.')}</span></footer>
