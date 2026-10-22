@@ -8,6 +8,9 @@ import { useBrainApi, useBrainEvents, useBrainSession } from '@/hooks/use-brain-
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import { BrainItemCard } from '@/components/brain/brain-item-card'
+import { BrainCourses } from '@/components/brain/brain-courses'
+import { BrainExam } from '@/components/brain/brain-exam'
+import { BrainTelegram } from '@/components/brain/brain-telegram'
 import { FibonacciLogo, FibonacciMark } from '@/components/fibonacci-mark'
 import { LanguagePicker } from '@/components/language-picker'
 import { SignInPrompt } from '@/components/sign-in-prompt'
@@ -62,6 +65,7 @@ export function BrainWorkspace() {
   const [simulating, setSimulating] = useState(false)
   const [simulationError, setSimulationError] = useState(false)
   const [presentation, setPresentation] = useState(false)
+  const [examCourseId, setExamCourseId] = useState<string | null>(null)
   const [presentationReady, setPresentationReady] = useState(false)
 
   const loadOverview = useCallback(async (refreshGraph = true) => {
@@ -268,7 +272,11 @@ export function BrainWorkspace() {
             {orderedItems.map((item) => <BrainItemCard key={item.id} item={item} api={api} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
             {orderedItems.length === 0 && !loadingOverview && <p className="brain-no-recent">{c('No recent sources yet.')}</p>}
           </div>}
-        </> : tab === 'graph' ? <BrainGraph graph={graph} api={api} loading={loadingOverview} error={graphError} onRetry={loadOverview} connections={connections} presentation={presentationActive} focusRequest={focusRequest} /> : <BrainPlaceholder tab={tab} c={c} />}
+        </> : tab === 'graph' ? <BrainGraph graph={graph} api={api} loading={loadingOverview} error={graphError} onRetry={loadOverview} connections={connections} presentation={presentationActive} focusRequest={focusRequest} />
+          : tab === 'courses' ? <BrainCourses api={api} graph={graph} version={eventVersion.current} onStartExam={(courseId) => { setExamCourseId(courseId); setTab('exam') }} />
+          : tab === 'exam' ? <BrainExam api={api} graph={graph} courseId={examCourseId} presentation={presentationActive} />
+          : tab === 'telegram' ? <BrainTelegram api={api} />
+          : <BrainPlaceholder tab={tab} c={c} />}
       </div>
 
       <footer className="brain-footer"><span><Check size={15} aria-hidden="true" />{c('Every source stays yours.')}</span><span>{c('The Brain grows with every class.')}</span></footer>

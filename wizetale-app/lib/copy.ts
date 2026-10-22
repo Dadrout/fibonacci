@@ -1,4 +1,7 @@
 import type { Language } from './i18n'
+import { coursesCopy } from './copy-brain/courses'
+import { examCopy } from './copy-brain/exam'
+import { graphCopy } from './copy-brain/graph'
 
 export const localizedCopy: Record<string, [string, string]> = {
   // Fibonacci landing
@@ -988,6 +991,9 @@ export const localizedCopy: Record<string, [string, string]> = {
   "Learning workspace": ["Учебное пространство", "Оқу кеңістігі"],
   "Upload progress": ["Ход загрузки", "Жүктеу барысы"],
 }
+
+// Brain screens keep their strings in separate files so parallel work never edits the same file.
+Object.assign(localizedCopy, coursesCopy, examCopy, graphCopy)
 
 export function copyText(text: string, language: Language): string {
   const pair = localizedCopy[text]
