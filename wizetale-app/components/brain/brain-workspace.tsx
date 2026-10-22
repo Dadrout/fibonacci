@@ -177,7 +177,8 @@ export function BrainWorkspace() {
     setView(next)
     window.scrollTo({ top: 0 })
   }, [])
-  const openExam = (courseId: string | null, back: Extract<View, { name: 'exam' }>['back']) => go({ name: 'exam', courseId, back })
+  const [examToken, setExamToken] = useState(0)
+  const openExam = (courseId: string | null, back: Extract<View, { name: 'exam' }>['back']) => { setExamToken(token => token + 1); go({ name: 'exam', courseId, back }) }
   const liveItems = useMemo(() => {
     // Home shows what is arriving or just filed; failures live under "All sources" with their Retry.
     const active = orderedItems.filter(item => !['filed', 'failed'].includes(item.status) || newlyFiled.includes(item.id))
@@ -302,7 +303,7 @@ export function BrainWorkspace() {
 
       {view.name === 'exam' && <section className="brain-subpage">
         <button type="button" className="brain-text-button brain-course-back" onClick={() => go(view.back)}><ArrowLeft size={16} aria-hidden="true" />{view.back.name === 'course' ? c('Back to the course') : c('Back to your Brain')}</button>
-        <BrainExam api={api} graph={graph} courseId={view.courseId} presentation={presentationActive} />
+        <BrainExam key={`${view.courseId}:${examToken}`} api={api} graph={graph} courseId={view.courseId} presentation={presentationActive} autoStart={Boolean(view.courseId)} />
       </section>}
 
       <footer className="brain-footer"><span><Check size={15} aria-hidden="true" />{c('Every source stays yours.')}</span><span>{c('The Brain grows with every class.')}</span></footer>

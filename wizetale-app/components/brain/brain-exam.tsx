@@ -28,6 +28,8 @@ export type BrainExamProps = {
   /** Course chosen from the course view's "Exam in N days" button (null = let the student choose). */
   courseId: string | null
   presentation: boolean
+  /** "Exam in 3 days" on a course card: build the 3-day plan right away (one tap). */
+  autoStart?: boolean
 }
 
 const LAST_PLAN_KEY = 'fibonacci:brain:exam:last-plan:v1'
@@ -47,7 +49,7 @@ function openPicker() {
   window.dispatchEvent(new Event('brain:open-picker'))
 }
 
-export function BrainExam({ api, graph, courseId, presentation }: BrainExamProps) {
+export function BrainExam({ api, graph, courseId, presentation, autoStart = false }: BrainExamProps) {
   const [state, dispatch] = useReducer(examReducer, initialExamState)
   const { view } = state
   const courses = useCourses(api, graph)
@@ -106,6 +108,15 @@ export function BrainExam({ api, graph, courseId, presentation }: BrainExamProps
   }, [api])
 
   const reset = useCallback(() => { writeLastPlan(null); dispatch({ type: 'reset' }) }, [])
+
+  // One tap from a course card: start the 3-day plan in the UI language immediately.
+  const { language } = useLanguage()
+  const autoStarted = useRef(false)
+  useEffect(() => {
+    if (!autoStart || !courseId || autoStarted.current) return
+    autoStarted.current = true
+    void create({ courseId, days: 3, language: planLanguageFor(language) }, newRequestId())
+  }, [autoStart, courseId, create, language])
 
   const retry = useCallback((failed: Extract<ExamView, { phase: 'failed' }>) => {
     if (failed.retry === 'poll' && failed.planId) dispatch({ type: 'resume', planId: failed.planId })
