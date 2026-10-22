@@ -21,6 +21,7 @@ import type {
   BrainItem,
   BrainItemDetail,
   BrainLanguage,
+  BrainTodo,
   Presentation,
   BrainOverview,
   BrainTopic,
@@ -617,6 +618,21 @@ export class MockBrain {
     this.recount()
     this.emit({ type: 'item.deleted', item_id: id })
   }
+
+  private todos = new Map<UUID, BrainTodo>()
+  todoList(): BrainTodo[] { return [...this.todos.values()].map(clone) }
+  addTodo(title: string, due: string | null): BrainTodo {
+    const todo: BrainTodo = { id: mockId(this.nextN()), title, due, done: false, source: 'web', created_at: nowIso() }
+    this.todos.set(todo.id, todo)
+    return clone(todo)
+  }
+  setTodo(id: UUID, body: { done?: boolean; title?: string }): BrainTodo {
+    const todo = this.todos.get(id)
+    if (!todo) throw new MockNotFound()
+    Object.assign(todo, body)
+    return clone(todo)
+  }
+  removeTodo(id: UUID): void { if (!this.todos.delete(id)) throw new MockNotFound() }
 
   async deleteTopic(id: UUID): Promise<void> {
     if (!this.topics.delete(id)) throw new MockNotFound()

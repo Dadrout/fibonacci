@@ -1,0 +1,25 @@
+{
+ "title": "Tomorrow quiz english",
+ "summary": "A short reminder about an upcoming English quiz scheduled for tomorrow.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "72be2a9d-9b91-4987-acbc-9a137ae60689",
+  "course_title": "English Vocabulary and IELTS Preparation",
+  "course_code": null,
+  "topic_id": null,
+  "topic_title": "Everyday Life and Routines",
+  "sequence": null,
+  "sequence_kind": null,
+  "confidence": 0.7
+ },
+ "alternatives": [],
+ "concepts": [
+  {
+   "name": "Quiz Reminder",
+   "summary": "A notification regarding an upcoming English quiz happening tomorrow.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}

@@ -55,7 +55,7 @@ function SplitHero() {
         ['Probability & Statistics', 'Variance', '4 sources', 'Law of large numbers'],
         ['Calculus II', 'Taylor series', '3 sources', 'Improper integrals'],
       ].map(([name, topic, count, other], index) => <section className={`fl-course fl-course-${index}`} key={name}>
-        <h2><span className="fl-dot" />{c(name)}</h2><div className="fl-course-item">{c(topic)}<small>{c(count)}</small></div><div className="fl-course-item">{c(other)}</div>
+        <h2>{c(name)}</h2><div className="fl-course-item">{c(topic)}<small>{c(count)}</small></div><div className="fl-course-item">{c(other)}</div>
         {index === 0 && <p className="fl-gold">{c('Week 7 is missing')}</p>}
       </section>)}
     </div>

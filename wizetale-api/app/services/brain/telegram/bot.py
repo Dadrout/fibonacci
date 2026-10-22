@@ -175,6 +175,19 @@ def _handle(message: dict, chat: int, language: str, client: TelegramClient, cap
 
     uid = link["user_id"]
     metadata = {"telegram": {"chat_id": chat, "message_id": message_id, "language": language}}
+    if text and not _file(message) and not _urls(message):
+        # Plain text: tasks become to-dos (not a source); anything else is filed as a note below.
+        from app.services.brain import todos
+        from app.services.brain.telegram import tasks as text_tasks
+
+        client.typing(chat)
+        analysis = text_tasks.analyze_model(text)
+        if analysis and analysis.kind != "note" and analysis.tasks:
+            created = todos.create_many(uid, [(task.title, task.due) for task in analysis.tasks[:text_tasks.MAX_TASKS]],
+                                        "telegram")
+            if created:
+                _send(client, chat, text_tasks.format_todos_reply(analysis, language, len(created)), message_id)
+                return
     jobs: list[Callable[[str], dict]] = []
     file = _file(message)
     if file:

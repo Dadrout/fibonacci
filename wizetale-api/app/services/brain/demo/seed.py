@@ -69,7 +69,7 @@ def _chunk_columns(anchor: dict) -> dict:
 
 
 def wipe(uid: str) -> None:
-    for table in ("brain_study_plans", "brain_refile_events", "brain_telegram_codes", "brain_items", "brain_courses"):
+    for table in ("brain_study_plans", "brain_refile_events", "brain_telegram_codes", "brain_todos", "brain_items", "brain_courses"):
         brain_store.request("DELETE", table, params={"user_id": f"eq.{uid}"})
 
 

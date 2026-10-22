@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "applies",
+ "direction": "b_to_a",
+ "strength": 0.75,
+ "rationale": "An upcoming quiz reminder is an event that often requires scheduling within your daily routines and time management habits."
+}

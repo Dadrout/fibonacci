@@ -464,6 +464,20 @@ export interface TelegramLinkCode {
 }
 
 // ---------------------------------------------------------------------------
+// To do — GET/POST /brain/todos, PATCH/DELETE /brain/todos/{id}; event { type: 'todos.changed' }
+// ---------------------------------------------------------------------------
+
+export interface BrainTodo {
+  id: UUID
+  title: string
+  /** Deadline as the student or the message wrote it ("Friday", "25 Oct"), or null. */
+  due: string | null
+  done: boolean
+  source: 'telegram' | 'web'
+  created_at: IsoDateTime
+}
+
+// ---------------------------------------------------------------------------
 // Presentation — POST /brain/courses/{id}/presentation
 // ---------------------------------------------------------------------------
 
@@ -517,6 +531,7 @@ interface EventBase {
 }
 
 export type BrainEvent =
+  | (EventBase & { type: 'todos.changed' })
   | (EventBase & { type: 'item.created'; item: BrainItem })
   | (EventBase & { type: 'item.progress'; item_id: UUID; status: ItemStatus; progress: number; title: string })
   | (EventBase & {

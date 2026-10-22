@@ -1,0 +1,25 @@
+{
+ "title": "Завтра куиз по матем",
+ "summary": "Напоминание о предстоящем завтра куизе по математике.",
+ "language": "ru-RU",
+ "placement": {
+  "course_id": "b1c71eec-0997-45e2-ba93-7b0c3eb75dae",
+  "course_title": "Mathematics",
+  "course_code": null,
+  "topic_id": "c8824545-38e2-4ea2-90c1-80e2e0c2da59",
+  "topic_title": "Basic Formulas",
+  "sequence": null,
+  "sequence_kind": null,
+  "confidence": 0.8
+ },
+ "alternatives": [],
+ "concepts": [
+  {
+   "name": "Куиз",
+   "summary": "Проверка знаний в виде короткого теста по математике, запланированная на завтра.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}

@@ -365,3 +365,12 @@ def test_plan_focus_adapts_to_the_time_left():
     rules, quiz = plans.focus_rules("essentials", 1)
     assert "ONLY the most important topics" in rules and quiz == "5"
     assert plans.focus_rules("core", 3)[1] == "6" and plans.focus_rules("full", 6)[1] == "8" and plans.focus_rules("full", 20)[1] == "10"
+
+
+def test_todos_reply_names_the_tasks_and_where_they_went():
+    from app.services.brain.telegram import tasks
+
+    analysis = tasks.TextAnalysis(summary="Homework.", kind="tasks", tasks=[tasks.TaskItem(title="Read chapter 9", due="Friday")])
+    reply = tasks.format_todos_reply(analysis, "en", 1)
+    assert "☐ Read chapter 9 — due: Friday" in reply and reply.endswith("Added 1 to your To do list in Fibonacci.")
+    assert "Saved to your Brain." not in reply

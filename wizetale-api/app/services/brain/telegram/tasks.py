@@ -19,9 +19,12 @@ logger = logging.getLogger(__name__)
 MIN_LENGTH = 12
 MAX_TASKS = 12
 LABELS = {
-    "en": {"tasks": "To do:", "checklist": "Checklist:", "due": "due", "saved": "Saved to your Brain."},
-    "ru": {"tasks": "Задачи:", "checklist": "Чек-лист:", "due": "срок", "saved": "Сохранено в ваш Brain."},
-    "kk": {"tasks": "Тапсырмалар:", "checklist": "Тексеру тізімі:", "due": "мерзімі", "saved": "Brain-ге сақталды."},
+    "en": {"tasks": "To do:", "checklist": "Checklist:", "due": "due", "saved": "Saved to your Brain.",
+           "added": "Added {n} to your To do list in Fibonacci."},
+    "ru": {"tasks": "Задачи:", "checklist": "Чек-лист:", "due": "срок", "saved": "Сохранено в ваш Brain.",
+           "added": "Добавлено в список дел в Fibonacci: {n}."},
+    "kk": {"tasks": "Тапсырмалар:", "checklist": "Тексеру тізімі:", "due": "мерзімі", "saved": "Brain-ге сақталды.",
+           "added": "Fibonacci-дегі істер тізіміне қосылды: {n}."},
 }
 
 
@@ -49,6 +52,27 @@ def format_reply(analysis: TextAnalysis, language: str) -> str:
     lines.append("")
     lines.append(labels["saved"])
     return "\n".join(lines).strip()
+
+
+def format_todos_reply(analysis: TextAnalysis, language: str, count: int) -> str:
+    """Reply after the message's tasks were added to the student's To do list."""
+    labels = LABELS.get(language, LABELS["en"])
+    body = format_reply(analysis, language).rsplit("\n\n", 1)[0]  # drop the "saved to your Brain" line
+    return f"{body}\n\n{labels['added'].format(n=count)}".strip()
+
+
+def analyze_model(text: str, *, ai: BrainAI = brain_ai) -> Optional[TextAnalysis]:
+    """The structured analysis, or None when the text is too short or the AI is unavailable."""
+    text = text.strip()
+    if len(text) < MIN_LENGTH:
+        return None
+    try:
+        return ai.generate(operation="brain_text_tasks", prompt="text_tasks", schema=TextAnalysis,
+                           model=settings.BRAIN_TEXT_MODEL, max_output_tokens=1500, temperature=0.2, timeout=20,
+                           variables={"text": text[:6000]}, cache_key=["v1", text[:6000]])
+    except Exception as error:  # noqa: BLE001 — fall back to filing the text as a source
+        logger.warning("brain_text_tasks failed error_type=%s", type(error).__name__)
+        return None
 
 
 def analyze(text: str, language: str, *, ai: BrainAI = brain_ai) -> Optional[str]:

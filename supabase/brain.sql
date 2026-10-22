@@ -206,6 +206,17 @@ create table if not exists public.brain_quiz_attempts (
 create index if not exists brain_quiz_attempts_plan on public.brain_quiz_attempts (user_id, plan_id, created_at desc);
 
 -- Corrections the classifier learns from (titles are copied so examples survive deletions).
+create table if not exists public.brain_todos (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  title text not null check (char_length(title) between 1 and 300),
+  due text check (due is null or char_length(due) <= 80),
+  done boolean not null default false,
+  source text not null default 'web' check (source in ('web', 'telegram')),
+  created_at timestamptz not null default now()
+);
+create index if not exists brain_todos_owner on public.brain_todos (user_id, done, created_at desc);
+
 create table if not exists public.brain_refile_events (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
@@ -248,7 +259,7 @@ begin
   foreach t in array array[
     'brain_courses', 'brain_topics', 'brain_concepts', 'brain_items', 'brain_chunks',
     'brain_chunk_concepts', 'brain_concept_links', 'brain_study_plans', 'brain_plan_secrets',
-    'brain_quiz_attempts', 'brain_refile_events', 'brain_telegram_links', 'brain_telegram_codes'
+    'brain_quiz_attempts', 'brain_refile_events', 'brain_telegram_links', 'brain_telegram_codes', 'brain_todos'
   ] loop
     execute format('alter table public.%I enable row level security', t);
     execute format('revoke all on public.%I from public, anon, authenticated', t);
@@ -258,7 +269,7 @@ begin
   foreach t in array array[
     'brain_courses', 'brain_topics', 'brain_concepts', 'brain_items', 'brain_chunks',
     'brain_chunk_concepts', 'brain_concept_links', 'brain_study_plans', 'brain_quiz_attempts',
-    'brain_refile_events', 'brain_telegram_links'
+    'brain_refile_events', 'brain_telegram_links', 'brain_todos'
   ] loop
     execute format('grant select on public.%I to authenticated', t);
     execute format('drop policy if exists %I on public.%I', t || '_owner_read', t);

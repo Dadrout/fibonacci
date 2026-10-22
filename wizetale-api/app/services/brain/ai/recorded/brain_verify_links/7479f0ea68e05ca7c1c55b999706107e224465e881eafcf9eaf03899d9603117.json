@@ -1,0 +1,36 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 1,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 2,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 3,
+   "related": true,
+   "relation": "applies",
+   "direction": "b_to_a",
+   "strength": 0.75,
+   "rationale": "An upcoming quiz reminder is an event that often requires scheduling within your daily routines and time management habits."
+  }
+ ]
+}

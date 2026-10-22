@@ -438,6 +438,16 @@ class ExamPlanRequest(Model):
     request_id: UUID
 
 
+class TodoCreateRequest(Model):
+    title: str = Field(min_length=1, max_length=300)
+    due: Optional[str] = Field(default=None, max_length=80)
+
+
+class TodoUpdateRequest(Model):
+    done: Optional[bool] = None
+    title: Optional[str] = Field(default=None, min_length=1, max_length=300)
+
+
 class PresentationRequest(Model):
     language: BrainLanguage
 

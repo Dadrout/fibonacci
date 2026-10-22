@@ -15,7 +15,7 @@ from starlette.concurrency import run_in_threadpool
 from app.api.dependencies import consume_user_rate_limit, get_current_user
 from app.core.config import settings
 from app.domain.brain.models import (
-    CaptureCreateRequest, ExamPlanRequest, PresentationRequest, QuizAnswerRequest, RefileRequest, RenameCourseRequest,
+    CaptureCreateRequest, ExamPlanRequest, PresentationRequest, TodoCreateRequest, TodoUpdateRequest, QuizAnswerRequest, RefileRequest, RenameCourseRequest,
     WebChannel,
 )
 from app.services.brain import events
@@ -274,6 +274,44 @@ async def delete_course(course_id: UUID, uid: str = Depends(owner)):
         raise BrainError(404, "not_found", "Course not found.")
     for item_id in deleted:
         events.publish(uid, "item.deleted", item_id=item_id)
+    return Response(status_code=204)
+
+
+# ---------------------------------------------------------------- to-dos
+
+@router.get("/todos")
+async def get_todos(uid: str = Depends(owner)):
+    from app.services.brain import todos
+    return await call(todos.list_todos, uid)
+
+
+@router.post("/todos", status_code=201)
+async def create_todo(body: TodoCreateRequest, request: Request, uid: str = Depends(owner)):
+    await limit(request, uid, "todo", 60)
+    from app.services.brain import todos
+    rows = await call(todos.create_many, uid, [(body.title, body.due)], "web")
+    if not rows:
+        raise BrainError(422, "invalid_input", "Write the to-do first.")
+    return rows[0]
+
+
+@router.patch("/todos/{todo_id}")
+async def update_todo(todo_id: UUID, body: TodoUpdateRequest, uid: str = Depends(owner)):
+    from app.services.brain import todos
+    fields = {k: v for k, v in body.model_dump().items() if v is not None}
+    if not fields:
+        raise BrainError(422, "invalid_input", "Nothing to change.")
+    row = await call(todos.update, uid, str(todo_id), fields)
+    if not row:
+        raise BrainError(404, "not_found", "To-do not found.")
+    return row
+
+
+@router.delete("/todos/{todo_id}", status_code=204)
+async def delete_todo(todo_id: UUID, uid: str = Depends(owner)):
+    from app.services.brain import todos
+    if not await call(todos.delete, uid, str(todo_id)):
+        raise BrainError(404, "not_found", "To-do not found.")
     return Response(status_code=204)
 
 

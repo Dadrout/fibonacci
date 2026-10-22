@@ -24,6 +24,7 @@ import type {
   CourseDetail,
   DemoHeroResponse,
   DemoResetResponse,
+  BrainTodo,
   Presentation,
   ExamPlanRequest,
   GapAlert,
@@ -104,6 +105,10 @@ export interface BrainApi {
   items(params?: { status?: ItemStatus; course_id?: UUID; limit?: number; cursor?: string }): Promise<ItemPage>
   item(id: UUID): Promise<BrainItemDetail>
   deleteItem(id: UUID): Promise<void>
+  todos(): Promise<BrainTodo[]>
+  createTodo(body: { title: string; due?: string | null }): Promise<BrainTodo>
+  updateTodo(id: UUID, body: { done?: boolean; title?: string }): Promise<BrainTodo>
+  deleteTodo(id: UUID): Promise<void>
   /** Delete a lesson (topic) and every source filed under it. 404 if it no longer exists. */
   deleteTopic(id: UUID): Promise<void>
   /** Delete a course with its lessons, sources, concepts and plans. */
@@ -251,6 +256,10 @@ function createLiveApi(getToken: TokenGetter): BrainApi {
     item: (id) => request(`items/${encodeURIComponent(id)}`),
     deleteItem: (id) => request(`items/${encodeURIComponent(id)}`, { method: 'DELETE' }),
     deleteTopic: (id) => request(`topics/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+    todos: () => request('todos'),
+    createTodo: (body) => request('todos', { method: 'POST', body }),
+    updateTodo: (id, body) => request(`todos/${encodeURIComponent(id)}`, { method: 'PATCH', body }),
+    deleteTodo: (id) => request(`todos/${encodeURIComponent(id)}`, { method: 'DELETE' }),
     deleteCourse: (id) => request(`courses/${encodeURIComponent(id)}`, { method: 'DELETE' }),
     retryItem: (id) => request(`items/${encodeURIComponent(id)}/retry`, { method: 'POST' }),
     refile: (id, body) => request(`items/${encodeURIComponent(id)}/refile`, { method: 'POST', body }),
@@ -418,6 +427,10 @@ function createMockApi(): BrainApi {
     item: (id) => wrapMock(() => brain.item(id)),
     deleteItem: (id) => wrapMock(() => brain.deleteItem(id)),
     deleteTopic: (id) => wrapMock(() => brain.deleteTopic(id)),
+    todos: () => wrapMock(async () => brain.todoList()),
+    createTodo: (body) => wrapMock(async () => brain.addTodo(body.title, body.due ?? null)),
+    updateTodo: (id, body) => wrapMock(async () => brain.setTodo(id, body)),
+    deleteTodo: (id) => wrapMock(async () => brain.removeTodo(id)),
     deleteCourse: (id) => wrapMock(() => brain.deleteCourse(id)),
     retryItem: (id) => wrapMock(() => brain.retryItem(id)),
     refile: (id, body) => wrapMock(() => brain.refile(id, body)),
