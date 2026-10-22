@@ -143,13 +143,13 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 | C1 | Contracts: types, mocks, API client + mock mode, `useBrainSession` | done | `wizetale-app/lib/brain-{types,mocks,api,api-helpers}.ts`, `hooks/use-brain-api.ts`, `scripts/brain-mocks.test.mjs` |
 | C2 | `brain.sql` (tables, pgvector, RPCs, RLS) + local Postgres/PostgREST stack + RLS tests | done | `supabase/brain.sql`, `supabase/tests/brain_rls.test.sql` (42 checks), `docker-compose.brain.yml`, `supabase/local/*` |
 | C3 | AI client: prompts in files, JSON schema validation, timeout/retry, recorded cache + fallback | done | `wizetale-api/app/services/brain/ai/**` (prompts, structured output, 3-model chain, recorded cache) |
-| C4 | Ingestion: photo OCR, PDF pages, YouTube transcript, audio transcript, web readable text, text | done — tests pending (W1) | `wizetale-api/app/services/brain/extract/**` |
+| C4 | Ingestion: photo OCR, PDF pages, YouTube transcript, audio transcript, web readable text, text | done — tests by Claude agent | `wizetale-api/app/services/brain/extract/**` |
 | C5 | Classifier (course/topic/concepts + confidence + alternatives, learns from re-files) | done | `wizetale-api/app/services/brain/classify.py` |
 | C6 | Concept linker (embedding candidates + LLM verify, threshold) | done | `wizetale-api/app/services/brain/link.py` |
 | C7 | API routes + SSE + media signing + Next proxy routes | done | `wizetale-api/app/api/brain/routes.py` (24 endpoints), `wizetale-app/lib/brain-proxy.ts`, `wizetale-app/app/api/v1/brain/[...path]/route.ts` |
 | C8 | Exam plan + notes + flashcards + quiz with `source_refs`; answer → moment | done | `wizetale-api/app/services/brain/plans.py` |
 | C9 | Gap detector, search, re-file | done (gaps, search, re-file) | `views.py` (gaps), routes (search, refile), `brain.sql` (`brain_refile_item`) |
-| C10 | Telegram bot: link code, capture all types, "Filed under …" reply | built — needs bot token from owner; tests pending (W2) | `wizetale-api/app/services/brain/telegram/**` |
+| C10 | Telegram bot: link code, capture all types, "Filed under …" reply | live — @eduhack2026_bot polling; tests by Claude agent | `wizetale-api/app/services/brain/telegram/**` |
 | C11 | `DEMO_MODE`: seed (demo student, 3 courses, ~40 items, links), hero inputs, recorded AI, golden tests | done | `wizetale-api/app/services/brain/demo/**`, `demo/hero/**`, `ai/recorded/**` |
 | C12 | `docs/brain/DEMO_SCRIPT.md`, end-to-end rehearsals, offline check | doing | `docs/brain/DEMO_SCRIPT.md` |
 
@@ -161,13 +161,13 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 | A2 | Brain shell + nav entry + presentation mode (projector) | review | `wizetale-app/app/brain/page.tsx`, `wizetale-app/app/layout.tsx`, `wizetale-app/app/create/student-workspace-client.tsx`, `wizetale-app/components/study/study-shell.tsx`, `wizetale-app/components/brain/**` |
 | A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | doing | H2 review fixes — Astra: `wizetale-app/components/brain/brain-item-card.tsx`, `brain-workspace.tsx`, `brain.css`, UI state helpers, `wizetale-app/lib/copy.ts` |
 | A4 | Brain graph: force layout, zoom course → concept, animated cross-course links, node panel with sources (60 fps @ few hundred nodes) | doing | H2 — Astra: `wizetale-app/components/brain/brain-graph*`, `source-viewer*`, `scripts/brain-ui-*.test.mjs`, `docs/brain/DESIGN_BRAIN.md` |
-| A5 | Exam mode: N-days flow, day plan, notes, flashcards, quiz, citation chips → source viewer (YouTube seek, slide/page) | todo | |
-| A6 | Mistake → moment after a wrong answer | todo | |
-| A7 | Course view: ordered topics, source cards, inline gap alerts, one-tap re-file | todo | |
-| A8 | Telegram connect: QR + one-time code + linked state | todo | |
+| A5 | Exam mode: N-days flow, day plan, notes, flashcards, quiz, citation chips → source viewer (YouTube seek, slide/page) | doing — Claude agent (Codex paused) | `components/brain/brain-exam*.tsx`, `brain-exam.css`, `lib/copy-brain/exam.ts` |
+| A6 | Mistake → moment after a wrong answer | doing — Claude agent (with A5) | same as A5 |
+| A7 | Course view: ordered topics, source cards, inline gap alerts, one-tap re-file | done — built by Claude | `components/brain/brain-courses.tsx`, `brain-courses.css`, `lib/copy-brain/courses.ts` |
+| A8 | Telegram connect: QR + one-time code + linked state | done — built by Claude | `components/brain/brain-telegram.tsx`, `brain-courses.css`, `lib/copy-brain/courses.ts` |
 | A9 | Onboarding empty state ("just send us anything") | review | `wizetale-app/components/brain/brain-workspace.tsx`, `wizetale-app/lib/copy.ts` |
 | A10 | ru/kk/en copy, light/dark, phone/tablet/desktop/projector, a11y, screenshots in `artifacts/brain/` | todo | |
-| A11 | **Owner request (2026-10-21): replace the logo with one made by ChatGPT image generation.** Lower priority than P0. If Codex can generate images, make it there; otherwise the owner puts a ChatGPT-generated PNG at `wizetale-app/public/brand/logo-source.png`. Then derive the mark, favicon, and app icons (light/dark, small sizes legible) and update `components/fibonacci-mark.tsx` + `DESIGN.md`. | todo | `wizetale-app/public/brand/**`, `components/fibonacci-mark.tsx`, `app/icon*`, `DESIGN.md` |
+| A11 | **Owner request (2026-10-21): replace the logo with one made by ChatGPT image generation.** Lower priority than P0. If Codex can generate images, make it there; otherwise the owner puts a ChatGPT-generated PNG at `wizetale-app/public/brand/logo-source.png`. Then derive the mark, favicon, and app icons (light/dark, small sizes legible) and update `components/fibonacci-mark.tsx` + `DESIGN.md`. | scheduled — Codex 09:32 (image generation) | `public/brand/**`, `app/icon.png`, `components/fibonacci-mark.tsx`, `DESIGN.md` |
 
 ---
 
@@ -202,6 +202,7 @@ _Format: `- [open|answered] (from → to, date) question — answer (who)`_
 
 ## 7. Decisions log
 
+- **D16 (Claude, 2026-10-22 09:10) — Parallel agents to go faster (owner request).** While Codex is limited, Claude runs parallel Claude agents with strictly separate files: exam mode + mistake → moment (A5/A6), Telegram tests, extractor tests. Claude built A7/A8 directly. Codex (from 09:31) does the graph follow-ups (H3) and the logo (A11) in parallel. Brain UI strings now live in per-workstream files `lib/copy-brain/{courses,exam,graph}.ts` (merged by `lib/copy.ts`) and per-screen CSS files, so no two agents edit the same file. Telegram bot: **@eduhack2026_bot** (token only in `.env.brain`).
 - **D15 (Claude, 2026-10-22 04:40) — Codex model per task.** `gpt-6-astra` used the whole refreshed Codex window in ~5 minutes. Implementation tasks now run on `gpt-6.1-sol` (Codex's latest coding model) in fresh, focused sessions; `gpt-6-astra` is reserved for design-critical review passes.
 - **D14 (Claude, 2026-10-22) — Live backend is ready; how to run it.** `supabase/local/setup.sh` once, then `docker compose -p talespark-local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.brain.yml up -d redis brain-db brain-rest api celery-worker telegram-bot`, then `docker exec talespark-local-api-1 python -m app.services.brain.demo.seed`. With `wizetale-app/.env.development.local` (`NEXT_PUBLIC_BRAIN_DEMO=1`, `BRAIN_DEMO_TOKEN`), `/brain` on the dev server shows the demo student on live data. Verified through the Next proxy: JSON, uploads, SSE with Last-Event-ID replay, signed media (tampered link → 404).
 - **D13 (Claude) — Recorded AI outputs make the demo network-proof.** Cache keys come from the material + the prompt file's fingerprint (not ids or dates); link verdicts are cached per concept pair; YouTube captions/metadata are recorded too. Verified with the Gemini key removed: hero items file in 2.6 s, the plan in 1 s. Editing a prompt retires its recordings → re-record before the finale (`BRAIN_AI_RECORD=true`, run the hero flow + plans).

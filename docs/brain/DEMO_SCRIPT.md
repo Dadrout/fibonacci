@@ -18,7 +18,7 @@ Status: **draft**. Backend steps are verified (2026-10-22). Steps marked ⏳ dep
    → expect `{"courses": 3, "topics": 16, "concepts": 35, "items": 38, ... "missing_embeddings": 0}`.
    The seed keeps the Telegram link, so you don't need to re-link the phone.
 4. Open **http://localhost:3001/brain** — the demo student loads (badge *Demo*). Check: 3 courses, "Econometrics — missing weeks 6 and 7", *Live* indicator on.
-5. Telegram: open the chat with the bot on the presenter's phone; the three hero files are ready to forward (below). Send `/start` once — the bot must answer within 2 s.
+5. Telegram: open the chat with **@eduhack2026_bot** on the presenter's phone; the three hero files are ready to forward (below). Send `/start` once — the bot must answer within 2 s.
 6. Confirm `DEMO_MODE=true` in `.env.brain` (recorded AI outputs replay first; live AI only for anything new).
 
 ### Hero inputs (in `demo/hero/`, also saved on the phone)
@@ -74,6 +74,6 @@ Measured backend timings (local stack, 2026-10-22): three items filed in **7.7�
 
 ## 4. One-time owner setup still needed
 
-1. **Telegram bot token:** create a bot with [@BotFather](https://t.me/BotFather) (`/newbot`, e.g. name "Fibonacci Brain", username ending in `bot`). Put `TELEGRAM_BOT_TOKEN=<token>` and `TELEGRAM_BOT_USERNAME=<username>` in `~/Fibonacci/.env.brain`, then `docker compose … up -d telegram-bot api`. In the web app: Brain → Telegram → send the 6-digit code to the bot.
+1. ~~Telegram bot token~~ — done: **@eduhack2026_bot**, token in `.env.brain`. **Link the presenter's phone once:** Brain → Telegram → Connect Telegram → scan the QR (or open the bot and press Start). The link survives re-seeding.
 2. **Gemini key tier:** the current key is on the free tier and hits per-minute limits when several items process at once. A paid key (`GEMINI_BILLING_TIER=paid`) makes live (non-recorded) captures reliable.
 3. *(Only if you want the hosted Supabase project instead of the local brain database)*: paste `supabase/brain.sql` into the Supabase SQL editor once, and set `BRAIN_STORE=supabase`.
