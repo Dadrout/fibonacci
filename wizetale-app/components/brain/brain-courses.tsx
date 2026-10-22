@@ -2,24 +2,16 @@
 
 /*
  * Course view (board row A7). Built by Claude while Codex was paused; Astra owns the design.
- * List of courses → course detail with topics in sequence order, their sources, inline gap
- * alerts, one-tap re-file (via BrainItemCard), and the "Exam in N days" entry.
+ * Course cards for the Brain home and the course page: topics in sequence order, their sources,
+ * inline gap alerts, one-tap re-file (via BrainItemCard), and the "Exam in 3 days" entry.
  */
 import { useCallback, useEffect, useState } from 'react'
-import { ArrowLeft, BookOpen, ChevronRight, FilePlus2, GraduationCap, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, ChevronRight, FilePlus2, GraduationCap, TriangleAlert } from 'lucide-react'
 import { BrainItemCard } from '@/components/brain/brain-item-card'
 import { useCopy } from '@/hooks/use-copy'
 import './brain-courses.css'
 import type { BrainApi } from '@/lib/brain-api'
 import type { BrainGraph, BrainItem, CourseDetail, GapAlert, SequenceKind } from '@/lib/brain-types'
-
-type Props = {
-  api: BrainApi
-  graph: BrainGraph | null
-  /** Bumps when live events change the brain, so an open course refreshes. */
-  version: number
-  onStartExam: (courseId: string) => void
-}
 
 const SEQUENCE_LABEL: Record<SequenceKind, string> = { week: 'Week {n}', lecture: 'Lecture {n}', chapter: 'Chapter {n}', module: 'Module {n}' }
 const MISSING_LABEL: Record<SequenceKind, string> = {
@@ -30,55 +22,48 @@ function openPicker() {
   window.dispatchEvent(new Event('brain:open-picker'))
 }
 
-export function BrainCourses({ api, graph, version, onStartExam }: Props) {
+/** Course cards for the Brain home: color, counts, missing weeks, and the two things a student does next. */
+export function CourseGrid({ graph, gaps, onOpen, onExam }: {
+  graph: BrainGraph | null; gaps: GapAlert[]; onOpen: (courseId: string) => void; onExam: (courseId: string) => void
+}) {
   const c = useCopy()
-  const [openCourse, setOpenCourse] = useState<string | null>(null)
-
   if (!graph) {
     return <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading courses')}>
       {[0, 1, 2].map(n => <div className="brain-source-skeleton" key={n}><span /><div><i /><i /><i /></div></div>)}
     </div>
   }
-  if (openCourse) {
-    return <CourseDetailView api={api} courseId={openCourse} version={version} onBack={() => setOpenCourse(null)} onStartExam={onStartExam} />
-  }
   if (graph.courses.length === 0) {
-    return <section className="brain-coming-soon" aria-labelledby="brain-courses-empty">
-      <div className="brain-coming-icon"><BookOpen size={27} aria-hidden="true" /></div>
-      <h2 id="brain-courses-empty">{c('No courses yet.')}</h2>
-      <p>{c('Send your first lecture photo, PDF, or link — Fibonacci creates the course for you.')}</p>
-      <button type="button" className="brain-primary-button" onClick={openPicker}><FilePlus2 size={18} aria-hidden="true" />{c('Add a file')}</button>
-    </section>
+    return <p className="brain-no-recent">{c('Send your first lecture photo, PDF, or link — Fibonacci creates the course for you.')}</p>
   }
-  return <section aria-labelledby="brain-courses-title">
-    <div className="brain-inbox-heading">
-      <div>
-        <p className="brain-section-kicker">{c('Course by course')}</p>
-        <h2 id="brain-courses-title">{c('Your courses')}</h2>
-        <p>{c('Every source you send lands in a course. Open one to see its topics, what is missing, and what to study.')}</p>
-      </div>
-    </div>
-    <ul className="brain-course-grid">
-      {graph.courses.map(course => <li key={course.id}>
-        <button type="button" className="brain-course-card" data-course-color={course.color_index} onClick={() => setOpenCourse(course.id)}>
+  return <ul className="brain-course-grid">
+    {graph.courses.map(course => {
+      const missing = gaps.filter(gap => gap.course_id === course.id)
+      return <li key={course.id}>
+        <article className="brain-course-card" data-course-color={course.color_index} aria-labelledby={`course-card-${course.id}`}>
           <span className="brain-course-card-top">
             <span className="brain-course-swatch" aria-hidden="true" />
             {course.code && <span className="brain-course-code">{course.code}</span>}
           </span>
-          <strong>{course.title}</strong>
+          <h3 id={`course-card-${course.id}`}><button type="button" className="brain-course-title" onClick={() => onOpen(course.id)}>{course.title}</button></h3>
           <span className="brain-course-counts">
             <span><b>{course.item_count}</b> {c('sources')}</span>
             <span><b>{course.topic_count}</b> {c('topics')}</span>
             <span><b>{course.concept_count}</b> {c('concepts')}</span>
           </span>
-          <span className="brain-course-open">{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></span>
-        </button>
-      </li>)}
-    </ul>
-  </section>
+          {missing.length > 0 && <span className="brain-course-gap"><TriangleAlert size={15} aria-hidden="true" />
+            {missing.map(gap => c(MISSING_LABEL[gap.sequence_kind]).replace('{n}', String(gap.missing))).join(' · ')}</span>}
+          <span className="brain-course-actions">
+            <button type="button" className="brain-secondary-button" onClick={() => onOpen(course.id)}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
+            <button type="button" className="brain-primary-button" onClick={() => onExam(course.id)}><GraduationCap size={17} aria-hidden="true" />{c('Exam in 3 days')}</button>
+          </span>
+        </article>
+      </li>
+    })}
+  </ul>
 }
 
-function CourseDetailView({ api, courseId, version, onBack, onStartExam }: {
+/** Full course page: topics in order with their sources, inline gaps, and the exam entry. */
+export function CourseDetailView({ api, courseId, version, onBack, onStartExam }: {
   api: BrainApi; courseId: string; version: number; onBack: () => void; onStartExam: (courseId: string) => void
 }) {
   const c = useCopy()
@@ -124,7 +109,7 @@ function CourseDetailView({ api, courseId, version, onBack, onStartExam }: {
   const gapsBefore = (sequence: number | null) => detail.gaps.filter(gap => sequence !== null && gap.missing < sequence)
   const shownGaps = new Set<string>()
   return <section className="brain-course-detail" data-course-color={course.color_index} aria-labelledby="brain-course-title">
-    <button type="button" className="brain-text-button brain-course-back" onClick={onBack}><ArrowLeft size={16} aria-hidden="true" />{c('All courses')}</button>
+    <button type="button" className="brain-text-button brain-course-back" onClick={onBack}><ArrowLeft size={16} aria-hidden="true" />{c('Back to your Brain')}</button>
     <header className="brain-course-header">
       <div>
         <p className="brain-section-kicker">{course.code ?? c('Course')}</p>

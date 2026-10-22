@@ -1,8 +1,6 @@
-import SlushLanding from '@/components/slush-landing'
-import './landing/globals.css'
+import { redirect } from 'next/navigation'
 
+/** Fibonacci opens straight into the Brain. */
 export default function HomePage() {
-  const previewEnabled = process.env.NEXT_PUBLIC_ENABLE_DASHBOARD_PREVIEW === 'true'
-
-  return <SlushLanding previewEnabled={previewEnabled} />
+  redirect('/brain')
 }

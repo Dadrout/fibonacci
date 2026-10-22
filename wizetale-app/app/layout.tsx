@@ -37,8 +37,8 @@ export default function RootLayout({
   return (
     <html lang={languageState.language} suppressHydrationWarning>
       <head>
-        <title>{copyText('Fibonacci — Learn any topic step by step', languageState.language)}</title>
-        <meta name="description" content={copyText('Fibonacci turns questions and your own material into clear explanations, quizzes, flashcards, presentations, and lessons.', languageState.language)} />
+        <title>{copyText('Fibonacci — your second brain', languageState.language)}</title>
+        <meta name="description" content={copyText('Send Fibonacci anything from your classes. It organizes it into courses and topics, connects ideas across courses, and builds your exam plan with sources.', languageState.language)} />
         <link rel="icon" href="/fibonacci-mark.svg" type="image/svg+xml" />
       </head>
       <body className={`${literata.variable} ${golos.variable} app-root min-h-screen`}>

@@ -1,7 +1,7 @@
 import type { Language } from './i18n'
-import { coursesCopy } from './copy-brain/courses'
-import { examCopy } from './copy-brain/exam'
-import { graphCopy } from './copy-brain/graph'
+import { coursesCopy } from './copy-brain/courses.ts'
+import { examCopy } from './copy-brain/exam.ts'
+import { graphCopy } from './copy-brain/graph.ts'
 
 export const localizedCopy: Record<string, [string, string]> = {
   // Fibonacci landing
