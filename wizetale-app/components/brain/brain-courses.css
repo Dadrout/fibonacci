@@ -254,3 +254,21 @@ html:has(.brain-app:is([data-brain-view="exam"], [data-brain-view="presentation"
   .brain-course-tools { gap: 6px; }
   .brain-course-tools.is-compact { gap: 0 10px; }
 }
+
+/* Quiet destructive actions and inline confirmations, shared with source popovers. */
+.brain-delete-trigger { color: var(--studio-muted); }
+.brain-delete-trigger:hover:not(:disabled), .brain-delete-trigger:focus-visible,
+.brain-delete-button { color: var(--workspace-danger, #a43d32); }
+.brain-delete-trigger, .brain-delete-button, .brain-delete-actions > button { min-height: 44px; min-width: 44px; }
+.brain-topic-delete { display: inline-grid; place-items: center; flex: none; margin-left: auto; padding: 0; border: 0; border-radius: 6px; background: transparent; cursor: pointer; align-self: center; }
+.brain-topic-delete:hover:not(:disabled) { background: var(--studio-sage); }
+.brain-topic-delete:disabled, .brain-delete-actions > button:disabled, .brain-source-delete > button:disabled { opacity: .6; cursor: default; }
+.brain-delete-confirm { display: grid; gap: 8px; margin: 8px 0 12px; padding: 12px 0; color: var(--studio-ink); }
+.brain-delete-confirm > p { margin: 0; overflow-wrap: anywhere; font-size: 14px; line-height: 1.5; }
+.brain-delete-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.brain-delete-confirm .brain-delete-button { border-color: var(--workspace-danger, #a43d32); background: var(--studio-surface); }
+.brain-delete-confirm .brain-delete-button:hover:not(:disabled) { background: color-mix(in srgb, var(--workspace-danger, #a43d32) 8%, var(--studio-surface)); }
+.brain-source-delete { padding: 4px 8px; border-top: 1px solid var(--studio-line); }
+.brain-source-delete .brain-delete-confirm { margin: 0; }
+.brain-delete-trigger:focus-visible, .brain-delete-button:focus-visible, .brain-delete-actions > button:focus-visible,
+.brain-course-detail #brain-course-title:focus { outline: 3px solid var(--studio-accent); outline-offset: 2px; }

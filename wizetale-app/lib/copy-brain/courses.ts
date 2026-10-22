@@ -1,5 +1,18 @@
 /** Brain courses + Telegram connect copy: English key → [Russian, Kazakh]. Merged into localizedCopy by lib/copy.ts. */
 export const coursesCopy: Record<string, [string, string]> = {
+  "Delete source": ["Удалить материал", "Материалды жою"],
+  "Delete this source? This can't be undone.": ["Удалить этот материал? Это действие нельзя отменить.", "Бұл материал жойылсын ба? Бұл әрекетті қайтару мүмкін емес."],
+  "Delete": ["Удалить", "Жою"],
+  "Cancel": ["Отмена", "Бас тарту"],
+  "Deleting…": ["Удаляем…", "Жойылуда…"],
+  "Could not delete this source. Try again.": ["Не удалось удалить материал. Попробуйте ещё раз.", "Материалды жою мүмкін болмады. Қайталап көріңіз."],
+  "Delete lesson {title}": ["Удалить занятие «{title}»", "«{title}» сабағын жою"],
+  "Delete \"{title}\" and its {count} sources?": ["Удалить занятие «{title}» и все его материалы ({count})?", "«{title}» сабағы және ондағы {count} материал жойылсын ба?"],
+  "Delete lesson": ["Удалить занятие", "Сабақты жою"],
+  "Could not delete this lesson. Try again.": ["Не удалось удалить занятие. Попробуйте ещё раз.", "Сабақты жою мүмкін болмады. Қайталап көріңіз."],
+  "Delete course": ["Удалить курс", "Курсты жою"],
+  "Delete {title}, its lessons and {count} sources?": ["Удалить курс «{title}», все его занятия и материалы ({count})?", "«{title}» курсы, ондағы барлық сабақтар және {count} материал жойылсын ба?"],
+  "Could not delete this course. Try again.": ["Не удалось удалить курс. Попробуйте ещё раз.", "Курсты жою мүмкін болмады. Қайталап көріңіз."],
   "Demo": ["Демо", "Демо"],
   "Send the 3 demo items": ["Отправить 3 демоматериала", "3 үлгі материалды жіберу"],
   "A slide photo, a lecture video and a PDF — the same path as Telegram.": ["Фото слайда, видеолекция и PDF — тот же путь, что и через Telegram.", "Слайд суреті, дәріс бейнесі және PDF — Telegram-дағыдай өңделеді."],

@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import { useId, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { ArrowRight, ArrowUpRight, AudioLines, Check, ChevronDown, FileText, Image as ImageIcon, Link2, RotateCw } from 'lucide-react'
+import { BrainDeleteConfirm } from './brain-delete-confirm'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import { courseColorSlot } from './brain-ui-state'
@@ -19,6 +20,7 @@ type BrainItemCardProps = {
   catalog?: { courses: BrainCourse[]; topics: BrainTopic[] } | null
   /** Hide "course → topic" where the page already shows it (the course page). */
   showPath?: boolean
+  onDeleted?: (id: string) => void
   onItemChange: (item: BrainItem) => void
 }
 
@@ -64,7 +66,7 @@ function requestForAlternative(alt: BrainItem['alternatives'][number]) {
   }
 }
 
-export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, catalog = null, showPath = true, onItemChange }: BrainItemCardProps) {
+export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, catalog = null, showPath = true, onItemChange, onDeleted }: BrainItemCardProps) {
   const c = useCopy()
   const { language } = useLanguage()
   const moveId = useId()
@@ -75,8 +77,28 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, c
   const courseTopics = (catalog?.topics ?? []).filter(topic => topic.course_id === targetCourse)
     .sort((a, b) => (a.sequence ?? 999) - (b.sequence ?? 999) || a.title.localeCompare(b.title))
   const unchanged = targetCourse === item.course_id && (moveTopic || null) === item.topic_id
-  const [action, setAction] = useState<'retry' | 'refile' | null>(null)
+  const [action, setAction] = useState<'retry' | 'refile' | 'delete' | null>(null)
   const [actionError, setActionError] = useState('')
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const deleteButton = useRef<HTMLButtonElement>(null)
+  const cancelDelete = () => {
+    setConfirmDelete(false)
+    setActionError('')
+    window.requestAnimationFrame(() => deleteButton.current?.focus())
+  }
+  const deleteSource = async () => {
+    if (action !== null) return
+    setAction('delete')
+    setActionError('')
+    try {
+      await api.deleteItem(item.id)
+      setConfirmDelete(false)
+      setShowAlternatives(false)
+      onDeleted?.(item.id)
+    } catch {
+      setActionError(c('Could not delete this source. Try again.'))
+    } finally { setAction(null) }
+  }
   const [showAlternatives, setShowAlternatives] = useState(false)
   const imageUrl = item.thumbnail_url ?? (item.kind === 'photo' ? item.media_url : null)
   const progress = Math.max(0, Math.min(1, item.progress || 0))
@@ -156,7 +178,7 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, c
           <span>{needsReview ? c('Please review this match') : c('Filing confidence')}</span>
           <strong aria-label={`${c('Filing confidence')}: ${confidence}%`}>{confidence}%</strong>
         </span>}
-        <details className="brain-refile" open={showAlternatives} onToggle={(event) => setShowAlternatives(event.currentTarget.open)}>
+        <details className="brain-refile" open={showAlternatives} onToggle={(event) => { setShowAlternatives(event.currentTarget.open); if (!event.currentTarget.open) setConfirmDelete(false) }}>
           <summary><span>{c('Not right?')}</span><ChevronDown size={16} aria-hidden="true" /></summary>
           <div className="brain-alternatives">
             {item.alternatives.length > 0 && <>
@@ -182,6 +204,10 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, c
               </select>
               <button type="submit" className="brain-primary-button" disabled={action !== null || unchanged}>{action === 'refile' ? c('Moving…') : c('Move')}</button>
             </form> : !item.alternatives.length && <p>{c('No other filing suggestions yet.')}</p>}
+            <div className="brain-source-delete">
+              <button ref={deleteButton} type="button" className="brain-text-button brain-delete-button" disabled={action !== null || confirmDelete} onClick={() => { setActionError(''); setConfirmDelete(true) }}>{c('Delete source')}</button>
+              {confirmDelete && <BrainDeleteConfirm message={c("Delete this source? This can't be undone.")} label={c('Delete')} busy={action === 'delete'} onConfirm={() => void deleteSource()} onCancel={cancelDelete} />}
+            </div>
           </div>
         </details>
       </div>

@@ -198,6 +198,12 @@ export function BrainWorkspace() {
     setOlderItems(list => list.map(item => item.id === updated.id ? updated : item))
   }, [])
 
+  const itemDeleted = useCallback((id: string) => {
+    setOverview(current => current ? { ...current, recent_items: current.recent_items.filter(item => item.id !== id) } : current)
+    setOlderItems(items => items.filter(item => item.id !== id))
+    void loadOverview(true)
+  }, [loadOverview])
+
   const orderedItems = useMemo(() => overview?.recent_items ?? [], [overview?.recent_items])
   const allSources = useMemo(() => {
     const seen = new Set(orderedItems.map(item => item.id))
@@ -341,7 +347,7 @@ export function BrainWorkspace() {
             </div>
             {simulationError && <p role="alert">{c('Check your connection and try again.')}</p>}
             <div className="brain-item-list">
-              {liveItems.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
+              {liveItems.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} onDeleted={itemDeleted} />)}
             </div>
           </section>
 
@@ -373,7 +379,7 @@ export function BrainWorkspace() {
           <button type="button" className="brain-text-button" onClick={() => go({ name: 'course', courseId: gap.id })}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
         </aside>)}
         <div className="brain-item-list" aria-label={c('Recent captures')}>
-          {allSources.map((item) => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
+          {allSources.map((item) => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} onDeleted={itemDeleted} />)}
           {allSources.length === 0 && !loadingOverview && <p className="brain-no-recent">{c('No recent sources yet.')}</p>}
         </div>
         {allSources.length > 0 && <div className="brain-show-more">
@@ -385,6 +391,7 @@ export function BrainWorkspace() {
 
       {view.name === 'course' && <CourseDetailView api={api} catalog={catalog} courseId={view.courseId} version={eventVersion.current}
         onFlashcards={courseId => openExam(courseId, { name: 'course', courseId }, 'cards')} onQuiz={courseId => openExam(courseId, { name: 'course', courseId }, 'quiz')} onPresentation={courseId => go({ name: 'presentation', courseId, back: { name: 'course', courseId } })}
+        onChanged={() => { setOlderItems([]); setOlderCursor(undefined); void loadOverview(true) }}
         onBack={() => go({ name: 'home' })} onStartExam={(courseId) => openExam(courseId, { name: 'course', courseId })} />}
 
       {view.name === 'exam' && <section className="brain-subpage">

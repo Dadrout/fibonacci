@@ -6,7 +6,8 @@
  * inline gap alerts, one-tap re-file (via BrainItemCard), and the "Exam in 3 days" entry.
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowLeft, ChevronRight, FilePlus2, GraduationCap, Layers, ListChecks, Presentation, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, ChevronRight, FilePlus2, GraduationCap, Layers, ListChecks, Presentation, Trash2, TriangleAlert } from 'lucide-react'
+import { BrainDeleteConfirm } from './brain-delete-confirm'
 import { BrainItemCard } from '@/components/brain/brain-item-card'
 import { useCopy } from '@/hooks/use-copy'
 import './brain-courses.css'
@@ -63,9 +64,9 @@ export function CourseGrid({ graph, gaps, onOpen, onExam, onFlashcards, onQuiz, 
 }
 
 /** Full course page: topics in order with their sources, inline gaps, and the exam entry. */
-export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onStartExam, onFlashcards, onQuiz, onPresentation }: {
+export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onChanged, onStartExam, onFlashcards, onQuiz, onPresentation }: {
   api: BrainApi; catalog?: { courses: BrainCourse[]; topics: BrainTopic[] } | null; courseId: string; version: number
-  onBack: () => void; onStartExam: (courseId: string) => void
+  onBack: () => void; onChanged: () => void; onStartExam: (courseId: string) => void
 } & StudyToolActions) {
   const c = useCopy()
   const [detail, setDetail] = useState<CourseDetail | null>(null)
@@ -76,6 +77,54 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
   const [renameError, setRenameError] = useState<string | null>(null)
   const renameButton = useRef<HTMLButtonElement>(null)
   const renameInput = useRef<HTMLInputElement>(null)
+
+  const [deleteTarget, setDeleteTarget] = useState<{ kind: 'course' } | { kind: 'topic'; id: string } | null>(null)
+  const [deleteBusy, setDeleteBusy] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+  const deleteTrigger = useRef<HTMLButtonElement | null>(null)
+  const cancelDelete = () => {
+    setDeleteTarget(null)
+    setDeleteError(null)
+    deleteTrigger.current?.focus()
+  }
+  const removeSource = (id: string) => {
+    setDetail(current => current && {
+      ...current,
+      course: { ...current.course, item_count: Math.max(0, current.course.item_count - (current.loose_items.some(item => item.id === id) || current.topics.some(entry => entry.items.some(item => item.id === id)) ? 1 : 0)) },
+      topics: current.topics.map(entry => ({ ...entry, items: entry.items.filter(item => item.id !== id) })),
+      loose_items: current.loose_items.filter(item => item.id !== id),
+    })
+    onChanged()
+  }
+  const deleteSelection = async () => {
+    if (!deleteTarget || deleteBusy) return
+    setDeleteBusy(true)
+    setDeleteError(null)
+    try {
+      if (deleteTarget.kind === 'course') {
+        await api.deleteCourse(courseId)
+        onBack()
+      } else {
+        const id = deleteTarget.id
+        await api.deleteTopic(id)
+        setDetail(current => {
+          if (!current) return current
+          const removed = current.topics.find(entry => entry.topic.id === id)
+          return {
+            ...current,
+            course: { ...current.course, topic_count: Math.max(0, current.course.topic_count - 1), item_count: Math.max(0, current.course.item_count - (removed?.items.length ?? 0)) },
+            topics: current.topics.filter(entry => entry.topic.id !== id),
+          }
+        })
+        // The deleted lesson's trigger is gone; return focus to the course heading.
+        document.getElementById('brain-course-title')?.focus()
+      }
+      setDeleteTarget(null)
+      onChanged()
+    } catch {
+      setDeleteError(c(deleteTarget.kind === 'course' ? 'Could not delete this course. Try again.' : 'Could not delete this lesson. Try again.'))
+    } finally { setDeleteBusy(false) }
+  }
 
   useEffect(() => {
     if (renaming) { renameInput.current?.focus(); renameInput.current?.select() }
@@ -145,8 +194,9 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
     <header className="brain-course-header">
       <div>
         <div className="brain-course-title-row">
-          <h2 id="brain-course-title">{course.title}</h2>
+          <h2 id="brain-course-title" tabIndex={-1}>{course.title}</h2>
           {!renaming && <button ref={renameButton} type="button" className="brain-text-button" onClick={() => { setTitle(course.title); setRenameError(null); setRenaming(true) }}>{c('Rename')}</button>}
+          <button type="button" className="brain-text-button brain-delete-trigger" disabled={deleteBusy} onClick={event => { deleteTrigger.current = event.currentTarget; setDeleteError(null); setDeleteTarget({ kind: 'course' }) }}>{c('Delete course')}</button>
         </div>
         {renaming && <form className="brain-course-rename" aria-busy={renameBusy} onSubmit={event => { event.preventDefault(); void saveTitle() }}>
           <label htmlFor="brain-course-rename-title">{c('Course title')}</label>
@@ -175,6 +225,10 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
       </div>
     </header>
 
+    {deleteTarget?.kind === 'course' && <BrainDeleteConfirm key={`delete-course-${course.id}`} 
+      message={c('Delete {title}, its lessons and {count} sources?').replace('{title}', course.title).replace('{count}', String(course.item_count))}
+      label={c('Delete course')} busy={deleteBusy} error={deleteError} onConfirm={() => void deleteSelection()} onCancel={cancelDelete} />}
+
     <ol className="brain-topic-list">
       {detail.topics.map(({ topic, items }) => {
         const gaps = gapsBefore(topic.sequence).filter(gap => !shownGaps.has(gap.id))
@@ -186,9 +240,14 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
               {topic.sequence !== null && topic.sequence_kind && <span className="brain-topic-sequence">{c(SEQUENCE_LABEL[topic.sequence_kind]).replace('{n}', String(topic.sequence))}</span>}
               <h3 id={`topic-${topic.id}`}>{topic.title}</h3>
               <span className="brain-topic-meta">{items.length} {c('sources')} · {topic.concept_count} {c('concepts')}</span>
+              <button type="button" className="brain-topic-delete brain-delete-trigger" aria-label={c('Delete lesson {title}').replace('{title}', topic.title)} disabled={deleteBusy}
+                onClick={event => { deleteTrigger.current = event.currentTarget; setDeleteError(null); setDeleteTarget({ kind: 'topic', id: topic.id }) }}><Trash2 size={17} aria-hidden="true" /></button>
             </header>
+            {deleteTarget?.kind === 'topic' && deleteTarget.id === topic.id && <BrainDeleteConfirm key={`delete-topic-${topic.id}`} 
+              message={c('Delete "{title}" and its {count} sources?').replace('{title}', topic.title).replace('{count}', String(items.length))}
+              label={c('Delete lesson')} busy={deleteBusy} error={deleteError} onConfirm={() => void deleteSelection()} onCancel={cancelDelete} />}
             {items.length > 0
-              ? <div className="brain-item-list">{items.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} showPath={false} courseColor={course.color_index} onItemChange={replaceItem} />)}</div>
+              ? <div className="brain-item-list">{items.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} showPath={false} courseColor={course.color_index} onItemChange={replaceItem} onDeleted={removeSource} />)}</div>
               : <p className="brain-no-recent">{c('No sources in this topic yet.')}</p>}
           </section>
         </li>
@@ -198,7 +257,7 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
 
     {detail.loose_items.length > 0 && <section className="brain-topic" aria-labelledby="brain-loose-title">
       <header><h3 id="brain-loose-title">{c('Not in a topic yet')}</h3></header>
-      <div className="brain-item-list">{detail.loose_items.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={course.color_index} onItemChange={replaceItem} />)}</div>
+      <div className="brain-item-list">{detail.loose_items.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={course.color_index} onItemChange={replaceItem} onDeleted={removeSource} />)}</div>
     </section>}
   </section>
 }
