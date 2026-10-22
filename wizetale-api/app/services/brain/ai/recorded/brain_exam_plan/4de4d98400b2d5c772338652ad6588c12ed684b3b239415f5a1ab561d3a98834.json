@@ -1,0 +1,361 @@
+{
+ "title": "Econometrics Exam Preparation",
+ "days": [
+  {
+   "day": 1,
+   "focus": "Foundations: Simple Linear Regression, OLS Assumptions, and Multiple Regression",
+   "tasks": [
+    {
+     "kind": "read",
+     "title": "Review Simple Linear Regression basics",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000201",
+     "passage_ids": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "kind": "read",
+     "title": "Study Gauss-Markov Assumptions and BLUE properties",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000202",
+     "passage_ids": [
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+     ]
+    },
+    {
+     "kind": "read",
+     "title": "Study Multiple Regression and Omitted Variable Bias",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000203",
+     "passage_ids": [
+      "P10",
+      "P11",
+      "P12"
+     ]
+    }
+   ]
+  },
+  {
+   "day": 2,
+   "focus": "Hypothesis Testing, Dummies, and Heteroskedasticity",
+   "tasks": [
+    {
+     "kind": "read",
+     "title": "Review t tests, F tests, and Dummy Variables",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000204",
+     "passage_ids": [
+      "P13",
+      "P14",
+      "P15",
+      "P16",
+      "P17"
+     ]
+    },
+    {
+     "kind": "read",
+     "title": "Read notes on Heteroskedasticity, robust standard errors, tests, and WLS",
+     "minutes": 45,
+     "topic_id": "39ee635e-5772-4bf4-a8a2-ff9f32c3c71f",
+     "passage_ids": [
+      "P18",
+      "P19",
+      "P20",
+      "P21",
+      "P22"
+     ]
+    },
+    {
+     "kind": "watch",
+     "title": "Watch residual plots and heteroskedasticity examples",
+     "minutes": 20,
+     "topic_id": "39ee635e-5772-4bf4-a8a2-ff9f32c3c71f",
+     "passage_ids": [
+      "P23",
+      "P24",
+      "P25",
+      "P26"
+     ]
+    }
+   ]
+  },
+  {
+   "day": 3,
+   "focus": "Autocorrelation, Mixed Review, and Quiz",
+   "tasks": [
+    {
+     "kind": "read",
+     "title": "Review Autocorrelation and Durbin-Watson statistic",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000208",
+     "passage_ids": [
+      "P27",
+      "P28",
+      "P29"
+     ]
+    },
+    {
+     "kind": "flashcards",
+     "title": "Work through flashcards",
+     "minutes": 20,
+     "topic_id": null,
+     "passage_ids": []
+    },
+    {
+     "kind": "quiz",
+     "title": "Take exam practice quiz",
+     "minutes": 30,
+     "topic_id": null,
+     "passage_ids": []
+    }
+   ]
+  }
+ ],
+ "notes": [
+  {
+   "heading": "Simple Linear Regression and Gauss-Markov Assumptions",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "bullets": [
+    {
+     "text": "OLS estimates minimize the sum of squared residuals Σ(yᵢ − b₀ − b₁xᵢ)², yielding the slope estimate b₁ = Cov(x, y) / Var(x).",
+     "passage_ids": [
+      "P1",
+      "P2",
+      "P5"
+     ]
+    },
+    {
+     "text": "The population process must be linear in parameters (MLR.1), and under assumptions MLR.1–MLR.5 OLS is BLUE: the best linear unbiased estimator.",
+     "passage_ids": [
+      "P6",
+      "P8"
+     ]
+    },
+    {
+     "text": "Unbiasedness requires assumptions MLR.1–4. Adding homoskedasticity (MLR.5) makes OLS the most efficient estimator.",
+     "passage_ids": [
+      "P9"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Multiple Regression and Omitted Variable Bias",
+   "topic_id": "00000000-0000-4000-8000-000000000203",
+   "bullets": [
+    {
+     "text": "In multiple regression, β₁ measures the ceteris paribus effect of x₁ on y holding x₂ fixed.",
+     "passage_ids": [
+      "P10"
+     ]
+    },
+    {
+     "text": "Omitting a relevant variable correlated with x₁ introduces omitted variable bias, where Bias(b̃₁) = β₂ · δ̃₁.",
+     "passage_ids": [
+      "P11",
+      "P12"
+     ]
+    },
+    {
+     "text": "Categorical variables require g − 1 dummies for g groups when an intercept is included to avoid the dummy variable trap.",
+     "passage_ids": [
+      "P17"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Heteroskedasticity and Autocorrelation",
+   "topic_id": "39ee635e-5772-4bf4-a8a2-ff9f32c3c71f",
+   "bullets": [
+    {
+     "text": "Heteroskedasticity means the error variance depends on the regressors: Var(uᵢ | xᵢ) = σᵢ². OLS remains unbiased, but standard errors are invalid.",
+     "passage_ids": [
+      "P18",
+      "P22"
+     ]
+    },
+    {
+     "text": "Heteroskedasticity can be detected using residual plots, the Breusch-Pagan test, or the White test, and fixed using robust standard errors or WLS.",
+     "passage_ids": [
+      "P20",
+      "P22"
+     ]
+    },
+    {
+     "text": "Autocorrelation occurs when errors are correlated across periods (e.g., AR(1) errors). OLS is unbiased, but standard errors are invalid, and the Durbin-Watson statistic can test for it.",
+     "passage_ids": [
+      "P27",
+      "P28",
+      "P29"
+     ]
+    }
+   ]
+  }
+ ],
+ "flashcards": [
+  {
+   "front": "What does the slope b₁ represent in simple linear regression?",
+   "back": "It tells us how much y changes on average when x goes up by one unit, calculated as Cov(x, y) / Var(x).",
+   "passage_ids": [
+    "P2",
+    "P3"
+   ]
+  },
+  {
+   "front": "What does BLUE stand for under the Gauss-Markov assumptions?",
+   "back": "Best Linear Unbiased Estimator.",
+   "passage_ids": [
+    "P8"
+   ]
+  },
+  {
+   "front": "What are the requirements for OLS to be unbiased versus BLUE?",
+   "back": "Unbiasedness requires assumptions MLR.1–4. BLUE also requires homoskedasticity (MLR.5).",
+   "passage_ids": [
+    "P9"
+   ]
+  },
+  {
+   "front": "What is the formula for omitted variable bias when variable 2 is omitted?",
+   "back": "Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ is the slope from regressing the omitted x₂ on x₁.",
+   "passage_ids": [
+    "P12"
+   ]
+  },
+  {
+   "front": "How do you avoid the dummy variable trap when including g groups with an intercept?",
+   "back": "Include exactly g − 1 dummy variables to prevent perfect collinearity.",
+   "passage_ids": [
+    "P17"
+   ]
+  },
+  {
+   "front": "What happens to OLS when heteroskedasticity is present?",
+   "back": "The OLS estimates remain unbiased and consistent, but the usual standard errors are biased, rendering t tests, F tests, and confidence intervals invalid.",
+   "passage_ids": [
+    "P22"
+   ]
+  },
+  {
+   "front": "What does a Durbin-Watson statistic value near 2 indicate?",
+   "back": "It indicates no first-order autocorrelation.",
+   "passage_ids": [
+    "P29"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "prompt": "What does the slope coefficient b₁ measure in a simple linear regression model?",
+   "options": [
+    "The exact deterministic change in y for every individual observation when x increases by one unit",
+    "How much y changes on average when x goes up by one unit",
+    "The correlation coefficient between the error term and the dependent variable",
+    "The expected value of y when x is zero"
+   ],
+   "correct_index": 1,
+   "explanation": "The slope tells us how much y changes on average when x goes up by one unit.",
+   "passage_ids": [
+    "P3"
+   ],
+   "explain_passage": "P3",
+   "explain_reason": "The video at 3:34–4:22 explains the interpretation of the slope.",
+   "concepts": []
+  },
+  {
+   "prompt": "Which set of Gauss-Markov assumptions is required for OLS estimators to be unbiased?",
+   "options": [
+    "MLR.1 through MLR.5 only",
+    "MLR.1 through MLR.4",
+    "MLR.5 only",
+    "Only homoskedasticity and normality"
+   ],
+   "correct_index": 1,
+   "explanation": "Assumptions MLR.1 through MLR.4 guarantee that OLS is unbiased. MLR.5 (homoskedasticity) is additionally required for efficiency (BLUE).",
+   "passage_ids": [
+    "P9",
+    "P18"
+   ],
+   "explain_passage": "P9",
+   "explain_reason": "Your notes state that unbiasedness needs MLR.1–4.",
+   "concepts": []
+  },
+  {
+   "prompt": "If a relevant explanatory variable x₂ is omitted from a regression, and it is positively correlated with x₁ while having a positive effect on y, what is the effect on the estimated coefficient of x₁?",
+   "options": [
+    "It will be unbiased because omitted variables do not affect slope coefficients",
+    "It will be biased depending on the product of the effect of x₂ on y and the regression of x₂ on x₁",
+    "It will always equal zero",
+    "It will decrease the residual sum of squares"
+   ],
+   "correct_index": 1,
+   "explanation": "Omitted variable bias is given by the formula Bias(b̃₁) = β₂ · δ̃₁, meaning the bias depends on the coefficient of the omitted variable and its relationship with the included regressor.",
+   "passage_ids": [
+    "P12"
+   ],
+   "explain_passage": "P12",
+   "explain_reason": "Slide 11 shows the omitted variable bias formula.",
+   "concepts": []
+  },
+  {
+   "prompt": "Why is the dummy variable trap a problem in regression analysis?",
+   "options": [
+    "It causes the error term to become heteroskedastic",
+    "It creates perfect collinearity when an intercept is included, making estimation impossible",
+    "It guarantees that the R-squared will be exactly equal to 1",
+    "It violates the assumption of linearity in parameters"
+   ],
+   "correct_index": 1,
+   "explanation": "Including all g dummy variables alongside an intercept creates perfect collinearity, known as the dummy variable trap.",
+   "passage_ids": [
+    "P17"
+   ],
+   "explain_passage": "P17",
+   "explain_reason": "Slide 6 explains that including all g dummies with an intercept creates perfect collinearity.",
+   "concepts": []
+  },
+  {
+   "prompt": "What is the primary consequence of heteroskedasticity for OLS estimation?",
+   "options": [
+    "OLS estimates become biased and inconsistent",
+    "OLS estimates are no longer unbiased, but standard errors become smaller",
+    "OLS estimates remain unbiased, but the usual standard errors are biased, invalidating t and F tests",
+    "The errors become correlated with previous time periods"
+   ],
+   "correct_index": 2,
+   "explanation": "Under heteroskedasticity, OLS estimates remain unbiased and consistent, but the usual standard errors are biased, making hypothesis tests invalid unless robust standard errors are used.",
+   "passage_ids": [
+    "P22"
+   ],
+   "explain_passage": "P22",
+   "explain_reason": "Heteroskedasticity slide 7 notes that OLS estimates are still unbiased, but standard errors are biased.",
+   "concepts": []
+  },
+  {
+   "prompt": "What does a Durbin-Watson statistic of approximately 2 suggest about time-series errors in a regression model?",
+   "options": [
+    "Severe positive autocorrelation",
+    "Severe negative autocorrelation",
+    "No first-order autocorrelation",
+    "Complete heteroskedasticity"
+   ],
+   "correct_index": 2,
+   "explanation": "The Durbin-Watson statistic d ≈ 2(1 − ρ̂), so values near 2 indicate that ρ̂ is near zero, meaning no first-order autocorrelation.",
+   "passage_ids": [
+    "P29"
+   ],
+   "explain_passage": "P29",
+   "explain_reason": "Lecture 8 page 7 states that values near 2 indicate no first-order autocorrelation.",
+   "concepts": []
+  }
+ ]
+}

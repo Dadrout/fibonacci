@@ -11,10 +11,11 @@ import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import type { BrainApi } from '@/lib/brain-api'
 import type { BrainCourse, Flashcard, PlanDay, PlanTaskKind, SourceRef, StudyPlan, StudyPlanContent } from '@/lib/brain-types'
+import { ExamDateChooser } from './brain-exam-date-chooser'
 import { SourceViewer } from './source-viewer'
 import { SourceChips, type OpenSource } from './brain-exam-chips'
 import { BrainExamQuiz } from './brain-exam-quiz'
-import { MISSING_LABEL, TASK_KIND_LABEL, coverageGaps, dayMinutes, formatPlanDate, type AnswerState } from './brain-exam-logic'
+import { MISSING_LABEL, TASK_KIND_LABEL, PLAN_FOCUS_COPY, daysFromDate, examDateFor, coverageGaps, dayMinutes, formatPlanDate, type AnswerState, type PlanParams } from './brain-exam-logic'
 
 type Section = 'days' | 'notes' | 'cards' | 'quiz'
 const SECTIONS: Section[] = ['days', 'notes', 'cards', 'quiz']
@@ -24,8 +25,8 @@ const TASK_ICON: Record<PlanTaskKind, LucideIcon> = {
   read: BookOpen, watch: CirclePlay, review: RotateCcw, flashcards: Layers, quiz: ListChecks, practice: PencilLine,
 }
 
-export function BrainExamPlan({ api, plan, course, presentation, onNewPlan, initialSection = 'days' }: {
-  api: BrainApi; plan: StudyPlan; course: BrainCourse | null; presentation: boolean; onNewPlan: () => void; initialSection?: 'cards' | 'quiz' | 'days'
+export function BrainExamPlan({ api, plan, course, presentation, onNewPlan, onChangeDate, initialSection = 'days' }: {
+  api: BrainApi; plan: StudyPlan; course: BrainCourse | null; presentation: boolean; onNewPlan: () => void; onChangeDate: (request: PlanParams) => void; initialSection?: 'cards' | 'quiz' | 'days'
 }) {
   const c = useCopy()
   const { language } = useLanguage()
@@ -34,6 +35,9 @@ export function BrainExamPlan({ api, plan, course, presentation, onNewPlan, init
   const [viewing, setViewing] = useState<{ source: SourceRef; reason?: string } | null>(null)
   const [answers, setAnswers] = useState<Record<string, AnswerState>>({})
   const [questionIndex, setQuestionIndex] = useState(0)
+  const [changingDate, setChangingDate] = useState(false)
+  const [date, setDate] = useState(() => daysFromDate(plan.exam_date) !== null ? plan.exam_date : examDateFor(plan.days))
+  const dateButton = useRef<HTMLButtonElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   useEffect(() => { headingRef.current?.focus({ preventScroll: true }) }, [plan.id])
 
@@ -60,9 +64,21 @@ export function BrainExamPlan({ api, plan, course, presentation, onNewPlan, init
           <span aria-hidden="true">·</span>
           <span>{c(plan.days === 1 ? '1 day' : '{n} days').replace('{n}', String(plan.days))}</span>
         </p>
+        {plan.coverage?.focus && <p className="brain-exam-focus">{c(PLAN_FOCUS_COPY[plan.coverage.focus])}</p>}
       </div>
+      <div className="brain-exam-plan-actions">
+      <button ref={dateButton} type="button" className="brain-secondary-button" aria-expanded={changingDate} aria-controls="brain-exam-change-date" onClick={() => setChangingDate(value => !value)}>{c('Change date')}</button>
       <button type="button" className="brain-secondary-button" onClick={onNewPlan}><ArrowLeft size={17} aria-hidden="true" />{c('New plan')}</button>
+      </div>
     </header>
+
+    {changingDate && <form id="brain-exam-change-date" className="brain-exam-date-editor" onSubmit={event => {
+      event.preventDefault()
+      const days = daysFromDate(date)
+      if (days !== null) onChangeDate({ courseId: plan.course_id, days, exam_date: date, language: plan.language })
+    }} onKeyDown={event => { if (event.key === 'Escape') { setChangingDate(false); dateButton.current?.focus() } }}>
+      <ExamDateChooser date={date} onChange={setDate} focusOnMount />
+    </form>}
 
     {plan.coverage && <div className="brain-exam-coverage">
       <p className="brain-exam-coverage-line">

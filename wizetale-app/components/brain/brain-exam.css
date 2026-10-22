@@ -303,3 +303,33 @@
 .brain-exam-plan-meta > [aria-hidden="true"], .brain-exam-day-meta > [aria-hidden="true"] { display: none; }
 .brain-exam-plan-meta > :not([aria-hidden="true"]), .brain-exam-day-meta > :not([aria-hidden="true"]) { position: relative; padding-left: 18px; }
 .brain-exam-plan-meta > :not([aria-hidden="true"])::before, .brain-exam-day-meta > :not([aria-hidden="true"])::before { content: "·"; position: absolute; left: 6px; color: var(--studio-muted); }
+
+/* The same compact date controls serve setup and the inline plan editor. */
+.brain-exam-date-chooser { display: grid; gap: 20px; min-width: 0; }
+.brain-exam-date-options { display: flex; flex-wrap: wrap; gap: 0; width: fit-content; max-width: 100%; border: 1px solid var(--studio-line); border-radius: 6px; overflow: clip; }
+.brain-exam-date-options label { position: relative; display: flex; flex: 1 1 auto; min-width: 44px; cursor: pointer; }
+.brain-exam-date-options input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.brain-exam-date-options span { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; min-height: 46px; padding: 8px 12px; color: var(--studio-ink); background: var(--studio-paper); font-size: 14px; font-weight: 600; }
+.brain-exam-date-options label:hover span { background: var(--studio-sage); }
+.brain-exam-date-options input:checked + span { background: var(--studio-sage); color: var(--studio-green); box-shadow: inset 0 -2px var(--studio-green); }
+.brain-exam-date-options input:focus-visible + span { outline: 3px solid var(--studio-accent); outline-offset: -3px; }
+.brain-exam-custom-date { display: grid; gap: 8px; margin-top: 16px; font-size: 14px; }
+.brain-exam-custom-date input { min-width: 0; color-scheme: light; }
+.brain-exam-custom-date input:focus-visible { outline: 3px solid var(--studio-accent); outline-offset: 3px; }
+.brain-exam-plan-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.brain-exam-date-editor { padding: 20px 0; border-block: 1px solid var(--studio-line); margin-bottom: 20px; }
+.brain-exam-focus { margin: 8px 0 0; color: var(--studio-muted); font-size: 14px; line-height: 1.5; }
+.brain-choose-date { min-height: 44px; min-width: 44px; }
+@media (max-width: 390px) {
+  .brain-exam-date-options { width: 100%; }
+  .brain-exam-date-options span { padding-inline: 9px; }
+  .brain-exam-plan-actions { width: 100%; }
+  .brain-exam-plan-actions button { flex: 1 1 auto; }
+}
+
+.dark .brain-exam-custom-date input { color-scheme: dark; }
+
+@media (max-width: 640px) {
+  .brain-exam-plan-header { grid-template-columns: minmax(0, 1fr); }
+  .brain-exam-plan-actions { justify-content: flex-start; }
+}

@@ -2,13 +2,13 @@
  * Exam mode state and formatting (board rows A5, A6). Pure (the only runtime import is the
  * pure date helper), so scripts/brain-ui-exam.test.mjs can load it with `node --experimental-strip-types`.
  */
-import type { BrainEvent, BrainLanguage, GapAlert, PlanDay, PlanTaskKind, QuizAnswerResult, QuizOptionId, SequenceKind, SourceRef, StudyPlan } from '@/lib/brain-types'
+import type { BrainEvent, BrainLanguage, GapAlert, PlanDay, PlanFocus, PlanTaskKind, QuizAnswerResult, QuizOptionId, SequenceKind, SourceRef, StudyPlan } from '@/lib/brain-types'
 import { formatBrainDate } from './brain-date.ts'
 
 export type UiLanguage = 'en' | 'ru' | 'kk'
 
 export const MIN_DAYS = 1
-export const MAX_DAYS = 14
+export const MAX_DAYS = 30
 export const DEFAULT_DAYS = 3
 
 /** Endonyms: each language is named in itself, so they need no translation. */
@@ -41,6 +41,34 @@ const pad = (value: number) => String(value).padStart(2, '0')
 export function examDateFor(days: number, now: Date = new Date()): string {
   const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + days)
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+}
+
+/** Calendar-day difference, independent of daylight-saving changes; reject invalid/out-of-range dates. */
+export function daysFromDate(value: string, now: Date = new Date()): number | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null
+  const [year, month, day] = value.split('-').map(Number)
+  const target = new Date(Date.UTC(year, month - 1, day))
+  if (target.getUTCFullYear() !== year || target.getUTCMonth() !== month - 1 || target.getUTCDate() !== day) return null
+  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+  const days = (target.valueOf() - today) / 86_400_000
+  return days >= MIN_DAYS && days <= MAX_DAYS ? days : null
+}
+
+export function focusForDays(days: number): PlanFocus {
+  return days <= 1 ? 'essentials' : days <= 4 ? 'core' : 'full'
+}
+
+export const FOCUS_HINT: Record<PlanFocus, string> = {
+  essentials: 'Short on time: only the essentials — the most important topics and a quick quiz.',
+  core: 'Main topics first, then a quiz.',
+  full: 'Everything, with spaced review and practice.',
+}
+export function hintForDays(days: number): string { return FOCUS_HINT[focusForDays(days)] }
+
+export const PLAN_FOCUS_COPY: Record<PlanFocus, string> = {
+  essentials: 'Short on time — this plan covers the essentials first.',
+  core: 'Main topics first.',
+  full: 'Full coverage with spaced review.',
 }
 
 /** "Wed, Oct 21" for an ISO calendar date, independent of the viewer's time zone. */
@@ -129,7 +157,7 @@ export function shouldStopPolling(failure: PlanFailure, consecutiveFailures: num
 // Exam state machine
 // ---------------------------------------------------------------------------
 
-export type PlanParams = { courseId: string; days: number; language: BrainLanguage }
+export type PlanParams = { courseId: string; days: number; language: BrainLanguage; exam_date?: string }
 /** create = repeat the same idempotent request; poll = keep waiting for this plan; restart = new request. */
 export type RetryKind = 'create' | 'poll' | 'restart'
 
@@ -166,7 +194,7 @@ function planEventId(event: PlanEvent): string {
 }
 
 function paramsOf(plan: StudyPlan): PlanParams {
-  return { courseId: plan.course_id, days: plan.days, language: plan.language }
+  return { courseId: plan.course_id, days: plan.days, language: plan.language, exam_date: plan.exam_date }
 }
 
 /** The view a plan snapshot belongs in (also used to reopen an earlier plan). */

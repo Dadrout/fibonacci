@@ -30,7 +30,7 @@ type View =
   | { name: 'sources' }
   | { name: 'course'; courseId: string }
   | { name: 'presentation'; courseId: string; back: { name: 'home' } | { name: 'course'; courseId: string } }
-  | { name: 'exam'; section?: 'cards' | 'quiz'; courseId: string | null; back: { name: 'home' } | { name: 'course'; courseId: string } }
+  | { name: 'exam'; autoStart?: boolean; section?: 'cards' | 'quiz'; courseId: string | null; back: { name: 'home' } | { name: 'course'; courseId: string } }
 
 function BrainLoading() {
   const c = useCopy()
@@ -244,7 +244,7 @@ export function BrainWorkspace() {
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     window.setTimeout(() => document.getElementById('brain-courses-title')?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }), 60)
   }
-  const openExam = (courseId: string | null, back: Extract<View, { name: 'exam' }>['back'], section?: 'cards' | 'quiz') => { setExamToken(token => token + 1); go({ name: 'exam', courseId, back, section }) }
+  const openExam = (courseId: string | null, back: Extract<View, { name: 'exam' }>['back'], section?: 'cards' | 'quiz', autoStart = true) => { setExamToken(token => token + 1); go({ name: 'exam', courseId, back, section, autoStart }) }
   const liveItems = useMemo(() => {
     // Home shows what is arriving or just filed; failures live under "All sources" with their Retry.
     const active = orderedItems.filter(item => !['filed', 'failed'].includes(item.status) || newlyFiled.includes(item.id))
@@ -360,7 +360,7 @@ export function BrainWorkspace() {
               </div>
             </div>
             {homeMode === 'courses'
-              ? <CourseGrid graph={graph} gaps={overview?.gaps ?? []} onOpen={(courseId) => go({ name: 'course', courseId })} onExam={(courseId) => openExam(courseId, { name: 'home' })} onFlashcards={courseId => openExam(courseId, { name: 'home' }, 'cards')} onQuiz={courseId => openExam(courseId, { name: 'home' }, 'quiz')} onPresentation={courseId => go({ name: 'presentation', courseId, back: { name: 'home' } })} />
+              ? <CourseGrid graph={graph} gaps={overview?.gaps ?? []} onOpen={(courseId) => go({ name: 'course', courseId })} onChooseDate={courseId => openExam(courseId, { name: 'home' }, undefined, false)} onExam={(courseId) => openExam(courseId, { name: 'home' })} onFlashcards={courseId => openExam(courseId, { name: 'home' }, 'cards')} onQuiz={courseId => openExam(courseId, { name: 'home' }, 'quiz')} onPresentation={courseId => go({ name: 'presentation', courseId, back: { name: 'home' } })} />
               : <BrainGraph graph={graph} api={api} loading={loadingOverview} error={graphError} onRetry={loadOverview} connections={connections} presentation={presentationActive} focusRequest={focusRequest} />}
           </section>
         </>}
@@ -392,11 +392,11 @@ export function BrainWorkspace() {
       {view.name === 'course' && <CourseDetailView api={api} catalog={catalog} courseId={view.courseId} version={eventVersion.current}
         onFlashcards={courseId => openExam(courseId, { name: 'course', courseId }, 'cards')} onQuiz={courseId => openExam(courseId, { name: 'course', courseId }, 'quiz')} onPresentation={courseId => go({ name: 'presentation', courseId, back: { name: 'course', courseId } })}
         onChanged={() => { setOlderItems([]); setOlderCursor(undefined); void loadOverview(true) }}
-        onBack={() => go({ name: 'home' })} onStartExam={(courseId) => openExam(courseId, { name: 'course', courseId })} />}
+        onChooseDate={courseId => openExam(courseId, { name: 'course', courseId }, undefined, false)} onBack={() => go({ name: 'home' })} onStartExam={(courseId) => openExam(courseId, { name: 'course', courseId })} />}
 
       {view.name === 'exam' && <section className="brain-subpage">
         <button type="button" className="brain-text-button brain-course-back" onClick={() => go(view.back)}><ArrowLeft size={16} aria-hidden="true" />{view.back.name === 'course' ? c('Back to the course') : c('Back to your Brain')}</button>
-        <BrainExam key={`${view.courseId}:${examToken}`} api={api} graph={graph} courseId={view.courseId} presentation={presentationActive} autoStart={Boolean(view.courseId)} initialSection={view.section} />
+        <BrainExam key={`${view.courseId}:${examToken}`} api={api} graph={graph} courseId={view.courseId} presentation={presentationActive} autoStart={Boolean(view.courseId) && view.autoStart !== false} initialSection={view.section} />
       </section>}
 
       {view.name === 'presentation' && <section className="brain-subpage">

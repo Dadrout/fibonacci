@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {
-  advanceStage, clampDays, coverageGaps, examReducer, failureFromError, formatPlanDate, initialExamState, optionStatus,
+  advanceStage, clampDays, daysFromDate, examDateFor, focusForDays, hintForDays, coverageGaps, examReducer, failureFromError, formatPlanDate, initialExamState, optionStatus,
   newestReadyPlan, parseDays, planLanguageFor, quizScore, shouldStopPolling, stageProgress, uniqueSources,
 } from '../components/brain/brain-exam-logic.ts'
 import { examCopy } from '../lib/copy-brain/exam.ts'
@@ -21,16 +21,16 @@ const planOf = (overrides = {}) => ({
 const content = { title: 'Econometrics — exam in 3 days', days: [], notes: [], flashcards: [], quiz: [] }
 const run = (actions, state = initialExamState) => actions.reduce(examReducer, state)
 
-test('setup defaults follow the UI language and keep days within 1–14', () => {
+test('setup defaults follow the UI language and keep days within 1–30', () => {
   assert.equal(planLanguageFor('en'), 'en-US')
   assert.equal(planLanguageFor('ru'), 'ru-RU')
   assert.equal(planLanguageFor('kk'), 'kk-KZ')
   assert.equal(clampDays(0), 1)
-  assert.equal(clampDays(30), 14)
+  assert.equal(clampDays(30), 30)
   assert.equal(clampDays(Number.NaN), 3)
   assert.equal(parseDays('', 5), 5)
   assert.equal(parseDays('7', 3), 7)
-  assert.equal(parseDays('99', 3), 14)
+  assert.equal(parseDays('99', 3), 30)
   assert.equal(formatPlanDate('2026-10-25', 'en'), 'Sun, Oct 25')
 })
 
@@ -173,4 +173,26 @@ test('direct course tools reopen the newest ready plan without choosing unfinish
   const reopened = examReducer(initialExamState, { type: 'open', plan: newestReadyPlan(history) })
   assert.equal(reopened.view.phase, 'ready')
   assert.equal(reopened.view.plan.id, 'newest')
+})
+
+
+test('date choices count local calendar days and enforce tomorrow through day 30', () => {
+  const now = new Date(2026, 9, 22, 23, 59)
+  for (const days of [1, 3, 7, 14, 30]) assert.equal(daysFromDate(examDateFor(days, now), now), days)
+  for (const date of ['', 'invalid', '2026-10-22', '2026-10-21', '2026-11-22', '2026-02-30', '2026-2-3']) assert.equal(daysFromDate(date, now), null)
+  assert.equal(daysFromDate('2027-01-02', new Date(2026, 11, 31, 23)), 2)
+  assert.equal(daysFromDate('2028-03-01', new Date(2028, 1, 28, 12)), 2)
+  assert.equal(daysFromDate('2026-03-09', new Date(2026, 2, 7, 23)), 2, 'DST boundary uses calendar days')
+})
+
+test('adaptation hints switch at one, two, and five days and have all translations', () => {
+  for (let days = 1; days <= 30; days++) {
+    const expected = days === 1 ? 'essentials' : days <= 4 ? 'core' : 'full'
+    assert.equal(focusForDays(days), expected)
+    assert.ok(examCopy[hintForDays(days)]?.every(Boolean))
+  }
+  assert.equal(hintForDays(1), 'Short on time: only the essentials — the most important topics and a quick quiz.')
+  assert.equal(hintForDays(2), 'Main topics first, then a quiz.')
+  assert.equal(hintForDays(4), hintForDays(2))
+  assert.equal(hintForDays(5), 'Everything, with spaced review and practice.')
 })

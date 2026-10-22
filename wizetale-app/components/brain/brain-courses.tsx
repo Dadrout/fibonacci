@@ -26,9 +26,9 @@ function openPicker() {
 /** Course cards for the Brain home: color, counts, missing weeks, and the two things a student does next. */
 type StudyToolActions = { onFlashcards: (courseId: string) => void; onQuiz: (courseId: string) => void; onPresentation: (courseId: string) => void }
 
-export function CourseGrid({ graph, gaps, onOpen, onExam, onFlashcards, onQuiz, onPresentation }: {
+export function CourseGrid({ graph, gaps, onOpen, onExam, onChooseDate, onFlashcards, onQuiz, onPresentation }: {
   graph: BrainGraph | null; gaps: GapAlert[]; onOpen: (courseId: string) => void; onExam: (courseId: string) => void
-} & StudyToolActions) {
+} & StudyToolActions & { onChooseDate: (courseId: string) => void }) {
   const c = useCopy()
   if (!graph) {
     return <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading courses')}>
@@ -54,6 +54,7 @@ export function CourseGrid({ graph, gaps, onOpen, onExam, onFlashcards, onQuiz, 
             {missing.map(gap => c(MISSING_LABEL[gap.sequence_kind]).replace('{n}', String(gap.missing))).join(' · ')}</span>}
           <span className="brain-course-actions">
             <button type="button" className="brain-primary-button" onClick={() => onExam(course.id)}><GraduationCap size={17} aria-hidden="true" />{c('Exam in 3 days')}</button>
+            <button type="button" className="brain-text-button brain-choose-date" onClick={() => onChooseDate(course.id)}>{c('Choose date')}</button>
             <button type="button" className="brain-secondary-button" onClick={() => onOpen(course.id)}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
           </span>
           <StudyTools courseId={course.id} compact onFlashcards={onFlashcards} onQuiz={onQuiz} onPresentation={onPresentation} />
@@ -64,10 +65,10 @@ export function CourseGrid({ graph, gaps, onOpen, onExam, onFlashcards, onQuiz, 
 }
 
 /** Full course page: topics in order with their sources, inline gaps, and the exam entry. */
-export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onChanged, onStartExam, onFlashcards, onQuiz, onPresentation }: {
+export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onChanged, onStartExam, onChooseDate, onFlashcards, onQuiz, onPresentation }: {
   api: BrainApi; catalog?: { courses: BrainCourse[]; topics: BrainTopic[] } | null; courseId: string; version: number
   onBack: () => void; onChanged: () => void; onStartExam: (courseId: string) => void
-} & StudyToolActions) {
+} & StudyToolActions & { onChooseDate: (courseId: string) => void }) {
   const c = useCopy()
   const [detail, setDetail] = useState<CourseDetail | null>(null)
   const [error, setError] = useState(false)
@@ -221,6 +222,7 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
         <button type="button" className="brain-primary-button" onClick={() => onStartExam(course.id)}>
           <GraduationCap size={18} aria-hidden="true" />{c('Exam in 3 days')}
         </button>
+        <button type="button" className="brain-text-button brain-choose-date" onClick={() => onChooseDate(course.id)}>{c('Choose date')}</button>
         <StudyTools courseId={course.id} onFlashcards={onFlashcards} onQuiz={onQuiz} onPresentation={onPresentation} />
       </div>
     </header>

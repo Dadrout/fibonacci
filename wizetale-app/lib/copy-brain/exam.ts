@@ -1,5 +1,22 @@
 /** Brain exam copy: English key → [Russian, Kazakh]. Merged into localizedCopy by lib/copy.ts. */
 export const examCopy: Record<string, [string, string]> = {
+  // Adaptive exam/deadline date chooser
+  'Exam or deadline': ['Экзамен или срок сдачи', 'Емтихан немесе тапсыру мерзімі'],
+  'Tomorrow': ['Завтра', 'Ертең'],
+  '3 days': ['3 дня', '3 күн'],
+  '1 week': ['1 неделя', '1 апта'],
+  '2 weeks': ['2 недели', '2 апта'],
+  'Pick a date': ['Выбрать дату', 'Күнді таңдау'],
+  'Choose date': ['Выбрать дату', 'Күнді таңдау'],
+  'Change date': ['Изменить дату', 'Күнді өзгерту'],
+  'Build my plan': ['Составить мой план', 'Жоспарымды құру'],
+  'Choose a date within the next 30 days.': ['Выберите дату в ближайшие 30 дней.', 'Алдағы 30 күн ішінен бір күнді таңдаңыз.'],
+  'Short on time: only the essentials — the most important topics and a quick quiz.': ['Времени мало: только самое важное — главные темы и короткий тест.', 'Уақыт аз: тек ең маңызды тақырыптар мен қысқа тест.'],
+  'Main topics first, then a quiz.': ['Сначала главные темы, затем тест.', 'Алдымен негізгі тақырыптар, содан кейін тест.'],
+  'Everything, with spaced review and practice.': ['Все темы с интервальным повторением и практикой.', 'Барлық тақырыптар, араға уақыт салып қайталау және жаттығулар.'],
+  'Short on time — this plan covers the essentials first.': ['Времени мало — в этом плане самое важное идёт первым.', 'Уақыт аз — бұл жоспарда ең маңызды тақырыптар бірінші орында.'],
+  'Main topics first.': ['Главные темы в первую очередь.', 'Алдымен негізгі тақырыптар.'],
+  'Full coverage with spaced review.': ['Все темы с интервальным повторением.', 'Барлық тақырыптар араға уақыт салып қайталанады.'],
   // Course tools and source-backed slides
   'Slides': ['Слайды', 'Слайдтар'],
   'Presentation': ['Презентация', 'Презентация'],

@@ -7,7 +7,7 @@
  * Pure state and formatting live in brain-exam-logic.ts.
  */
 import { useCallback, useEffect, useReducer, useRef, useState, type FormEvent } from 'react'
-import { BookOpen, Check, ChevronRight, FilePlus2, GraduationCap, Minus, Plus, RefreshCw, TriangleAlert } from 'lucide-react'
+import { BookOpen, Check, ChevronRight, FilePlus2, RefreshCw, TriangleAlert } from 'lucide-react'
 import { useBrainEvents } from '@/hooks/use-brain-api'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
@@ -15,10 +15,11 @@ import type { BrainApi } from '@/lib/brain-api'
 import type { BrainCourse, BrainGraph, BrainLanguage, StudyPlan } from '@/lib/brain-types'
 import './brain-exam.css'
 import { BrainExamPlan } from './brain-exam-plan'
+import { ExamDateChooser } from './brain-exam-date-chooser'
 import {
-  DEFAULT_DAYS, FAILURE_COPY, MAX_DAYS, MIN_DAYS, PLAN_LANGUAGES, PLAN_STAGES, STAGE_LABEL,
-  activeStageIndex, clampDays, examDateFor, examReducer, failureFromError, formatCreatedAt, formatPlanDate,
-  initialExamState, newestReadyPlan, newRequestId, parseDays, planLanguageFor, shouldStopPolling, sortPlansNewest, stageProgress,
+  DEFAULT_DAYS, FAILURE_COPY, PLAN_LANGUAGES, PLAN_STAGES, STAGE_LABEL,
+  activeStageIndex, daysFromDate, examDateFor, examReducer, failureFromError, formatCreatedAt, formatPlanDate,
+  initialExamState, newestReadyPlan, newRequestId, planLanguageFor, shouldStopPolling, sortPlansNewest, stageProgress,
   type ExamView, type PlanParams, type PlanStage,
 } from './brain-exam-logic'
 
@@ -102,7 +103,7 @@ export function BrainExam({ api, graph, courseId, presentation, autoStart = fals
   const create = useCallback(async (request: PlanParams, requestId: string) => {
     dispatch({ type: 'start', request, requestId })
     try {
-      const plan = await api.createExamPlan(request.courseId, { days: request.days, language: request.language, request_id: requestId })
+      const plan = await api.createExamPlan(request.courseId, { days: request.days, exam_date: request.exam_date, language: request.language, request_id: requestId })
       dispatch({ type: 'created', requestId, plan })
     } catch (error) {
       dispatch({ type: 'error', failure: failureFromError(error), retry: 'create', requestId })
@@ -150,7 +151,7 @@ export function BrainExam({ api, graph, courseId, presentation, autoStart = fals
       : view.phase === 'setup' ? <ExamSetup api={api} courses={courses} initialCourseId={courseId} onStart={request => void create(request, newRequestId())} onOpen={plan => dispatch({ type: 'open', plan })} />
       : view.phase === 'restoring' ? <ExamProgress title="" stage={null} restoring />
       : view.phase === 'generating' ? <ExamProgress title={courseTitle(view.request.courseId)} stage={view.stage} />
-      : view.phase === 'ready' ? <BrainExamPlan api={api} plan={view.plan} course={courses.list?.find(course => course.id === view.plan.course_id) ?? null} presentation={presentation} initialSection={initialSection} onNewPlan={reset} />
+      : view.phase === 'ready' ? <BrainExamPlan api={api} plan={view.plan} course={courses.list?.find(course => course.id === view.plan.course_id) ?? null} presentation={presentation} initialSection={initialSection} onNewPlan={reset} onChangeDate={request => void create(request, newRequestId())} />
       : <ExamFailure view={view} courseTitle={courseTitle(view.request?.courseId)} onRetry={() => retry(view)} onBack={reset} />}
   </section>
 }
@@ -182,8 +183,7 @@ function ExamSetup({ api, courses, initialCourseId, onStart, onOpen }: {
   const c = useCopy()
   const { language } = useLanguage()
   const [selected, setSelected] = useState<string | null>(initialCourseId)
-  const [days, setDays] = useState(DEFAULT_DAYS)
-  const [daysText, setDaysText] = useState(String(DEFAULT_DAYS))
+  const [date, setDate] = useState(() => examDateFor(DEFAULT_DAYS))
   const [chosenLanguage, setChosenLanguage] = useState<BrainLanguage | null>(null)
   const planLanguage = chosenLanguage ?? planLanguageFor(language)
   const list = courses.list
@@ -194,10 +194,10 @@ function ExamSetup({ api, courses, initialCourseId, onStart, onOpen }: {
       : initialCourseId && list.some(course => course.id === initialCourseId) ? initialCourseId : list[0].id)
   }, [list, initialCourseId])
 
-  const setDayCount = (value: number) => { const next = clampDays(value); setDays(next); setDaysText(String(next)) }
   const submit = (event: FormEvent) => {
     event.preventDefault()
-    if (selected) onStart({ courseId: selected, days, language: planLanguage })
+    const days = daysFromDate(date)
+    if (selected && days !== null) onStart({ courseId: selected, days, exam_date: date, language: planLanguage })
   }
 
   const heading = <div className="brain-inbox-heading">
@@ -227,7 +227,6 @@ function ExamSetup({ api, courses, initialCourseId, onStart, onOpen }: {
     </div></>
   }
 
-  const examDate = formatPlanDate(examDateFor(days), language)
   return <>
     {heading}
     <form className="brain-exam-setup" onSubmit={submit}>
@@ -246,30 +245,14 @@ function ExamSetup({ api, courses, initialCourseId, onStart, onOpen }: {
         </div>
       </fieldset>
 
-      <div className="brain-exam-setup-row">
-        <div className="brain-exam-field">
-          <label htmlFor="brain-exam-days">{c('Days until the exam')}</label>
-          <div className="brain-exam-days">
-            <button type="button" className="brain-icon-button" aria-label={c('Fewer days')} disabled={days <= MIN_DAYS} onClick={() => setDayCount(days - 1)}><Minus size={18} aria-hidden="true" /></button>
-            <input id="brain-exam-days" type="number" inputMode="numeric" min={MIN_DAYS} max={MAX_DAYS} step={1} value={daysText} aria-describedby="brain-exam-date"
-              onChange={event => { setDaysText(event.target.value); setDays(current => parseDays(event.target.value, current)) }}
-              onBlur={() => setDaysText(String(days))} />
-            <button type="button" className="brain-icon-button" aria-label={c('More days')} disabled={days >= MAX_DAYS} onClick={() => setDayCount(days + 1)}><Plus size={18} aria-hidden="true" /></button>
-          </div>
-          <p id="brain-exam-date" className="brain-exam-hint">{c('Exam on {date} · 1–14 days').replace('{date}', examDate)}</p>
-        </div>
-        <div className="brain-exam-field">
-          <label htmlFor="brain-exam-language">{c('Plan language')}</label>
-          <select id="brain-exam-language" className="brain-exam-select" value={planLanguage} onChange={event => setChosenLanguage(event.target.value as BrainLanguage)}>
-            {PLAN_LANGUAGES.map(option => <option key={option.id} value={option.id} lang={option.id}>{option.label}</option>)}
-          </select>
-          <p className="brain-exam-hint">{c('Notes, flashcards, and the quiz are written in this language.')}</p>
-        </div>
+      <div className="brain-exam-field">
+        <label htmlFor="brain-exam-language">{c('Plan language')}</label>
+        <select id="brain-exam-language" className="brain-exam-select" value={planLanguage} onChange={event => setChosenLanguage(event.target.value as BrainLanguage)}>
+          {PLAN_LANGUAGES.map(option => <option key={option.id} value={option.id} lang={option.id}>{option.label}</option>)}
+        </select>
+        <p className="brain-exam-hint">{c('Notes, flashcards, and the quiz are written in this language.')}</p>
       </div>
-
-      <button type="submit" className="brain-primary-button brain-exam-build" disabled={!selected}>
-        <GraduationCap size={22} aria-hidden="true" />{c('Build my exam plan')}
-      </button>
+      <ExamDateChooser date={date} onChange={setDate} disabled={!selected} />
     </form>
     {selected && <EarlierPlans key={selected} api={api} courseId={selected} onOpen={onOpen} />}
   </>
