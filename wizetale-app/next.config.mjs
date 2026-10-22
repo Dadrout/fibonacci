@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // No developer badge on screen (demo recordings); compile and runtime errors still show.
+  devIndicators: false,
   typescript: {
     ignoreBuildErrors: false,
   },
