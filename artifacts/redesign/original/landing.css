@@ -1,4 +1,4 @@
-@font-face{font-family:"TaleSpark Display";src:url("/fonts/talespark-display.ttf") format("truetype");font-style:normal;font-weight:900;font-display:swap}
+@font-face{font-family:"Fibonacci Display";src:url("/fonts/fibonacci-display.ttf") format("truetype");font-style:normal;font-weight:900;font-display:swap}
 
 .slush-page{--ink:#050505;--paper:#fff;--sky:#dceeff;--blue:#4da2ff;--mint:#55db9c;--lavender:#e9ccff;--orange:#fb4903;--yellow:#ffd731;--violet:#5c4ade;color:var(--ink);background:var(--paper);font-family:var(--font-body),Arial,Helvetica,sans-serif;overflow-x:clip}
 .slush-page *{box-sizing:border-box}
@@ -33,7 +33,7 @@
 .slush-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);border:1px solid var(--ink);border-radius:100px;padding:10px 14px;letter-spacing:.04em;font-size:11px}
 .slush-kicker>span{width:8px;height:8px;border-radius:50%;background:var(--orange)}
 .slush-hero-copy{position:relative;z-index:2;margin:auto 0;max-width:980px;padding:54px 0 70px}
-.slush-hero h1{margin:0 0 45px;font-family:"TaleSpark Display",Impact,sans-serif;text-transform:uppercase;font-weight:900;letter-spacing:-.025em;line-height:.78;font-size:clamp(100px,12.8vw,220px);max-width:900px}
+.slush-hero h1{margin:0 0 45px;font-family:"Fibonacci Display",Impact,sans-serif;text-transform:uppercase;font-weight:900;letter-spacing:-.025em;line-height:.78;font-size:clamp(100px,12.8vw,220px);max-width:900px}
 .slush-hero h1 span,.slush-hero h1 strong{display:block;font:inherit}
 .slush-hero h1 span{font-size:.67em;line-height:1.02;max-width:690px}
 .slush-hero h1 strong{white-space:nowrap}
@@ -53,7 +53,7 @@
 .slush-sticker-star{left:9%;top:15%;width:76px;height:76px;border-radius:20px;background:var(--mint);color:var(--violet);font-size:55px;transform:rotate(-15deg)}
 .slush-art-label{position:absolute;right:19%;bottom:6%;background:var(--paper);border:1px solid var(--ink);padding:13px 16px;border-radius:14px;transform:rotate(-9deg);font-size:12px;line-height:1.1;font-weight:900;letter-spacing:.04em}
 .slush-ticker{height:58px;background:var(--blue);border-bottom:1px solid var(--ink);overflow:hidden;display:flex;align-items:center}
-.slush-ticker div{width:max-content;white-space:nowrap;font-family:"TaleSpark Display",Impact,sans-serif;font-size:30px;letter-spacing:.02em;animation:slush-scroll 28s linear infinite}
+.slush-ticker div{width:max-content;white-space:nowrap;font-family:"Fibonacci Display",Impact,sans-serif;font-size:30px;letter-spacing:.02em;animation:slush-scroll 28s linear infinite}
 .slush-ticker span{font-family:Arial,sans-serif;color:var(--yellow);font-size:24px;margin:0 18px;-webkit-text-stroke:1px var(--ink)}
 @keyframes slush-scroll{to{transform:translateX(-50%)}}
 
@@ -71,7 +71,7 @@
 .slush-section{padding:120px 0;scroll-margin-top:24px}
 .slush-section-heading{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.7fr);align-items:end;gap:50px;margin-bottom:48px}
 .slush-eyebrow{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-.slush-section h2,.slush-cta h2{font-family:"TaleSpark Display",Impact,sans-serif;text-transform:uppercase;font-size:clamp(64px,7vw,108px);font-weight:900;line-height:.86;letter-spacing:-.025em;margin:20px 0 0;max-width:980px}
+.slush-section h2,.slush-cta h2{font-family:"Fibonacci Display",Impact,sans-serif;text-transform:uppercase;font-size:clamp(64px,7vw,108px);font-weight:900;line-height:.86;letter-spacing:-.025em;margin:20px 0 0;max-width:980px}
 .slush-section-heading>p{font-size:17px;line-height:1.5;margin:0 0 5px;max-width:335px}
 .slush-how{background:var(--paper)}
 .slush-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
@@ -88,7 +88,7 @@
 .slush-demo{background:var(--paper);padding:0 0 120px;scroll-margin-top:24px}
 .slush-demo-inner{border:1px solid var(--ink);border-radius:30px;background:var(--yellow);padding:40px;display:grid;grid-template-columns:.65fr 1fr;gap:45px;align-items:center}
 .slush-demo-copy{position:relative}
-.slush-demo h2{font-family:"TaleSpark Display",Impact,sans-serif;text-transform:uppercase;font-size:clamp(52px,5.3vw,80px);line-height:.88;letter-spacing:-.025em;margin:20px 0}
+.slush-demo h2{font-family:"Fibonacci Display",Impact,sans-serif;text-transform:uppercase;font-size:clamp(52px,5.3vw,80px);line-height:.88;letter-spacing:-.025em;margin:20px 0}
 .slush-demo-copy p{max-width:310px;font-size:15px;line-height:1.5;margin:0}
 .slush-demo-spark{position:absolute;font-size:80px;line-height:1;right:5%;bottom:-35px;color:var(--orange);-webkit-text-stroke:1px var(--ink);transform:rotate(-13deg)}
 .slush-video{border:1px solid var(--ink);border-radius:22px!important;box-shadow:none!important}
@@ -109,7 +109,7 @@
 
 .slush-interlude{background:var(--blue);border-bottom:1px solid var(--ink);overflow:hidden}
 .slush-interlude>.slush-container{min-height:350px;display:flex;align-items:center;justify-content:center;position:relative}
-.slush-interlude p{font-family:"TaleSpark Display",Impact,sans-serif;font-size:clamp(70px,10vw,165px);line-height:.83;letter-spacing:-.02em;text-align:center;margin:0}
+.slush-interlude p{font-family:"Fibonacci Display",Impact,sans-serif;font-size:clamp(70px,10vw,165px);line-height:.83;letter-spacing:-.02em;text-align:center;margin:0}
 .slush-interlude em{font-style:normal;color:var(--paper)}
 .slush-interlude-star{position:absolute;left:0;top:30px;color:var(--yellow);font-size:110px;line-height:1;-webkit-text-stroke:1px var(--ink);transform:rotate(-20deg)}
 .slush-interlude-badge{position:absolute;right:3%;bottom:18px;width:145px;height:145px;border:1px solid var(--ink);border-radius:50%;background:var(--yellow);display:grid;place-items:center;text-align:center;line-height:1.1;font-size:14px;font-weight:900;transform:rotate(13deg)}
@@ -120,7 +120,7 @@
 .slush-price-premium{background:var(--sky)}
 .slush-plan-label{font-size:11px;font-weight:900;letter-spacing:.12em}
 .slush-price-card h3{font-size:40px;letter-spacing:-.06em;line-height:1;margin:28px 0 18px;font-weight:900}
-.slush-price{font-family:"TaleSpark Display",Impact,sans-serif;font-size:76px;line-height:1;display:flex;align-items:end;gap:12px}
+.slush-price{font-family:"Fibonacci Display",Impact,sans-serif;font-size:76px;line-height:1;display:flex;align-items:end;gap:12px}
 .slush-price small{font-family:Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:.02em;line-height:1.3;margin-bottom:8px}
 .slush-price-card>p{font-size:15px;line-height:1.5;margin:14px 0 25px}
 .slush-price-card ul{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:10px}
@@ -256,9 +256,9 @@
 @media(max-width:370px){.slush-hero h1{font-size:clamp(48px,16.5vw,60px)}.slush-hero-actions .slush-button{font-size:11px;padding:0 14px}.slush-text-link{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.slush-ticker div{animation:none}.slush-button{transition:none}}
 
-/* Shared TaleSpark typography and theme */
+/* Shared Fibonacci typography and theme */
 .slush-page{--ink:#292538;--paper:#fffefa;--sky:#e7f3ff;--blue:#b8d9f3;--mint:#d8f1e2;--lavender:#e8e2fa;--orange:#b5472a;--yellow:#ffe08b;--violet:#5d4aca;color:var(--ink);background:var(--paper);font-family:var(--font-body),"Noto Sans",Arial,sans-serif}
-.slush-brand,.slush-hero h1,.slush-ticker div,.slush-interlude p{font-family:"TaleSpark Display",var(--font-heading),sans-serif}
+.slush-brand,.slush-hero h1,.slush-ticker div,.slush-interlude p{font-family:"Fibonacci Display",var(--font-heading),sans-serif}
 .slush-section h2,.slush-demo h2,.slush-cta h2,.slush-step h3,.slush-feature h3,.slush-price-card h3,.slush-feedback-card h3,.slush-script-question{font-family:var(--font-heading),"Noto Sans",Arial,sans-serif}
 .slush-price{font-family:var(--font-heading),"Noto Sans",Arial,sans-serif}
 .slush-sticker,.slush-price small{font-family:var(--font-body),"Noto Sans",Arial,sans-serif}

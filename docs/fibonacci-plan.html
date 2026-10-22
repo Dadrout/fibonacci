@@ -110,7 +110,7 @@ footer{margin-top:var(--s89);color:var(--muted);font-size:13px}
 <main>
 <header class="top">
   <div class="brandline"><svg class="seed" id="logo" width="40" height="40" viewBox="-50 -50 100 100" aria-hidden="true"></svg><b>fibonacci</b></div>
-  <h1>From TaleSpark to Fibonacci: audit, direction and roadmap</h1>
+  <h1>From Fibonacci to Fibonacci: audit, direction and roadmap</h1>
   <p class="lede">A planning document. Nothing in the application has been changed. It is based on a read of the code in <code>wizetale-app</code>, <code>wizetale-api</code> and <code>supabase</code>, the project docs, the 20 October 2026 verification report, and a short web search on competitors.</p>
   <p class="meta">Prepared 20 Oct 2026 · Labels: <span class="tag found">Found</span> what the code or research shows · <span class="tag prop">Proposal</span> what I recommend · <span class="tag warn">Risk</span> something to act on</p>
 </header>
@@ -118,7 +118,7 @@ footer{margin-top:var(--s89);color:var(--muted);font-size:13px}
 <!-- 01 -->
 <section id="audit">
 <h2><span class="n">01</span>Existing project audit</h2>
-<p><span class="tag found">Found</span> TaleSpark is further along than "a video generator". It already has the core parts of a source-grounded learning product, mainly in teacher mode. The learner side is topic-only and does not read user material.</p>
+<p><span class="tag found">Found</span> Fibonacci is further along than "a video generator". It already has the core parts of a source-grounded learning product, mainly in teacher mode. The learner side is topic-only and does not read user material.</p>
 
 <h3>What exists</h3>
 <div class="tbl"><table>
@@ -131,7 +131,7 @@ footer{margin-top:var(--s89);color:var(--muted);font-size:13px}
 <tr><td>Retrieval and citations</td><td>Postgres full-text search, built by OR-ing the lesson topic's words. At most 8 passages and 16k characters. <code>validate_grounded</code> rejects answers that cite passage IDs that were not supplied. Citations are attached to a whole resource, not to individual claims.</td><td>Right idea, too coarse for Q&amp;A</td></tr>
 <tr><td>Outputs</td><td>Learner: story script → video, plus flashcards (12), quiz (10) and presentation (8 slides). Teacher: 10 resource kinds, presentation video and topic video. Outputs are editable and printable.</td><td>Broad and working</td></tr>
 <tr><td>Video pipeline</td><td>Script → scenes → images (Gemini, fal or Cloudflare) → speech (Edge, Google, Azure or ElevenLabs) → subtitles → FFmpeg, producing 1280×720 MP4. Verified at 108–154 seconds per video.</td><td>Works, but expensive and slow</td></tr>
-<tr><td>Design system</td><td>The "field guide" look: Literata and Golos Text served locally with Kazakh glyphs checked, documented tokens, measured contrast, reduced-motion support.</td><td>Well made, but it is the TaleSpark brand</td></tr>
+<tr><td>Design system</td><td>The "field guide" look: Literata and Golos Text served locally with Kazakh glyphs checked, documented tokens, measured contrast, reduced-motion support.</td><td>Well made, but it is the Fibonacci brand</td></tr>
 </table></div>
 
 <h3>Problems and technical debt</h3>
@@ -144,7 +144,7 @@ footer{margin-top:var(--s89);color:var(--muted);font-size:13px}
 <li><b>Retrieval is keyword-only.</b> Kazakh uses the <code>simple</code> text-search config, with no stemming. That is acceptable for "find material for this lesson" but weak for questions in natural language.</li>
 <li><b>Code that does nothing:</b> <code>runware_service.py</code> and <code>azure_openai_service.py</code> are never imported. A Stability key setting remains. Firebase is still used by <code>lib/analytics.ts</code> and <code>lib/firebase.ts</code>. About 40 shadcn components in <code>components/ui</code> are never used, and neither are recharts, embla and cmdk. There is a duplicate <code>/landing</code> route tree.</li>
 <li><b>Clutter:</b> eight overlapping deployment docs, plus <code>updates.tar.gz</code>, <code>user-stats.html</code>, <code>nginx.conf.fixed</code>, <code>docker-logs.txt</code> and 13 <code>.chart-data-*</code> folders.</li>
-<li><b>Three names in use:</b> wizetale (code, domain, Docker images), TaleSpark (UI), wisetale (a logo file).</li>
+<li><b>Three names in use:</b> wizetale (code, domain, Docker images), Fibonacci (UI), wisetale (a logo file).</li>
 <li><b>Open launch gates</b> (<code>docs/PUBLIC_LAUNCH_GATES.md</code>): privacy notice, terms, and parental consent for ages 10–18. Google OAuth is disabled in Supabase. Real email delivery is not verified.</li>
 </ul>
 
@@ -510,7 +510,7 @@ outputs         id, project_id, kind, content jsonb, revision, segment_ids[]   �
 <div class="tbl"><table>
 <tr><th>Phase</th><th>Delivers</th><th>Done when</th><th>Size and risk</th></tr>
 <tr><td><b>0 · Make it safe to change</b></td><td>Revoke and remove the service-account key. Initialise git and check history for secrets. Remove dead services, Firebase, unused UI components and dependencies, stale docs and files. Split Celery queues. Decide on internal naming (keep <code>wizetale-*</code> service names until DNS moves).</td><td>No secrets in the tree. All 321 API tests and 81 frontend tests pass. Build passes. A video render no longer delays an upload.</td><td>S · low</td></tr>
-<tr><td><b>1 · Brand system</b></td><td>Tokens (colour, Fibonacci spacing, type), fonts self-hosted with a Kazakh glyph test page, logo and seedhead component, updated <code>studio-icon</code>, all UI copy renamed TaleSpark → Fibonacci in three languages.</td><td>Contrast AA in both themes. Kazakh renders in every face. Existing screens restyled with no behaviour change.</td><td>M · low</td></tr>
+<tr><td><b>1 · Brand system</b></td><td>Tokens (colour, Fibonacci spacing, type), fonts self-hosted with a Kazakh glyph test page, logo and seedhead component, updated <code>studio-icon</code>, all UI copy renamed Fibonacci → Fibonacci in three languages.</td><td>Contrast AA in both themes. Kazakh renders in every face. Existing screens restyled with no behaviour change.</td><td>M · low</td></tr>
 <tr><td><b>2 · Projects and sources</b></td><td>New tables and RLS, migration from teacher documents, web URL ingestion with SSRF guard, stages and polling, Library page, add-source field.</td><td>Upload or link → ready in under 60s for a 50-page PDF. SSRF and RLS tests pass. Teacher sources still work.</td><td>M · medium (migration)</td></tr>
 <tr><td><b>3 · Understanding core</b></td><td>Analysis job (overview and path), workspace with path, idea view, check question, Ask with labelled citations, source viewer that jumps to the passage.</td><td>Evaluation targets met in EN / RU / KK. A test user can finish a path for one chapter without help.</td><td>L · <b>highest</b>: answer quality</td></tr>
 <tr><td><b>4 · Make, and new landing</b></td><td>Study guide, flashcards and quiz grounded in project sources (reusing generators and editors), print and copy, sample project, new landing page, "Start from a topic" option.</td><td>Outputs cite segments. Landing passes Lighthouse accessibility at 95 or above. No invented claims.</td><td>M · low</td></tr>
@@ -533,7 +533,7 @@ outputs         id, project_id, kind, content jsonb, revision, segment_ids[]   �
 <div class="q"><b>5. Teacher mode:</b><span>Should it merge into projects (recommended, Phase 6) or stay a separate product?</span></div>
 <div class="q"><b>6. Languages at launch:</b><span>EN, RU and KK, all to the same evaluation standard? Each language adds evaluation and copy work.</span></div>
 <div class="q"><b>7. Budget:</b><span>What monthly AI and API spend is acceptable, including a paid YouTube transcript provider? Will there be a free tier, and with what limits?</span></div>
-<div class="q"><b>8. Existing users and data:</b><span>Is TaleSpark live with real users? If so, data must be migrated and users told about the change. If not, the migration can be simpler.</span></div>
+<div class="q"><b>8. Existing users and data:</b><span>Is Fibonacci live with real users? If so, data must be migrated and users told about the change. If not, the migration can be simpler.</span></div>
 
 <h3>Risks</h3>
 <div class="tbl"><table>

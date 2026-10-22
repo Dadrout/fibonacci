@@ -1,4 +1,4 @@
-"""Small server-side PostgREST repository for TaleSpark learner records."""
+"""Small server-side PostgREST repository for Fibonacci learner records."""
 
 from __future__ import annotations
 

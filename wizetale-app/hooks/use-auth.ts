@@ -130,8 +130,8 @@ export const useAuthState = () => {
 
   const signInWithGoogle = async (next: '/create' | '/teacher' = '/create') => {
     if (typeof window !== 'undefined') {
-      if (next === '/teacher') window.sessionStorage.setItem('talespark-teacher-intent', '1')
-      else window.sessionStorage.removeItem('talespark-teacher-intent')
+      if (next === '/teacher') window.sessionStorage.setItem('fibonacci-teacher-intent', '1')
+      else window.sessionStorage.removeItem('fibonacci-teacher-intent')
     }
     const client = requireClient()
     setLoading(true)

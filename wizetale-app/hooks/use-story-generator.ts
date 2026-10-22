@@ -132,7 +132,7 @@ export const useStoryGenerator = () => {
 
   const restoreDraft = useCallback(async () => {
     if (typeof window === 'undefined') return
-    const legacyId = window.localStorage.getItem('talespark-current-draft')
+    const legacyId = window.localStorage.getItem('fibonacci-current-draft')
     const id = window.localStorage.getItem(learnerStorageKey('draft', user!.id)) || legacyId
     if (!id) return
     try {
@@ -142,7 +142,7 @@ export const useStoryGenerator = () => {
       if (id === legacyId) {
         // Migrate only after the server has confirmed this learner owns it.
         saveDraftId(id)
-        window.localStorage.removeItem('talespark-current-draft')
+        window.localStorage.removeItem('fibonacci-current-draft')
       }
       if (restored.status === 'draft') setDraft(restored)
       else saveDraftId(null)

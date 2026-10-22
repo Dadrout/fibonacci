@@ -95,7 +95,7 @@ components:
 > Contrast figures below were measured for the previous palette and need re-measuring for the new values.
 
 
-Fibonacci (formerly TaleSpark) is an editorial learning studio for curious learners aged 10–18 and teachers preparing private lesson materials. Product behavior, authentication, content ownership, generation, and source review remain in the existing Next.js and API architecture.
+Fibonacci is an editorial learning studio for curious learners aged 10–18 and teachers preparing private lesson materials. Product behavior, authentication, content ownership, generation, and source review remain in the existing Next.js and API architecture.
 
 ## Visual direction
 

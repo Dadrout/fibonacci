@@ -56,7 +56,7 @@ jobs:
       - run: docker compose config --quiet
       - run: touch .env.brain && docker compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.brain.yml config --quiet
         env:
-          TALESPARK_LOCAL_REDIS_PASSWORD: ci-only
+          FIBONACCI_LOCAL_REDIS_PASSWORD: ci-only
 
   brain-db:
     runs-on: ubuntu-latest

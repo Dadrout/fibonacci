@@ -72,14 +72,14 @@ export default function SlushLanding({ previewEnabled }: { previewEnabled: boole
 
       <header className="slush-header">
         <div className="slush-container slush-header-inner">
-          <Link href="/" className="slush-brand" aria-label={c("TaleSpark home")}>
-            <Image src="/talespark-logo-owl.png" alt="TaleSpark" width={74} height={74} priority />
+          <Link href="/" className="slush-brand" aria-label={c("Fibonacci home")}>
+            <Image src="/fibonacci-logo-owl.png" alt="Fibonacci" width={74} height={74} priority />
           </Link>
 
           <nav className="slush-nav" aria-label={c("Main navigation")}>
             <a href="#how-it-works"> {c("How it works")} </a>
             <a href="#story-preview"> {c("Story preview")} </a>
-            <a href="#features"> {c("Why TaleSpark")} </a>
+            <a href="#features"> {c("Why Fibonacci")} </a>
             <Link href="/teacher"> {c("Teacher prep")} </Link>
           </nav>
 
@@ -106,7 +106,7 @@ export default function SlushLanding({ previewEnabled }: { previewEnabled: boole
           <nav id="slush-mobile-navigation" className="slush-mobile-nav" aria-label={c("Mobile navigation")}>
             <a href="#how-it-works" onClick={closeMenu}> {c("How it works")} <span aria-hidden="true">↘</span></a>
             <a href="#story-preview" onClick={closeMenu}> {c("Story preview")} <span aria-hidden="true">↘</span></a>
-            <a href="#features" onClick={closeMenu}> {c("Why TaleSpark")} <span aria-hidden="true">↘</span></a>
+            <a href="#features" onClick={closeMenu}> {c("Why Fibonacci")} <span aria-hidden="true">↘</span></a>
             <div>
               <Link href="/login" onClick={closeMenu}> {c("Sign in")} </Link>
               <Link href={startHref} className="slush-button slush-button-black" onClick={closeMenu}> {c("Start learning")} <span aria-hidden="true">↗</span></Link>
@@ -241,16 +241,16 @@ export default function SlushLanding({ previewEnabled }: { previewEnabled: boole
         <div className="slush-container">
           <div className="slush-footer-main">
             <div>
-              <Link href="/" className="slush-brand" aria-label={c("TaleSpark home")}>
-                <Image src="/talespark-logo-owl.png" alt="TaleSpark" width={74} height={74} />
+              <Link href="/" className="slush-brand" aria-label={c("Fibonacci home")}>
+                <Image src="/fibonacci-logo-owl.png" alt="Fibonacci" width={74} height={74} />
               </Link>
               <p> {c("Good questions go places. Let’s see where yours takes you.")} </p>
             </div>
-            <nav aria-label={c("Explore TaleSpark")}>
+            <nav aria-label={c("Explore Fibonacci")}>
               <span> {c("EXPLORE")} </span>
               <a href="#how-it-works"> {c("How it works")} </a>
               <a href="#story-preview"> {c("Story preview")} </a>
-              <a href="#features"> {c("Why TaleSpark")} </a>
+              <a href="#features"> {c("Why Fibonacci")} </a>
             <Link href="/teacher"> {c("Teacher prep")} </Link>
             </nav>
             <div className="slush-footer-join">
@@ -259,7 +259,7 @@ export default function SlushLanding({ previewEnabled }: { previewEnabled: boole
               <Link href={startHref} className="slush-button slush-button-black"> {c("Start learning")} <span aria-hidden="true">↗</span></Link>
             </div>
           </div>
-          <div className="slush-footer-bottom"><span>© {new Date().getFullYear()} TaleSpark</span><a href="#top"> {c("BACK TO TOP ↑")} </a></div>
+          <div className="slush-footer-bottom"><span>© {new Date().getFullYear()} Fibonacci</span><a href="#top"> {c("BACK TO TOP ↑")} </a></div>
         </div>
       </footer>
     </main>

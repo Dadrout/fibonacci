@@ -1,6 +1,6 @@
 # Supabase setup completed
 
-Target: TalesPark (`nsrhlhbpnkxmzgveingy`), API `https://nsrhlhbpnkxmzgveingy.supabase.co`.
+Target: Fibonacci (`nsrhlhbpnkxmzgveingy`), API `https://nsrhlhbpnkxmzgveingy.supabase.co`.
 
 Read-only inspection on 2026-10-04: project healthy; public schema has no application tables or migrations; security advisor reports no notices. Local frontend/API environment files now use the project's URL and active publishable key. No server secret has been obtained or exposed.
 

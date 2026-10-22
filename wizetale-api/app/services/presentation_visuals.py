@@ -173,7 +173,7 @@ class PresentationVisualService:
         current = self.repository.transition(row, 'processing')
         if not current:
             return
-        temp_dir = self.workdir / f"talespark_slide_{row['id']}"
+        temp_dir = self.workdir / f"fibonacci_slide_{row['id']}"
         object_path = f"{row['user_id']}/{row['id']}/slide.png"
         uploaded = False
         try:

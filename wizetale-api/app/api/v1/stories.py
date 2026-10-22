@@ -63,7 +63,7 @@ def _user_id(user: dict[str, Any]) -> str:
 
 
 def _repo_error(error: Exception) -> HTTPException:
-    logger.warning("TaleSpark story service request failed (%s)", type(error).__name__)
+    logger.warning("Fibonacci story service request failed (%s)", type(error).__name__)
     if not settings.SUPABASE_URL or not settings.SUPABASE_SERVICE_ROLE_KEY:
         return HTTPException(status_code=503, detail="Story storage is not configured.")
     return HTTPException(status_code=503, detail="Story storage is temporarily unavailable.")

@@ -1,6 +1,6 @@
 # Production deployment
 
-TaleSpark runs its Next.js app on Vercel and its API, Celery worker, Redis, Nginx, and Certbot on a Docker host. Use a supported Linux server with Docker Engine and the Docker Compose plugin. Configure DNS so `api.wizetale.com` resolves to that server. Vercel manages DNS and TLS for the website domains.
+Fibonacci runs its Next.js app on Vercel and its API, Celery worker, Redis, Nginx, and Certbot on a Docker host. Use a supported Linux server with Docker Engine and the Docker Compose plugin. Configure DNS so `api.wizetale.com` resolves to that server. Vercel manages DNS and TLS for the website domains.
 
 ## 1. Configure the API server
 

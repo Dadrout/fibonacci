@@ -1,4 +1,4 @@
-# Expanded TaleSpark verification — 20 October 2026
+# Expanded Fibonacci verification — 20 October 2026
 
 **Status:** automated and tested local workflows pass. Google sign-in is blocked by Supabase configuration; real email delivery remains pending owner verification. No production deployment or universal readiness claim is made.
 
@@ -45,7 +45,7 @@ The earlier run additionally verified learner story draft generation/editing, a 
 
 ## Confirmed blockers and remaining limits
 
-- **Google OAuth is disabled in TalesPark Supabase.** The public Auth settings return google=false; authorization returns HTTP 400, `Unsupported provider: provider is not enabled`. Browser sign-in cannot complete until the owner configures/enables the Google provider. The owner opted to handle external-account steps. No OAuth credentials or provider settings were changed. Follow the [official Google provider setup](https://supabase.com/docs/guides/auth/social-login/auth-google), including the Google client, Supabase callback, and the app callback allowlist. Keep the client secret in the provider dashboard.
+- **Google OAuth is disabled in Fibonacci Supabase.** The public Auth settings return google=false; authorization returns HTTP 400, `Unsupported provider: provider is not enabled`. Browser sign-in cannot complete until the owner configures/enables the Google provider. The owner opted to handle external-account steps. No OAuth credentials or provider settings were changed. Follow the [official Google provider setup](https://supabase.com/docs/guides/auth/social-login/auth-google), including the Google client, Supabase callback, and the app callback allowlist. Keep the client secret in the provider dashboard.
 - **Real email delivery and email-link completion are unverified.** No personal inbox was accessed or password/verification code requested. Signup confirmation, reset-email arrival, real Google consent, and final OAuth callback still need owner testing.
 - **Provider intermittency remains visible.** One worksheet request produced a business-validation ValueError and a recoverable 503; a direct reproduction and fresh API generation passed. The failed model output was not retained, so its exact invalid field is unknown. Russian male speech twice exhausted host retries despite appearing in the live voice catalog, then succeeded in the API container after a retry. These are recorded as failures/recoveries, not universal reliability.
 - No load/soak test, physical printing, full PDF pagination export, Safari/Firefox/device matrix, OS reduced-motion emulation, adversarial security audit, production deployment, or production failover testing was performed. The earlier transactional SQL test connector failures remain documented; the real JWT/RLS checks above provide additional evidence without claiming those SQL assertions passed.

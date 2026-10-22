@@ -1,20 +1,20 @@
-# TaleSpark UI and Typography Implementation Plan
+# Fibonacci UI and Typography Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Apply the approved warm storybook visual system and Fredoka/Nunito typography across TaleSpark’s public, learning, authentication, and account routes.
+**Goal:** Apply the approved warm storybook visual system and Fredoka/Nunito typography across Fibonacci’s public, learning, authentication, and account routes.
 
 **Architecture:** Load the two variable fonts once through `next/font/local` in the root app layout, then expose shared type and color tokens from the existing global stylesheet. Keep the landing page and creation workspace layouts intact while updating their visual rules, then bring authentication and account/story routes onto the same tokens.
 
 **Tech Stack:** Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 3, `next/font/local`, existing CSS and shadcn-style UI components.
 
-**Spec:** `docs/superpowers/specs/2026-10-02-talespark-ui-typography-design.md`
+**Spec:** `docs/superpowers/specs/2026-10-02-fibonacci-ui-typography-design.md`
 
 ## Global Constraints
 
 - Keep the work visual and typographic; preserve authentication, story generation, account deletion, API behavior, and content flow.
 - Use bundled local Fredoka and Nunito font files and retain their OFL license files; do not make runtime requests to a font service.
-- Use Fredoka for headings and Nunito for interface and reading text; reserve TaleSpark Display for brand marks and a few oversized brand moments.
+- Use Fredoka for headings and Nunito for interface and reading text; reserve Fibonacci Display for brand marks and a few oversized brand moments.
 - Keep light and dark themes readable, maintain visible keyboard focus, respect reduced-motion preferences, and keep primary reading text at least 16px.
 - Do not add product dependencies or refactor unrelated route behavior.
 - The workspace has no usable Git repository, so implementation commits cannot be created here.
@@ -77,7 +77,7 @@ Open `/` and `/login` in the running app. Confirm Fredoka is used for headings, 
 
 - [x] **Step 1: Align landing typography and surfaces**
 
-Use Fredoka for section and card headings, Nunito for navigation and all supporting text, and TaleSpark Display only for the wordmark and the largest hero/interlude moments. Replace isolated Arial styles and tune small copy to remain readable. Retain the current bold, illustrated identity and existing links/content.
+Use Fredoka for section and card headings, Nunito for navigation and all supporting text, and Fibonacci Display only for the wordmark and the largest hero/interlude moments. Replace isolated Arial styles and tune small copy to remain readable. Retain the current bold, illustrated identity and existing links/content.
 
 - [x] **Step 2: Align the creation workspace styles**
 

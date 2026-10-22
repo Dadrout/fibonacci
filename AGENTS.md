@@ -29,7 +29,7 @@ Everything is prioritized by whether it makes this 90-second demo flawless:
 6. A gap alert shows: "Week 7 is missing."
 
 ## Existing project — read before changing anything
-Repo: `~/Fibonacci`. Start by reading: `README.md`, `PRODUCT.md`, `DESIGN.md`, `HOW_TO_RUN.md`, `design-system/talespark/MASTER.md`, `wizetale-app/AGENTS.md`, `docs/UI_REDESIGN.md`, `supabase/schema.sql`, `supabase/study_tools.sql`, `supabase/teacher_documents.sql`, and the `wizetale-api/app/` and `wizetale-app/app/` trees.
+Repo: `~/Fibonacci`. Start by reading: `README.md`, `PRODUCT.md`, `DESIGN.md`, `HOW_TO_RUN.md`, `design-system/fibonacci/MASTER.md`, `wizetale-app/AGENTS.md`, `docs/UI_REDESIGN.md`, `supabase/schema.sql`, `supabase/study_tools.sql`, `supabase/teacher_documents.sql`, and the `wizetale-api/app/` and `wizetale-app/app/` trees.
 Known stack (verify, don't assume):
 - Frontend: `wizetale-app/` — Next.js (App Router), TypeScript, Tailwind, Radix/shadcn UI, framer-motion, recharts/d3, i18n (ru / kk / en).
 - Backend: `wizetale-api/` — Python FastAPI + Celery workers, edge-tts, Gemini.

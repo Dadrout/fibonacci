@@ -1,12 +1,12 @@
-# TaleSpark UI and Typography Refresh
+# Fibonacci UI and Typography Refresh
 
 ## Purpose
 
-Create a consistent, readable visual system for TaleSpark, an educational storytelling app for learners aged 10–18. The refresh should make the experience feel warm and imaginative while keeping story creation, reading, and account tasks clear and comfortable on desktop and mobile.
+Create a consistent, readable visual system for Fibonacci, an educational storytelling app for learners aged 10–18. The refresh should make the experience feel warm and imaginative while keeping story creation, reading, and account tasks clear and comfortable on desktop and mobile.
 
 ## Current context
 
-- The home page has its own bold storybook identity, using the local TaleSpark Display font and Inter.
+- The home page has its own bold storybook identity, using the local Fibonacci Display font and Inter.
 - The story creation workspace has a separate pastel dashboard style and loads Inter independently.
 - Sign-in and account-related screens inherit generic app styling and may fall back to Arial.
 - History and generated-story screens use another set of utility-class styles and do not share the dashboard typography or surface treatment.
@@ -14,12 +14,12 @@ Create a consistent, readable visual system for TaleSpark, an educational storyt
 
 ## Chosen direction
 
-Keep the distinctive TaleSpark landing-page personality, then carry a calmer storybook look across the app. Use warm paper-like backgrounds, deep readable ink, and a restrained violet/sky palette, with yellow and mint used for small moments of emphasis. Cards may use soft color fills and friendly rounded corners, but avoid relying on heavy 3D effects or shadows to communicate hierarchy.
+Keep the distinctive Fibonacci landing-page personality, then carry a calmer storybook look across the app. Use warm paper-like backgrounds, deep readable ink, and a restrained violet/sky palette, with yellow and mint used for small moments of emphasis. Cards may use soft color fills and friendly rounded corners, but avoid relying on heavy 3D effects or shadows to communicate hierarchy.
 
 ### Typography
 
 - Use Fredoka for headings and Nunito for interface and reading text.
-- Keep the existing TaleSpark Display font for the brand wordmark or a small number of oversized brand moments only.
+- Keep the existing Fibonacci Display font for the brand wordmark or a small number of oversized brand moments only.
 - Bundle font files with the app using the fonts’ open licenses; do not load fonts from a third-party runtime service.
 - Define one shared font setup at the app root so all routes render consistently. Remove per-page duplicate font setup where it is no longer needed.
 - Establish a responsive type scale with comfortable body copy (16px minimum for primary reading text), clear heading levels, readable line spacing, and limited line lengths for longer narration and recaps.

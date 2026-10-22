@@ -3,7 +3,7 @@
 # CI sets PSQL to a psql command for its service container.
 set -eu
 cd "$(dirname "$0")/.."
-PSQL=${PSQL:-"docker exec -i talespark-local-brain-db-1 psql -U supabase_admin -d postgres"}
+PSQL=${PSQL:-"docker exec -i fibonacci-local-brain-db-1 psql -U supabase_admin -d postgres"}
 out=$($PSQL -X -q -At -v ON_ERROR_STOP=1 < tests/brain_rls.test.sql 2>&1) || { echo "$out"; exit 1; }
 echo "$out" | grep -E "^(ok|not ok|#)" || true
 passed=$(echo "$out" | grep -c "^ok " || true)

@@ -6,7 +6,7 @@ Make the existing student experience coherent and dependable from starting a sto
 
 ## Users and scope
 
-This work is for signed-in learners using the existing student dashboard and its story, history, and profile screens. Keep the current TaleSpark visual style, supported English/Russian/Kazakh interface, and existing product capabilities. Improve action labels and state feedback where the current behavior is unclear.
+This work is for signed-in learners using the existing student dashboard and its story, history, and profile screens. Keep the current Fibonacci visual style, supported English/Russian/Kazakh interface, and existing product capabilities. Improve action labels and state feedback where the current behavior is unclear.
 
 The work may add or adjust authenticated API behavior where needed to make the interface correct, while preserving existing public response shapes wherever possible. Server-owned data is authoritative; browser storage may help resume a session but must not be the only copy of saved progress.
 

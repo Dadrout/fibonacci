@@ -61,7 +61,7 @@ async def get_current_user(request: Request):
 
 async def consume_user_rate_limit(redis_client, user_id: str, action: str, limit: int, window_seconds: int) -> None:
     """Atomically count one user action and reject excess requests."""
-    key = f"talespark:rate-limit:{action}:{user_id}"
+    key = f"fibonacci:rate-limit:{action}:{user_id}"
     try:
         pipeline = redis_client.pipeline(transaction=True)
         pipeline.incr(key)

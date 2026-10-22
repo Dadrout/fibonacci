@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-10-19T17:40:39.871761+00:00",
-  "title": "Design System: TaleSpark",
+  "title": "Design System: Fibonacci",
   "extensions": {
     "colorMeta": {
       "studio-paper": {
@@ -448,7 +448,7 @@
   ],
   "narrative": {
     "northStar": "Educational field guide",
-    "overview": "The interface borrows the clarity of an educational field guide: paper surfaces, deep green actions, a restrained vermilion accent, a readable serif for learning content, and practical sans-serif controls. Keep the supplied TaleSpark owl as the brand asset. Useful content and diagrams lead; omit stock photography, decoration-only illustration, moving tickers, and gradient ornament.",
+    "overview": "The interface borrows the clarity of an educational field guide: paper surfaces, deep green actions, a restrained vermilion accent, a readable serif for learning content, and practical sans-serif controls. Keep the supplied Fibonacci owl as the brand asset. Useful content and diagrams lead; omit stock photography, decoration-only illustration, moving tickers, and gradient ornament.",
     "keyCharacteristics": [
       "Headings and narrative emphasis: locally hosted Literata.",
       "Body, navigation, controls: locally hosted Golos Text.",

@@ -7,7 +7,7 @@
         "rule": "overused-font",
         "value": "arial",
         "createdAt": "2026-10-05T10:56:16.722Z",
-        "reason": "The reported landing-page occurrences are decorative glyph fonts or a pricing-label declaration overridden later by the TaleSpark body font; the interface uses TaleSpark Display and Nunito. Suppress this value-level false positive while keeping the rule active for other fonts."
+        "reason": "The reported landing-page occurrences are decorative glyph fonts or a pricing-label declaration overridden later by the Fibonacci body font; the interface uses Fibonacci Display and Nunito. Suppress this value-level false positive while keeping the rule active for other fonts."
       }
     ]
   }

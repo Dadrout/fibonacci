@@ -233,7 +233,7 @@ async def download_teacher_video(render_id: UUID, user=Depends(get_current_user)
                 yield chunk
 
     headers = {
-        "Content-Disposition": 'attachment; filename="talespark-topic-video.mp4"',
+        "Content-Disposition": 'attachment; filename="fibonacci-topic-video.mp4"',
         "Cache-Control": "private, no-store",
         "X-Content-Type-Options": "nosniff",
     }

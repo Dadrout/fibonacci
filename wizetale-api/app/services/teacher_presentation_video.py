@@ -18,7 +18,7 @@ from app.services.tts.provider_factory import get_tts_provider
 from app.services.video.ffmpeg_service import ffmpeg_service
 
 logger = logging.getLogger(__name__)
-OWL_LOGO = Path(__file__).parents[1] / "assets-talespark-logo-owl.png"
+OWL_LOGO = Path(__file__).parents[1] / "assets-fibonacci-mark.png"
 SLIDE_PAUSE_SECONDS = 0.32
 
 
@@ -147,16 +147,16 @@ def _draw_content_header(
 ) -> None:
     _, _, _, slide_label = _localized_labels(language)
     _paste_logo(image, xy=(78, 43), size=42)
-    draw.text((132, 47), "TALESPARK", font=_font(18, bold=True), fill="#5d4aca")
+    draw.text((132, 47), "FIBONACCI", font=_font(18, bold=True), fill="#2346d8")
     draw.text((132, 72), topic[:74], font=_font(15), fill="#777382")
     page = f"{slide_label}  {index + 1:02d} / {total:02d}"
     page_width = draw.textbbox((0, 0), page, font=_font(15, bold=True))[2]
-    draw.text((1190 - page_width, 57), page, font=_font(15, bold=True), fill="#5d4aca")
+    draw.text((1190 - page_width, 57), page, font=_font(15, bold=True), fill="#2346d8")
 
 
 def _draw_footer(draw: ImageDraw.ImageDraw) -> None:
     draw.rounded_rectangle((86, 642, 1194, 644), radius=1, fill="#e4e0ec")
-    draw.text((88, 657), "TaleSpark", font=_font(14, bold=True), fill="#777382")
+    draw.text((88, 657), "Fibonacci", font=_font(14, bold=True), fill="#777382")
 
 
 def render_slide_image(
@@ -170,7 +170,7 @@ def render_slide_image(
     language: str = "en-US",
     visual_path: str | None = None,
 ) -> str:
-    ink, violet = "#292538", "#5d4aca"
+    ink, violet = "#292538", "#2346d8"
     points = [point for point in key_points if point.strip()][:5]
     layout = slide_layout_for(index, total)
     labels = _localized_labels(language)
@@ -204,7 +204,7 @@ def render_slide_image(
         draw.ellipse((1090, 443, 1287, 640), fill="#6b57cd")
         draw.text(
             (86, 68),
-            f"TALESPARK  ·  {labels[0]}",
+            f"FIBONACCI  ·  {labels[0]}",
             font=_font(19, bold=True),
             fill="#d9d3ff",
         )
@@ -341,7 +341,7 @@ def render_slide_image(
                 outline="#e6e1eb",
                 width=1,
             )
-            draw.ellipse((x + 19, y + 20, x + 71, y + 72), fill="#5d4aca")
+            draw.ellipse((x + 19, y + 20, x + 71, y + 72), fill="#2346d8")
             number = f"{point_index + 1:02d}"
             number_width = draw.textbbox((0, 0), number, font=_font(16, bold=True))[2]
             draw.text(
@@ -368,7 +368,7 @@ def render_slide_image(
         draw = ImageDraw.Draw(image)
         draw.ellipse((970, -210, 1430, 250), fill="#493d80")
         _paste_logo(image, xy=(82, 42), size=48)
-        draw.text((145, 48), "TALESPARK", font=_font(18, bold=True), fill="#ded9ff")
+        draw.text((145, 48), "FIBONACCI", font=_font(18, bold=True), fill="#ded9ff")
         draw.text((145, 73), labels[2], font=_font(14, bold=True), fill="#beb7dc")
         _draw_fit(
             draw,
@@ -561,7 +561,7 @@ class PresentationVideoRenderer:
         slides = content.get("slides") or []
         if not slides:
             raise ValueError("Presentation has no slides")
-        temp_dir = Path(settings.WORKDIR_ROOT) / f"talespark_presentation_{render_id}"
+        temp_dir = Path(settings.WORKDIR_ROOT) / f"fibonacci_presentation_{render_id}"
         temp_dir.mkdir(parents=True, exist_ok=True)
         image_paths: list[str] = []
         audio_paths: list[str] = []
@@ -570,7 +570,7 @@ class PresentationVideoRenderer:
             if progress:
                 progress(5, "Preparing slides", "slide_preparation")
             topic = (
-                lesson.get("topic") or content.get("title") or "TaleSpark presentation"
+                lesson.get("topic") or content.get("title") or "Fibonacci presentation"
             )
             for index, slide in enumerate(slides):
                 image_path = temp_dir / f"slide-{index + 1:02d}.png"
@@ -679,7 +679,7 @@ def _render_is_active(render_id: str, user_id: str) -> bool:
 def render_teacher_presentation_task(
     self, render_id: str, user_id: str, content: dict, lesson: dict
 ):
-    temp_dir = Path(settings.WORKDIR_ROOT) / f"talespark_presentation_{render_id}"
+    temp_dir = Path(settings.WORKDIR_ROOT) / f"fibonacci_presentation_{render_id}"
 
     def progress(value: int, message: str, stage: str):
         if not _render_is_active(render_id, user_id):

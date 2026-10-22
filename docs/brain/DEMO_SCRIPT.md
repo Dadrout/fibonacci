@@ -10,11 +10,11 @@ Status: **draft**. Backend steps are verified (2026-10-22). Steps marked ⏳ dep
 1. **Laptop on power, notifications off, browser zoom 100%, presentation mode on** (Brain header → *Presentation mode*).
 2. Start the stack (from `~/Fibonacci`):
    ```
-   docker compose -p talespark-local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.brain.yml \
+   docker compose -p fibonacci-local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.brain.yml \
      up -d redis brain-db brain-rest api celery-worker telegram-bot
    cd wizetale-app && npm run dev        # http://localhost:3001
    ```
-3. **Fresh demo brain:** `docker exec talespark-local-api-1 python -m app.services.brain.demo.seed`
+3. **Fresh demo brain:** `docker exec fibonacci-local-api-1 python -m app.services.brain.demo.seed`
    → expect `{"courses": 3, "topics": 16, "concepts": 35, "items": 38, ... "missing_embeddings": 0}`.
    The seed keeps the Telegram link, so you don't need to re-link the phone.
 4. Open **http://localhost:3001/brain** — the demo student loads (badge *Demo*). Check: 3 courses, "Econometrics — missing weeks 6 and 7", *Live* indicator on.

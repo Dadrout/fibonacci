@@ -1,4 +1,4 @@
-# Fibonacci (formerly TaleSpark)
+# Fibonacci
 
 Fibonacci helps people understand material by turning it into a path of ideas, each step building on the last. Today it turns educational questions into editable learning stories for ages 10–18 and helps teachers prepare private K–12 lesson materials. It supports English, Russian, and Kazakh; the interface language and generated-material language can differ.
 

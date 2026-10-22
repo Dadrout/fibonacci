@@ -58,7 +58,7 @@ export function PresentationRender({ lessonId, resourceId, disabled, visualsPend
       const objectUrl = URL.createObjectURL(await response.blob())
       const link = document.createElement('a')
       link.href = objectUrl
-      link.download = 'talespark-presentation.mp4'
+      link.download = 'fibonacci-presentation.mp4'
       document.body.appendChild(link)
       link.click()
       link.remove()

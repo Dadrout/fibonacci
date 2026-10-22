@@ -83,7 +83,7 @@ async def lifespan(app: FastAPI):
             await redis_client.aclose()
 
 app = FastAPI(
-    title="TaleSpark API",
+    title="Fibonacci API",
     description="AI-powered educational video generation",
     version="1.0.0",
     docs_url=None if environment == "production" else "/docs",

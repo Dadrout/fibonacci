@@ -38,7 +38,7 @@ export async function proxyBackend(request: NextRequest, path: string, method: s
       return new NextResponse(response.body, {status:response.status,headers:{'Content-Type':'application/octet-stream','Content-Disposition':response.headers.get('Content-Disposition')||'attachment','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}})
     }
     if ((path.startsWith('teacher/presentation-renders/') || path.startsWith('teacher/video-renders/')) && path.endsWith('/video') && response.ok) {
-      return new NextResponse(response.body, {status:response.status,headers:{'Content-Type':'video/mp4','Content-Disposition':response.headers.get('Content-Disposition')||'attachment; filename="talespark-presentation.mp4"','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}})
+      return new NextResponse(response.body, {status:response.status,headers:{'Content-Type':'video/mp4','Content-Disposition':response.headers.get('Content-Disposition')||'attachment; filename="fibonacci-presentation.mp4"','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}})
     }
     const responseBody = await response.text()
     return new NextResponse([204, 205, 304].includes(response.status) ? null : responseBody, {

@@ -30,8 +30,8 @@ function TeacherWorkspace() {
     try {
       let profile = await api<{teacher_enabled:boolean}>('profile')
       // Metadata is an onboarding preference only. API authorization uses the persisted profile.
-      if (!profile.teacher_enabled && (user?.user_metadata?.learning_role === 'teacher' || window.sessionStorage.getItem('talespark-teacher-intent') === '1')) profile = await api('profile','POST')
-      if (profile.teacher_enabled) window.sessionStorage.removeItem('talespark-teacher-intent')
+      if (!profile.teacher_enabled && (user?.user_metadata?.learning_role === 'teacher' || window.sessionStorage.getItem('fibonacci-teacher-intent') === '1')) profile = await api('profile','POST')
+      if (profile.teacher_enabled) window.sessionStorage.removeItem('fibonacci-teacher-intent')
       setEnabled(profile.teacher_enabled)
       if (profile.teacher_enabled) {
         const rows = await api<Lesson[]>('lessons?limit=25&offset=0')

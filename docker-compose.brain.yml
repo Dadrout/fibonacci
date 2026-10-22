@@ -1,7 +1,7 @@
 # Fibonacci Brain local database: Postgres (pgvector, Supabase roles/auth schema) + PostgREST.
 # Used for development, RLS tests, and the offline demo (BRAIN_STORE=local).
 #   supabase/local/setup.sh      # once: creates .env.brain with local-only secrets
-#   docker compose -p talespark-local -f docker-compose.yml -f docker-compose.local.yml \
+#   docker compose -p fibonacci-local -f docker-compose.yml -f docker-compose.local.yml \
 #     -f docker-compose.brain.yml up -d --build redis brain-db brain-rest api celery-worker
 services:
   brain-db:
@@ -60,7 +60,7 @@ services:
       - ./wizetale-api/app/services/brain/ai/recorded:/app/app/services/brain/ai/recorded:z
 
   telegram-bot:
-    image: talespark-api-local
+    image: fibonacci-api-local
     init: true
     restart: unless-stopped
     command: ["python", "-m", "app.services.brain.telegram.poller"]
@@ -71,9 +71,9 @@ services:
       - ./.env.brain
     environment:
       ENVIRONMENT: development
-      REDIS_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
-      CELERY_BROKER_URL: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/0
-      CELERY_RESULT_BACKEND: redis://:${TALESPARK_LOCAL_REDIS_PASSWORD}@redis:6379/1
+      REDIS_URL: redis://:${FIBONACCI_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${FIBONACCI_LOCAL_REDIS_PASSWORD}@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:${FIBONACCI_LOCAL_REDIS_PASSWORD}@redis:6379/1
     depends_on:
       redis:
         condition: service_healthy

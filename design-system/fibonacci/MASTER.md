@@ -1,5 +1,5 @@
 ---
-name: TaleSpark
+name: Fibonacci
 description: "An editorial learning studio inspired by an educational field guide."
 colors:
   studio-paper: "#f7f5ee"
@@ -88,13 +88,13 @@ components:
     rounded: "{rounded.control}"
     padding: "13px 11px"
 ---
-# TaleSpark visual system
+# Fibonacci visual system
 
-TaleSpark is an editorial learning studio for curious learners aged 10–18 and teachers preparing private lesson materials. Product behavior, authentication, content ownership, generation, and source review remain in the existing Next.js and API architecture.
+Fibonacci is an editorial learning studio for curious learners aged 10–18 and teachers preparing private lesson materials. Product behavior, authentication, content ownership, generation, and source review remain in the existing Next.js and API architecture.
 
 ## Visual direction
 
-The interface borrows the clarity of an educational field guide: paper surfaces, deep green actions, a restrained vermilion accent, a readable serif for learning content, and practical sans-serif controls. Keep the supplied TaleSpark owl as the brand asset. Useful content and diagrams lead; omit stock photography, decoration-only illustration, moving tickers, and gradient ornament.
+The interface borrows the clarity of an educational field guide: paper surfaces, deep green actions, a restrained vermilion accent, a readable serif for learning content, and practical sans-serif controls. Keep the supplied Fibonacci owl as the brand asset. Useful content and diagrams lead; omit stock photography, decoration-only illustration, moving tickers, and gradient ornament.
 
 - Headings and narrative emphasis: locally hosted **Literata**, generally weight 450–500, line height 1.12–1.35, tracking no tighter than −0.04em.
 - Body, navigation, controls: locally hosted **Golos Text**, weight 400–650, body line height 1.6–1.85.

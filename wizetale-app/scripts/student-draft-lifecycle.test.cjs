@@ -53,7 +53,7 @@ function hookHarness() {
   loaded.require = id => {
     if (id === 'react') return react
     if (id === './use-auth') return { useAuth: () => ({ getToken: async () => 'learner-token', user: { id: 'learner-1' } }) }
-    if (id === '@/lib/learner-storage') return { learnerStorageKey: (kind, userId) => `talespark-current-${kind}:${userId}` }
+    if (id === '@/lib/learner-storage') return { learnerStorageKey: (kind, userId) => `fibonacci-current-${kind}:${userId}` }
     if (id === '@/lib/analytics') return { trackEvent() {}, trackConversion() {}, trackFunnelStep() {} }
     return originalRequire(id)
   }
@@ -240,7 +240,7 @@ test('discard removes the owned server draft and its active local pointer', asyn
   assert.equal(discarded, true)
   assert.deepEqual(calls, [['/api/v1/story-drafts/draft-1', 'DELETE']])
   assert.equal(harness.render().draft, null)
-  assert.equal(harness.storage.has('talespark-current-draft:learner-1'), false)
+  assert.equal(harness.storage.has('fibonacci-current-draft:learner-1'), false)
 })
 
 test('clearing the active pointer keeps a saved server draft available', async t => {
@@ -254,7 +254,7 @@ test('clearing the active pointer keeps a saved server draft available', async t
 
   assert.equal(laterRequests, 0)
   assert.equal(harness.render().draft, null)
-  assert.equal(harness.storage.has('talespark-current-draft:learner-1'), false)
+  assert.equal(harness.storage.has('fibonacci-current-draft:learner-1'), false)
   assert.equal(draft.status, 'draft')
 })
 
@@ -268,5 +268,5 @@ test('discard conflict keeps the editable workspace and active pointer', async t
 
   assert.equal(discarded, false)
   assert.equal(harness.render().draft.id, draft.id)
-  assert.equal(harness.storage.get('talespark-current-draft:learner-1'), draft.id)
+  assert.equal(harness.storage.get('fibonacci-current-draft:learner-1'), draft.id)
 })

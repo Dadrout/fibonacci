@@ -99,7 +99,7 @@ export function VideoResourceRender({
       const objectUrl = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = objectUrl
-      link.download = 'talespark-topic-video.mp4'
+      link.download = 'fibonacci-topic-video.mp4'
       document.body.appendChild(link)
       link.click()
       link.remove()

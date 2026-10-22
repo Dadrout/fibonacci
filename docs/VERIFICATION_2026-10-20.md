@@ -1,4 +1,4 @@
-# TaleSpark verification — 20 October 2026
+# Fibonacci verification — 20 October 2026
 
 > Follow-up: [expanded verification and latest status](FULL_VERIFICATION_2026-10-20.md). The formerly failing camera assertion is resolved there; Google OAuth is confirmed disabled.
 
@@ -16,7 +16,7 @@ Scope: verify the redesigned frontend and the actual local application flow thro
 
 ## Supabase restoration
 
-The configured TalesPark project initially reported `INACTIVE`; its API hostname did not resolve. The user explicitly approved restoring it. The restore operation succeeded and the project reached `ACTIVE_HEALTHY`.
+The configured Fibonacci project initially reported `INACTIVE`; its API hostname did not resolve. The user explicitly approved restoring it. The restore operation succeeded and the project reached `ACTIVE_HEALTHY`.
 
 Auth and database services recovered at different times: an early attempt reached a gateway 502, and a later temporary schema-cache 404 produced a teacher-profile 500. Once restoration completed, the required tables were available without database schema changes. The known fixture from the failed attempt was confirmed absent through Auth admin lookup.
 

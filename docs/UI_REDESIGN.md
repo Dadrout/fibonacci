@@ -1,10 +1,10 @@
-# TaleSpark UI redesign — 19 October 2026
+# Fibonacci UI redesign — 19 October 2026
 
 ## Research
 
 Public pages were actually opened in the configured in-app browser. The observations below are limited to their public entry pages; no claim is made to have tested their authenticated products.
 
-| Reference | Observed principle | Application to TaleSpark |
+| Reference | Observed principle | Application to Fibonacci |
 | --- | --- | --- |
 | [Are.na](https://www.are.na/) | Narrow reading measure, plain language, content organization explained through tasks | Put the learning task before decoration; use readable supporting text |
 | [Readwise Reader](https://www.readwise.io/read) | A direct product promise and immediate product preview | Put an inspectable example beside the main action |
@@ -34,7 +34,7 @@ Source inspection covered the landing, learner shell, draft lifecycle, story vie
 
 ## Visual direction and implementation
 
-See [DESIGN.md](../DESIGN.md) and [design-system/talespark/MASTER.md](../design-system/talespark/MASTER.md) for tokens, typography, layout, and interaction guidance.
+See [DESIGN.md](../DESIGN.md) and [design-system/fibonacci/MASTER.md](../design-system/fibonacci/MASTER.md) for tokens, typography, layout, and interaction guidance.
 
 Main implementation files:
 

@@ -1,4 +1,4 @@
-# TaleSpark Supabase setup
+# Fibonacci Supabase setup
 
 1. Create a Supabase project and copy its project URL and publishable key into `wizetale-app/.env.local`.
 2. Set the same `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in the API environment. Set `SUPABASE_SERVICE_ROLE_KEY` only on the API server; never add it to a `NEXT_PUBLIC_` variable.
@@ -11,7 +11,7 @@
 
 The source library contains short original fact notes and links to the references; it does not copy complete articles. Authenticated learners can read approved entries, but only the API's server-side secret key can change them. Database access rules are covered by `tests/knowledge_entries_rls.test.sql` and can be run with `supabase test db` when the local Supabase CLI project is configured.
 
-TaleSpark stores each media object under `<auth-user-id>/<job-id>/` in the private bucket. The API creates short-lived signed URLs after checking the requesting user's ownership. Keep the service role key private: it bypasses Supabase row policies, so API queries also include the authenticated owner ID explicitly.
+Fibonacci stores each media object under `<auth-user-id>/<job-id>/` in the private bucket. The API creates short-lived signed URLs after checking the requesting user's ownership. Keep the service role key private: it bypasses Supabase row policies, so API queries also include the authenticated owner ID explicitly.
 
 The account page offers account deletion. The API first places a server-only deletion lock, cancels active generation jobs, and waits for running workers to stop. It then revokes the learner's sessions, removes their objects from the configured media provider, and deletes their Supabase Auth user. The schema's `ON DELETE CASCADE` foreign keys remove the lock, drafts, stories, and quiz results. Keep workers reachable when deleting an account with active jobs; deletion stops safely if workers cannot be confirmed stopped or media removal fails.
 

@@ -3,10 +3,10 @@
 ## Configured and verified
 
 - Frontend: `http://localhost:3001`; backend proxy: `http://localhost:8001`.
-- Supabase: TalesPark (`nsrhlhbpnkxmzgveingy`). Auth Site URL is `http://localhost:3001`. Exact allowed callbacks are `/auth/callback`, `/auth/callback?next=/create`, `/auth/callback?next=/teacher`, and `/auth/callback?next=/reset-password/update`, all on localhost:3001. Verified saved in the Supabase dashboard.
+- Supabase: Fibonacci (`nsrhlhbpnkxmzgveingy`). Auth Site URL is `http://localhost:3001`. Exact allowed callbacks are `/auth/callback`, `/auth/callback?next=/create`, `/auth/callback?next=/teacher`, and `/auth/callback?next=/reset-password/update`, all on localhost:3001. Verified saved in the Supabase dashboard.
 - Email sign-in and email confirmation enabled; anonymous sign-in disabled. Google OAuth is not configured.
 - API/worker use Gemini free-tier text, Edge speech for English/Russian, ElevenLabs v3 for Kazakh, and Supabase private video storage. Paid Gemini image calls are disabled; story rendering uses existing placeholder scene cards. Local runtime is development mode; no new production domain was configured.
-- Separate Redis project `talespark-local`, published only at 127.0.0.1:6380, with a generated password in private environment files. API connects successfully; the worker responds to ping. Earlier containers remain running on their original ports.
+- Separate Redis project `fibonacci-local`, published only at 127.0.0.1:6380, with a generated password in private environment files. API connects successfully; the worker responds to ping. Earlier containers remain running on their original ports.
 - API health returned 200; the frontend teacher proxy correctly returned 401 without authentication.
 - Replacement Gemini key: model listing and minimal primary/fallback text requests each returned 200. The actual teacher service generated validated objectives (4 objectives) and a quiz (10 questions / 10 answers) from fictional lesson data. Private settings declare the owner-reported free tier. API and worker were restarted with this configuration. See [Gemini free-tier review](GEMINI_FREE_TIER_REVIEW.md) for documentation, quota and release constraints.
 
@@ -24,7 +24,7 @@ The frontend, API and worker were started as local processes during setup. Redis
 
 ```bash
 # From the repository root: isolated local Redis
- docker compose -p talespark-local -f docker-compose.yml -f docker-compose.local.yml up -d redis
+ docker compose -p fibonacci-local -f docker-compose.yml -f docker-compose.local.yml up -d redis
 
 # From wizetale-api: API and worker in separate terminals
  ./.venv/bin/python -m pip install -c constraints.txt -e '.[dev]'
@@ -41,10 +41,10 @@ Private `.env` files have owner-only filesystem permissions. Old deployment doma
 
 ## Document library upgrade
 
-The private teacher document migration, covering foreign-key index, and pending-removal quota guard are applied to TalesPark. Owner isolation and EN/RU/KK keyword retrieval were checked with rollback-only SQL. API/worker are running the new ingestion support locally. See [teacher preparation](TEACHER_PREP.md#private-document-library-and-source-based-generation) for limits, retry behavior and production rollout ordering.
+The private teacher document migration, covering foreign-key index, and pending-removal quota guard are applied to Fibonacci. Owner isolation and EN/RU/KK keyword retrieval were checked with rollback-only SQL. API/worker are running the new ingestion support locally. See [teacher preparation](TEACHER_PREP.md#private-document-library-and-source-based-generation) for limits, retry behavior and production rollout ordering.
 
 The document workflow passed live with disposable fictional accounts: all four source formats, processing failure/retry, source attachments/revision conflicts, source-grounded Gemini quiz/flashcards, citations, duplicate prevention, save/reload, source removal references, and account/storage cleanup. Desktop-browser checks verified pasted-source Ready state and account-switch isolation. Latest audit: 154 API tests pass locally and inside the production Python 3.11 container; 42 frontend checks, type-checking, production builds, Compose and rollback database checks pass. Both dependency scans report no known vulnerabilities. See [the full audit](LOCAL_PROJECT_AUDIT_2026-10-05.md). Bugbot re-review has no remaining material findings. Teacher-only references are covered by rendering tests; physical A4/Letter print layout remains a release check. The security advisor reports leaked-password protection disabled; review that Auth setting before launch.
 
 ## October 5 recovery and dependency update
 
-Apply `supabase/story_render_recovery.sql` before using the updated API in another environment. It is already applied to TalesPark. Use the checked-in Python constraints for installation; the optional legacy gTTS fallback is excluded from the default verified runtime. Browser account switching, saved drafts and all three story languages passed. No deployment was performed.
+Apply `supabase/story_render_recovery.sql` before using the updated API in another environment. It is already applied to Fibonacci. Use the checked-in Python constraints for installation; the optional legacy gTTS fallback is excluded from the default verified runtime. Browser account switching, saved drafts and all three story languages passed. No deployment was performed.

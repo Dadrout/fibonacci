@@ -1,6 +1,6 @@
-# TaleSpark
+# Fibonacci
 
-TaleSpark turns humanities topics into illustrated learning stories and helps teachers prepare private K–12 lesson materials in English, Russian, and Kazakh.
+Fibonacci turns humanities topics into illustrated learning stories and helps teachers prepare private K–12 lesson materials in English, Russian, and Kazakh.
 
 ## Architecture
 

@@ -1,4 +1,4 @@
--- TaleSpark learner story storage. Apply in the Supabase SQL editor.
+-- Fibonacci learner story storage. Apply in the Supabase SQL editor.
 -- Video objects belong in the private `story-videos` bucket.
 
 -- A durable lock keeps in-flight and queued workers from creating media while

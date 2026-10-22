@@ -46,7 +46,7 @@ function SourceLibrary(){
  // Same onboarding call as the teacher home page: persist the teacher profile, then load the library.
  async function enableTeacherMode(){
   setEnabling(true);setError('')
-  try{await api('profile','POST');window.sessionStorage.removeItem('talespark-teacher-intent');if(alive.current){setTeacherModeOff(false);await load()}}
+  try{await api('profile','POST');window.sessionStorage.removeItem('fibonacci-teacher-intent');if(alive.current){setTeacherModeOff(false);await load()}}
   catch(e){if(alive.current)setError(e instanceof Error?e.message:'Could not complete this request. Please try again.')}
   finally{if(alive.current)setEnabling(false)}
  }

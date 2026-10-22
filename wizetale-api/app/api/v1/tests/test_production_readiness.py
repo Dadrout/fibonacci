@@ -175,7 +175,7 @@ def test_user_rate_limit_counts_are_isolated_by_user_and_expire():
             return pipeline
 
     redis_client = FakeRedis()
-    key_a = "talespark:rate-limit:draft:learner-a"
+    key_a = "fibonacci:rate-limit:draft:learner-a"
     asyncio.run(consume(redis_client, "learner-a", "draft", 2, 60))
     redis_client.ttls[key_a] -= 20
     asyncio.run(consume(redis_client, "learner-a", "draft", 2, 60))
@@ -185,7 +185,7 @@ def test_user_rate_limit_counts_are_isolated_by_user_and_expire():
     assert error.value.status_code == 429
     assert error.value.headers["Retry-After"] == "40"
     asyncio.run(consume(redis_client, "learner-b", "draft", 2, 60))
-    key_b = "talespark:rate-limit:draft:learner-b"
+    key_b = "fibonacci:rate-limit:draft:learner-b"
     assert redis_client.counts[key_b] == 1
     assert redis_client.ttls[key_b] == 60
     del redis_client.counts[key_a]

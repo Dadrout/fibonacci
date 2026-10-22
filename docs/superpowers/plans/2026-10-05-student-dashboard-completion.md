@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Keep the current TaleSpark visual style, supported English/Russian/Kazakh interface, and existing product capabilities.
+- Keep the current Fibonacci visual style, supported English/Russian/Kazakh interface, and existing product capabilities.
 - Server-owned data is authoritative; browser storage may help resume a session but must not be the only copy of saved progress.
 - Every draft, story, quiz result, history entry, and profile operation remains authenticated and owner-scoped on the server.
 - Preserve existing public response shapes wherever possible.
