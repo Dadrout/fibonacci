@@ -121,3 +121,9 @@
   .brain-telegram-pill span { display: none; }
   .brain-capture-bar > button { width: 100%; justify-content: center; }
 }
+
+/* Map inside Home: the section header already names it, so the graph's own title is hidden
+   and its Graph | List view switch becomes a quiet control on the right. */
+.brain-courses-section .brain-graph-heading { justify-content: flex-end; min-height: 0; margin-bottom: 8px; }
+.brain-courses-section .brain-graph-heading > div:first-child { display: none; }
+.brain-courses-section .brain-view-toggle { transform: scale(.92); transform-origin: right center; }

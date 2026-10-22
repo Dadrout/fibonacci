@@ -7,7 +7,10 @@ import type { BrainEvent, BrainGraph as GraphData } from '@/lib/brain-types'
 import { useCopy } from '@/hooks/use-copy'
 import { BrainConceptPanel } from './brain-concept-panel'
 import { courseColorSlot } from './brain-ui-state'
-import { createGraphSimulation, fitCamera, makeGraphLayout, zoomCamera, type Camera, type GraphLayout, type GraphNode } from './brain-graph-layout'
+import { connectedNodeIds, createGraphSimulation, edgeEndpointIds, fitCamera, makeGraphLayout, overviewConceptIds, zoomCamera, type Camera, type GraphLayout, type GraphNode } from './brain-graph-layout'
+
+// Remember arrivals across Home's Courses / Map unmounts without retaining old API sessions.
+const animatedLinksByApi = new WeakMap<BrainApi, Set<string>>()
 
 type Props = {
   graph: GraphData | null; api: BrainApi; loading: boolean; error: boolean; onRetry: () => void | Promise<void>
@@ -30,6 +33,10 @@ function GraphExplorer({ graph, api, connections, presentation, focusRequest }: 
   const instructionsId = useId()
   const [list, setList] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
+  const [hovered, setHovered] = useState<string | null>(null)
+  const [focused, setFocused] = useState<string | null>(null)
+  const [arrivingLinks, setArrivingLinks] = useState<Set<string>>(new Set())
+  const sectionRef = useRef<HTMLElement>(null)
   const [reduced, setReduced] = useState(true)
   const svgRef = useRef<SVGSVGElement>(null)
   const viewportRef = useRef<SVGGElement>(null)
@@ -46,8 +53,47 @@ function GraphExplorer({ graph, api, connections, presentation, focusRequest }: 
   const latestFocus = useRef<number | null>(null)
   const pointers = useRef(new Map<number, { x: number; y: number }>())
   const gesture = useRef({ x: 0, y: 0, moved: false, node: null as string | null, left: 0, top: 0 })
-  const highlightedLinks = useMemo(() => new Set(connections.map(connection => connection.link.id)), [connections])
-  const highlightedNodes = useMemo(() => new Set(connections.flatMap(connection => [`concept:${connection.source.id}`, `concept:${connection.target.id}`])), [connections])
+  const highlightedLinks = arrivingLinks
+  const overviewLabels = useMemo(() => overviewConceptIds(graph), [graph])
+  const activeNode = hovered ?? focused ?? selected
+  const relatedNodes = useMemo(() => connectedNodeIds(layout.edges, activeNode), [layout, activeNode])
+
+  useEffect(() => {
+    const seen = animatedLinksByApi.get(api) ?? new Set<string>()
+    animatedLinksByApi.set(api, seen)
+    const edgeIds = new Set(layout.edges.map(edge => edge.id))
+    const fresh = connections.filter(connection => connection.link.cross_course && edgeIds.has(connection.link.id) && !seen.has(connection.link.id))
+    for (const connection of fresh) seen.add(connection.link.id)
+    if (fresh.length) setArrivingLinks(current => new Set([...current, ...fresh.map(connection => connection.link.id)]))
+  }, [api, connections, layout])
+  useEffect(() => {
+    if (!arrivingLinks.size) return
+    const timer = window.setTimeout(() => setArrivingLinks(new Set()), 1400)
+    return () => window.clearTimeout(timer)
+  }, [arrivingLinks])
+
+  // Map is a section on Home. Bring its section heading into view when it mounts.
+  useEffect(() => {
+    const section = sectionRef.current?.closest('.brain-courses-section')
+    section?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }, [])
+  useEffect(() => {
+    const section = sectionRef.current, host = hostRef.current
+    const homeSection = section?.closest('.brain-courses-section')
+    if (!section || !host || !homeSection || list) return
+    const resize = () => {
+      const canvas = host.getBoundingClientRect()
+      const top = homeSection.getBoundingClientRect().top
+      const footer = section.getBoundingClientRect().bottom - canvas.bottom
+      host.style.setProperty('--brain-map-height', `${Math.max(320, window.innerHeight - 24 - (canvas.top - top) - footer)}px`)
+    }
+    const observer = new ResizeObserver(resize)
+    observer.observe(homeSection)
+    window.addEventListener('resize', resize)
+    resize()
+    return () => { observer.disconnect(); window.removeEventListener('resize', resize) }
+  }, [list, presentation])
+  const highlightedNodes = useMemo(() => new Set(connections.filter(connection => arrivingLinks.has(connection.link.id)).flatMap(connection => [`concept:${connection.source.id}`, `concept:${connection.target.id}`])), [connections, arrivingLinks])
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -129,7 +175,9 @@ function GraphExplorer({ graph, api, connections, presentation, focusRequest }: 
       const previous = size.current
       size.current = { width: rect.width, height: rect.height }
       svg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`)
-      if (previous.width === 1000 && previous.height === 620) camera.current = fitCamera(priorLayout.current.nodes, rect.width, rect.height)
+      // Refit an overview on resize (including projector mode); preserve a learner's zoom.
+      const previousFit = fitCamera(priorLayout.current.nodes, previous.width, previous.height)
+      if ((previous.width === 1000 && previous.height === 620) || Math.abs(camera.current.k - previousFit.k) < .02) camera.current = fitCamera(priorLayout.current.nodes, rect.width, rect.height)
       else camera.current = { ...camera.current, x: camera.current.x + (rect.width - previous.width) / 2, y: camera.current.y + (rect.height - previous.height) / 2 }
       paintCamera()
     })
@@ -186,8 +234,8 @@ function GraphExplorer({ graph, api, connections, presentation, focusRequest }: 
     }
   }
   const selectedNode = layout.nodes.find(node => node.id === selected) ?? null
-  return <section className="brain-graph-section">
-    <div className="brain-graph-heading"><div><h2>{c('Ideas that connect your courses')}</h2><p>{c('Choose a seed to see the sources behind it.')}</p></div><div className="brain-view-toggle" aria-label={c('Graph display')}><button type="button" aria-pressed={!list} onClick={() => setList(false)}><GitBranch size={17} aria-hidden="true" />{c('Graph')}</button><button type="button" aria-pressed={list} onClick={() => setList(true)}><List size={17} aria-hidden="true" />{c('List view')}</button></div></div>
+  return <section className="brain-graph-section" ref={sectionRef}>
+    <div className="brain-graph-heading"><div><h3>{c('Ideas that connect your courses')}</h3><p>{c('Most-mentioned ideas stay visible. Choose a seed to trace its sources and connections.')}</p></div><div className="brain-view-toggle" aria-label={c('Graph display')}><button type="button" aria-pressed={!list} onClick={() => setList(false)}><GitBranch size={17} aria-hidden="true" />{c('Graph')}</button><button type="button" aria-pressed={list} onClick={() => setList(true)}><List size={17} aria-hidden="true" />{c('List view')}</button></div></div>
     {list ? <GraphList graph={graph} onNavigate={navigate} /> : <>
       <div className="brain-graph-canvas" ref={hostRef}>
         <svg ref={svgRef} className="brain-graph-svg" viewBox="0 0 1000 620" role="group" aria-label={c('Interactive Brain graph')} aria-describedby={instructionsId} tabIndex={0}
@@ -199,12 +247,13 @@ function GraphExplorer({ graph, api, connections, presentation, focusRequest }: 
             else if (['+', '=', '-', 'Home'].includes(event.key)) { event.preventDefault(); if (event.key === 'Home') fit(); else zoom(event.key === '-' ? .8 : 1.25) }
           }}>
           <g ref={viewportRef}>
-            <g aria-hidden="true">{layout.edges.map(edge => <path key={edge.id} ref={element => { if (element) edgeElements.current.set(edge.id, element); else edgeElements.current.delete(edge.id) }} className={`brain-graph-edge is-${edge.kind}${highlightedLinks.has(edge.id) ? ' is-new' : ''}`} pathLength={edge.kind === 'cross' ? 1 : undefined} vectorEffect="non-scaling-stroke" />)}</g>
+            <g aria-hidden="true">{layout.edges.map(edge => <path key={edge.id} ref={element => { if (element) edgeElements.current.set(edge.id, element); else edgeElements.current.delete(edge.id) }} className={`brain-graph-edge is-${edge.kind}${highlightedLinks.has(edge.id) ? ' is-new' : ''}${activeNode && edgeEndpointIds(edge).includes(activeNode) ? ' is-active' : ''}`} pathLength={edge.kind === 'cross' ? 1 : undefined} vectorEffect="non-scaling-stroke" />)}</g>
             {layout.nodes.map(node => <g key={node.id} ref={element => { if (element) nodeElements.current.set(node.id, element); else nodeElements.current.delete(node.id) }}
-              data-node-id={node.id} data-course-color={courseColorSlot(node.color)} data-kind={node.kind} data-emphasis={highlightedNodes.has(node.id) || selected === node.id ? 'true' : undefined}
+              data-node-id={node.id} data-course-color={courseColorSlot(node.color)} data-kind={node.kind} data-overview-label={overviewLabels.has(node.id) ? 'true' : undefined} data-emphasis={highlightedNodes.has(node.id) || relatedNodes.has(node.id) ? 'true' : undefined}
               className="brain-graph-node" role="button" tabIndex={0} aria-label={`${c(node.kind === 'course' ? 'Course' : node.kind === 'topic' ? 'Topic' : 'Concept')}: ${node.label}`} aria-haspopup="dialog"
               onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); navigate(node.id) } }}
-              onFocus={() => { if (node.kind === 'concept') nodeElements.current.get(node.id)?.setAttribute('data-focused', 'true') }} onBlur={() => nodeElements.current.get(node.id)?.removeAttribute('data-focused')}>
+              onPointerEnter={() => setHovered(node.id)} onPointerLeave={() => setHovered(null)}
+              onFocus={() => setFocused(node.id)} onBlur={() => setFocused(null)}>
               <title>{node.label}</title><circle className="brain-node-hit" r={22} fill="transparent" />
               {highlightedNodes.has(node.id) && <circle className="brain-node-arrival" r={node.radius + 9} vectorEffect="non-scaling-stroke" />}
               <circle className="brain-node-shape" r={node.radius} vectorEffect="non-scaling-stroke" />

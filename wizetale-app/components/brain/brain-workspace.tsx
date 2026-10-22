@@ -270,7 +270,7 @@ export function BrainWorkspace() {
               <h2 id="brain-courses-title">{c('Your courses')}</h2>
               <div className="brain-segmented" role="group" aria-label={c('Show courses as')}>
                 <button type="button" aria-pressed={homeMode === 'courses'} onClick={() => setHomeMode('courses')}><LayoutGrid size={16} aria-hidden="true" />{c('Courses')}</button>
-                <button type="button" aria-pressed={homeMode === 'map'} onClick={() => setHomeMode('map')}><GitBranch size={16} aria-hidden="true" />{c('Map')}</button>
+                <button type="button" aria-pressed={homeMode === 'map'} onClick={() => { setHomeMode('map'); window.setTimeout(() => document.getElementById('brain-courses-title')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60) }}><GitBranch size={16} aria-hidden="true" />{c('Map')}</button>
               </div>
             </div>
             {homeMode === 'courses'

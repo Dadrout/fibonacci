@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { makeGraphLayout, createGraphSimulation, fitCamera, zoomCamera, conceptRadius } from '../components/brain/brain-graph-layout.ts'
+import { makeGraphLayout, createGraphSimulation, fitCamera, zoomCamera, conceptRadius, overviewConceptIds, edgeEndpointIds, connectedNodeIds } from '../components/brain/brain-graph-layout.ts'
 import { MockBrain } from '../lib/brain-mocks.ts'
 
 const deepFreeze = value => { Object.freeze(value); for (const child of Object.values(value)) if (child && typeof child === 'object' && !Object.isFrozen(child)) deepFreeze(child); return value }
@@ -59,4 +59,59 @@ test('a few hundred nodes settle with finite coordinates and intact links', asyn
   assert.ok(layout.nodes.length > 350)
   assert.ok(layout.nodes.every(node => Number.isFinite(node.x) && Number.isFinite(node.y)))
   assert.ok(layout.edges.every(edge => typeof edge.source === 'object' && typeof edge.target === 'object'))
+})
+
+
+test('overview keeps the two most-mentioned ideas per course readable with stable ties', async () => {
+  const graph = await new MockBrain().graph()
+  for (const concept of graph.concepts) concept.mention_count = 3
+  const before = JSON.stringify(graph)
+  const labels = overviewConceptIds(graph)
+  for (const course of graph.courses) {
+    const expected = graph.concepts.filter(concept => concept.course_id === course.id)
+      .map(concept => concept.id).sort().slice(0, 2).map(id => `concept:${id}`)
+    const actual = [...labels].filter(id => graph.concepts.some(concept => `concept:${concept.id}` === id && concept.course_id === course.id))
+    assert.deepEqual(actual.sort(), expected.sort())
+  }
+  assert.deepEqual([...overviewConceptIds({ ...graph, concepts: [...graph.concepts].reverse() })].sort(), [...labels].sort())
+  assert.equal(overviewConceptIds(graph, 0).size, 0)
+  const winner = graph.concepts[graph.concepts.length - 1]
+  winner.mention_count = 10000
+  assert.ok(overviewConceptIds(graph, 1).has(`concept:${winner.id}`))
+  winner.mention_count = 3
+  assert.equal(JSON.stringify(graph), before, 'ranking must not reorder API concepts')
+})
+
+test('focus traces direct connections before and after d3 mutates endpoints', async () => {
+  const graph = await new MockBrain().graph()
+  const layout = makeGraphLayout(graph)
+  const cross = layout.edges.find(edge => edge.kind === 'cross')
+  const [source, target] = edgeEndpointIds(cross)
+  const before = [...connectedNodeIds(layout.edges, source)].sort()
+  assert.ok(before.includes(target), 'focus reveals the named cross-course relationship')
+  assert.ok(connectedNodeIds(layout.edges, target).has(source))
+  const parent = layout.nodes.find(node => node.id === source).parentId
+  assert.equal(before.includes(parent), false, 'containment must not light up an entire cluster')
+  createGraphSimulation(layout).stop().tick(150)
+  assert.deepEqual(edgeEndpointIds(cross), [source, target])
+  assert.deepEqual([...connectedNodeIds(layout.edges, source)].sort(), before)
+  assert.equal(connectedNodeIds(layout.edges, null).size, 0)
+  assert.deepEqual([...connectedNodeIds(layout.edges, 'unknown')], ['unknown'])
+})
+
+test('mock graph concepts resolve to exact source anchors across photo, PDF and video', async () => {
+  const brain = new MockBrain()
+  const graph = await brain.graph()
+  const kinds = new Set()
+  for (const concept of graph.concepts) {
+    const detail = await brain.concept(concept.id)
+    assert.equal(detail.concept.id, concept.id)
+    for (const source of detail.sources) {
+      assert.ok(source.item_id && source.chunk_id && source.item_title)
+      assert.ok(source.quote, 'the quote remains usable even when media is offline')
+      kinds.add(source.anchor.kind)
+      if (source.anchor.kind === 'timestamp') assert.ok(source.anchor.end_sec >= source.anchor.start_sec)
+    }
+  }
+  for (const kind of ['slide', 'page', 'timestamp']) assert.ok(kinds.has(kind), `missing ${kind} citation path`)
 })

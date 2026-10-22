@@ -83,3 +83,33 @@ export function zoomCamera(camera: Camera, factor: number, point: { x: number; y
   const k = Math.max(.15, Math.min(4, camera.k * factor))
   return { k, x: point.x - (point.x - camera.x) * k / camera.k, y: point.y - (point.y - camera.y) * k / camera.k }
 }
+
+/** Two stable overview labels per cluster, ranked by the actual passage count. */
+export function overviewConceptIds(graph: BrainGraph, perCourse = 2): Set<string> {
+  const result = new Set<string>()
+  for (const course of graph.courses) {
+    const concepts = graph.concepts.filter(concept => concept.course_id === course.id)
+      .sort((a, b) => b.mention_count - a.mention_count || a.id.localeCompare(b.id))
+    for (const concept of concepts.slice(0, Math.max(0, perCourse))) result.add(nodeKey('concept', concept.id))
+  }
+  return result
+}
+
+/** d3 replaces endpoint ids with nodes; interactions must work before AND after settling. */
+export function edgeEndpointIds(edge: GraphEdge): [string, string] {
+  return [typeof edge.source === 'string' ? edge.source : edge.source.id,
+    typeof edge.target === 'string' ? edge.target : edge.target.id]
+}
+
+export function connectedNodeIds(edges: GraphEdge[], id: string | null): Set<string> {
+  const result = new Set<string>()
+  if (!id) return result
+  result.add(id)
+  for (const edge of edges) {
+    if (edge.kind === 'contains') continue
+    const [source, target] = edgeEndpointIds(edge)
+    if (source === id) result.add(target)
+    if (target === id) result.add(source)
+  }
+  return result
+}
