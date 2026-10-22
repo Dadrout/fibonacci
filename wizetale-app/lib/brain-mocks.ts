@@ -21,6 +21,7 @@ import type {
   BrainItem,
   BrainItemDetail,
   BrainLanguage,
+  Presentation,
   BrainOverview,
   BrainTopic,
   CaptureChannel,
@@ -840,6 +841,19 @@ export class MockBrain {
   }
 
   // ---- exam mode ------------------------------------------------------------------
+
+  /** Mock deck: one slide per note section of the mock plan, same citations. */
+  async createPresentation(courseId: UUID, language: BrainLanguage): Promise<Presentation> {
+    const course = this.courses.get(courseId)
+    if (!course) throw new MockNotFound()
+    await sleep(1200)
+    const examDate = new Date(Date.now() + 3 * 86_400_000).toISOString().slice(0, 10)
+    const content = courseId === mockId(101) ? this.econPlan(3, examDate) : this.genericPlan(courseId, 3, examDate)
+    return {
+      course_id: courseId, language, title: course.title, generated_at: nowIso(),
+      slides: content.notes.map((note, index) => ({ id: `s${index + 1}`, title: note.heading, bullets: clone(note.bullets), notes: '', topic_id: note.topic_id })),
+    }
+  }
 
   async createExamPlan(courseId: UUID, request: ExamPlanRequest): Promise<StudyPlan> {
     const course = this.courses.get(courseId)

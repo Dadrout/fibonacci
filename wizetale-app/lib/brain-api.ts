@@ -24,6 +24,7 @@ import type {
   CourseDetail,
   DemoHeroResponse,
   DemoResetResponse,
+  Presentation,
   ExamPlanRequest,
   GapAlert,
   ItemPage,
@@ -116,6 +117,8 @@ export interface BrainApi {
   createExamPlan(courseId: UUID, request: { days: number; language: BrainLanguage; exam_date?: string; request_id?: UUID }): Promise<StudyPlan>
   plan(id: UUID): Promise<StudyPlan>
   coursePlans(courseId: UUID): Promise<StudyPlan[]>
+  /** Slides built from the course's own sources. Takes ~10 s live: do not wrap in the 15 s UI timeout. */
+  createPresentation(courseId: UUID, request: { language: BrainLanguage }): Promise<Presentation>
   answerQuiz(planId: UUID, questionId: string, optionId: QuizOptionId): Promise<QuizAnswerResult>
   telegramStatus(): Promise<TelegramStatus>
   telegramLinkCode(): Promise<TelegramLinkCode>
@@ -257,6 +260,7 @@ function createLiveApi(getToken: TokenGetter): BrainApi {
       request(`courses/${encodeURIComponent(courseId)}/exam-plan`, { method: 'POST', body: { ...body, request_id: body.request_id ?? newRequestId() } satisfies ExamPlanRequest }),
     plan: (id) => request(`plans/${encodeURIComponent(id)}`),
     coursePlans: (courseId) => request(`courses/${encodeURIComponent(courseId)}/plans`),
+    createPresentation: (courseId, body) => request(`courses/${encodeURIComponent(courseId)}/presentation`, { method: 'POST', body }),
     answerQuiz: (planId, questionId, optionId) =>
       request(`plans/${encodeURIComponent(planId)}/quiz/${encodeURIComponent(questionId)}/answer`, { method: 'POST', body: { option_id: optionId } }),
     telegramStatus: () => request('telegram/status'),
@@ -433,6 +437,7 @@ function createMockApi(): BrainApi {
     }),
     plan: (id) => wrapMock(() => brain.plan(id)),
     coursePlans: (courseId) => wrapMock(() => brain.coursePlans(courseId)),
+    createPresentation: (courseId, body) => wrapMock(() => brain.createPresentation(courseId, body.language)),
     answerQuiz: (planId, questionId, optionId) => wrapMock(() => brain.answerQuiz(planId, questionId, optionId)),
     telegramStatus: () => wrapMock(() => brain.telegramStatus()),
     telegramLinkCode: () => wrapMock(() => brain.telegramLinkCode()),

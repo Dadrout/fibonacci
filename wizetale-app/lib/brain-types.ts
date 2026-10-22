@@ -459,6 +459,33 @@ export interface TelegramLinkCode {
 }
 
 // ---------------------------------------------------------------------------
+// Presentation — POST /brain/courses/{id}/presentation
+// ---------------------------------------------------------------------------
+
+export interface PresentationRequest {
+  language: BrainLanguage
+}
+
+/** One slide: every bullet cites the student's own sources (bullets without a source are dropped). */
+export interface PresentationSlide {
+  id: string
+  title: string
+  bullets: CitedText[]
+  /** What to say out loud; may be empty. */
+  notes: string
+  topic_id: UUID | null
+}
+
+/** Generated on request (about 10 s live, instant when cached); not stored. Errors: 404, 422 not_enough_material, 503 unavailable. */
+export interface Presentation {
+  course_id: UUID
+  language: BrainLanguage
+  title: string
+  slides: PresentationSlide[]
+  generated_at: IsoDateTime
+}
+
+// ---------------------------------------------------------------------------
 // Demo tools — only while DEMO_MODE is on (overview.demo_mode); the API answers 404 otherwise
 // ---------------------------------------------------------------------------
 

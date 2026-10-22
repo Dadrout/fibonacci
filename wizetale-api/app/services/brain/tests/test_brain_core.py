@@ -310,3 +310,31 @@ def test_demo_tools_are_off_outside_demo_mode_and_in_production(monkeypatch):
     with pytest.raises(routes.BrainError) as refused:  # reset only ever touches the demo student
         asyncio.run(routes.demo_reset(uid=UID))
     assert refused.value.status == 404
+
+
+# ---------------------------------------------------------------- presentations
+
+def test_deck_keeps_only_cited_bullets_and_drops_empty_slides():
+    from app.services.brain import decks
+
+    items = {"photo": {"id": "photo", "kind": "photo", "title": "Slide 7", "course_id": "econ", "captured_at": "2026-10-21T00:00:00Z"}}
+    ids = {"P1": chunk("c1", "photo", "slide", slide=7)}
+    draft = decks.DeckDraft(title="Econometrics (P1)", slides=[
+        decks.DraftSlide(title="Heteroskedasticity", topic_id="t6", notes="Say it plainly, see P1.", bullets=[
+            plans.DraftBullet(text="Only the standard errors break (P1).", passage_ids=["P1"]),
+            plans.DraftBullet(text="Invented claim", passage_ids=["P42"])]),
+        decks.DraftSlide(title="Nothing cited", bullets=[plans.DraftBullet(text="No source", passage_ids=[])]),
+        decks.DraftSlide(title="Unknown topic", topic_id="nope", bullets=[plans.DraftBullet(text="Cited", passage_ids=["p1"])]),
+    ])
+    slides = decks.assemble(UID, draft, ids, items, {"t6"})
+    assert [s["title"] for s in slides] == ["Heteroskedasticity", "Unknown topic"]
+    assert [b["text"] for b in slides[0]["bullets"]] == ["Only the standard errors break."]
+    assert slides[0]["bullets"][0]["sources"][0]["anchor"] == {"kind": "slide", "slide": 7}
+    assert "P1" not in slides[0]["notes"] and slides[0]["topic_id"] == "t6"
+    assert slides[1]["id"] == "s2" and slides[1]["topic_id"] is None
+
+
+def test_deck_slide_count_stays_between_five_and_twelve():
+    from app.services.brain import decks
+
+    assert decks.slide_count(0) == "5" and decks.slide_count(7) == "9" and decks.slide_count(40) == "12"

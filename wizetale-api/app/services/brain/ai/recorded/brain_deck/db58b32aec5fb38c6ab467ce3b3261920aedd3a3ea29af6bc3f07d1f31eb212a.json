@@ -1,0 +1,181 @@
+{
+ "title": "Econometrics Presentation",
+ "slides": [
+  {
+   "title": "Course Overview: Econometrics and Statistical Foundations",
+   "bullets": [],
+   "notes": "",
+   "topic_id": null
+  },
+  {
+   "title": "Simple Linear Regression",
+   "bullets": [
+    {
+     "text": "OLS estimates minimize the sum of squared residuals Σ(yᵢ − b₀ − b₁xᵢ)².",
+     "passage_ids": [
+      "P1"
+     ]
+    },
+    {
+     "text": "The slope estimate is given by b₁ = Cov(x, y) / Var(x) or via normal equations.",
+     "passage_ids": [
+      "P2",
+      "P5"
+     ]
+    },
+    {
+     "text": "The slope tells us how much y changes on average when x goes up by one unit.",
+     "passage_ids": [
+      "P3"
+     ]
+    }
+   ],
+   "notes": "We begin with simple linear regression, where OLS minimizes squared residuals to find the best-fitting line. Remember that variance from your probability notes underlies these estimators.",
+   "topic_id": "00000000-0000-4000-8000-000000000201"
+  },
+  {
+   "title": "OLS Assumptions and Gauss-Markov Theorem",
+   "bullets": [
+    {
+     "text": "The first Gauss-Markov assumption is that the population process is linear in parameters.",
+     "passage_ids": [
+      "P6"
+     ]
+    },
+    {
+     "text": "MLR.5 defines homoskedasticity: Var(u | x₁, …, xₖ) = σ², meaning error variance does not depend on regressors.",
+     "passage_ids": [
+      "P7"
+     ]
+    },
+    {
+     "text": "Under MLR.1–MLR.5, OLS is BLUE: the best linear unbiased estimator.",
+     "passage_ids": [
+      "P8"
+     ]
+    }
+   ],
+   "notes": "Here we establish the famous Gauss-Markov theorem. Unbiasedness requires the first four assumptions, while homoskedasticity is required for OLS to be fully efficient as BLUE.",
+   "topic_id": "00000000-0000-4000-8000-000000000202"
+  },
+  {
+   "title": "Multiple Regression and OVB",
+   "bullets": [
+    {
+     "text": "β₁ measures the effect of x₁ on y holding x₂ fixed, providing a ceteris paribus interpretation.",
+     "passage_ids": [
+      "P10"
+     ]
+    },
+    {
+     "text": "Omitting a relevant variable that is correlated with x₁ introduces omitted variable bias into b₁.",
+     "passage_ids": [
+      "P11"
+     ]
+    },
+    {
+     "text": "The omitted variable bias equals Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ comes from regressing x₂ on x₁.",
+     "passage_ids": [
+      "P12"
+     ]
+    }
+   ],
+   "notes": "Multiple regression lets us control for other factors. Be very careful with omitted variables, as failing to include a relevant regressor biases your slope estimate.",
+   "topic_id": "00000000-0000-4000-8000-000000000203"
+  },
+  {
+   "title": "Hypothesis Testing: t and F",
+   "bullets": [
+    {
+     "text": "The t-test statistic is the estimate divided by its standard error, compared to a t distribution with n − 2 degrees of freedom.",
+     "passage_ids": [
+      "P14"
+     ]
+    },
+    {
+     "text": "The F-test evaluates multiple restrictions simultaneously, asking how much worse the fit gets if coefficients are forced to zero.",
+     "passage_ids": [
+      "P13",
+      "P15"
+     ]
+    }
+   ],
+   "notes": "For hypothesis testing, we use t-tests for individual coefficients and F-tests to check joint restrictions using restricted and unrestricted models.",
+   "topic_id": "00000000-0000-4000-8000-000000000204"
+  },
+  {
+   "title": "Dummy Variables and Interactions",
+   "bullets": [
+    {
+     "text": "An interaction term allows the effect of one variable on the outcome to depend on the value of another variable.",
+     "passage_ids": [
+      "P16"
+     ]
+    },
+    {
+     "text": "To avoid the dummy variable trap, include g − 1 dummies for g groups when an intercept is present to prevent perfect collinearity.",
+     "passage_ids": [
+      "P17"
+     ]
+    }
+   ],
+   "notes": "Dummy variables capture qualitative factors. Always remember to drop one category to avoid the dummy variable trap.",
+   "topic_id": "00000000-0000-4000-8000-000000000205"
+  },
+  {
+   "title": "Autocorrelation in Time Series",
+   "bullets": [
+    {
+     "text": "Autocorrelation means that the error in the current period is correlated with the error in the previous period.",
+     "passage_ids": [
+      "P18"
+     ]
+    },
+    {
+     "text": "With AR(1) errors defined by uₜ = ρuₜ₋₁ + eₜ, OLS remains unbiased but standard errors become invalid.",
+     "passage_ids": [
+      "P19"
+     ]
+    },
+    {
+     "text": "The Durbin–Watson statistic d ≈ 2(1 − ρ̂) helps detect autocorrelation, with values near 2 indicating no first-order serial correlation.",
+     "passage_ids": [
+      "P20"
+     ]
+    }
+   ],
+   "notes": "When moving to time series, errors can be correlated over time. While OLS stays unbiased under AR(1) errors, standard errors are ruined, so we rely on checks like Durbin-Watson.",
+   "topic_id": "00000000-0000-4000-8000-000000000208"
+  },
+  {
+   "title": "Key Takeaways",
+   "bullets": [
+    {
+     "text": "OLS minimizes squared residuals, and its statistical properties rely heavily on the Gauss-Markov assumptions.",
+     "passage_ids": [
+      "P1",
+      "P8"
+     ]
+    },
+    {
+     "text": "Omitted variables cause bias, while proper hypothesis testing uses t and F statistics to evaluate coefficient restrictions.",
+     "passage_ids": [
+      "P11",
+      "P13",
+      "P14"
+     ]
+    },
+    {
+     "text": "Time series models require caution regarding autocorrelation, connecting back to the variance and expectation concepts from probability.",
+     "passage_ids": [
+      "P18",
+      "P22",
+      "P23"
+     ]
+    }
+   ],
+   "notes": "To ace your exam, make sure you understand the core OLS mechanics, the Gauss-Markov conditions, and how omitted variables or autocorrelation disrupt standard inferences.",
+   "topic_id": null
+  }
+ ]
+}

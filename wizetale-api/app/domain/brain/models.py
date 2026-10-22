@@ -438,6 +438,10 @@ class ExamPlanRequest(Model):
     request_id: UUID
 
 
+class PresentationRequest(Model):
+    language: BrainLanguage
+
+
 class QuizAnswerRequest(Model):
     option_id: QuizOptionId
 

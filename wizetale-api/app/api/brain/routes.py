@@ -15,7 +15,8 @@ from starlette.concurrency import run_in_threadpool
 from app.api.dependencies import consume_user_rate_limit, get_current_user
 from app.core.config import settings
 from app.domain.brain.models import (
-    CaptureCreateRequest, ExamPlanRequest, QuizAnswerRequest, RefileRequest, RenameCourseRequest, WebChannel,
+    CaptureCreateRequest, ExamPlanRequest, PresentationRequest, QuizAnswerRequest, RefileRequest, RenameCourseRequest,
+    WebChannel,
 )
 from app.services.brain import events
 from app.services.brain.blobs import BlobError, blob_store, verify_media
@@ -375,6 +376,24 @@ async def create_plan(course_id: UUID, body: ExamPlanRequest, request: Request, 
         await call(brain_store.finish_plan, uid, claimed["id"], {"status": "failed", "failure_code": "internal"})
         raise BrainError(503, "unavailable", "Plan generation could not start.") from error
     return plan_view(claimed)
+
+
+@router.post("/courses/{course_id}/presentation")
+async def course_presentation(course_id: UUID, body: PresentationRequest, request: Request, uid: str = Depends(owner)):
+    """A slide deck built from the course's own sources; every bullet cites them. Generated on request."""
+    await limit(request, uid, "plan", 10)
+    from app.services.brain import decks
+    from app.services.brain.ai.client import AIUnavailable
+    from app.services.brain.plans import NotEnoughMaterial
+
+    try:
+        return await call(decks.build, uid, str(course_id), body.language)
+    except KeyError as error:
+        raise BrainError(404, "not_found", "Course not found.") from error
+    except NotEnoughMaterial as error:
+        raise BrainError(422, "not_enough_material", "Add a few sources to this course first.") from error
+    except AIUnavailable as error:
+        raise BrainError(503, "unavailable", "The presentation could not be built right now. Try again.") from error
 
 
 @router.get("/plans/{plan_id}")
