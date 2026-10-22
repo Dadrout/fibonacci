@@ -358,7 +358,12 @@ export interface StudyPlanContent {
   quiz: QuizQuestion[]
 }
 
+/** How much the plan covers, chosen from the time left: essentials (≤1 day), core (2–4 days), full (5+ days). */
+export type PlanFocus = 'essentials' | 'core' | 'full'
+
 export interface PlanCoverage {
+  /** Present on plans built after the deadline-aware planner (Oct 22); older plans omit it. */
+  focus?: PlanFocus
   item_count: number // items in the course
   cited_item_count: number // items cited somewhere in the plan
   /** Topics with no material at all (feeds the honest "not covered" note). */

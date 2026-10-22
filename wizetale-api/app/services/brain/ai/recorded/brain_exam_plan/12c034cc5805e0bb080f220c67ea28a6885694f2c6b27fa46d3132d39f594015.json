@@ -1,0 +1,273 @@
+{
+ "title": "Econometrics Last-Minute Exam Preparation",
+ "days": [
+  {
+   "day": 1,
+   "focus": "Foundations, Gauss-Markov assumptions, Heteroskedasticity, and Autocorrelation",
+   "tasks": [
+    {
+     "kind": "review",
+     "title": "Review core OLS and Gauss-Markov assumptions",
+     "minutes": 20,
+     "topic_id": "00000000-0000-4000-8000-000000000202",
+     "passage_ids": [
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+     ]
+    },
+    {
+     "kind": "watch",
+     "title": "Watch Heteroskedasticity video on residual plots",
+     "minutes": 15,
+     "topic_id": "bd188e75-574e-48ba-8b39-c6c43035e207",
+     "passage_ids": [
+      "P22",
+      "P23",
+      "P24",
+      "P25"
+     ]
+    },
+    {
+     "kind": "flashcards",
+     "title": "Work through high-yield flashcards",
+     "minutes": 15,
+     "topic_id": null,
+     "passage_ids": [
+      "P2",
+      "P10",
+      "P11",
+      "P19",
+      "P26",
+      "P29"
+     ]
+    },
+    {
+     "kind": "quiz",
+     "title": "Complete final exam practice quiz",
+     "minutes": 20,
+     "topic_id": null,
+     "passage_ids": [
+      "P11",
+      "P19",
+      "P20",
+      "P26",
+      "P29"
+     ]
+    }
+   ]
+  }
+ ],
+ "notes": [
+  {
+   "heading": "OLS & Gauss-Markov Assumptions",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "bullets": [
+    {
+     "text": "The slope estimate b₁ can be written as Cov(x, y) / Var(x) and minimizes the sum of squared residuals.",
+     "passage_ids": [
+      "P1",
+      "P2"
+     ]
+    },
+    {
+     "text": "Under assumptions MLR.1–MLR.5 (including homoskedasticity Var(u | x) = σ²), OLS is BLUE: the best linear unbiased estimator.",
+     "passage_ids": [
+      "P7",
+      "P8",
+      "P9"
+     ]
+    },
+    {
+     "text": "Omitting a relevant variable that correlates with x₁ introduces omitted variable bias, where Bias(b̃₁) = β₂ · δ̃₁.",
+     "passage_ids": [
+      "P11",
+      "P12"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Heteroskedasticity & Autocorrelation",
+   "topic_id": "bd188e75-574e-48ba-8b39-c6c43035e207",
+   "bullets": [
+    {
+     "text": "Heteroskedasticity means the error variance depends on the regressors (Var(uᵢ | xᵢ) = σᵢ²). OLS remains unbiased, but standard errors are invalid.",
+     "passage_ids": [
+      "P18",
+      "P26"
+     ]
+    },
+    {
+     "text": "Heteroskedasticity-robust (White) standard errors fix inference without knowing the exact form of heteroskedasticity.",
+     "passage_ids": [
+      "P19"
+     ]
+    },
+    {
+     "text": "Breusch-Pagan and White tests can detect heteroskedasticity, while Weighted Least Squares (WLS) restores efficiency when the variance function is known.",
+     "passage_ids": [
+      "P20",
+      "P21"
+     ]
+    },
+    {
+     "text": "With AR(1) errors, uₜ = ρuₜ₋₁ + eₜ, OLS remains unbiased but standard errors are invalid, and the Durbin-Watson statistic d ≈ 2(1 − ρ̂) tests for it.",
+     "passage_ids": [
+      "P28",
+      "P29"
+     ]
+    }
+   ]
+  }
+ ],
+ "flashcards": [
+  {
+   "front": "What does MLR.5 (homoskedasticity) state?",
+   "back": "Var(u | x₁, …, xₖ) = σ², meaning the error variance does not depend on the regressors.",
+   "passage_ids": [
+    "P7"
+   ]
+  },
+  {
+   "front": "What does BLUE stand for and when does OLS achieve it?",
+   "back": "Best Linear Unbiased Estimator. OLS achieves it under Gauss-Markov assumptions MLR.1–MLR.5.",
+   "passage_ids": [
+    "P8",
+    "P9"
+   ]
+  },
+  {
+   "front": "What is the formula for omitted variable bias when an important variable x₂ is omitted?",
+   "back": "Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ is the slope coefficient from regressing the omitted x₂ on the included x₁.",
+   "passage_ids": [
+    "P12"
+   ]
+  },
+  {
+   "front": "What happens to OLS estimators under heteroskedasticity?",
+   "back": "They remain unbiased and consistent, but the usual standard errors are biased, making t-tests, F-tests, and confidence intervals invalid.",
+   "passage_ids": [
+    "P26"
+   ]
+  },
+  {
+   "front": "How do heteroskedasticity-robust (White) standard errors modify the standard formulas?",
+   "back": "They replace σ² with the squared OLS residuals ûᵢ² observation by observation in the variance estimator.",
+   "passage_ids": [
+    "P19"
+   ]
+  },
+  {
+   "front": "How is the Durbin-Watson statistic related to first-order autocorrelation ρ?",
+   "back": "Durbin–Watson d ≈ 2(1 − ρ̂). Values near 2 indicate no first-order autocorrelation.",
+   "passage_ids": [
+    "P29"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "prompt": "If a regression model suffers from heteroskedasticity, what is the primary consequence for OLS estimation?",
+   "options": [
+    "OLS estimators become biased and inconsistent.",
+    "OLS estimators are no longer unbiased, but standard errors remain valid.",
+    "OLS estimators remain unbiased, but the usual standard errors are biased, invalidating standard hypothesis tests.",
+    "OLS estimators achieve minimum variance among all linear estimators."
+   ],
+   "correct_index": 2,
+   "explanation": "Under heteroskedasticity, OLS estimates remain unbiased and consistent, but the usual standard errors are biased, making hypothesis tests and confidence intervals invalid.",
+   "passage_ids": [
+    "P26"
+   ],
+   "explain_passage": "P26",
+   "explain_reason": "Slide 7 shows that under heteroskedasticity OLS estimates are still unbiased and consistent BUT the usual standard errors are biased.",
+   "concepts": [
+    "Heteroskedasticity",
+    "OLS properties"
+   ]
+  },
+  {
+   "prompt": "What does the Breusch-Pagan test evaluate under the null hypothesis?",
+   "options": [
+    "Homoskedasticity: that the squared residuals are not explained by the regressors.",
+    "First-order autocorrelation of the error terms.",
+    "Perfect multicollinearity among the dummy variables.",
+    "Omitted variable bias from a missing regressor."
+   ],
+   "correct_index": 0,
+   "explanation": "Under the null hypothesis of homoskedasticity in the Breusch-Pagan test, the squared OLS residuals ûᵢ² should not be explained by the regressors.",
+   "passage_ids": [
+    "P20"
+   ],
+   "explain_passage": "P20",
+   "explain_reason": "Page 4 explains that under the null of homoskedasticity in the Breusch-Pagan test the regressors should not explain the squared residuals.",
+   "concepts": [
+    "Breusch-Pagan test",
+    "Heteroskedasticity"
+   ]
+  },
+  {
+   "prompt": "How does omitting a relevant variable x₂ that is positively correlated with x₁ affect the OLS slope estimate b₁ for x₁ (assuming β₂ > 0)?",
+   "options": [
+    "It causes b₁ to have an upward (positive) bias.",
+    "It causes b₁ to have a downward (negative) bias.",
+    "It leaves b₁ completely unbiased but increases its variance.",
+    "It makes b₁ equal to zero."
+   ],
+   "correct_index": 0,
+   "explanation": "Omitting a relevant variable creates omitted variable bias equal to β₂ · δ̃₁. If β₂ > 0 and δ̃₁ > 0 (positive correlation between x₂ and x₁), the bias is positive, leading to an upward bias.",
+   "passage_ids": [
+    "P11",
+    "P12"
+   ],
+   "explain_passage": "P12",
+   "explain_reason": "Slide 11 gives the formula Bias(b̃₁) = β₂ · δ̃₁, showing how the sign of the omitted variable coefficient and regression slope determine the bias direction.",
+   "concepts": [
+    "Omitted variable bias",
+    "Multiple regression"
+   ]
+  },
+  {
+   "prompt": "What is a key feature of heteroskedasticity-robust (White) standard errors?",
+   "options": [
+    "They restore the Gauss-Markov efficiency of OLS under non-constant variance.",
+    "They are valid in large samples whether or not the errors are homoskedastic.",
+    "They require knowing the exact mathematical form of the variance function h(x).",
+    "They eliminate the need to compute t-statistics."
+   ],
+   "correct_index": 1,
+   "explanation": "Robust standard errors are valid in large samples whether or not errors are homoskedastic, which is why applied economists report them by default.",
+   "passage_ids": [
+    "P19"
+   ],
+   "explain_passage": "P19",
+   "explain_reason": "Page 3 states that robust t statistics are valid in large samples whether or not the errors are homoskedastic.",
+   "concepts": [
+    "Robust standard errors",
+    "White standard errors"
+   ]
+  },
+  {
+   "prompt": "If the Durbin-Watson statistic d for a time-series regression is approximately 2, what does this suggest about first-order autocorrelation (ρ)?",
+   "options": [
+    "ρ is close to 1, indicating strong positive autocorrelation.",
+    "ρ is close to -1, indicating strong negative autocorrelation.",
+    "ρ is close to 0, indicating no first-order autocorrelation.",
+    "The model suffers from severe heteroskedasticity."
+   ],
+   "correct_index": 2,
+   "explanation": "The Durbin-Watson statistic is approximated by d ≈ 2(1 − ρ̂). Values near 2 imply that ρ̂ is near 0, meaning no first-order autocorrelation.",
+   "passage_ids": [
+    "P29"
+   ],
+   "explain_passage": "P29",
+   "explain_reason": "Page 11 notes that Durbin–Watson d ≈ 2(1 − ρ̂) and values near 2 indicate no first-order autocorrelation.",
+   "concepts": [
+    "Autocorrelation",
+    "Durbin-Watson test"
+   ]
+  }
+ ]
+}

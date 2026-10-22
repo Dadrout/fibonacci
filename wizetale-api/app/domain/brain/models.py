@@ -432,7 +432,7 @@ class RenameCourseRequest(Model):
 
 
 class ExamPlanRequest(Model):
-    days: int = Field(ge=1, le=14)
+    days: int = Field(ge=1, le=30)
     exam_date: Optional[date] = None
     language: BrainLanguage
     request_id: UUID

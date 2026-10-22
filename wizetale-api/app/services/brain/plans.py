@@ -31,6 +31,25 @@ _PASSAGE_REFS = re.compile(r"\s*[\(\[]\s*P\d{1,3}(?:\s*[,;–-]\s*P?\d{1,3})*\s*
 _BARE_REF = re.compile(r"\bP\d{1,3}\b")
 
 
+def focus_for(days: int) -> str:
+    """How much a plan covers, from the time left: 1 day → essentials, 2–4 → core, 5+ → full."""
+    return "essentials" if days <= 1 else "core" if days <= 4 else "full"
+
+
+def focus_rules(focus: str, days: int) -> tuple[str, str]:
+    """(instructions for the model, quiz size) for the plan's focus."""
+    if focus == "essentials":
+        return ("very little time (1 day). Cover ONLY the most important topics — the ones most likely to be examined "
+                "and that other topics build on; leave out minor topics and optional depth entirely. 3–4 short tasks, "
+                "review rather than long reading, notes only for those topics (2–3 sections), 6 flashcards."), "5"
+    if focus == "core":
+        return (f"short time ({days} days). Main topics first, in order of importance; skip optional depth and minor "
+                "details. 2–3 tasks per day, notes for the main topics, 6–8 flashcards."), "6"
+    return (f"enough time ({days} days). Cover every topic in course order, revisit earlier topics (spaced review), add "
+            "practice tasks, and keep a mixed review plus the quiz for the last days. Up to 4 tasks per day; for plans "
+            "longer than 10 days keep 1–3 tasks per day."), "10" if days > 7 else "8"
+
+
 def clean(text: str) -> str:
     """Remove internal passage ids that a model may leak into student-facing text."""
     text = _PASSAGE_REFS.sub("", text)
@@ -266,13 +285,15 @@ def generate(uid: str, plan_id: str, *, store: BrainStore = brain_store, ai: Bra
         topics = [{"id": t["id"], "title": t["title"], "sequence": t.get("sequence")} for t in catalog.graph["topics"]
                   if t["course_id"] == course_id]
         events.publish(uid, "plan.progress", plan_id=plan_id, stage="planning")
+        focus = focus_for(days)
+        rules, quiz_count = focus_rules(focus, days)
         draft = ai.generate(operation="brain_exam_plan", prompt="exam_plan", schema=PlanDraft, model=settings.BRAIN_PLAN_MODEL,
-                            max_output_tokens=12000, temperature=0.3, timeout=90, variables={
+                            max_output_tokens=16000, temperature=0.3, timeout=90, variables={
                                 "language_name": LANGUAGE_NAMES[plan["language"]], "days": str(days),
-                                "quiz_count": "6" if days <= 3 else "8", "course_title": catalog.courses[course_id]["title"],
+                                "focus_rules": rules, "quiz_count": quiz_count, "course_title": catalog.courses[course_id]["title"],
                                 "exam_date": plan["exam_date"], "topics": json.dumps(topics, ensure_ascii=False),
                                 "passages": text},
-                            cache_key=["v2", catalog.courses[course_id]["title"], days, plan["language"],
+                            cache_key=["v3", focus, catalog.courses[course_id]["title"], days, plan["language"],
                                        [t["title"] for t in topics], text])
         events.publish(uid, "plan.progress", plan_id=plan_id, stage="citing")
         content, answer_key = assemble(uid, draft, ids, items, catalog, course_id, days, date.fromisoformat(plan["exam_date"]))
@@ -280,7 +301,7 @@ def generate(uid: str, plan_id: str, *, store: BrainStore = brain_store, ai: Bra
             raise NotEnoughMaterial()
         cited = {r["item_id"] for r in _all_refs(content)}
         course_items = {i for i, row in items.items() if row.get("course_id") == course_id}
-        coverage = {"item_count": len(course_items), "cited_item_count": len(cited & course_items),
+        coverage = {"focus": focus, "item_count": len(course_items), "cited_item_count": len(cited & course_items),
                     "missing": gap_alerts(catalog.graph, course_id)}
         store.save_plan_secrets(uid, plan_id, answer_key)
         saved = store.finish_plan(uid, plan_id, {"status": "ready", "content": content, "coverage": coverage})

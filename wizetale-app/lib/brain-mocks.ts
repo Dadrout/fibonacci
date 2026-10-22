@@ -896,7 +896,7 @@ export class MockBrain {
       content.quiz.forEach((q) => collect(q.sources))
       Object.assign(plan, {
         status: 'ready', content,
-        coverage: { item_count: course.item_count, cited_item_count: [...cited].filter((id) => this.items.get(id)?.course_id === courseId).length, missing: this.gaps(courseId) },
+        coverage: { focus: request.days <= 1 ? 'essentials' : request.days <= 4 ? 'core' : 'full', item_count: course.item_count, cited_item_count: [...cited].filter((id) => this.items.get(id)?.course_id === courseId).length, missing: this.gaps(courseId) },
       } satisfies Partial<StudyPlan>)
       this.emit({ type: 'plan.ready', plan: clone(plan) })
     })()

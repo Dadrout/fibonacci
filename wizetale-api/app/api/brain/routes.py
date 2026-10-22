@@ -407,7 +407,7 @@ async def search(q: str = Query(min_length=1, max_length=200), limit_: int = Que
 
 @router.post("/courses/{course_id}/exam-plan", status_code=202)
 async def create_plan(course_id: UUID, body: ExamPlanRequest, request: Request, uid: str = Depends(owner)):
-    await limit(request, uid, "plan", 6)
+    await limit(request, uid, "plan", 30 if demo_tools_allowed() else 6)
     course_row = await call(brain_store.course, uid, str(course_id))
     if not course_row:
         raise BrainError(404, "not_found", "Course not found.")
@@ -433,7 +433,7 @@ async def create_plan(course_id: UUID, body: ExamPlanRequest, request: Request, 
 @router.post("/courses/{course_id}/presentation")
 async def course_presentation(course_id: UUID, body: PresentationRequest, request: Request, uid: str = Depends(owner)):
     """A slide deck built from the course's own sources; every bullet cites them. Generated on request."""
-    await limit(request, uid, "plan", 10)
+    await limit(request, uid, "plan", 30 if demo_tools_allowed() else 10)
     from app.services.brain import decks
     from app.services.brain.ai.client import AIUnavailable
     from app.services.brain.plans import NotEnoughMaterial

@@ -358,3 +358,10 @@ def test_text_tasks_reply_lists_only_given_tasks_and_falls_back_quietly():
             raise RuntimeError("down")
     assert tasks.analyze("Homework: read chapter 9 by Friday", "en", ai=Down()) is None
     assert tasks.analyze("hi", "en", ai=Down()) is None
+
+
+def test_plan_focus_adapts_to_the_time_left():
+    assert [plans.focus_for(d) for d in (1, 2, 4, 5, 30)] == ["essentials", "core", "core", "full", "full"]
+    rules, quiz = plans.focus_rules("essentials", 1)
+    assert "ONLY the most important topics" in rules and quiz == "5"
+    assert plans.focus_rules("core", 3)[1] == "6" and plans.focus_rules("full", 6)[1] == "8" and plans.focus_rules("full", 20)[1] == "10"
