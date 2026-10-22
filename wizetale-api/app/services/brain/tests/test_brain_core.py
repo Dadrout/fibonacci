@@ -226,3 +226,32 @@ def test_plan_assembly_drops_uncited_claims_and_keeps_answers_server_side():
     moment = key["q1"]["moment"]["source"]
     assert moment["anchor"] == {"kind": "timestamp", "start_sec": 872.0, "end_sec": 910.0}
     assert moment["open_url"].endswith("t=872s")
+
+
+def test_event_stream_survives_read_timeouts_and_ends_cleanly_on_redis_errors():
+    import asyncio
+
+    import redis
+
+    from app.services.brain import events
+
+    class FakeRedis:
+        def __init__(self):
+            self.calls = 0
+
+        async def xread(self, streams, block, count):
+            self.calls += 1
+            if self.calls == 1:
+                raise redis.exceptions.TimeoutError("slow read")
+            if self.calls == 2:
+                return [("brain:events:u1", [("1700000000000-0", {"data": '{"type": "item.filed"}'})])]
+            raise redis.exceptions.ConnectionError("redis went away")
+
+    async def collect():
+        return [frame async for frame in events.stream("u1", None, client=FakeRedis())]
+
+    frames = asyncio.run(collect())
+    assert frames[0] == "retry: 2000\n\n"
+    assert frames[1].startswith(": heartbeat")
+    assert frames[2].startswith("id: 1700000000000-0\n") and '"item.filed"' in frames[2]
+    assert len(frames) == 3

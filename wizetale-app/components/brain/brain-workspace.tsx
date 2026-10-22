@@ -61,6 +61,8 @@ export function BrainWorkspace() {
   const snapshotRequest = useRef(0)
   const reconcileTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const reconcileGraph = useRef(false)
+  const hasOverview = useRef(false)
+  const refreshRetry = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [simulating, setSimulating] = useState(false)
   const [simulationError, setSimulationError] = useState(false)
   const [presentation, setPresentation] = useState(false)
@@ -78,8 +80,17 @@ export function BrainWorkspace() {
       const [overviewResult, graphResult] = await Promise.allSettled([withUiTimeout(api.overview()), refreshGraph ? withUiTimeout(api.graph()) : Promise.resolve(null)])
       if (snapshotRequest.current !== request) return
       if (version !== eventVersion.current) continue
-      if (overviewResult.status === 'fulfilled') setOverview(overviewResult.value)
-      else setOverviewError(true)
+      if (overviewResult.status === 'fulfilled') {
+        hasOverview.current = true
+        setOverview(overviewResult.value)
+      } else {
+        setOverviewError(true)
+        // A failed background refresh keeps the current screen and quietly tries again.
+        if (hasOverview.current) {
+          if (refreshRetry.current !== null) clearTimeout(refreshRetry.current)
+          refreshRetry.current = setTimeout(() => { refreshRetry.current = null; void loadOverview(refreshGraph) }, 4000)
+        }
+      }
       if (graphResult.status === 'fulfilled' && graphResult.value) {
         graphRef.current = graphResult.value
         setGraph(graphResult.value)
@@ -91,7 +102,10 @@ export function BrainWorkspace() {
 
   useEffect(() => {
     if (session.canUse) void loadOverview()
-    return () => { snapshotRequest.current += 1 }
+    return () => {
+      snapshotRequest.current += 1
+      if (refreshRetry.current !== null) clearTimeout(refreshRetry.current)
+    }
   }, [loadOverview, session.canUse])
 
   useEffect(() => {
@@ -242,7 +256,7 @@ export function BrainWorkspace() {
 
         {loadingOverview && !overview ? <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading sources')}>
           {[0, 1].map((number) => <div className="brain-source-skeleton" key={number}><span /><div><i /><i /><i /></div></div>)}
-        </div> : overviewError ? <div className="brain-load-error" role="alert"><TriangleAlert size={24} aria-hidden="true" /><div><strong>{c('Your Brain could not load.')}</strong><p>{c('Check your connection and try again.')}</p></div><button type="button" className="brain-secondary-button" onClick={() => void loadOverview()}>{c('Try again')}</button></div>
+        </div> : overviewError && !overview ? <div className="brain-load-error" role="alert"><TriangleAlert size={24} aria-hidden="true" /><div><strong>{c('Your Brain could not load.')}</strong><p>{c('Check your connection and try again.')}</p></div><button type="button" className="brain-secondary-button" onClick={() => void loadOverview()}>{c('Try again')}</button></div>
         : isEmpty ? <section className="brain-onboarding" aria-labelledby="brain-onboarding-title">
           <div className="brain-onboarding-mark"><FibonacciMark size={54} filled={5} /></div>
           <div className="brain-onboarding-copy"><p className="brain-section-kicker">{c('A lighter way to study')}</p><h2 id="brain-onboarding-title">{c('Just send us anything.')}</h2><p>{c('Drop a photo, paste a link or notes, or send a lecture to Fibonacci on Telegram. Your Brain will sort it into the right course and topic.')}</p></div>

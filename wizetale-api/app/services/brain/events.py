@@ -62,12 +62,26 @@ def frame(event_id: str, data: dict[str, Any]) -> str:
 async def stream(uid: str, last_event_id: Optional[str], client: Optional[aioredis.Redis] = None) -> AsyncIterator[str]:
     """Yield SSE frames forever: missed events after `last_event_id`, then live ones, plus heartbeats."""
     own_client = client is None
-    client = client or aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+    # redis-py 8 defaults to a 5 s socket timeout, shorter than the blocking read below,
+    # so the stream client needs its own read timeout above the heartbeat interval.
+    client = client or aioredis.from_url(
+        settings.REDIS_URL,
+        decode_responses=True,
+        socket_timeout=HEARTBEAT_SECONDS + 10,
+        socket_connect_timeout=5,
+    )
     cursor = last_event_id if last_event_id and _ID.match(last_event_id) else "$"
     try:
         yield "retry: 2000\n\n"
         while True:
-            response = await client.xread({_key(uid): cursor}, block=HEARTBEAT_SECONDS * 1000, count=50)
+            try:
+                response = await client.xread({_key(uid): cursor}, block=HEARTBEAT_SECONDS * 1000, count=50)
+            except redis.exceptions.TimeoutError:
+                response = None
+            except redis.exceptions.RedisError as error:
+                # End this stream cleanly; the browser reconnects with Last-Event-ID and misses nothing.
+                logger.warning("brain_event_stream_ended error_type=%s", type(error).__name__)
+                return
             if not response:
                 yield f": heartbeat {int(datetime.now(timezone.utc).timestamp())}\n\n"
                 continue

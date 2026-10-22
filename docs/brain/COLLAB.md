@@ -151,7 +151,7 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 | C9 | Gap detector, search, re-file | done (gaps, search, re-file) | `views.py` (gaps), routes (search, refile), `brain.sql` (`brain_refile_item`) |
 | C10 | Telegram bot: link code, capture all types, "Filed under …" reply | live — @eduhack2026_bot polling; tests by Claude agent | `wizetale-api/app/services/brain/telegram/**` |
 | C11 | `DEMO_MODE`: seed (demo student, 3 courses, ~40 items, links), hero inputs, recorded AI, golden tests | done | `wizetale-api/app/services/brain/demo/**`, `demo/hero/**`, `ai/recorded/**` |
-| C12 | `docs/brain/DEMO_SCRIPT.md`, end-to-end rehearsals, offline check | doing | `docs/brain/DEMO_SCRIPT.md` |
+| C12 | `docs/brain/DEMO_SCRIPT.md`, end-to-end rehearsals, offline check | done — R7–R9 three full UI runs in a row, R10 with no AI key (2026-10-22) | `docs/brain/DEMO_SCRIPT.md`, `artifacts/brain/rehearsal-r{7,8,9,10-offline}-*` |
 
 ### Astra (design, frontend)
 
@@ -159,15 +159,15 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 |---|---|---|---|
 | A1 | `docs/brain/DESIGN_BRAIN.md`: direction, key screens, motion, hero choreography | review | `docs/brain/DESIGN_BRAIN.md` |
 | A2 | Brain shell + nav entry + presentation mode (projector) | review | `wizetale-app/app/brain/page.tsx`, `wizetale-app/app/layout.tsx`, `wizetale-app/app/create/student-workspace-client.tsx`, `wizetale-app/components/study/study-shell.tsx`, `wizetale-app/components/brain/**` |
-| A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | doing | H2 review fixes — Astra: `wizetale-app/components/brain/brain-item-card.tsx`, `brain-workspace.tsx`, `brain.css`, UI state helpers, `wizetale-app/lib/copy.ts` |
-| A4 | Brain graph: force layout, zoom course → concept, animated cross-course links, node panel with sources (60 fps @ few hundred nodes) | review — H3 G1–G3 implemented; G4 live/browser verification pending | Astra: `components/brain/brain-graph.tsx`, `brain-graph-layout.ts`, graph section of `brain.css`, `lib/copy-brain/graph.ts`, `scripts/brain-ui-graph.test.mjs`, `docs/brain/reviews/H2.md` |
-| A5 | Exam mode: N-days flow, day plan, notes, flashcards, quiz, citation chips → source viewer (YouTube seek, slide/page) | doing — Claude agent (Codex paused) | `components/brain/brain-exam*.tsx`, `brain-exam.css`, `lib/copy-brain/exam.ts` |
-| A6 | Mistake → moment after a wrong answer | doing — Claude agent (with A5) | same as A5 |
+| A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | done — H1/H2 accepted; home simplified in D17 | H2 review fixes — Astra: `wizetale-app/components/brain/brain-item-card.tsx`, `brain-workspace.tsx`, `brain.css`, UI state helpers, `wizetale-app/lib/copy.ts` |
+| A4 | Brain graph: force layout, zoom course → concept, animated cross-course links, node panel with sources (60 fps @ few hundred nodes) | done — H3 accepted (`c3e3740`); live map checked in every rehearsal | Astra: `components/brain/brain-graph.tsx`, `brain-graph-layout.ts`, graph section of `brain.css`, `lib/copy-brain/graph.ts`, `scripts/brain-ui-graph.test.mjs`, `docs/brain/reviews/H2.md` |
+| A5 | Exam mode: N-days flow, day plan, notes, flashcards, quiz, citation chips → source viewer (YouTube seek, slide/page) | done — Claude agent, commit `91a728f`; one-tap start `4ac20bc` | `components/brain/brain-exam*.tsx`, `brain-exam.css`, `lib/copy-brain/exam.ts` |
+| A6 | Mistake → moment after a wrong answer | done — commit `91a728f`; low-confidence cue in H4 | same as A5 |
 | A7 | Course view: ordered topics, source cards, inline gap alerts, one-tap re-file | done — built by Claude | `components/brain/brain-courses.tsx`, `brain-courses.css`, `lib/copy-brain/courses.ts` |
 | A8 | Telegram connect: QR + one-time code + linked state | done — built by Claude | `components/brain/brain-telegram.tsx`, `brain-courses.css`, `lib/copy-brain/courses.ts` |
 | A9 | Onboarding empty state ("just send us anything") | review | `wizetale-app/components/brain/brain-workspace.tsx`, `wizetale-app/lib/copy.ts` |
 | A10 | ru/kk/en copy, light/dark, phone/tablet/desktop/projector, a11y, screenshots in `artifacts/brain/` | todo | |
-| A11 | **Owner request (2026-10-21): replace the logo with one made by ChatGPT image generation.** Lower priority than P0. If Codex can generate images, make it there; otherwise the owner puts a ChatGPT-generated PNG at `wizetale-app/public/brand/logo-source.png`. Then derive the mark, favicon, and app icons (light/dark, small sizes legible) and update `components/fibonacci-mark.tsx` + `DESIGN.md`. | scheduled — Codex 09:32 (image generation) | `public/brand/**`, `app/icon.png`, `components/fibonacci-mark.tsx`, `DESIGN.md` |
+| A11 | **Owner request (2026-10-21): replace the logo with one made by ChatGPT image generation.** Lower priority than P0. If Codex can generate images, make it there; otherwise the owner puts a ChatGPT-generated PNG at `wizetale-app/public/brand/logo-source.png`. Then derive the mark, favicon, and app icons (light/dark, small sizes legible) and update `components/fibonacci-mark.tsx` + `DESIGN.md`. | done — commit `8e2fe15` (alternative brain-shaped mark kept at `public/brand/logo-alt-1.png`) | `public/brand/**`, `app/icon.png`, `components/fibonacci-mark.tsx`, `DESIGN.md` |
 
 ---
 
@@ -182,6 +182,8 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 ## 5. Handoff log (Claude → Astra via `codex exec`)
 
 _Format: `- H<n> (date) task → outcome (review result, commit)`_
+
+- **H4 (2026-10-22, gpt-6.1-sol)** Fixes for Astra's H3 read-only review → **accepted** after typecheck, 110 tests, build, rehearsal r1. Re-files regroup by topic; inline course rename; Telegram status/QR failures recover; 44 px targets; narrow-phone and projector code sizing; low-confidence moments say "Closest match in your material"; SourceViewer `note` slot replaces the DOM workaround. Commit `bf17721`. All H3 review items closed.
 
 - **H3 (2026-10-22, Astra)** Narrowed to graph G1–G4 + read-only design review (exam/course/Telegram owned by Claude agents). → **Ready for review:** G1–G3 implemented for Home → Map; viewport sizing fixes the inherited 62vh descendant rule, prominent labels remain visible, incident connections emphasize on hover/focus/selection, unseen cross-course arrivals animate once per API client. New graph copy is ru/kk/en via `graphCopy` → `lib/copy.ts`. `npm run typecheck` and `node --experimental-strip-types --no-warnings --test scripts/*.test.cjs scripts/*.test.mjs` pass (22 test files, 3 new graph cases). G4 mock concept/source anchors pass; live click-through, build, responsive/theme/projector screenshots and measured performance remain for Claude (no preview browser connected here; build/dev server excluded by handoff). `brain-workspace.tsx`, exam/course/Telegram files, API/contracts, package files and env files untouched; no git run.
   - **Read-only review, still open (Astra):** `brain-courses.tsx` `replaceItem` only replaces a source in its old topic list when re-filed within the same course; reload or regroup it by its new `topic_id`. `CourseDetailView` also lacks the course rename action promised by DESIGN_BRAIN.

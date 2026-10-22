@@ -1,7 +1,7 @@
 # Fibonacci Brain — finale demo script (90 seconds)
 
 Owner: Claude (backend, setup, backups) · Astra (screens, choreography — see `DESIGN_BRAIN.md`).
-Status: **ready for rehearsal**. All steps work in the app (verified 2026-10-22 in a browser on live data). The Brain is one home screen — capture bar, what's arriving now, your courses (Courses | Map) — with drill-down to a course and its exam. Finalize timings after the three full rehearsals.
+Status: **rehearsed — 3 full UI runs in a row passed (R7–R9), plus an offline run (R10)**. All steps work in the app (verified 2026-10-22 in a browser on live data). The Brain is one home screen — capture bar, what's arriving now, your courses (Courses | Map) — with drill-down to a course and its exam. Finalize timings after the three full rehearsals.
 
 ---
 
@@ -66,9 +66,14 @@ Measured backend timings (local stack, 2026-10-22): three items filed in **7.7�
 | # | Date | Live / recorded | Result | Notes |
 |---|---|---|---|---|
 | R0 | 2026-10-22 00:4x | API only (no UI) | ✅ hero items filed 9.8 s; plan 12 s (en/ru/kk); offline replay 2.6 s + 1 s | UI rehearsals pending Astra's screens |
-| R1 | | | | |
-| R2 | | | | |
-| R3 | | | | |
+| R1–R5 | 2026-10-22 03:5x–04:4x | Full UI, recorded | ✅ ×5 (filing 1.7–20.9 s) | Browser rehearsals (`rehearse.py`): capture → filed → Map → Exam in 3 days → wrong answer → moment |
+| R6 | 2026-10-22 04:49 | Full UI, recorded | ❌ | Home was replaced by "Your Brain could not load." Two causes, both fixed: the live-updates connection dropped every 5 s (Redis client timeout shorter than the 15 s wait), and a failed background refresh wiped a working screen. Now the screen stays and quietly retries. |
+| **R7** | 2026-10-22 05:0x | Full UI, recorded | ✅ filed 1.8 s · 5 new links · Week 7 gap · plan 0.6 s · moment opened · 0 page errors | Screenshots `artifacts/brain/rehearsal-r7-*` |
+| **R8** | 2026-10-22 05:0x | Full UI, recorded | ✅ filed 1.8 s · 5 new links · Week 7 gap · plan 0.9 s · moment opened · 0 page errors | `rehearsal-r8-*` |
+| **R9** | 2026-10-22 05:0x | Full UI, recorded | ✅ filed 1.8 s · 5 new links · Week 7 gap · plan 0.4 s · moment opened · 0 page errors | `rehearsal-r9-*` — three in a row ✅ |
+| **R10** | 2026-10-22 05:1x | Full UI, **no AI key**, AI cache cleared | ✅ filed 1.9 s · 5 new links · Week 7 gap · plan 0.6 s · moment opened | Proves the "Wi-Fi down" backup: recorded outputs alone carry the whole demo |
+
+Not yet rehearsed: forwarding through Telegram from the presenter's phone (needs the phone linked once — see §4). The rehearsals above send the same three files through the web capture path, which runs the same pipeline.
 
 ---
 
