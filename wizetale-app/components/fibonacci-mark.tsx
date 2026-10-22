@@ -64,7 +64,9 @@ export function FibonacciMark({ size = 36, seeds = 21, filled, className, label,
 export function FibonacciLogo({ size = 30, className }: { size?: number; className?: string }) {
   return (
     <span className={['fibonacci-logo', className].filter(Boolean).join(' ')}>
-      <FibonacciMark size={size} />
+      {/* The adjacent wordmark and existing parent labels name the brand. */}
+      <img src="/brand/logo-192.png" width={size} height={size} alt="" aria-hidden="true" className="block shrink-0 dark:hidden" />
+      <img src="/brand/logo-dark-192.png" width={size} height={size} alt="" aria-hidden="true" className="hidden shrink-0 dark:block" />
       <span className="fibonacci-wordmark">fibonacci</span>
     </span>
   )

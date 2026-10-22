@@ -90,7 +90,9 @@ components:
 ---
 # Fibonacci visual system
 
-**Direction: Seedhead** (chosen 20 Oct 2026; see `docs/fibonacci-plan.html`). Each idea in a learning path is a seed placed at the golden angle (~137.5°), the arrangement a sunflower uses. The seedhead (`components/fibonacci-mark.tsx`) is the logo and can show progress: filled seeds are understood ideas. Colours: ink and cobalt blue. Cobalt (`--studio-green`, name kept for compatibility) is for actions. Gold (`--studio-gold`) marks progress and source highlights only; `--studio-accent` is its darker, text-safe version. Gold is never a button colour. Use the seedhead sparingly. The old owl logo is retired.
+**Direction: Seedhead** (chosen 20 Oct 2026; see `docs/fibonacci-plan.html`). Each idea in a learning path is a seed placed at the golden angle (~137.5°), the arrangement a sunflower uses. Colours: ink and cobalt blue. Cobalt (`--studio-green`, name kept for compatibility) is for actions. Gold (`--studio-gold`) marks progress and source highlights only; `--studio-accent` is its darker, text-safe version. Gold is never a button colour. Use the seedhead sparingly. The old owl logo is retired.
+
+**Logo (22 Oct 2026):** the Codex image-generated mark is a growing spiral of six broad cobalt seeds around one gold spark, suggesting ideas assembling into a second brain. Option 2 was chosen for its simple silhouette and small-size clarity. The original, two runner-ups, transparent 512/192px marks, dark-theme header variant, favicons, opaque Apple icon, and generation prompts live in `wizetale-app/public/brand/`; Next.js icons live at `wizetale-app/app/icon.png` and `app/apple-icon.png`. `FibonacciLogo` uses the new image beside the existing wordmark; the SVG `FibonacciMark` and its filled-seed progress behavior remain unchanged.
 
 > Contrast figures below were measured for the previous palette and need re-measuring for the new values.
 
