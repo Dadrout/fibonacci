@@ -1,12 +1,16 @@
 # Fibonacci
 
-Fibonacci helps people understand material by turning it into a path of ideas, each step building on the last. Today it turns educational questions into editable learning stories for ages 10–18 and helps teachers prepare private K–12 lesson materials. It supports English, Russian, and Kazakh; the interface language and generated-material language can differ.
+Fibonacci is a second brain for students that builds itself. Students send anything they study with (a slide photo, a lecture link, a PDF, a web page, a voice note, pasted notes) through the web app, drag-and-drop, paste, or the Telegram bot. Fibonacci reads it, files it as Course → Topic → Concept with a confidence score, and links concepts across courses into one knowledge graph.
 
-The learner workspace supports story scripts and video generation, quizzes, flashcards, presentations, and saved work. The teacher workspace supports lessons, source documents, resource generation and editing, and print/presentation workflows. Learners review story drafts before choosing video generation.
+From that brain, one tap ("Exam in 3 days") builds a day-by-day plan, notes, flashcards and a quiz. Every generated line cites its source (page, slide photo, or video timestamp). A wrong quiz answer opens the exact moment in the student's own material that explains it, and gap alerts show what is missing ("Week 7 is missing").
 
-The frontend is an existing Next.js 16 / React 19 app in `wizetale-app`. Authentication uses Supabase; server routes proxy to the existing FastAPI/Celery backend. This redesign preserves those integrations and private ownership rules. The existing local preview is opt-in, explicitly labeled, and uses sample content without creating saved work.
+The Brain is one calm home screen: a capture bar, what is arriving now, and the student's courses (as cards or as a map), with drill-down to a course and its exam. The interface and generated material work in English, Russian and Kazakh; the two languages can differ.
 
-The redesign brief calls for a distinctive identity, useful visuals, simpler task completion, practical accessibility, responsive behavior, both existing themes, maintained localization, and actual implementation. No stock imagery, fake metrics, invented saved work, or replacement of functional workflows with static mockups.
+Principles:
 
+- **Zero-effort capture.** No "upload and choose a folder" step.
+- **Honest output.** Every AI result shows its sources; uncertainty is shown, not hidden.
+- **Private by default.** Each student's material is visible only to them, enforced in the database.
+- **Works on stage.** Every AI call has a timeout, a retry, and a recorded fallback, so the demo runs on bad Wi-Fi.
 
-The longer-term direction (source analysis, the learning path, citations at sentence level, and the roadmap) is in `docs/fibonacci-plan.html`. Internal service names (`wizetale-app`, `wizetale-api`, Docker images, domain) are unchanged until the domain and trademark are settled.
+Product and design details: `docs/brain/DESIGN_BRAIN.md`. Team board and decisions: `docs/brain/COLLAB.md`. Demo: `docs/brain/DEMO_SCRIPT.md`.

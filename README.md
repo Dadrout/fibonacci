@@ -1,57 +1,57 @@
 # Fibonacci
 
-Fibonacci turns humanities topics into illustrated learning stories and helps teachers prepare private K–12 lesson materials in English, Russian, and Kazakh.
+**A second brain for students that builds itself.**
 
-## Architecture
+Students lose their study material everywhere: slide photos in the camera roll, closed tabs, PDFs in Downloads. With Fibonacci they just send it, from the web app or the Telegram bot, and Fibonacci does the rest:
 
-- `wizetale-app/`: Next.js frontend, deployed to Vercel.
-- `wizetale-api/`: FastAPI API and Celery worker, deployed on a Docker host.
-- Supabase: Auth, Postgres, and optionally private media storage.
-- Cloudflare R2: optional private media storage provider.
-- Redis: private queue, cache, and per-user request limits.
-- Nginx + Certbot: HTTPS ingress for `api.wizetale.com`.
+1. **Reads it.** Text from blurry slide photos, transcripts with timestamps from lecture videos, pages from PDFs.
+2. **Files it.** Course → Topic → Concept, with a confidence score and a one-tap fix if it guessed wrong.
+3. **Connects it.** Links the same idea across courses, such as *Variance* in Probability and *Heteroskedasticity* in Econometrics.
+4. **Turns it into study material.** *Exam in 3 days* builds a day-by-day plan, notes, flashcards and a quiz from the student's own material. Every line cites its source: slide, page or video timestamp.
+5. **Traces mistakes.** A wrong quiz answer opens the exact slide or video moment that explains it.
+6. **Spots gaps.** "You have weeks 1–6 and 8, but nothing from week 7."
 
-The browser calls Next.js route handlers. Those handlers forward authenticated requests to the server-only `BACKEND_API_URL`; the browser never receives the API host configuration or Supabase service role key.
+> NotebookLM makes you organize your sources. Fibonacci organizes them for you, connects them, and makes sure you learned them.
 
-## Local development
+English, Russian and Kazakh · light and dark · phone, desktop and projector.
 
-1. Create a Supabase project and apply [`supabase/schema.sql`](supabase/schema.sql), then [`supabase/knowledge_seed.sql`](supabase/knowledge_seed.sql) and [`supabase/teacher_prep.sql`](supabase/teacher_prep.sql), then [`supabase/relationship_indexes.sql`](supabase/relationship_indexes.sql).
-2. Copy `.env.example` to `.env` at the repository root, set `ENVIRONMENT=development`, and fill in local Supabase and provider settings. Keep credentials out of source control.
-3. Start Redis and the API/worker with `docker compose up --build redis api celery-worker`.
-4. In `wizetale-app`, copy `.env.example` to `.env.local`, set the public Supabase URL/key and `BACKEND_API_URL=http://localhost:8000`, then run `npm ci` and `npm run dev`.
-5. Open `http://localhost:3001`. API docs are enabled only outside production at `http://localhost:8000/docs`.
+## Run it locally
 
-## Image generation
+You need Docker (with Compose) and Node.js 20+.
 
-The API and Celery worker support Gemini, fal.ai, and Cloudflare Workers AI through the same image-provider interface. To use Cloudflare FLUX.2 Dev, set these server-only values in the repository-root `.env` for Docker, or `wizetale-api/.env` when running the API directly:
+1. Put a `.env` with `GEMINI_API_KEY` in the repository root (see `.env.example`).
+2. Create the local secrets once: `supabase/local/setup.sh` (writes the git-ignored `.env.brain`). Add `DEMO_MODE=true`, and `TELEGRAM_BOT_TOKEN` if you use the bot.
+3. Start the backend and load the demo student:
+   ```sh
+   docker compose -p fibonacci-local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.brain.yml \
+     up -d redis brain-db brain-rest api celery-worker telegram-bot
+   docker exec fibonacci-local-api-1 python -m app.services.brain.demo.seed
+   ```
+4. Start the web app. In `wizetale-app/.env.development.local` set `NEXT_PUBLIC_BRAIN_DEMO=1` and `BRAIN_DEMO_TOKEN` (the same value as in `.env.brain`), then:
+   ```sh
+   cd wizetale-app && npm ci && npm run dev    # http://localhost:3001
+   ```
 
-```dotenv
-IMAGE_PROVIDER=cloudflare
-CLOUDFLARE_ACCOUNT_ID=<your Cloudflare account ID>
-CLOUDFLARE_API_TOKEN=<your Cloudflare API token>
-CLOUDFLARE_IMAGE_MODEL=@cf/black-forest-labs/flux-1-schnell
-CLOUDFLARE_IMAGE_TIMEOUT_SECONDS=180
-IMAGE_GENERATION_CONCURRENCY=3
-```
+With `DEMO_MODE=true`, recorded AI outputs for the demo inputs replay first, so the demo also works without internet.
 
-Keep the Cloudflare token out of frontend environment files and source control. A custom token needs `Workers AI - Read` and `Workers AI - Edit` permissions. Workers AI uses a direct authenticated request and returns the generated image; selected scenes run concurrently while the existing image budget, prompts, scene order, and placeholder fallback remain in effect.
+## Repository
 
-Cloudflare FLUX.2 Dev accepts multipart form data, even for text-only prompts, and returns image data as base64. Restart or rebuild both the API and worker after changing provider settings. Set `IMAGE_PROVIDER=gemini` or `IMAGE_PROVIDER=fal` to select those providers instead.
+| Path | What it is |
+|---|---|
+| `wizetale-app/` | Web app. The Brain lives in `components/brain/` and `app/brain/`. |
+| `wizetale-api/` | API and background workers. The Brain lives in `app/services/brain/` and `app/api/brain/`. |
+| `supabase/brain.sql` | Data model with row-level security on every table; tests in `supabase/tests/`. |
+| `demo/hero/` | The three demo inputs: a slide photo, a PDF, and a lecture link. |
+| `docs/brain/` | Design, team board, and the demo script. |
 
-## Production deployment
+## Tests
 
-Follow [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). The production checklist is in [`docs/DEPLOYMENT_CHECKLIST.md`](docs/DEPLOYMENT_CHECKLIST.md); owner-supplied privacy and child-safety decisions are listed in [`docs/PUBLIC_LAUNCH_GATES.md`](docs/PUBLIC_LAUNCH_GATES.md).
+- API: `cd wizetale-api && python -m pytest -q`
+- Web app: `cd wizetale-app && npm run typecheck && node --experimental-strip-types --no-warnings --test scripts/*.test.mjs && npm run build`
+- Database security: `supabase/tests/run_brain_tests.sh`
 
-Production API startup intentionally stops when required credentials, Redis, provider configuration, or the paid Gemini billing tier are missing. Account deletion removes a learner's media, revokes sessions, and deletes the Supabase Auth user; it is available from the account page.
+CI runs all three on every push.
 
-## Verification
+## Deployment
 
-- API: `cd wizetale-api && python -m pip install -e ".[dev]" && python -m pytest -q`.
-- Frontend: `cd wizetale-app && npm ci && npm run build`.
-- Compose syntax: copy `.env.example` to `.env`, then `docker compose config --quiet`.
-
-CI runs the API suite, frontend type-check, typography, teacher-content, localization and proxy checks, production build, and Compose validation.
-
-## Teacher preparation
-
-See [teacher setup and release checks](docs/TEACHER_PREP.md). Teacher mode is available at `/teacher` for existing accounts and as a signup preference. Saved lessons and resources belong to the authenticated account.
+See `docs/DEPLOYMENT.md`. In production the API refuses to start in demo mode or without its media signing secret.
