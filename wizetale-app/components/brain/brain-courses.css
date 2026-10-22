@@ -220,8 +220,8 @@ html[data-brain-capture-visible] .brain-global-add { opacity: 0; transform: tran
 .brain-show-more > p { margin: 0; color: var(--studio-muted); font-size: 14px; font-variant-numeric: tabular-nums; }
 .brain-show-more > .brain-item-action-error { flex-basis: 100%; }
 
-/* The floating Add button stays out of the exam: nothing there is captured. */
-html:has(.brain-app[data-brain-view="exam"]) .brain-global-add { display: none; }
+/* The floating Add button stays out of exam and presentation viewers. */
+html:has(.brain-app:is([data-brain-view="exam"], [data-brain-view="presentation"])) .brain-global-add { display: none; }
 .brain-courses-section .brain-graph-section > .brain-graph-list { padding-top: 64px; }
 
 /* Phones: two header rows — brand, Demo, Telegram, theme; then search and language.
@@ -241,4 +241,16 @@ html:has(.brain-app[data-brain-view="exam"]) .brain-global-add { display: none; 
   .brain-header-simple { column-gap: 6px; }
   .brain-header-simple .fibonacci-wordmark { font-size: 19px; }
   .brain-header-simple .brain-telegram-pill, .brain-header-simple .brain-header-tools > :last-child { width: 40px; min-width: 40px; height: 40px; min-height: 40px; padding: 0; justify-content: center; }
+}
+
+/* Course study tools keep the exam action primary and wrap without widening phones. */
+.brain-course-study-actions, .brain-course-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.brain-course-study-actions { justify-content: flex-end; }
+.brain-course-tools button { min-height: 44px; }
+.brain-course-tools.is-compact { gap: 0 12px; }
+.brain-course-tools.is-compact button { padding: 0; font-size: 12px; gap: 5px; }
+@media (max-width: 640px) {
+  .brain-course-study-actions { justify-content: flex-start; }
+  .brain-course-tools { gap: 6px; }
+  .brain-course-tools.is-compact { gap: 0 10px; }
 }

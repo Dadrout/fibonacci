@@ -1,5 +1,27 @@
 /** Brain exam copy: English key → [Russian, Kazakh]. Merged into localizedCopy by lib/copy.ts. */
 export const examCopy: Record<string, [string, string]> = {
+  // Course tools and source-backed slides
+  'Slides': ['Слайды', 'Слайдтар'],
+  'Presentation': ['Презентация', 'Презентация'],
+  'Present': ['Показать', 'Көрсету'],
+  '{n} slides': ['Слайдов: {n}', '{n} слайд'],
+  'Building your slides…': ['Создаём слайды…', 'Слайдтарыңыз жасалуда…'],
+  'Building your slides from your sources… usually about 10 seconds.': ['Создаём слайды по вашим материалам… обычно это занимает около 10 секунд.', 'Слайдтар өз материалдарыңыздан жасалуда… әдетте бұл шамамен 10 секунд алады.'],
+  'Add more course material first.': ['Сначала добавьте материалы курса.', 'Алдымен курсқа көбірек материал қосыңыз.'],
+  'Add a lecture photo, PDF, or link to this course, then try building slides again.': ['Добавьте в этот курс фото лекции, PDF или ссылку, затем попробуйте создать слайды снова.', 'Осы курсқа дәріс суретін, PDF немесе сілтеме қосып, слайдтарды қайта жасап көріңіз.'],
+  'This course is no longer available.': ['Этот курс больше недоступен.', 'Бұл курс енді қолжетімді емес.'],
+  'Return to your Brain and choose another course.': ['Вернитесь в свой Brain и выберите другой курс.', 'Brain бетіне оралып, басқа курсты таңдаңыз.'],
+  'Your slides could not be built.': ['Не удалось создать слайды.', 'Слайдтарды жасау мүмкін болмады.'],
+  'Fullscreen is unavailable. You can still use the slides and arrow keys here.': ['Полноэкранный режим недоступен. Слайды и клавиши со стрелками работают и здесь.', 'Толық экран режимі қолжетімсіз. Слайдтарды осы жерден де көрсетіп, бағыттау пернелерімен ауыстыра аласыз.'],
+  'Previous slide': ['Предыдущий слайд', 'Алдыңғы слайд'],
+  'Next slide': ['Следующий слайд', 'Келесі слайд'],
+  'Slide {n} of {total}': ['Слайд {n} из {total}', '{total} слайдтың {n}-слайды'],
+  'Exit fullscreen': ['Выйти из полноэкранного режима', 'Толық экран режимінен шығу'],
+  'Slide viewer': ['Просмотр слайдов', 'Слайдтарды қарау'],
+  'Use ← and → to change slides. In fullscreen, Space advances and Esc exits.': ['Меняйте слайды клавишами ← и →. В полноэкранном режиме пробел открывает следующий слайд, Esc — выход.', 'Слайдтарды ← және → пернелерімен ауыстырыңыз. Толық экранда бос орын пернесі келесі слайдты ашады, Esc режимнен шығарады.'],
+  'Speaker notes': ['Заметки докладчика', 'Баяндамашы жазбалары'],
+  'No speaker notes for this slide.': ['У этого слайда нет заметок докладчика.', 'Бұл слайдқа баяндамашы жазбалары қосылмаған.'],
+
   // Setup
   'Exam mode': ['Подготовка к экзамену', 'Емтиханға дайындық'],
   'Choose a course and how many days you have. Fibonacci builds a day-by-day plan, notes, flashcards, and a quiz — every line cited to your own material.': ['Выберите курс и сколько у вас дней. Fibonacci составит план по дням, конспект, карточки и тест — у каждой строки будет ссылка на ваши материалы.', 'Курсты және қанша күніңіз бар екенін таңдаңыз. Fibonacci күндер бойынша жоспар, конспект, карточкалар мен тест жасайды — әр жолы өз материалыңызға сілтеме жасайды.'],

@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {
   advanceStage, clampDays, coverageGaps, examReducer, failureFromError, formatPlanDate, initialExamState, optionStatus,
-  parseDays, planLanguageFor, quizScore, shouldStopPolling, stageProgress, uniqueSources,
+  newestReadyPlan, parseDays, planLanguageFor, quizScore, shouldStopPolling, stageProgress, uniqueSources,
 } from '../components/brain/brain-exam-logic.ts'
 import { examCopy } from '../lib/copy-brain/exam.ts'
 
@@ -156,4 +156,21 @@ test('demo flow: Econometrics plan streams to ready, every claim is cited, and t
   assert.equal(result.moment.source.anchor.kind, 'timestamp')
   assert.equal(result.moment.source.anchor.start_sec, 872)
   assert.ok(result.moment.reason.length > 0)
+})
+
+
+test('direct course tools reopen the newest ready plan without choosing unfinished plans or mutating history', () => {
+  const older = planOf({ id: 'older', status: 'ready', content, created_at: '2026-10-20T10:00:00Z' })
+  const newest = planOf({ id: 'newest', status: 'ready', content, created_at: '2026-10-21T10:00:00Z' })
+  const pending = planOf({ id: 'pending' })
+  const failed = planOf({ id: 'failed', status: 'failed' })
+  const incomplete = planOf({ id: 'incomplete', status: 'ready', content: null })
+  const history = [older, pending, newest, failed, incomplete]
+  assert.equal(newestReadyPlan(history), newest)
+  assert.deepEqual(history.map(plan => plan.id), ['older', 'pending', 'newest', 'failed', 'incomplete'])
+  assert.equal(newestReadyPlan([pending, failed, incomplete]), undefined)
+  assert.equal(newestReadyPlan([]), undefined)
+  const reopened = examReducer(initialExamState, { type: 'open', plan: newestReadyPlan(history) })
+  assert.equal(reopened.view.phase, 'ready')
+  assert.equal(reopened.view.plan.id, 'newest')
 })

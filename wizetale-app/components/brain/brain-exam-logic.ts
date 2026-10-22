@@ -274,6 +274,11 @@ export function sortPlansNewest(plans: StudyPlan[]): StudyPlan[] {
   return [...plans].sort((a, b) => b.created_at.localeCompare(a.created_at))
 }
 
+/** Direct study tools reuse the newest complete plan; incomplete/failed plans are skipped. */
+export function newestReadyPlan(plans: StudyPlan[]): StudyPlan | undefined {
+  return sortPlansNewest(plans).find(plan => plan.status === 'ready' && plan.content)
+}
+
 // ---------------------------------------------------------------------------
 // Quiz
 // ---------------------------------------------------------------------------

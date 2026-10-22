@@ -1,0 +1,47 @@
+/* One source-backed slide surface; all surrounding controls stay quiet. */
+.brain-presentation { min-width: 0; color: var(--studio-ink); }
+.brain-presentation-heading { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 22px; }
+.brain-presentation-heading > div { flex: 1 1 240px; min-width: 0; }
+.brain-presentation h2 { margin: 0; font: 500 clamp(25px, 3vw, 38px)/1.2 var(--font-heading), Literata, Georgia, serif; overflow-wrap: anywhere; }
+.brain-presentation-heading p { margin: 9px 0 0; color: var(--studio-muted); font-size: 14px; }
+.brain-slide-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; container-type: inline-size; overflow: hidden; border: 1px solid var(--studio-line); border-radius: 12px; background: var(--studio-surface); color: var(--studio-ink); }
+.brain-slide { position: absolute; inset: 0; overflow-y: auto; overflow-wrap: anywhere; padding: clamp(14px, 4.5cqw, 64px); animation: brain-slide-appear 120ms ease-out; }
+.brain-slide h3 { margin: 0 0 .7em; font: 500 clamp(18px, 3.8cqw, 54px)/1.18 var(--font-heading), Literata, Georgia, serif; }
+.brain-slide ul { margin: 0; padding-left: 1.25em; display: grid; gap: .7em; font-size: clamp(12px, 2.1cqw, 30px); line-height: 1.5; }
+.brain-slide li { padding-left: .15em; }
+.brain-slide .brain-exam-chips { vertical-align: middle; }
+.brain-slide .brain-citation-chip { font-size: clamp(11px, 1.2cqw, 16px); }
+.brain-slide-navigation { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px; margin: 16px 0 0; }
+.brain-slide-navigation > span { min-width: 62px; text-align: center; font-variant-numeric: tabular-nums; color: var(--studio-muted); }
+.brain-slide-navigation button:disabled { opacity: .4; cursor: default; }
+.brain-presentation-hint { margin: 12px 0; color: var(--studio-muted); font-size: 13px; line-height: 1.5; text-align: center; }
+.brain-slide-notes { margin-top: 24px; padding: 16px 0; border-block: 1px solid var(--studio-line); }
+.brain-slide-notes summary { min-height: 44px; align-content: center; width: fit-content; cursor: pointer; font-weight: 650; }
+.brain-slide-notes p { margin: 8px 0; max-width: 80ch; font-size: 15px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.brain-slide-list { margin-top: 16px; }
+.brain-slide-list ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 4px 16px; }
+.brain-slide-list button { display: flex; align-items: baseline; gap: 12px; width: 100%; min-height: 44px; padding: 10px; border: 0; border-radius: 6px; background: transparent; color: var(--studio-muted); font: 500 14px/1.4 var(--font-body), sans-serif; text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+.brain-slide-list button > span:first-child { font-variant-numeric: tabular-nums; min-width: 18px; }
+.brain-slide-list button[aria-current], .brain-slide-list button:hover { color: var(--studio-ink); background: color-mix(in srgb, var(--studio-ink) 6%, transparent); }
+.brain-slide-list button[aria-current] { font-weight: 700; }
+.brain-presentation :is(button, summary, .brain-slide-frame):focus-visible { outline: 3px solid var(--studio-accent); outline-offset: 3px; }
+.brain-presentation-recovery { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.brain-slide-skeleton { padding: 6%; display: flex; flex-direction: column; gap: 18px; }
+.brain-slide-skeleton i { display: block; height: 14px; width: 80%; border-radius: 4px; background: color-mix(in srgb, var(--studio-muted) 12%, transparent); }
+.brain-slide-skeleton i:first-child { width: 65%; height: 28px; margin-bottom: 12px; }
+.brain-slide-skeleton i:last-child { width: 55%; }
+.brain-slide-frame:fullscreen { width: 100vw; height: 100dvh; aspect-ratio: auto; border: 0; border-radius: 0; }
+.brain-slide-frame:fullscreen .brain-slide { padding: clamp(24px, 5vw, 100px); padding-bottom: 96px; }
+.brain-slide-frame:fullscreen .brain-slide h3 { font-size: clamp(24px, min(4vw, 7vh), 76px); }
+.brain-slide-frame:fullscreen .brain-slide ul { font-size: clamp(18px, min(2.5vw, 4vh), 42px); }
+.brain-slide-navigation.in-frame { position: absolute; z-index: 1; bottom: 16px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 20px); margin: 0; padding: 6px; border-radius: 8px; background: var(--studio-surface); }
+.brain-presentation.is-presentation .brain-presentation-heading p, .brain-presentation.is-presentation .brain-slide-notes p { font-size: 18px; }
+.brain-presentation.is-presentation .brain-slide-list button { min-height: 48px; font-size: 17px; }
+@keyframes brain-slide-appear { from { opacity: .4; } to { opacity: 1; } }
+@media (max-width: 480px) {
+  .brain-presentation-heading { gap: 12px; }
+  .brain-slide-frame { border-radius: 8px; }
+  .brain-slide-navigation { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .brain-slide { animation: none; } }
+.brain-presentation [tabindex="-1"]:focus { outline: none; }

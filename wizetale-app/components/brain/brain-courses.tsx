@@ -6,7 +6,7 @@
  * inline gap alerts, one-tap re-file (via BrainItemCard), and the "Exam in 3 days" entry.
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowLeft, ChevronRight, FilePlus2, GraduationCap, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, ChevronRight, FilePlus2, GraduationCap, Layers, ListChecks, Presentation, TriangleAlert } from 'lucide-react'
 import { BrainItemCard } from '@/components/brain/brain-item-card'
 import { useCopy } from '@/hooks/use-copy'
 import './brain-courses.css'
@@ -23,9 +23,11 @@ function openPicker() {
 }
 
 /** Course cards for the Brain home: color, counts, missing weeks, and the two things a student does next. */
-export function CourseGrid({ graph, gaps, onOpen, onExam }: {
+type StudyToolActions = { onFlashcards: (courseId: string) => void; onQuiz: (courseId: string) => void; onPresentation: (courseId: string) => void }
+
+export function CourseGrid({ graph, gaps, onOpen, onExam, onFlashcards, onQuiz, onPresentation }: {
   graph: BrainGraph | null; gaps: GapAlert[]; onOpen: (courseId: string) => void; onExam: (courseId: string) => void
-}) {
+} & StudyToolActions) {
   const c = useCopy()
   if (!graph) {
     return <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading courses')}>
@@ -53,6 +55,7 @@ export function CourseGrid({ graph, gaps, onOpen, onExam }: {
             <button type="button" className="brain-primary-button" onClick={() => onExam(course.id)}><GraduationCap size={17} aria-hidden="true" />{c('Exam in 3 days')}</button>
             <button type="button" className="brain-secondary-button" onClick={() => onOpen(course.id)}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
           </span>
+          <StudyTools courseId={course.id} compact onFlashcards={onFlashcards} onQuiz={onQuiz} onPresentation={onPresentation} />
         </article>
       </li>
     })}
@@ -60,10 +63,10 @@ export function CourseGrid({ graph, gaps, onOpen, onExam }: {
 }
 
 /** Full course page: topics in order with their sources, inline gaps, and the exam entry. */
-export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onStartExam }: {
+export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onStartExam, onFlashcards, onQuiz, onPresentation }: {
   api: BrainApi; catalog?: { courses: BrainCourse[]; topics: BrainTopic[] } | null; courseId: string; version: number
   onBack: () => void; onStartExam: (courseId: string) => void
-}) {
+} & StudyToolActions) {
   const c = useCopy()
   const [detail, setDetail] = useState<CourseDetail | null>(null)
   const [error, setError] = useState(false)
@@ -164,9 +167,12 @@ export function CourseDetailView({ api, catalog = null, courseId, version, onBac
           <span><b>{course.concept_count}</b> {c('concepts')}</span>
         </p>
       </div>
-      <button type="button" className="brain-primary-button" onClick={() => onStartExam(course.id)}>
-        <GraduationCap size={18} aria-hidden="true" />{c('Exam in 3 days')}
-      </button>
+      <div className="brain-course-study-actions">
+        <button type="button" className="brain-primary-button" onClick={() => onStartExam(course.id)}>
+          <GraduationCap size={18} aria-hidden="true" />{c('Exam in 3 days')}
+        </button>
+        <StudyTools courseId={course.id} onFlashcards={onFlashcards} onQuiz={onQuiz} onPresentation={onPresentation} />
+      </div>
     </header>
 
     <ol className="brain-topic-list">
@@ -207,3 +213,12 @@ function GapRow({ gap }: { gap: GapAlert }) {
   </aside>
 }
 
+
+function StudyTools({ courseId, compact = false, onFlashcards, onQuiz, onPresentation }: StudyToolActions & { courseId: string; compact?: boolean }) {
+  const c = useCopy()
+  return <div className={`brain-course-tools${compact ? ' is-compact' : ''}`}>
+    <button type="button" className={compact ? 'brain-text-button' : 'brain-secondary-button'} onClick={() => onFlashcards(courseId)}><Layers size={16} aria-hidden="true" />{c('Flashcards')}</button>
+    <button type="button" className={compact ? 'brain-text-button' : 'brain-secondary-button'} onClick={() => onQuiz(courseId)}><ListChecks size={16} aria-hidden="true" />{c('Quiz')}</button>
+    <button type="button" className={compact ? 'brain-text-button' : 'brain-secondary-button'} onClick={() => onPresentation(courseId)}><Presentation size={16} aria-hidden="true" />{c(compact ? 'Slides' : 'Presentation')}</button>
+  </div>
+}

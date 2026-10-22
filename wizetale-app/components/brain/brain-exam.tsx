@@ -18,7 +18,7 @@ import { BrainExamPlan } from './brain-exam-plan'
 import {
   DEFAULT_DAYS, FAILURE_COPY, MAX_DAYS, MIN_DAYS, PLAN_LANGUAGES, PLAN_STAGES, STAGE_LABEL,
   activeStageIndex, clampDays, examDateFor, examReducer, failureFromError, formatCreatedAt, formatPlanDate,
-  initialExamState, newRequestId, parseDays, planLanguageFor, shouldStopPolling, sortPlansNewest, stageProgress,
+  initialExamState, newestReadyPlan, newRequestId, parseDays, planLanguageFor, shouldStopPolling, sortPlansNewest, stageProgress,
   type ExamView, type PlanParams, type PlanStage,
 } from './brain-exam-logic'
 
@@ -29,6 +29,7 @@ export type BrainExamProps = {
   courseId: string | null
   presentation: boolean
   /** "Exam in 3 days" on a course card: build the 3-day plan right away (one tap). */
+  initialSection?: 'cards' | 'quiz'
   autoStart?: boolean
 }
 
@@ -49,7 +50,8 @@ function openPicker() {
   window.dispatchEvent(new Event('brain:open-picker'))
 }
 
-export function BrainExam({ api, graph, courseId, presentation, autoStart = false }: BrainExamProps) {
+export function BrainExam({ api, graph, courseId, presentation, autoStart = false, initialSection }: BrainExamProps) {
+  const c = useCopy()
   const [state, dispatch] = useReducer(examReducer, initialExamState)
   const { view } = state
   const courses = useCourses(api, graph)
@@ -112,11 +114,27 @@ export function BrainExam({ api, graph, courseId, presentation, autoStart = fals
   // One tap from a course card: start the 3-day plan in the UI language immediately.
   const { language } = useLanguage()
   const autoStarted = useRef(false)
+  const [lookup, setLookup] = useState<'loading' | 'error' | 'done'>(initialSection && autoStart && courseId ? 'loading' : 'done')
+  const [lookupAttempt, setLookupAttempt] = useState(0)
   useEffect(() => {
     if (!autoStart || !courseId || autoStarted.current) return
-    autoStarted.current = true
-    void create({ courseId, days: 3, language: planLanguageFor(language) }, newRequestId())
-  }, [autoStart, courseId, create, language])
+    if (!initialSection) {
+      autoStarted.current = true
+      void create({ courseId, days: 3, language: planLanguageFor(language) }, newRequestId())
+      return
+    }
+    let alive = true
+    setLookup('loading')
+    api.coursePlans(courseId).then(plans => {
+      if (!alive) return
+      autoStarted.current = true
+      const ready = newestReadyPlan(plans)
+      setLookup('done')
+      if (ready) dispatch({ type: 'open', plan: ready })
+      else void create({ courseId, days: 3, language: planLanguageFor(language) }, newRequestId())
+    }, () => { if (alive) setLookup('error') })
+    return () => { alive = false }
+  }, [api, autoStart, courseId, create, initialSection, language, lookupAttempt])
 
   const retry = useCallback((failed: Extract<ExamView, { phase: 'failed' }>) => {
     if (failed.retry === 'poll' && failed.planId) dispatch({ type: 'resume', planId: failed.planId })
@@ -127,10 +145,12 @@ export function BrainExam({ api, graph, courseId, presentation, autoStart = fals
   const courseTitle = (id: string | null | undefined) => courses.list?.find(course => course.id === id)?.title ?? ''
 
   return <section className={`brain-exam${presentation ? ' is-presentation' : ''}`} aria-labelledby="brain-exam-title">
-    {view.phase === 'setup' ? <ExamSetup api={api} courses={courses} initialCourseId={courseId} onStart={request => void create(request, newRequestId())} onOpen={plan => dispatch({ type: 'open', plan })} />
+    {lookup === 'loading' ? <ExamProgress title="" stage={null} restoring />
+      : lookup === 'error' ? <div className="brain-load-error" role="alert"><h2 id="brain-exam-title">{c('Earlier plans could not load.')}</h2><button type="button" className="brain-secondary-button" onClick={() => setLookupAttempt(value => value + 1)}>{c('Try again')}</button></div>
+      : view.phase === 'setup' ? <ExamSetup api={api} courses={courses} initialCourseId={courseId} onStart={request => void create(request, newRequestId())} onOpen={plan => dispatch({ type: 'open', plan })} />
       : view.phase === 'restoring' ? <ExamProgress title="" stage={null} restoring />
       : view.phase === 'generating' ? <ExamProgress title={courseTitle(view.request.courseId)} stage={view.stage} />
-      : view.phase === 'ready' ? <BrainExamPlan api={api} plan={view.plan} course={courses.list?.find(course => course.id === view.plan.course_id) ?? null} presentation={presentation} onNewPlan={reset} />
+      : view.phase === 'ready' ? <BrainExamPlan api={api} plan={view.plan} course={courses.list?.find(course => course.id === view.plan.course_id) ?? null} presentation={presentation} initialSection={initialSection} onNewPlan={reset} />
       : <ExamFailure view={view} courseTitle={courseTitle(view.request?.courseId)} onRetry={() => retry(view)} onBack={reset} />}
   </section>
 }

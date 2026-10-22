@@ -1,0 +1,468 @@
+{
+ "title": "Econometrics Exam Preparation Plan",
+ "days": [
+  {
+   "day": 1,
+   "focus": "Simple linear regression, OLS assumptions, and multiple regression",
+   "tasks": [
+    {
+     "kind": "read",
+     "title": "Review simple linear regression and OLS mechanics",
+     "minutes": 25,
+     "topic_id": "00000000-0000-4000-8000-000000000201",
+     "passage_ids": [
+      "P1",
+      "P2",
+      "P5"
+     ]
+    },
+    {
+     "kind": "watch",
+     "title": "Watch regression slope explanation",
+     "minutes": 15,
+     "topic_id": "00000000-0000-4000-8000-000000000201",
+     "passage_ids": [
+      "P3",
+      "P4"
+     ]
+    },
+    {
+     "kind": "read",
+     "title": "Study Gauss-Markov assumptions and BLUE",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000202",
+     "passage_ids": [
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+     ]
+    },
+    {
+     "kind": "read",
+     "title": "Read on multiple regression and omitted variable bias",
+     "minutes": 30,
+     "topic_id": "00000000-0000-4000-8000-000000000203",
+     "passage_ids": [
+      "P10",
+      "P11",
+      "P12"
+     ]
+    }
+   ]
+  },
+  {
+   "day": 2,
+   "focus": "Hypothesis testing, dummy variables, interactions, and autocorrelation",
+   "tasks": [
+    {
+     "kind": "watch",
+     "title": "Watch t tests of parameters",
+     "minutes": 15,
+     "topic_id": "00000000-0000-4000-8000-000000000204",
+     "passage_ids": [
+      "P14"
+     ]
+    },
+    {
+     "kind": "watch",
+     "title": "Listen to F-test intuition",
+     "minutes": 10,
+     "topic_id": "00000000-0000-4000-8000-000000000204",
+     "passage_ids": [
+      "P13",
+      "P15"
+     ]
+    },
+    {
+     "kind": "read",
+     "title": "Study dummy variables, the dummy variable trap, and interactions",
+     "minutes": 25,
+     "topic_id": "00000000-0000-4000-8000-000000000205",
+     "passage_ids": [
+      "P16",
+      "P17"
+     ]
+    },
+    {
+     "kind": "watch",
+     "title": "Watch autocorrelation introduction",
+     "minutes": 20,
+     "topic_id": "00000000-0000-4000-8000-000000000208",
+     "passage_ids": [
+      "P18",
+      "P19",
+      "P20"
+     ]
+    }
+   ]
+  },
+  {
+   "day": 3,
+   "focus": "Review, flashcards, and final quiz",
+   "tasks": [
+    {
+     "kind": "review",
+     "title": "Review all course notes",
+     "minutes": 30,
+     "topic_id": null,
+     "passage_ids": [
+      "P1",
+      "P7",
+      "P10",
+      "P16",
+      "P19"
+     ]
+    },
+    {
+     "kind": "flashcards",
+     "title": "Practice key definitions and formulas",
+     "minutes": 20,
+     "topic_id": null,
+     "passage_ids": [
+      "P2",
+      "P7",
+      "P10",
+      "P17",
+      "P20"
+     ]
+    },
+    {
+     "kind": "quiz",
+     "title": "Take comprehensive exam quiz",
+     "minutes": 25,
+     "topic_id": null,
+     "passage_ids": [
+      "P2",
+      "P7",
+      "P11",
+      "P14",
+      "P17",
+      "P19"
+     ]
+    }
+   ]
+  }
+ ],
+ "notes": [
+  {
+   "heading": "Simple Linear Regression and OLS",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "bullets": [
+    {
+     "text": "OLS estimates minimize the sum of squared residuals: Σ(yᵢ − b₀ − b₁xᵢ)².",
+     "passage_ids": [
+      "P1"
+     ]
+    },
+    {
+     "text": "The slope estimate is given by b₁ = Cov(x, y) / Var(x) or via minimization: Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)².",
+     "passage_ids": [
+      "P2",
+      "P5"
+     ]
+    },
+    {
+     "text": "The slope measures how much y changes on average when x increases by one unit, while residuals represent the difference between actual and fitted values.",
+     "passage_ids": [
+      "P3",
+      "P4"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Gauss-Markoff Assumptions and BLUE",
+   "topic_id": "00000000-0000-4000-8000-000000000202",
+   "bullets": [
+    {
+     "text": "The first Gauss-Markov assumption is that the population process is linear in parameters.",
+     "passage_ids": [
+      "P6"
+     ]
+    },
+    {
+     "text": "MLR.5 states homoskedasticity: Var(u | x₁, …, xₖ) = σ², meaning the error variance does not depend on regressors.",
+     "passage_ids": [
+      "P7"
+     ]
+    },
+    {
+     "text": "Under assumptions MLR.1 to MLR.5, OLS is BLUE (best linear unbiased estimator). Without homoskedasticity, OLS remains unbiased but is no longer the most efficient estimator.",
+     "passage_ids": [
+      "P8",
+      "P9"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Multiple Regression and Omitted Variable Bias",
+   "topic_id": "00000000-0000-4000-8000-000000000203",
+   "bullets": [
+    {
+     "text": "In multiple regression, β₁ measures the ceteris paribus effect of x₁ on y, holding x₂ fixed.",
+     "passage_ids": [
+      "P10"
+     ]
+    },
+    {
+     "text": "Omitting a relevant variable that is correlated with x₁ introduces bias into b₁.",
+     "passage_ids": [
+      "P11"
+     ]
+    },
+    {
+     "text": "The omitted variable bias formula is Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ is the slope from regressing the omitted variable x₂ on x₁.",
+     "passage_ids": [
+      "P12"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Hypothesis Testing",
+   "topic_id": "00000000-0000-4000-8000-000000000204",
+   "bullets": [
+    {
+     "text": "The t-test statistic is the parameter estimate divided by its standard error, compared against a t distribution with n − 2 degrees of freedom.",
+     "passage_ids": [
+      "P14"
+     ]
+    },
+    {
+     "text": "An F test evaluates multiple restrictions simultaneously, such as testing H₀: β₂ = β₃ = 0 using restricted and unrestricted R² values.",
+     "passage_ids": [
+      "P13"
+     ]
+    },
+    {
+     "text": "The intuition behind the F test is asking how much worse the model fit gets if certain coefficients are forced to zero.",
+     "passage_ids": [
+      "P15"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Dummy Variables and Interactions",
+   "topic_id": "00000000-0000-4000-8000-000000000205",
+   "bullets": [
+    {
+     "text": "Interaction terms allow the effect of one variable on the outcome to depend on the level of another variable.",
+     "passage_ids": [
+      "P16"
+     ]
+    },
+    {
+     "text": "When including an intercept, you must include g − 1 dummy variables for g groups to avoid the dummy variable trap of perfect collinearity.",
+     "passage_ids": [
+      "P17"
+     ]
+    }
+   ]
+  },
+  {
+   "heading": "Autocorrelation",
+   "topic_id": "00000000-0000-4000-8000-000000000208",
+   "bullets": [
+    {
+     "text": "Autocorrelation occurs when the error term in the current period is correlated with the error term in a previous period.",
+     "passage_ids": [
+      "P18"
+     ]
+    },
+    {
+     "text": "Under AR(1) errors defined as uₜ = ρuₜ₋₁ + eₜ, OLS remains unbiased, but the standard errors are invalid.",
+     "passage_ids": [
+      "P19"
+     ]
+    },
+    {
+     "text": "The Durbin-Watson statistic approximates d ≈ 2(1 − ρ̂), where values near 2 suggest an absence of first-order autocorrelation.",
+     "passage_ids": [
+      "P20"
+     ]
+    }
+   ]
+  }
+ ],
+ "flashcards": [
+  {
+   "front": "What does the OLS method minimize?",
+   "back": "The sum of squared residuals Σ(yᵢ − b₀ − b₁xᵢ)².",
+   "passage_ids": [
+    "P1"
+   ]
+  },
+  {
+   "front": "How is the OLS slope estimator expressed in terms of covariance and variance?",
+   "back": "b₁ = Cov(x, y) / Var(x).",
+   "passage_ids": [
+    "P2"
+   ]
+  },
+  {
+   "front": "What does homoskedasticity (MLR.5) mean?",
+   "back": "Var(u | x₁, …, xₖ) = σ², meaning the error variance does not depend on the regressors.",
+   "passage_ids": [
+    "P7"
+   ]
+  },
+  {
+   "front": "What conditions are required for OLS to be BLUE?",
+   "back": "Assumptions MLR.1 through MLR.5 (including linearity, random sampling, zero conditional mean, no perfect collinearity, and homoskedasticity).",
+   "passage_ids": [
+    "P8",
+    "P9"
+   ]
+  },
+  {
+   "front": "What is the formula for omitted variable bias when estimating b̃₁?",
+   "back": "Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ is the regression slope of the omitted variable on the included regressor.",
+   "passage_ids": [
+    "P12"
+   ]
+  },
+  {
+   "front": "How many dummy variables should be included for g groups in a regression with an intercept?",
+   "back": "g − 1 dummy variables, to avoid perfect collinearity (the dummy variable trap).",
+   "passage_ids": [
+    "P17"
+   ]
+  },
+  {
+   "front": "What happens to OLS when errors follow an AR(1) autocorrelation process?",
+   "back": "OLS remains unbiased, but the standard errors are invalid.",
+   "passage_ids": [
+    "P19"
+   ]
+  },
+  {
+   "front": "What value of the Durbin-Watson statistic indicates no first-order autocorrelation?",
+   "back": "A value around 2 (specifically d ≈ 2(1 − ρ̂)).",
+   "passage_ids": [
+    "P20"
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "prompt": "What does the OLS slope coefficient b₁ represent in a simple linear regression?",
+   "options": [
+    "The exact value of y when x is zero",
+    "How much y changes on average when x goes up by one unit",
+    "The correlation coefficient between the error and the dependent variable",
+    "The variance of the residuals divided by the variance of x"
+   ],
+   "correct_index": 1,
+   "explanation": "The slope tells us how much y changes on average when x goes up by one unit.",
+   "passage_ids": [
+    "P3"
+   ],
+   "explain_passage": "P3",
+   "explain_reason": "In the video at 3:34–4:22, the lecturer explains that the slope tells us how much y changes on average when x goes up by one unit.",
+   "concepts": [
+    "slope interpretation"
+   ]
+  },
+  {
+   "prompt": "What is the consequence for OLS if the homoskedasticity assumption (MLR.5) fails while other assumptions hold?",
+   "options": [
+    "OLS becomes biased",
+    "OLS estimates become non-linear",
+    "OLS is still unbiased but is no longer BLUE",
+    "OLS slope estimates become zero"
+   ],
+   "correct_index": 2,
+   "explanation": "Without homoskedasticity OLS is still unbiased, but it is no longer the most efficient estimator (BLUE).",
+   "passage_ids": [
+    "P9"
+   ],
+   "explain_passage": "P9",
+   "explain_reason": "Your notes state that without homoskedasticity OLS is still unbiased but not the most efficient.",
+   "concepts": [
+    "Gauss-Markov assumptions",
+    "homoskedasticity"
+   ]
+  },
+  {
+   "prompt": "What effect does omitting a relevant variable that is correlated with x₁ have on the OLS estimator b₁?",
+   "options": [
+    "It makes b₁ biased",
+    "It reduces the variance of b₁ to zero",
+    "It has no effect on the estimate",
+    "It makes the regression sum of squares equal to zero"
+   ],
+   "correct_index": 0,
+   "explanation": "Omitting a relevant variable that is correlated with x₁ makes b₁ biased.",
+   "passage_ids": [
+    "P11"
+   ],
+   "explain_passage": "P11",
+   "explain_reason": "On page 15, the slide explains that omitting a relevant variable correlated with x₁ creates bias in b₁.",
+   "concepts": [
+    "omitted variable bias"
+   ]
+  },
+  {
+   "prompt": "How is a t test statistic calculated for a regression parameter?",
+   "options": [
+    "By multiplying the estimate by its standard error",
+    "By dividing the estimate by its standard error",
+    "By subtracting the standard error from the estimate",
+    "By squaring the estimate and dividing by the R-squared"
+   ],
+   "correct_index": 1,
+   "explanation": "The test statistic is the estimate divided by its standard error.",
+   "passage_ids": [
+    "P14"
+   ],
+   "explain_passage": "P14",
+   "explain_reason": "The video at 5:02–6:11 shows that the test statistic is the estimate divided by its standard error.",
+   "concepts": [
+    "t tests"
+   ]
+  },
+  {
+   "prompt": "Why must you include g − 1 dummy variables for g groups when an intercept is included?",
+   "options": [
+    "To ensure the residuals sum to one",
+    "To maximize the degrees of freedom",
+    "To avoid perfect collinearity known as the dummy variable trap",
+    "To make the error variance homoskedastic"
+   ],
+   "correct_index": 2,
+   "explanation": "Including all g dummy variables alongside an intercept creates perfect collinearity, known as the dummy variable trap.",
+   "passage_ids": [
+    "P17"
+   ],
+   "explain_passage": "P17",
+   "explain_reason": "Slide 6 shows that including all g dummies with an intercept creates perfect collinearity.",
+   "concepts": [
+    "dummy variables",
+    "multicollinearity"
+   ]
+  },
+  {
+   "prompt": "When errors follow an AR(1) process (uₜ = ρuₜ₋₁ + eₜ), what happens to OLS estimators and their inference?",
+   "options": [
+    "OLS becomes completely invalid and biased",
+    "OLS remains unbiased, but the usual standard errors are invalid",
+    "OLS standard errors become smaller and more reliable",
+    "The Durbin-Watson statistic becomes exactly zero"
+   ],
+   "correct_index": 1,
+   "explanation": "With AR(1) errors, OLS remains unbiased but the usual standard errors are invalid.",
+   "passage_ids": [
+    "P19"
+   ],
+   "explain_passage": "P19",
+   "explain_reason": "Page 7 notes that with AR(1) errors, OLS remains unbiased but standard errors are invalid.",
+   "concepts": [
+    "autocorrelation",
+    "standard errors"
+   ]
+  }
+ ]
+}

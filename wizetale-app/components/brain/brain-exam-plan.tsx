@@ -24,13 +24,13 @@ const TASK_ICON: Record<PlanTaskKind, LucideIcon> = {
   read: BookOpen, watch: CirclePlay, review: RotateCcw, flashcards: Layers, quiz: ListChecks, practice: PencilLine,
 }
 
-export function BrainExamPlan({ api, plan, course, presentation, onNewPlan }: {
-  api: BrainApi; plan: StudyPlan; course: BrainCourse | null; presentation: boolean; onNewPlan: () => void
+export function BrainExamPlan({ api, plan, course, presentation, onNewPlan, initialSection = 'days' }: {
+  api: BrainApi; plan: StudyPlan; course: BrainCourse | null; presentation: boolean; onNewPlan: () => void; initialSection?: 'cards' | 'quiz' | 'days'
 }) {
   const c = useCopy()
   const { language } = useLanguage()
   const content = plan.content as StudyPlanContent
-  const [section, setSection] = useState<Section>('days')
+  const [section, setSection] = useState<Section>(initialSection)
   const [viewing, setViewing] = useState<{ source: SourceRef; reason?: string } | null>(null)
   const [answers, setAnswers] = useState<Record<string, AnswerState>>({})
   const [questionIndex, setQuestionIndex] = useState(0)
