@@ -5,16 +5,21 @@ import logging
 from typing import Optional
 
 from app.services.brain.telegram.client import TelegramClient, TelegramError, telegram_client
-from app.services.brain.telegram.texts import t
+from app.services.brain.telegram.texts import TEXTS, t
 
 logger = logging.getLogger(__name__)
 
 
 def _target(item: dict) -> Optional[tuple[int, Optional[int], str]]:
     meta = (item.get("metadata") or {}).get("telegram") or {}
-    if not meta.get("chat_id"):
+    try:
+        chat = int(meta.get("chat_id") or 0)
+    except (TypeError, ValueError):
         return None
-    return int(meta["chat_id"]), meta.get("message_id"), meta.get("language") or "en"
+    if not chat:
+        return None
+    language = meta.get("language") if meta.get("language") in TEXTS else "en"
+    return chat, meta.get("message_id"), language
 
 
 def notify_filed(item: dict, course_title: str, topic_title: Optional[str], cross_link: Optional[str] = None,
@@ -23,7 +28,7 @@ def notify_filed(item: dict, course_title: str, topic_title: Optional[str], cros
     if not target or not client.configured:
         return
     chat, message_id, language = target
-    where = f"{course_title} → {topic_title}" if topic_title else course_title
+    where = " → ".join(part.strip() for part in (course_title, topic_title) if part and part.strip()) or "Brain"
     text = t(language, "filed", where=where)
     if cross_link:
         text += "\n" + t(language, "new_link", link=cross_link)
@@ -38,7 +43,8 @@ def notify_failed(item: dict, failure_code: str, client: TelegramClient = telegr
     if not target or not client.configured:
         return
     chat, message_id, language = target
+    key = f"reason.{failure_code}" if f"reason.{failure_code}" in TEXTS["en"] else "reason.internal"
     try:
-        client.send(chat, t(language, "failed", reason=t(language, f"reason.{failure_code}")), message_id)
-    except (TelegramError, KeyError) as error:
+        client.send(chat, t(language, "failed", reason=t(language, key)), message_id)
+    except TelegramError as error:
         logger.warning("brain_telegram notify_failed_failed error_type=%s", type(error).__name__)
