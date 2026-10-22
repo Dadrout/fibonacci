@@ -147,3 +147,8 @@
   .brain-telegram-code, .is-presentation .brain-telegram-code { font-size: clamp(28px, 11vw, 42px); font-size: min(42px, 15cqi); }
   .brain-telegram-card { padding: 16px; }
 }
+
+/* Floating Add button: hidden while the home capture bar (same action) is on screen. */
+.brain-global-add { transition: opacity .18s ease, transform .18s ease, visibility 0s linear 0s; }
+html[data-brain-capture-visible] .brain-global-add { opacity: 0; transform: translateY(10px); visibility: hidden; pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
+@media (prefers-reduced-motion: reduce) { .brain-global-add, html[data-brain-capture-visible] .brain-global-add { transition: none; } }

@@ -12,6 +12,7 @@ import { useBrainEvents } from '@/hooks/use-brain-api'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import './brain-courses.css'
+import { formatBrainDate } from './brain-date'
 import type { BrainApi } from '@/lib/brain-api'
 import type { TelegramLinkCode, TelegramStatus } from '@/lib/brain-types'
 
@@ -120,7 +121,7 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
         <CheckCircle2 size={28} aria-hidden="true" />
         <div>
           <strong>{c('Telegram is connected.')}</strong>
-          <p>{status.telegram_username ? `@${status.telegram_username}` : c('Your Telegram account')}{status.linked_at ? ` · ${new Date(status.linked_at).toLocaleDateString(language)}` : ''}</p>
+          <p>{status.telegram_username ? `@${status.telegram_username}` : c('Your Telegram account')}{status.linked_at ? ` · ${formatBrainDate(new Date(status.linked_at), language)}` : ''}</p>
           <p>{c('Forward anything to the bot and it appears in your inbox.')}{status.bot_username && <> <a href={`https://t.me/${status.bot_username}`} target="_blank" rel="noreferrer">@{status.bot_username}<ExternalLink size={14} aria-hidden="true" /></a></>}</p>
         </div>
         <button type="button" className="brain-secondary-button" disabled={busy} onClick={() => void unlink()}><Unlink size={16} aria-hidden="true" />{c('Disconnect')}</button>

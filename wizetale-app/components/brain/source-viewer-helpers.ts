@@ -1,4 +1,5 @@
 import type { SourceRef } from '@/lib/brain-types'
+import { formatBrainDate } from './brain-date.ts'
 
 export function safeSourceUrl(value: string | null): string | null {
   if (!value) return null
@@ -16,7 +17,7 @@ export function sourceOpenUrl(source: SourceRef): string | null {
 export function sourceLabel(source: SourceRef, c: (text: string) => string, locale: string, windowLabel: string): string {
   const anchor = source.anchor
   const date = new Date(source.captured_at)
-  const dateLabel = Number.isNaN(date.valueOf()) ? c('Unknown date') : new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric' }).format(date)
+  const dateLabel = Number.isNaN(date.valueOf()) ? c('Unknown date') : formatBrainDate(date, locale, { month: 'short', day: 'numeric' })
   switch (anchor.kind) {
     case 'timestamp': return c(source.youtube_id || source.item_kind === 'youtube' ? '{window} · video' : '{window} · audio').replace('{window}', windowLabel)
     case 'slide': return (anchor.slide === null ? c('Photo from {date}') : c('Slide {slide} · photo from {date}').replace('{slide}', String(anchor.slide))).replace('{date}', dateLabel)

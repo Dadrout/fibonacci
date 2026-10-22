@@ -1,8 +1,9 @@
 /*
- * Exam mode state and formatting (board rows A5, A6). Pure: no runtime imports, so
- * scripts/brain-ui-exam.test.mjs can load it with `node --experimental-strip-types`.
+ * Exam mode state and formatting (board rows A5, A6). Pure (the only runtime import is the
+ * pure date helper), so scripts/brain-ui-exam.test.mjs can load it with `node --experimental-strip-types`.
  */
 import type { BrainEvent, BrainLanguage, GapAlert, PlanDay, PlanTaskKind, QuizAnswerResult, QuizOptionId, SequenceKind, SourceRef, StudyPlan } from '@/lib/brain-types'
+import { formatBrainDate } from './brain-date.ts'
 
 export type UiLanguage = 'en' | 'ru' | 'kk'
 
@@ -47,13 +48,13 @@ export function formatPlanDate(isoDate: string | null, locale: string, weekday =
   if (!isoDate) return ''
   const date = new Date(`${isoDate.slice(0, 10)}T00:00:00Z`)
   if (Number.isNaN(date.valueOf())) return ''
-  return new Intl.DateTimeFormat(locale, { ...(weekday ? { weekday: 'short' } : {}), month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date)
+  return formatBrainDate(date, locale, { ...(weekday ? { weekday: 'short' } : {}), month: 'short', day: 'numeric', timeZone: 'UTC' })
 }
 
 export function formatCreatedAt(isoDateTime: string, locale: string): string {
   const date = new Date(isoDateTime)
   if (Number.isNaN(date.valueOf())) return ''
-  return new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(date)
+  return formatBrainDate(date, locale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
 }
 
 export function newRequestId(): string {

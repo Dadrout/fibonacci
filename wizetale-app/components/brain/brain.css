@@ -303,7 +303,7 @@
   .brain-presentation-toggle { width: 44px; padding: 0; }
   .brain-presentation-toggle > span { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
   .brain-header-tools .language-picker { gap: 3px; }
-  .brain-header-tools .language-picker select { max-width: 65px; font-size: 12px; }
+  .brain-header-tools .language-picker select { max-width: 84px; font-size: 12px; }
   .brain-content { width: calc(100% - 28px); }
   .brain-page-heading { padding: 28px 0 18px; }
   .brain-page-heading h1 { font-size: 40px; }

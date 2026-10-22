@@ -6,6 +6,7 @@ import { AudioLines, Check, ChevronDown, FileText, Image as ImageIcon, Link2, Ro
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import { courseColorSlot } from './brain-ui-state'
+import { formatBrainDate } from './brain-date'
 import type { BrainApi } from '@/lib/brain-api'
 import type { BrainItem, ItemStatus } from '@/lib/brain-types'
 
@@ -105,7 +106,7 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, o
         {imageUrl ? <Image src={imageUrl} alt={`${c('Preview of source')}: ${item.title}`} fill unoptimized sizes="(max-width: 700px) 68px, 88px" className="brain-item-image" /> : kindIcon(item.kind)}
       </div>
       <div className="brain-item-content">
-        <div className="brain-item-overline"><span className="brain-kind">{kindIcon(item.kind)}{c(kindLabel(item.kind))}</span><time dateTime={item.captured_at}>{new Intl.DateTimeFormat(language, { month: 'short', day: 'numeric' }).format(new Date(item.captured_at))}</time></div>
+        <div className="brain-item-overline"><span className="brain-kind">{kindIcon(item.kind)}{c(kindLabel(item.kind))}</span><time dateTime={item.captured_at}>{formatBrainDate(new Date(item.captured_at), language, { month: 'short', day: 'numeric' })}</time></div>
         <h2>{item.status === 'filed' && item.source_url ? <a href={item.source_url} target="_blank" rel="noopener noreferrer" aria-label={`${item.title} · ${c('Open original source')}`}>{item.title}<span aria-hidden="true"> ↗</span></a> : item.title}</h2>
         {item.status !== 'filed' && item.summary && <p className="brain-item-summary">{item.summary}</p>}
         {item.status !== 'filed' && item.source_url && <a className="brain-source-link" href={item.source_url} target="_blank" rel="noopener noreferrer">{c('Open original source')}<span aria-hidden="true">↗</span></a>}

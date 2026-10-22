@@ -68,6 +68,18 @@ export function BrainWorkspace() {
   const [presentation, setPresentation] = useState(false)
   const [presentationReady, setPresentationReady] = useState(false)
 
+  // The floating Add button repeats the capture bar's "Add a file"; hide it while the bar is on screen.
+  const watchCaptureBar = useCallback((node: HTMLElement | null) => {
+    if (!node || typeof IntersectionObserver === 'undefined') return
+    const root = document.documentElement
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) root.dataset.brainCaptureVisible = '1'
+      else delete root.dataset.brainCaptureVisible
+    })
+    observer.observe(node)
+    return () => { observer.disconnect(); delete root.dataset.brainCaptureVisible }
+  }, [])
+
   const loadOverview = useCallback(async (refreshGraph = true) => {
     const request = ++snapshotRequest.current
     setLoadingOverview(true)
@@ -236,7 +248,7 @@ export function BrainWorkspace() {
           </p>}
         </section>
 
-        <section className="brain-capture-bar" aria-label={c('Add to your Brain')}>
+        <section className="brain-capture-bar" ref={watchCaptureBar} aria-label={c('Add to your Brain')}>
           <UploadCloud size={30} aria-hidden="true" />
           <div>
             <strong>{c('Drop anything here')}</strong>
