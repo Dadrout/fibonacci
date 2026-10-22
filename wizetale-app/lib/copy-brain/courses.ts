@@ -1,5 +1,14 @@
 /** Brain courses + Telegram connect copy: English key → [Russian, Kazakh]. Merged into localizedCopy by lib/copy.ts. */
 export const coursesCopy: Record<string, [string, string]> = {
+  "Demo": ["Демо", "Демо"],
+  "Send the 3 demo items": ["Отправить 3 демоматериала", "3 үлгі материалды жіберу"],
+  "A slide photo, a lecture video and a PDF — the same path as Telegram.": ["Фото слайда, видеолекция и PDF — тот же путь, что и через Telegram.", "Слайд суреті, дәріс бейнесі және PDF — Telegram-дағыдай өңделеді."],
+  "Sending…": ["Отправляем…", "Жіберілуде…"],
+  "Start over": ["Начать заново", "Қайта бастау"],
+  "Back to the starting Brain. Telegram stays connected.": ["Вернуться к исходному Brain. Telegram останется подключён.", "Brain бастапқы күйіне оралады. Telegram байланысы сақталады."],
+  "Click again to start over": ["Нажмите ещё раз, чтобы начать заново", "Қайта бастау үшін тағы бір рет басыңыз"],
+  "Starting over…": ["Начинаем заново…", "Қайта басталуда…"],
+  "Demo tools are unavailable right now.": ["Демоинструменты сейчас недоступны.", "Демо құралдары қазір қолжетімсіз."],
   "Try again": ["Попробовать снова", "Қайталау"],
   "Loading courses": ["Загружаем курсы", "Курстар жүктелуде"],
   "No courses yet.": ["Курсов пока нет.", "Әзірге курс жоқ."],

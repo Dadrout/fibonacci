@@ -152,3 +152,28 @@
 .brain-global-add { transition: opacity .18s ease, transform .18s ease, visibility 0s linear 0s; }
 html[data-brain-capture-visible] .brain-global-add { opacity: 0; transform: translateY(10px); visibility: hidden; pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
 @media (prefers-reduced-motion: reduce) { .brain-global-add, html[data-brain-capture-visible] .brain-global-add { transition: none; } }
+
+/* H5: demo disclosure keeps the badge quiet and the stage controls close at hand. */
+.brain-demo-tools { position: relative; flex: none; }
+.brain-demo-trigger { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--studio-green); font: inherit; cursor: pointer; border-radius: 6px; }
+.brain-demo-trigger .brain-demo-badge { display: inline-flex; align-items: center; gap: 4px; }
+.brain-demo-trigger:hover .brain-demo-badge, .brain-demo-trigger[aria-expanded="true"] .brain-demo-badge { box-shadow: inset 0 0 0 1px var(--studio-green); }
+.brain-demo-trigger:focus-visible, .brain-demo-action:focus-visible { outline: 3px solid var(--studio-accent); outline-offset: 2px; }
+.brain-demo-popover { position: absolute; top: calc(100% + 8px); z-index: 60; box-sizing: border-box; width: min(360px, calc(100vw - 24px)); padding: 6px; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--studio-line); border-radius: 10px; background: var(--studio-surface); color: var(--studio-ink); box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--studio-ink) 28%, transparent); }
+.brain-demo-popover[hidden] { display: none; }
+.brain-demo-action { display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box; width: 100%; min-height: 44px; padding: 12px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--studio-ink); text-align: left; font: inherit; cursor: pointer; overflow-wrap: anywhere; }
+.brain-demo-action > svg { flex: none; margin-top: 2px; color: var(--studio-green); }
+.brain-demo-action > span { display: grid; gap: 4px; min-width: 0; }
+.brain-demo-action strong { font-size: 14px; font-weight: 650; line-height: 1.4; }
+.brain-demo-action span > span { color: var(--studio-muted); font-size: 13px; line-height: 1.5; }
+.brain-demo-action:hover:not(:disabled), .brain-demo-action:active:not(:disabled) { background: var(--studio-sage); }
+.brain-demo-action:disabled { cursor: wait; }
+.brain-demo-action:disabled > svg { color: var(--studio-muted); }
+.brain-demo-reset { margin-top: 4px; border-top-color: var(--studio-line); }
+.brain-demo-reset.is-armed { background: var(--studio-sage); border-color: var(--studio-green); }
+.brain-demo-error { margin: 6px 12px 10px; color: var(--studio-ink); font-size: 13px; line-height: 1.5; }
+.is-demo-presentation .brain-demo-badge { font-size: 14px; }
+.is-demo-presentation .brain-demo-popover { width: min(440px, calc(100vw - 24px)); }
+.is-demo-presentation .brain-demo-action { padding: 16px 12px; }
+.is-demo-presentation .brain-demo-action strong { font-size: 20px; }
+.is-demo-presentation .brain-demo-action span > span, .is-demo-presentation .brain-demo-error { font-size: 17px; }

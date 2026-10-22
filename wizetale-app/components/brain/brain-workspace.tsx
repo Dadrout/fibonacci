@@ -9,6 +9,7 @@ import { useLanguage } from '@/hooks/use-language'
 import { BrainItemCard } from '@/components/brain/brain-item-card'
 import { CourseDetailView, CourseGrid } from '@/components/brain/brain-courses'
 import { BrainDialog } from '@/components/brain/brain-dialog'
+import { BrainDemoTools } from '@/components/brain/brain-demo-tools'
 import { BrainExam } from '@/components/brain/brain-exam'
 import { BrainTelegram } from '@/components/brain/brain-telegram'
 import { BrainSearch } from '@/components/brain/brain-search'
@@ -199,9 +200,9 @@ export function BrainWorkspace() {
     setSimulationError(false)
     try { await api.simulateHeroDemo() } catch { setSimulationError(true) } finally { setSimulating(false) }
   }
-  const go = useCallback((next: View) => {
+  const go = useCallback((next: View, behavior: ScrollBehavior = 'auto') => {
     setView(next)
-    window.scrollTo({ top: 0 })
+    window.scrollTo({ top: 0, behavior })
   }, [])
   const [examToken, setExamToken] = useState(0)
   const openExam = (courseId: string | null, back: Extract<View, { name: 'exam' }>['back']) => { setExamToken(token => token + 1); go({ name: 'exam', courseId, back }) }
@@ -220,7 +221,18 @@ export function BrainWorkspace() {
     <a className="brain-skip" href="#brain-content">{c('Skip to content')}</a>
     <header className="brain-header brain-header-simple prep-screen">
       <button type="button" className="brain-brand" aria-label={c('Your Brain')} onClick={() => go({ name: 'home' })}><FibonacciLogo size={30} /></button>
-      {session.demo && <span className="brain-demo-badge">{c('Demo')}</span>}
+      {(session.demo || overview?.demo_mode) && <BrainDemoTools api={api} canReset={session.demo} presentation={presentationActive}
+        onSent={() => {
+          go({ name: 'home' }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth')
+          setHomeMode('courses')
+        }}
+        onReset={() => {
+          setConnections([])
+          setNewlyFiled([])
+          go({ name: 'home' }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth')
+          setHomeMode('courses')
+          void loadOverview(true)
+        }} />}
       <BrainSearch api={api} courses={graph?.courses ?? []} presentation={presentationActive}
         onOpenConcept={(conceptId) => { setFocusRequest({ id: `concept:${conceptId}`, token: Date.now() }); setHomeMode('map'); go({ name: 'home' }) }} />
       <div className="brain-header-tools">
