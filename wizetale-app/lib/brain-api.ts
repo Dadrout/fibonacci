@@ -22,6 +22,8 @@ import type {
   CaptureChannel,
   ConceptDetail,
   CourseDetail,
+  DemoHeroResponse,
+  DemoResetResponse,
   ExamPlanRequest,
   GapAlert,
   ItemPage,
@@ -122,6 +124,10 @@ export interface BrainApi {
   subscribe(listener: (event: BrainEvent) => void, options?: SubscribeOptions): () => void
   /** Mock mode only: plays the hero demo (three Telegram captures). No-op in live mode. */
   simulateHeroDemo(): Promise<void>
+  /** Demo tools (DEMO_MODE only): send the three demo items through the normal capture pipeline. */
+  sendDemoItems(): Promise<DemoHeroResponse>
+  /** Demo tools (demo student only): back to the starting Brain. Telegram stays linked. */
+  resetDemo(): Promise<DemoResetResponse>
 }
 
 const ERROR_CODES: BrainErrorCode[] = ['unauthorized', 'not_found', 'invalid_input', 'unsupported_type', 'too_large', 'rate_limited', 'conflict', 'not_enough_material', 'telegram_not_configured', 'unavailable', 'internal']
@@ -258,6 +264,8 @@ function createLiveApi(getToken: TokenGetter): BrainApi {
     telegramUnlink: () => request('telegram/link', { method: 'DELETE' }),
     subscribe: (listener, options) => liveHub.add(getToken, listener, options),
     simulateHeroDemo: async () => undefined,
+    sendDemoItems: () => request('demo/hero', { method: 'POST' }),
+    resetDemo: () => request('demo/reset', { method: 'POST' }),
   }
 }
 
@@ -435,6 +443,9 @@ function createMockApi(): BrainApi {
       return () => { unsubscribe(); options?.onConnectionChange?.(false) }
     },
     simulateHeroDemo: () => brain.simulateHeroDemo(),
+    // Mock mode plays the same three items as the Telegram simulation.
+    sendDemoItems: () => wrapMock(async () => { void brain.simulateHeroDemo(); return { items: [] } }),
+    resetDemo: () => wrapMock(async () => brain.reset()),
   }
 }
 

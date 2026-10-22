@@ -115,6 +115,7 @@ class Settings(BaseSettings):
     BRAIN_DEMO_TOKEN: Optional[str] = None
     BRAIN_DEMO_USER_ID: str = "00000000-0000-4000-8000-00000000d3e0"
     BRAIN_DEMO_EMAIL: str = "demo-student@fibonacci.local"
+    BRAIN_DEMO_HERO_DIR: str = "/app/demo-hero"  # demo/hero/, mounted read-only (demo tools only)
     BRAIN_TEXT_MODEL: str = "gemini-3.5-flash-lite"
     BRAIN_FALLBACK_MODEL: str = "gemini-flash-lite-latest"
     BRAIN_VISION_MODEL: str = "gemini-3.5-flash-lite"

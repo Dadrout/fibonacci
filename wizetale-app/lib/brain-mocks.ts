@@ -346,6 +346,18 @@ export class MockBrain {
   telegram: TelegramStatus = { bot_configured: true, bot_username: 'FibonacciBrainBot', linked: false, telegram_username: null, linked_at: null }
 
   constructor() {
+    this.loadSeed()
+  }
+
+  /** Demo tools: back to the starting Brain. Telegram stays as it is. */
+  reset(): { courses: number; items: number } {
+    for (const map of [this.courses, this.topics, this.concepts, this.items, this.chunks, this.links, this.plans, this.answers] as Array<Map<unknown, unknown>>) map.clear()
+    this.heroPlayed = false
+    this.loadSeed()
+    return { courses: this.courses.size, items: this.items.size }
+  }
+
+  private loadSeed() {
     COURSES.forEach((c) => this.addCourse(c))
     TOPICS.forEach((t) => this.addTopic(t))
     CONCEPTS.forEach((c) => this.addConcept(c))

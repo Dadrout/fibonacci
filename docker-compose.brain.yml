@@ -46,6 +46,8 @@ services:
       - ./wizetale-api/app:/app/app:ro,z
       # Recorded AI outputs (DEMO_MODE replays them; BRAIN_AI_RECORD=true writes new ones).
       - ./wizetale-api/app/services/brain/ai/recorded:/app/app/services/brain/ai/recorded:z
+      # The three demo inputs, for the "Send the 3 demo items" button (DEMO_MODE only).
+      - ./demo/hero:/app/demo-hero:ro,z
 
   celery-worker:
     # Process the three hero-demo captures side by side.

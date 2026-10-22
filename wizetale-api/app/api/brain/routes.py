@@ -143,6 +143,39 @@ async def upload_capture(request: Request, file: UploadFile = File(...), channel
     return await call(lambda: _catalog(uid).item(row))
 
 
+# ---------------------------------------------------------------- demo tools (DEMO_MODE only, never in production)
+
+def demo_tools_allowed() -> bool:
+    return settings.DEMO_MODE and settings.ENVIRONMENT.strip().lower() != "production"
+
+
+@router.post("/demo/hero", status_code=202)
+async def demo_send_hero(request: Request, uid: str = Depends(owner), user: dict = Depends(brain_user)):
+    """Send the three demo inputs (slide photo, lecture video, PDF) through the normal capture pipeline."""
+    if not demo_tools_allowed():
+        raise BrainError(404, "not_found", "Not found.")
+    for _ in range(3):
+        await limit(request, uid, "capture", 30)
+    from app.services.brain.demo import hero
+
+    try:
+        rows = await call(hero.send, capture_service, uid, user.get("email"))
+    except hero.HeroInputsMissing as error:
+        raise BrainError(503, "unavailable", "The demo files are not on this server.") from error
+    return await call(lambda: {"items": _catalog(uid).items(rows)})
+
+
+@router.post("/demo/reset")
+async def demo_reset(uid: str = Depends(owner)):
+    """Put the demo student's Brain back to its starting state. The Telegram link stays."""
+    if not demo_tools_allowed() or uid != settings.BRAIN_DEMO_USER_ID or not brain_store.local:
+        raise BrainError(404, "not_found", "Not found.")
+    from app.services.brain.demo.seed import seed
+
+    result = await call(seed, uid, settings.BRAIN_DEMO_EMAIL)
+    return {"courses": result["courses"], "items": result["items"]}
+
+
 @router.get("/items")
 async def list_items(status: Optional[str] = Query(None, pattern="^(queued|extracting|classifying|linking|filed|failed)$"),
                      course_id: Optional[UUID] = None, limit_: int = Query(25, alias="limit", ge=1, le=100),

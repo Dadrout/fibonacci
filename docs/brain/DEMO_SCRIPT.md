@@ -14,7 +14,7 @@ Status: **rehearsed — 3 full UI runs in a row passed (R7–R9), plus an offlin
      up -d redis brain-db brain-rest api celery-worker telegram-bot
    cd wizetale-app && npm run dev        # http://localhost:3001
    ```
-3. **Fresh demo brain:** `docker exec fibonacci-local-api-1 python -m app.services.brain.demo.seed`
+3. **Fresh demo brain:** in the app, *Demo* (badge next to the logo) → **Start over** → click again to confirm. Or from a terminal: `docker exec fibonacci-local-api-1 python -m app.services.brain.demo.seed`
    → expect `{"courses": 3, "topics": 16, "concepts": 35, "items": 38, ... "missing_embeddings": 0}`.
    The seed keeps the Telegram link, so you don't need to re-link the phone.
 4. Open **http://localhost:3001** (it opens the Brain) — the demo student loads (badge *Demo*). Check: 3 courses, the Econometrics card shows "Week 6 is missing · Week 7 is missing", *Live* is on.
@@ -52,12 +52,13 @@ Measured backend timings (local stack, 2026-10-22): three items filed in **7.7�
 | If… | Then… |
 |---|---|
 | **Venue Wi-Fi is slow or down** | Nothing changes for the hero inputs: with `DEMO_MODE=true` the recorded outputs replay (verified with the Gemini key removed). Use the phone's hotspot for Telegram; if Telegram itself is unreachable, use the next row. |
-| **Telegram doesn't deliver** (no internet, bot down) | Drag the three files from `demo/hero/` onto the browser window (global drop zone) and paste the YouTube link (Ctrl/Cmd+V). Same pipeline, same result. Say: "Same thing from the web app — drop anything anywhere." |
+| **Telegram doesn't deliver** (no internet, bot down) | *Demo* → **Send the 3 demo items** (one click: the same three files go through the same pipeline). Or drag the files from `demo/hero/` onto the browser window and paste the YouTube link (Ctrl/Cmd+V). Say: "Same thing from the web app — drop anything anywhere." |
 | **A card says "failed"** | Press *Retry* on the card. If it fails again, continue — the other two items carry the story. |
 | **YouTube transcript blocked** | Handled: captions → Gemini clip transcription → recorded transcript. Worst case the video files by its title (no timestamps); use slide 7 for the mistake → moment step. |
 | **Exam plan slow** | It streams progress (*Gathering → Planning → Citing*). Live it takes 10–15 s; from recordings ~1 s. Fill with: "It's reading everything she filed for Econometrics." |
 | **Laptop/browser crash** | Restart the browser → `localhost:3001/brain`. Data is in the local database; nothing is lost. |
-| **Need a clean slate between rehearsals** | Re-run the seed command (step 0.3). |
+| **Need a clean slate between rehearsals / video takes** | *Demo* → **Start over** (click twice). Telegram stays linked. |
+| **Recording a video fast** | *Demo* → **Send the 3 demo items** instead of forwarding from the phone; everything after that is identical. |
 
 ---
 
@@ -79,6 +80,6 @@ Not yet rehearsed: forwarding through Telegram from the presenter's phone (needs
 
 ## 4. One-time owner setup still needed
 
-1. ~~Telegram bot token~~ — done: **@eduhack2026_bot**, token in `.env.brain`. **Link the presenter's phone once:** Brain → Telegram → Connect Telegram → scan the QR (or open the bot and press Start). The link survives re-seeding.
+1. ~~Telegram bot token~~ — done: **@eduhack2026_bot**, token in `.env.brain`. **Link the presenter's phone once, from the demo student:** open http://localhost:3001 in a **private/incognito window** (a normal window may be signed in to another local account), check the *Demo* badge is there, then *Connect Telegram* → scan the QR or send the 6-digit code to the bot. Linking again moves the chat to the demo student. The link survives *Start over*.
 2. **Gemini key tier:** the current key is on the free tier and hits per-minute limits when several items process at once. A paid key (`GEMINI_BILLING_TIER=paid`) makes live (non-recorded) captures reliable.
 3. *(Only if you want the hosted Supabase project instead of the local brain database)*: paste `supabase/brain.sql` into the Supabase SQL editor once, and set `BRAIN_STORE=supabase`.

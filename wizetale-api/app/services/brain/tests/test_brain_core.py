@@ -255,3 +255,58 @@ def test_event_stream_survives_read_timeouts_and_ends_cleanly_on_redis_errors():
     assert frames[1].startswith(": heartbeat")
     assert frames[2].startswith("id: 1700000000000-0\n") and '"item.filed"' in frames[2]
     assert len(frames) == 3
+
+
+# ---------------------------------------------------------------- demo tools
+
+class RecordingCapture:
+    def __init__(self):
+        self.calls = []
+
+    def from_upload(self, uid, email, data, filename, mime, *, channel, request_id=None):
+        self.calls.append(("upload", filename, mime, channel, len(data)))
+        return {"id": filename}
+
+    def from_link(self, uid, email, url, *, channel, request_id=None):
+        self.calls.append(("link", url, channel))
+        return {"id": url}
+
+
+def test_demo_hero_sends_photo_video_pdf_through_normal_capture(tmp_path):
+    from app.services.brain.demo import hero
+
+    (tmp_path / hero.HERO_PHOTO[0]).write_bytes(b"\xff\xd8\xff photo")
+    (tmp_path / hero.HERO_PDF[0]).write_bytes(b"%PDF-1.4 pdf")
+    capture = RecordingCapture()
+    rows = hero.send(capture, UID, "demo@example.test", directory=tmp_path)
+    assert [call[0] for call in capture.calls] == ["upload", "link", "upload"]
+    assert capture.calls[0][1:4] == (hero.HERO_PHOTO[0], "image/jpeg", "web_drop")
+    assert capture.calls[1] == ("link", hero.HERO_YOUTUBE_URL, "web_paste")
+    assert capture.calls[2][1:4] == (hero.HERO_PDF[0], "application/pdf", "web_drop")
+    assert len(rows) == 3
+
+
+def test_demo_hero_creates_nothing_when_a_file_is_missing(tmp_path):
+    from app.services.brain.demo import hero
+
+    (tmp_path / hero.HERO_PHOTO[0]).write_bytes(b"\xff\xd8\xff photo")
+    capture = RecordingCapture()
+    with pytest.raises(hero.HeroInputsMissing):
+        hero.send(capture, UID, None, directory=tmp_path)
+    assert capture.calls == []
+
+
+def test_demo_tools_are_off_outside_demo_mode_and_in_production(monkeypatch):
+    import asyncio
+
+    from app.api.brain import routes
+
+    assert routes.demo_tools_allowed() is False  # tests run with DEMO_MODE off
+    monkeypatch.setattr(settings, "DEMO_MODE", True)
+    monkeypatch.setattr(settings, "ENVIRONMENT", "production")
+    assert routes.demo_tools_allowed() is False
+    monkeypatch.setattr(settings, "ENVIRONMENT", "development")
+    assert routes.demo_tools_allowed() is True
+    with pytest.raises(routes.BrainError) as refused:  # reset only ever touches the demo student
+        asyncio.run(routes.demo_reset(uid=UID))
+    assert refused.value.status == 404

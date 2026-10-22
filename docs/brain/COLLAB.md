@@ -115,6 +115,8 @@ All paths are relative to `/api/v1`. Auth: Supabase bearer token (the client add
 | DELETE | `/brain/telegram/link` | — | `204` | unlink |
 | GET | `/brain/events` | header `Last-Event-ID` optional | SSE stream of `BrainEvent` | use `subscribeBrainEvents()`; heartbeat every 15 s |
 | GET | `/brain/media/{token}` | — | bytes | signed, short-lived; used by `thumbnail_url` / `media_url` |
+| POST | `/brain/demo/hero` | — | `202 DemoHeroResponse` | **DEMO_MODE only** (404 otherwise, never in production): sends the three `demo/hero/` inputs through the normal capture pipeline |
+| POST | `/brain/demo/reset` | — | `DemoResetResponse` | **DEMO_MODE, demo student, local store only**: re-seeds the starting Brain; the Telegram link stays |
 
 **Event choreography for one capture** (what the inbox animates):
 `item.created` (queued) → `item.progress` extracting → `item.progress` classifying → `item.progress` linking → `item.filed` (course/topic/concepts, `new_course`/`new_topic`) → zero or more `link.created` (watch `link.cross_course`) → `gap.detected` / `gap.resolved` when a course's sequence changes.
@@ -157,6 +159,7 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 
 | # | Task | Status | Files |
 |---|---|---|---|
+| H5 | Header demo tools: send hero items + guarded reset, localized and accessible | doing — Astra, 2026-10-22 | `components/brain/brain-demo-tools.tsx`, demo UI helpers/tests, `brain-workspace.tsx`, `brain-courses.css`, `lib/copy-brain/courses.ts` |
 | A1 | `docs/brain/DESIGN_BRAIN.md`: direction, key screens, motion, hero choreography | review | `docs/brain/DESIGN_BRAIN.md` |
 | A2 | Brain shell + nav entry + presentation mode (projector) | review | `wizetale-app/app/brain/page.tsx`, `wizetale-app/app/layout.tsx`, `wizetale-app/app/create/student-workspace-client.tsx`, `wizetale-app/components/study/study-shell.tsx`, `wizetale-app/components/brain/**` |
 | A3 | Capture: global drop zone, paste-to-capture, live inbox (event-driven) | done — H1/H2 accepted; home simplified in D17 | H2 review fixes — Astra: `wizetale-app/components/brain/brain-item-card.tsx`, `brain-workspace.tsx`, `brain.css`, UI state helpers, `wizetale-app/lib/copy.ts` |
@@ -182,6 +185,8 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 ## 5. Handoff log (Claude → Astra via `codex exec`)
 
 _Format: `- H<n> (date) task → outcome (review result, commit)`_
+
+- **H5 (2026-10-22, gpt-6.1-sol)** Owner request: one-click demo tools. Claude built `POST /brain/demo/hero` + `/brain/demo/reset` (DEMO_MODE only), the client calls and mock reset; Astra builds the header menu (`brain-demo-tools.tsx`: *Send the 3 demo items*, two-step *Start over*). → in progress
 
 - **H4 (2026-10-22, gpt-6.1-sol)** Fixes for Astra's H3 read-only review → **accepted** after typecheck, 110 tests, build, rehearsal r1. Re-files regroup by topic; inline course rename; Telegram status/QR failures recover; 44 px targets; narrow-phone and projector code sizing; low-confidence moments say "Closest match in your material"; SourceViewer `note` slot replaces the DOM workaround. Commit `bf17721`. All H3 review items closed.
 
@@ -209,6 +214,7 @@ _Format: `- [open|answered] (from → to, date) question — answer (who)`_
 
 ## 7. Decisions log
 
+- **D18 (Claude, 2026-10-22) — Demo tools for fast, repeatable demos (owner request).** The *Demo* badge opens a small menu: *Send the 3 demo items* (the real files from `demo/hero/` go through the normal capture pipeline — nothing is faked; they show as web captures, not Telegram) and *Start over* (re-seeds the demo student, keeps the Telegram link). Both exist only when the server runs with `DEMO_MODE=true`; the API returns 404 otherwise and in production. Telegram forwarding stays the primary story on stage; the button is the fast path for videos and rehearsals.
 - **D17 (Claude, 2026-10-22 09:40) — The Brain is the product; one calm home, no tabs (owner request).** Owner: "too many tabs, not comfortable"; the finale presents Fibonacci as one product, so nothing from other app areas appears. The Brain is now: header (logo, search, Telegram pill → dialog, presentation toggle, language, theme) → Home = *Drop anything here* capture bar → *Arriving now / Just added* (failed items only under *All sources*) → *Your courses* with a **Courses | Map** toggle; each course card shows missing weeks + **Exam in 3 days** (one tap builds the plan). Drill-down pages: course, exam, all sources — each with a back button. `/` redirects to `/brain`; no links to Create/Study/Library/Teacher from the Brain; page title "Fibonacci — your second brain". Old routes still exist but are unlinked. All naming now says Fibonacci (see the commit "Use the Fibonacci name everywhere").
 - **D16 (Claude, 2026-10-22 09:10) — Parallel agents to go faster (owner request).** While Codex is limited, Claude runs parallel Claude agents with strictly separate files: exam mode + mistake → moment (A5/A6), Telegram tests, extractor tests. Claude built A7/A8 directly. Codex (from 09:31) does the graph follow-ups (H3) and the logo (A11) in parallel. Brain UI strings now live in per-workstream files `lib/copy-brain/{courses,exam,graph}.ts` (merged by `lib/copy.ts`) and per-screen CSS files, so no two agents edit the same file. Telegram bot: **@eduhack2026_bot** (token only in `.env.brain`).
 - **D15 (Claude, 2026-10-22 04:40) — Codex model per task.** `gpt-6-astra` used the whole refreshed Codex window in ~5 minutes. Implementation tasks now run on `gpt-6.1-sol` (Codex's latest coding model) in fresh, focused sessions; `gpt-6-astra` is reserved for design-critical review passes.

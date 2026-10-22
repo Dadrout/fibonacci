@@ -458,6 +458,22 @@ export interface TelegramLinkCode {
 }
 
 // ---------------------------------------------------------------------------
+// Demo tools — only while DEMO_MODE is on (overview.demo_mode); the API answers 404 otherwise
+// ---------------------------------------------------------------------------
+
+/** POST /brain/demo/hero → 202. The three demo inputs (slide photo, lecture video, PDF) go
+ *  through the normal capture pipeline; their progress arrives over events like any capture. */
+export interface DemoHeroResponse {
+  items: BrainItem[]
+}
+
+/** POST /brain/demo/reset → 200. Demo student only: back to the starting Brain. Telegram stays linked. */
+export interface DemoResetResponse {
+  courses: number
+  items: number
+}
+
+// ---------------------------------------------------------------------------
 // Realtime events — GET /brain/events (Server-Sent Events, via subscribeBrainEvents)
 // ---------------------------------------------------------------------------
 
