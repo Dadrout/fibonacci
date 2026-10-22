@@ -1,0 +1,68 @@
+{
+ "title": "ECON 301 — Week 6: Heteroskedasticity",
+ "summary": "Lecture notes covering the relaxation of the homoskedasticity assumption, its consequences for OLS inference, heteroskedasticity-robust standard errors, tests for heteroskedasticity, and weighted least squares.",
+ "language": "en-US",
+ "placement": {
+  "course_id": null,
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": null,
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 0.95
+ },
+ "alternatives": [
+  {
+   "course_id": null,
+   "course_title": "Introductory Econometrics",
+   "course_code": null,
+   "topic_id": null,
+   "topic_title": "Heteroskedasticity",
+   "sequence": 6,
+   "sequence_kind": "week",
+   "confidence": 0.8
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the conditional variance of the error term depends on the regressors, meaning Var(uᵢ | xᵢ) is not constant.",
+   "chunk_ordinals": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "Robust standard errors",
+   "summary": "Heteroskedasticity-robust variance estimators, such as White standard errors, allow for valid hypothesis testing in large samples even when error variance is non-constant.",
+   "chunk_ordinals": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "Breusch–Pagan test",
+   "summary": "The Breusch–Pagan test regresses squared OLS residuals on all regressors to test the null hypothesis of homoskedasticity against general heteroskedasticity.",
+   "chunk_ordinals": [
+    3,
+    5
+   ]
+  },
+  {
+   "name": "White test",
+   "summary": "The White test evaluates whether squared residuals are related to the regressors, their squares, and cross-products to detect broader forms of heteroskedasticity.",
+   "chunk_ordinals": [
+    3
+   ]
+  },
+  {
+   "name": "Weighted least squares",
+   "summary": "Weighted least squares (WLS) is a transformation method used to restore efficiency when the functional form of heteroskedasticity is known or estimated.",
+   "chunk_ordinals": [
+    4,
+    5
+   ]
+  }
+ ]
+}

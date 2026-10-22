@@ -97,7 +97,7 @@ export function BrainExamQuiz({ api, planId, questions, answers, setAnswers, ind
     </div>}
 
     <section className="brain-exam-question" aria-labelledby={promptId}>
-      <p className="brain-exam-question-count">{c('Question {n} of {total}').replace('{n}', String(current + 1)).replace('{total}', String(questions.length))}</p>
+      <p className="brain-exam-sr-only">{c('Question {n} of {total}').replace('{n}', String(current + 1)).replace('{total}', String(questions.length))}</p>
       <h3 id={promptId} ref={promptRef} tabIndex={-1}>{question.prompt}</h3>
       <ul className="brain-exam-options" aria-busy={answer?.status === 'checking'}>
         {question.options.map(option => {
@@ -178,6 +178,7 @@ function MomentCard({ moment, onOpen }: { moment: SourceMoment; onOpen: OpenSour
     <div className="brain-exam-moment-copy">
       <p className="brain-section-kicker">{c(moment.confidence < 0.7 ? 'Closest match in your material' : 'Where you learned it')}</p>
       <p className="brain-exam-moment-reason">{moment.reason}</p>
+      {source.quote && <blockquote className="brain-exam-moment-quote">{source.quote}</blockquote>}
       <p className="brain-exam-moment-source"><Icon size={17} aria-hidden="true" /><span><strong>{label}</strong> · {source.item_title}</span></p>
     </div>
     <button type="button" className="brain-primary-button brain-exam-moment-button" onClick={() => onOpen(source, moment.reason)}>

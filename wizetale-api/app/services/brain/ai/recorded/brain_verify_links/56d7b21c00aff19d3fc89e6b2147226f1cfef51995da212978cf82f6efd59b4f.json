@@ -1,0 +1,68 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": true,
+   "relation": "contrasts",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "Both are diagnostic tests for heteroskedasticity, offering alternative approaches to checking variance assumptions in regression models."
+  },
+  {
+   "pair": 1,
+   "related": true,
+   "relation": "applies",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Robust standard errors correct the unreliability of standard standard errors caused by heteroskedasticity."
+  },
+  {
+   "pair": 2,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.75,
+   "rationale": "You use diagnostic tests like the Breusch-Pagan test to determine if you need to apply robust standard errors."
+  },
+  {
+   "pair": 3,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.85,
+   "rationale": "Robust standard errors are designed to provide valid inference precisely when the assumption of homoskedasticity fails."
+  },
+  {
+   "pair": 4,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.8,
+   "rationale": "Detecting heteroskedasticity using tests like the White test motivates the subsequent use of robust standard errors."
+  },
+  {
+   "pair": 5,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.75,
+   "rationale": "Detecting heteroskedasticity with the Breusch-Pagan test can guide your decision to use weighted least squares to correct it."
+  },
+  {
+   "pair": 6,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.75,
+   "rationale": "Identifying heteroskedasticity through the Goldfeld-Quandt test helps inform when to apply weighted least squares."
+  },
+  {
+   "pair": 7,
+   "related": true,
+   "relation": "builds_on",
+   "direction": "a_to_b",
+   "strength": 0.9,
+   "rationale": "The Breusch-Pagan test is specifically designed to test for the presence of heteroskedasticity."
+  }
+ ]
+}

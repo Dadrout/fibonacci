@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { Activity, ArrowLeft, Check, ChevronRight, FilePlus2, GitBranch, LayoutGrid, Presentation, Send, Sparkles, TriangleAlert, UploadCloud } from 'lucide-react'
+import { Activity, ArrowLeft, ArrowLeftRight, Check, ChevronRight, FilePlus2, GitBranch, LayoutGrid, Presentation, Send, Sparkles, TriangleAlert, UploadCloud, X } from 'lucide-react'
 import { useBrainApi, useBrainEvents, useBrainSession } from '@/hooks/use-brain-api'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
@@ -185,16 +185,42 @@ export function BrainWorkspace() {
   }, [loadOverview])
 
   const { connected } = useBrainEvents(handleEvent, session.canUse)
+  // Older sources for "All sources": the overview carries the newest 20; the rest load page by page.
+  const [olderItems, setOlderItems] = useState<BrainItem[]>([])
+  const [olderCursor, setOlderCursor] = useState<string | null | undefined>(undefined)
+  const [olderState, setOlderState] = useState<'idle' | 'loading' | 'error'>('idle')
+
   const itemUpdate = useCallback((updated: BrainItem) => {
     const event: BrainEvent = { type: 'item.refiled', item: updated, id: `local:${updated.id}`, at: new Date().toISOString() }
     setOverview(current => current ? updateOverview(current, event, reduceItems(current.recent_items, event), graphRef.current) : current)
+    setOlderItems(list => list.map(item => item.id === updated.id ? updated : item))
   }, [])
 
   const orderedItems = useMemo(() => overview?.recent_items ?? [], [overview?.recent_items])
+  const allSources = useMemo(() => {
+    const seen = new Set(orderedItems.map(item => item.id))
+    return [...orderedItems, ...olderItems.filter(item => !seen.has(item.id))]
+  }, [orderedItems, olderItems])
+  const totalSources = overview ? overview.counts.items + overview.counts.processing + (overview.counts.failed ?? 0) : 0
+  const canLoadOlder = olderCursor === undefined ? allSources.length < totalSources : olderCursor !== null
+  const loadOlder = async () => {
+    const cursor = olderCursor ?? allSources[allSources.length - 1]?.captured_at
+    if (!cursor || olderState === 'loading') return
+    setOlderState('loading')
+    try {
+      const page = await withUiTimeout(api.items({ limit: 25, cursor }))
+      setOlderItems(list => [...list, ...page.items])
+      setOlderCursor(page.next_cursor)
+      setOlderState('idle')
+    } catch {
+      setOlderState('error')
+    }
+  }
   const isEmpty = Boolean(overview && overview.counts.items === 0 && overview.counts.processing === 0 && orderedItems.length === 0)
   const presentationActive = presentationReady && presentation
   const gaps = useMemo(() => groupGaps(overview?.gaps ?? []), [overview?.gaps])
   const courseColors = useMemo(() => new Map(graph?.courses.map(course => [course.id, course.color_index]) ?? []), [graph?.courses])
+  const catalog = useMemo(() => graph ? { courses: graph.courses, topics: graph.topics } : null, [graph])
   const simulate = async () => {
     setSimulating(true)
     setSimulationError(false)
@@ -205,6 +231,11 @@ export function BrainWorkspace() {
     window.scrollTo({ top: 0, behavior })
   }, [])
   const [examToken, setExamToken] = useState(0)
+  const showMap = () => {
+    setHomeMode('map')
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.setTimeout(() => document.getElementById('brain-courses-title')?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }), 60)
+  }
   const openExam = (courseId: string | null, back: Extract<View, { name: 'exam' }>['back']) => { setExamToken(token => token + 1); go({ name: 'exam', courseId, back }) }
   const liveItems = useMemo(() => {
     // Home shows what is arriving or just filed; failures live under "All sources" with their Retry.
@@ -229,6 +260,8 @@ export function BrainWorkspace() {
         onReset={() => {
           setConnections([])
           setNewlyFiled([])
+          setOlderItems([])
+          setOlderCursor(undefined)
           go({ name: 'home' }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth')
           setHomeMode('courses')
           void loadOverview(true)
@@ -270,13 +303,20 @@ export function BrainWorkspace() {
           <button type="button" className="brain-primary-button" onClick={() => window.dispatchEvent(new Event('brain:open-picker'))}><FilePlus2 size={18} aria-hidden="true" />{c('Add a file')}</button>
         </section>
 
-        {connections.length > 0 && <div className="brain-connections" aria-live="polite" aria-relevant="additions">
-          {connections.map(connection => <aside className="brain-connection-banner" key={connection.link.id}>
-            <span className="brain-connection-symbol"><GitBranch size={23} aria-hidden="true" /></span>
-            <span className="brain-connection-copy"><strong>{c('New cross-course connection')}</strong><span>{connection.source.name} <b aria-hidden="true">↔</b> {connection.target.name}</span><small>{connection.source_course.title} ↔ {connection.target_course.title}</small></span>
-            <button type="button" aria-label={`${c('Dismiss')}: ${connection.source.name} ↔ ${connection.target.name}`} onClick={() => setConnections(current => current.filter(entry => entry.link.id !== connection.link.id))}>×</button>
-          </aside>)}
-        </div>}
+        {connections.length > 0 && <section className="brain-connections" aria-labelledby="brain-connections-title" aria-live="polite" aria-relevant="additions">
+          <header>
+            <span className="brain-connection-symbol"><GitBranch size={19} aria-hidden="true" /></span>
+            <h2 id="brain-connections-title">{c(connections.length === 1 ? 'New connection between your courses' : 'New connections between your courses')}<span className="brain-connection-count">{connections.length}</span></h2>
+            <button type="button" className="brain-connections-map" onClick={showMap}>{c('See on the map')}<ChevronRight size={15} aria-hidden="true" /></button>
+            <button type="button" className="brain-connections-close" aria-label={c('Dismiss')} onClick={() => setConnections([])}><X size={18} aria-hidden="true" /></button>
+          </header>
+          <ul>
+            {connections.map(connection => <li key={connection.link.id}>
+              <span className="brain-connection-pair">{connection.source.name}<ArrowLeftRight size={15} aria-hidden="true" /><span className="sr-only"> – </span>{connection.target.name}</span>
+              <small>{connection.source_course.title} · {connection.target_course.title}</small>
+            </li>)}
+          </ul>
+        </section>}
 
         {loadingOverview && !overview ? <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading sources')}>
           {[0, 1].map((number) => <div className="brain-source-skeleton" key={number}><span /><div><i /><i /><i /></div></div>)}
@@ -299,7 +339,7 @@ export function BrainWorkspace() {
             </div>
             {simulationError && <p role="alert">{c('Check your connection and try again.')}</p>}
             <div className="brain-item-list">
-              {liveItems.map(item => <BrainItemCard key={item.id} item={item} api={api} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
+              {liveItems.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
             </div>
           </section>
 
@@ -308,7 +348,7 @@ export function BrainWorkspace() {
               <h2 id="brain-courses-title">{c('Your courses')}</h2>
               <div className="brain-segmented" role="group" aria-label={c('Show courses as')}>
                 <button type="button" aria-pressed={homeMode === 'courses'} onClick={() => setHomeMode('courses')}><LayoutGrid size={16} aria-hidden="true" />{c('Courses')}</button>
-                <button type="button" aria-pressed={homeMode === 'map'} onClick={() => { setHomeMode('map'); window.setTimeout(() => document.getElementById('brain-courses-title')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60) }}><GitBranch size={16} aria-hidden="true" />{c('Map')}</button>
+                <button type="button" aria-pressed={homeMode === 'map'} onClick={showMap}><GitBranch size={16} aria-hidden="true" />{c('Map')}</button>
               </div>
             </div>
             {homeMode === 'courses'
@@ -331,12 +371,17 @@ export function BrainWorkspace() {
           <button type="button" className="brain-text-button" onClick={() => go({ name: 'course', courseId: gap.id })}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
         </aside>)}
         <div className="brain-item-list" aria-label={c('Recent captures')}>
-          {orderedItems.map((item) => <BrainItemCard key={item.id} item={item} api={api} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
-          {orderedItems.length === 0 && !loadingOverview && <p className="brain-no-recent">{c('No recent sources yet.')}</p>}
+          {allSources.map((item) => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={courseColors.get(item.course_id ?? '')} recentlyFiled={newlyFiled.includes(item.id)} onItemChange={itemUpdate} />)}
+          {allSources.length === 0 && !loadingOverview && <p className="brain-no-recent">{c('No recent sources yet.')}</p>}
         </div>
+        {allSources.length > 0 && <div className="brain-show-more">
+          <p>{c('Showing {shown} of {total}').replace('{shown}', String(allSources.length)).replace('{total}', String(Math.max(totalSources, allSources.length)))}</p>
+          {canLoadOlder && <button type="button" className="brain-secondary-button" disabled={olderState === 'loading'} onClick={() => void loadOlder()}>{olderState === 'loading' ? c('Loading…') : c('Show more sources')}</button>}
+          {olderState === 'error' && <p role="alert" className="brain-item-action-error">{c('Could not load more sources. Try again.')}</p>}
+        </div>}
       </section>}
 
-      {view.name === 'course' && <CourseDetailView api={api} courseId={view.courseId} version={eventVersion.current}
+      {view.name === 'course' && <CourseDetailView api={api} catalog={catalog} courseId={view.courseId} version={eventVersion.current}
         onBack={() => go({ name: 'home' })} onStartExam={(courseId) => openExam(courseId, { name: 'course', courseId })} />}
 
       {view.name === 'exam' && <section className="brain-subpage">

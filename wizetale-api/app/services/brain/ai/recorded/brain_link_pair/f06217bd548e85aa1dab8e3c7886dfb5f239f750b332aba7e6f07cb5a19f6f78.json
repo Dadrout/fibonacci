@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.9,
+ "rationale": "Understanding heteroskedasticity is essential for seeing why standard errors become unreliable and biased in regression analysis."
+}

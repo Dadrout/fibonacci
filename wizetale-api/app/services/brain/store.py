@@ -182,6 +182,7 @@ class BrainStore:
         return {
             "items": count("brain_items", {"status": "eq.filed"}),
             "processing": count("brain_items", {"status": "in.(queued,extracting,classifying,linking)"}),
+            "failed": count("brain_items", {"status": "eq.failed"}),
         }
 
     # ------------------------------------------------------------------ chunks

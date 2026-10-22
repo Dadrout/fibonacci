@@ -6,7 +6,7 @@
  * answer opens that viewer at the returned source moment, with the reason shown inside it.
  */
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { ArrowLeft, BookOpen, CalendarDays, CirclePlay, Clock3, FilePlus2, Layers, ListChecks, PencilLine, RotateCcw, TriangleAlert, type LucideIcon } from 'lucide-react'
+import { ArrowLeft, BookOpen, CirclePlay, FilePlus2, Layers, ListChecks, PencilLine, RotateCcw, TriangleAlert, type LucideIcon } from 'lucide-react'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import type { BrainApi } from '@/lib/brain-api'
@@ -53,10 +53,11 @@ export function BrainExamPlan({ api, plan, course, presentation, onNewPlan }: {
   return <div className="brain-exam-plan" data-course-color={course?.color_index ?? 0}>
     <header className="brain-exam-plan-header">
       <div>
-        <p className="brain-section-kicker"><span className="brain-exam-course-dot" aria-hidden="true" />{course?.title ?? c('Exam plan')}</p>
         <h2 id="brain-exam-title" ref={headingRef} tabIndex={-1}>{content.title}</h2>
         <p className="brain-exam-plan-meta">
-          <span><CalendarDays size={16} aria-hidden="true" />{c('Exam on {date}').replace('{date}', formatPlanDate(plan.exam_date, language))}</span>
+          {course?.title && <><span>{course.title}</span><span aria-hidden="true">·</span></>}
+          <span>{c('Exam on {date}').replace('{date}', formatPlanDate(plan.exam_date, language))}</span>
+          <span aria-hidden="true">·</span>
           <span>{c(plan.days === 1 ? '1 day' : '{n} days').replace('{n}', String(plan.days))}</span>
         </p>
       </div>
@@ -106,9 +107,13 @@ function PlanDays({ days, onOpen, presentation, onStartQuiz }: { days: PlanDay[]
         return <li key={day.day} className="brain-exam-day">
           <article aria-labelledby={`brain-exam-day-${day.day}`}>
             <header>
-              <p className="brain-exam-day-label"><span>{c('Day {n}').replace('{n}', String(day.day))}</span>{day.date && <time dateTime={day.date}>{formatPlanDate(day.date, language)}</time>}</p>
               <h3 id={`brain-exam-day-${day.day}`}>{day.focus}</h3>
-              <p className="brain-exam-day-meta"><Clock3 size={15} aria-hidden="true" />{c('{n} min').replace('{n}', String(minutes))} · {c(day.tasks.length === 1 ? '1 task' : '{n} tasks').replace('{n}', String(day.tasks.length))}</p>
+              <p className="brain-exam-day-meta">
+                <span>{c('Day {n}').replace('{n}', String(day.day))}</span>
+                {day.date && <><span aria-hidden="true">·</span><time dateTime={day.date}>{formatPlanDate(day.date, language)}</time></>}
+                <span aria-hidden="true">·</span><span>{c('{n} min').replace('{n}', String(minutes))}</span>
+                <span aria-hidden="true">·</span><span>{c(day.tasks.length === 1 ? '1 task' : '{n} tasks').replace('{n}', String(day.tasks.length))}</span>
+              </p>
             </header>
             <ol className="brain-exam-tasks">
               {day.tasks.map(task => {
@@ -116,7 +121,7 @@ function PlanDays({ days, onOpen, presentation, onStartQuiz }: { days: PlanDay[]
                 return <li key={task.id} className="brain-exam-task">
                   <p className="brain-exam-task-kind"><span><Icon size={16} aria-hidden="true" />{c(TASK_KIND_LABEL[task.kind] ?? 'Recap')}</span><span>{c('{n} min').replace('{n}', String(task.minutes))}</span></p>
                   <p className="brain-exam-task-title">{task.title}</p>
-                  <SourceChips sources={task.sources} onOpen={onOpen} presentation={presentation} label={c('Sources for this task')} />
+                  <SourceChips sources={task.sources} limit={3} onOpen={onOpen} presentation={presentation} label={c('Sources for this task')} />
                 </li>
               })}
             </ol>
@@ -136,8 +141,7 @@ function PlanNotes({ content, onOpen, presentation }: { content: StudyPlanConten
       <h3 id={`brain-exam-note-${note.id}`}>{note.heading}</h3>
       <ul>
         {note.bullets.map((bullet, index) => <li key={index}>
-          <p>{bullet.text}</p>
-          <SourceChips sources={bullet.sources} onOpen={onOpen} presentation={presentation} />
+          <p>{bullet.text}{' '}<SourceChips inline sources={bullet.sources} onOpen={onOpen} presentation={presentation} /></p>
         </li>)}
       </ul>
     </section>)}
@@ -172,7 +176,7 @@ function PlanFlashcards({ cards, onOpen, presentation }: { cards: Flashcard[]; o
               </span>
             </span>
           </button>
-          <SourceChips sources={card.sources} onOpen={onOpen} presentation={presentation} />
+          <footer className="brain-exam-card-footer"><SourceChips sources={card.sources} onOpen={onOpen} presentation={presentation} /></footer>
         </li>
       })}
     </ul>

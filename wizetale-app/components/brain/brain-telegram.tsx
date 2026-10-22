@@ -97,14 +97,8 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
   const expired = Boolean(code) && secondsLeft === 0
   const countdown = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`
 
-  return <section className="brain-telegram" aria-labelledby="brain-telegram-title">
-    <div className="brain-inbox-heading">
-      <div>
-        <p className="brain-section-kicker">{c('Capture from your chats')}</p>
-        <h2 id="brain-telegram-title">{c('Send it from Telegram.')}</h2>
-        <p>{c('Forward slide photos, PDFs, lecture links, and voice notes to the Fibonacci bot. They are filed into your Brain within seconds.')}</p>
-      </div>
-    </div>
+  // Shown inside the Telegram dialog, whose title and description introduce it.
+  return <section className="brain-telegram" aria-label={c('Telegram')}>
 
     {error && <div className="brain-telegram-error">
       <p className="brain-item-action-error" role="alert"><TriangleAlert size={16} aria-hidden="true" />{c(error)}</p>

@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "applies",
+ "direction": "a_to_b",
+ "strength": 0.9,
+ "rationale": "The Goldfeld-Quandt test is specifically applied to detect the presence of heteroskedasticity in regression error terms."
+}

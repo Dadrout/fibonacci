@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.75,
+ "rationale": "The White test helps identify the heteroskedasticity that causes standard errors to be incorrectly estimated."
+}

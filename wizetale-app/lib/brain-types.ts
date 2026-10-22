@@ -236,7 +236,8 @@ export interface CourseDetail {
 
 /** GET /brain/overview — home/inbox header. */
 export interface BrainOverview {
-  counts: { items: number; courses: number; concepts: number; cross_links: number; processing: number }
+  /** items = filed sources; processing = still being read or filed; failed = need a retry. */
+  counts: { items: number; courses: number; concepts: number; cross_links: number; processing: number; failed?: number }
   recent_items: BrainItem[] // newest 20
   gaps: GapAlert[]
   telegram: TelegramStatus

@@ -1,20 +1,24 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
-import { AudioLines, Check, ChevronDown, FileText, Image as ImageIcon, Link2, RotateCw } from 'lucide-react'
+import { useId, useState } from 'react'
+import { ArrowRight, ArrowUpRight, AudioLines, Check, ChevronDown, FileText, Image as ImageIcon, Link2, RotateCw } from 'lucide-react'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
 import { courseColorSlot } from './brain-ui-state'
 import { formatBrainDate } from './brain-date'
 import type { BrainApi } from '@/lib/brain-api'
-import type { BrainItem, ItemStatus } from '@/lib/brain-types'
+import type { BrainCourse, BrainItem, BrainTopic, ItemStatus, RefileRequest } from '@/lib/brain-types'
 
 type BrainItemCardProps = {
   item: BrainItem
   api: BrainApi
   recentlyFiled?: boolean
   courseColor?: number
+  /** Courses and topics for "Move to…" when the suggestions are not right. */
+  catalog?: { courses: BrainCourse[]; topics: BrainTopic[] } | null
+  /** Hide "course → topic" where the page already shows it (the course page). */
+  showPath?: boolean
   onItemChange: (item: BrainItem) => void
 }
 
@@ -60,9 +64,17 @@ function requestForAlternative(alt: BrainItem['alternatives'][number]) {
   }
 }
 
-export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, onItemChange }: BrainItemCardProps) {
+export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, catalog = null, showPath = true, onItemChange }: BrainItemCardProps) {
   const c = useCopy()
   const { language } = useLanguage()
+  const moveId = useId()
+  const courses = catalog?.courses ?? []
+  const [moveCourse, setMoveCourse] = useState(item.course_id ?? '')
+  const [moveTopic, setMoveTopic] = useState(item.topic_id ?? '')
+  const targetCourse = moveCourse || item.course_id || courses[0]?.id || ''
+  const courseTopics = (catalog?.topics ?? []).filter(topic => topic.course_id === targetCourse)
+    .sort((a, b) => (a.sequence ?? 999) - (b.sequence ?? 999) || a.title.localeCompare(b.title))
+  const unchanged = targetCourse === item.course_id && (moveTopic || null) === item.topic_id
   const [action, setAction] = useState<'retry' | 'refile' | null>(null)
   const [actionError, setActionError] = useState('')
   const [showAlternatives, setShowAlternatives] = useState(false)
@@ -86,11 +98,11 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, o
     }
   }
 
-  const refile = async (alternative: BrainItem['alternatives'][number]) => {
+  const refile = async (request: RefileRequest) => {
     setAction('refile')
     setActionError('')
     try {
-      const result = await api.refile(item.id, requestForAlternative(alternative))
+      const result = await api.refile(item.id, request)
       onItemChange(result.item)
       setShowAlternatives(false)
     } catch {
@@ -107,9 +119,9 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, o
       </div>
       <div className="brain-item-content">
         <div className="brain-item-overline"><span className="brain-kind">{kindIcon(item.kind)}{c(kindLabel(item.kind))}</span><time dateTime={item.captured_at}>{formatBrainDate(new Date(item.captured_at), language, { month: 'short', day: 'numeric' })}</time></div>
-        <h2>{item.status === 'filed' && item.source_url ? <a href={item.source_url} target="_blank" rel="noopener noreferrer" aria-label={`${item.title} · ${c('Open original source')}`}>{item.title}<span aria-hidden="true"> ↗</span></a> : item.title}</h2>
+        <h2>{item.status === 'filed' && item.source_url ? <a href={item.source_url} target="_blank" rel="noopener noreferrer" aria-label={`${item.title} · ${c('Open original source')}`}>{item.title}<ArrowUpRight className="brain-external-icon" size={15} aria-hidden="true" /></a> : item.title}</h2>
         {item.status !== 'filed' && item.summary && <p className="brain-item-summary">{item.summary}</p>}
-        {item.status !== 'filed' && item.source_url && <a className="brain-source-link" href={item.source_url} target="_blank" rel="noopener noreferrer">{c('Open original source')}<span aria-hidden="true">↗</span></a>}
+        {item.status !== 'filed' && item.source_url && <a className="brain-source-link" href={item.source_url} target="_blank" rel="noopener noreferrer">{c('Open original source')}<ArrowUpRight size={14} aria-hidden="true" /></a>}
       </div>
       {item.status === 'filed' && <span className="brain-filed-mark" aria-label={c('Filed')}><Check size={19} aria-hidden="true" /></span>}
     </div>
@@ -134,20 +146,45 @@ export function BrainItemCard({ item, api, recentlyFiled = false, courseColor, o
       </ol>
     </div> : null}
 
-    {item.status === 'filed' && <div className="brain-filing-result">
-      <div className="brain-filing-path" role={recentlyFiled ? 'status' : undefined}><span><Check size={14} aria-hidden="true" />{c('Filed under')}</span><strong>{item.course_title || c('Course not identified')} <span aria-hidden="true">→</span> {item.topic_title || c('No topic yet')}</strong></div>
-      {confidence !== null && <div className={`brain-confidence${needsReview ? ' needs-review' : ''}`}>
-        <span>{needsReview ? c('Please review this match') : c('Filing confidence')}</span>
-        <strong aria-label={`${c('Filing confidence')}: ${confidence}%`}>{confidence}%</strong>
+    {item.status === 'filed' && <div className={`brain-filing-result${showPath ? '' : ' is-pathless'}`}>
+      {showPath && <div className="brain-filing-path" role={recentlyFiled ? 'status' : undefined}>
+        <Check size={15} aria-hidden="true" /><span className="sr-only">{c('Filed under')}</span>
+        <strong>{item.course_title || c('Course not identified')}<ArrowRight size={14} aria-hidden="true" />{item.topic_title || c('No topic yet')}</strong>
       </div>}
-      <details className="brain-refile" open={showAlternatives} onToggle={(event) => setShowAlternatives(event.currentTarget.open)}>
-        <summary><span>{c('Not right?')}</span><ChevronDown size={16} aria-hidden="true" /></summary>
-        <div className="brain-alternatives">
-          {item.alternatives.length ? item.alternatives.map((alt, index) => <button type="button" key={`${alt.course_id ?? alt.course_title}-${alt.topic_id ?? alt.topic_title}-${index}`} disabled={action !== null} onClick={() => void refile(alt)}>
-            <span>{alt.course_title}<span aria-hidden="true"> → </span>{alt.topic_title}</span><small>{Math.round(alt.confidence * 100)}% {c('match')}</small>
-          </button>) : <p>{c('No other filing suggestions yet.')}</p>}
-        </div>
-      </details>
+      <div className="brain-filing-meta">
+        {confidence !== null && <span className={`brain-confidence${needsReview ? ' needs-review' : ''}`}>
+          <span>{needsReview ? c('Please review this match') : c('Filing confidence')}</span>
+          <strong aria-label={`${c('Filing confidence')}: ${confidence}%`}>{confidence}%</strong>
+        </span>}
+        <details className="brain-refile" open={showAlternatives} onToggle={(event) => setShowAlternatives(event.currentTarget.open)}>
+          <summary><span>{c('Not right?')}</span><ChevronDown size={16} aria-hidden="true" /></summary>
+          <div className="brain-alternatives">
+            {item.alternatives.length > 0 && <>
+              <p className="brain-refile-label">{c('Suggestions')}</p>
+              {item.alternatives.map((alt, index) => <button type="button" key={`${alt.course_id ?? alt.course_title}-${alt.topic_id ?? alt.topic_title}-${index}`} disabled={action !== null} onClick={() => void refile(requestForAlternative(alt))}>
+                <span>{alt.course_title}<ArrowRight size={13} aria-hidden="true" />{alt.topic_title}</span><small>{Math.round(alt.confidence * 100)}% {c('match')}</small>
+              </button>)}
+            </>}
+            {courses.length > 0 ? <form className="brain-move" onSubmit={(event) => {
+              event.preventDefault()
+              if (!targetCourse || unchanged) return
+              void refile(moveTopic ? { course_id: targetCourse, topic_id: moveTopic } : { course_id: targetCourse })
+            }}>
+              <p className="brain-refile-label">{c('Move to')}</p>
+              <label htmlFor={`${moveId}-course`}>{c('Course')}</label>
+              <select id={`${moveId}-course`} value={targetCourse} onChange={(event) => { setMoveCourse(event.target.value); setMoveTopic('') }}>
+                {courses.map(course => <option key={course.id} value={course.id}>{course.title}</option>)}
+              </select>
+              <label htmlFor={`${moveId}-topic`}>{c('Topic')}</label>
+              <select id={`${moveId}-topic`} value={moveTopic} onChange={(event) => setMoveTopic(event.target.value)}>
+                <option value="">{c('Let Fibonacci choose the topic')}</option>
+                {courseTopics.map(topic => <option key={topic.id} value={topic.id}>{topic.title}</option>)}
+              </select>
+              <button type="submit" className="brain-primary-button" disabled={action !== null || unchanged}>{action === 'refile' ? c('Moving…') : c('Move')}</button>
+            </form> : !item.alternatives.length && <p>{c('No other filing suggestions yet.')}</p>}
+          </div>
+        </details>
+      </div>
     </div>}
     {actionError && <p className="brain-item-action-error" role="alert">{actionError}</p>}
   </article>

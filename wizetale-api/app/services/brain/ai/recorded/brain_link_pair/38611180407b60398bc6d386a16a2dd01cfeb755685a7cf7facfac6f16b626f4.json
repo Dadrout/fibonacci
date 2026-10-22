@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "The Goldfeld-Quandt test and the White test are alternative diagnostic methods used to test for heteroskedasticity under different assumptions."
+}

@@ -11,7 +11,7 @@ import { BrainItemCard } from '@/components/brain/brain-item-card'
 import { useCopy } from '@/hooks/use-copy'
 import './brain-courses.css'
 import type { BrainApi } from '@/lib/brain-api'
-import type { BrainGraph, BrainItem, CourseDetail, GapAlert, SequenceKind } from '@/lib/brain-types'
+import type { BrainCourse, BrainGraph, BrainItem, BrainTopic, CourseDetail, GapAlert, SequenceKind } from '@/lib/brain-types'
 
 const SEQUENCE_LABEL: Record<SequenceKind, string> = { week: 'Week {n}', lecture: 'Lecture {n}', chapter: 'Chapter {n}', module: 'Module {n}' }
 const MISSING_LABEL: Record<SequenceKind, string> = {
@@ -40,12 +40,9 @@ export function CourseGrid({ graph, gaps, onOpen, onExam }: {
       const missing = gaps.filter(gap => gap.course_id === course.id)
       return <li key={course.id}>
         <article className="brain-course-card" data-course-color={course.color_index} aria-labelledby={`course-card-${course.id}`}>
-          <span className="brain-course-card-top">
-            <span className="brain-course-swatch" aria-hidden="true" />
-            {course.code && <span className="brain-course-code">{course.code}</span>}
-          </span>
-          <h3 id={`course-card-${course.id}`}><button type="button" className="brain-course-title" onClick={() => onOpen(course.id)}>{course.title}</button></h3>
+          <h3 id={`course-card-${course.id}`}><span className="brain-course-swatch" aria-hidden="true" /><button type="button" className="brain-course-title" onClick={() => onOpen(course.id)}>{course.title}</button></h3>
           <span className="brain-course-counts">
+            {course.code && <span className="brain-course-code">{course.code}</span>}
             <span><b>{course.item_count}</b> {c('sources')}</span>
             <span><b>{course.topic_count}</b> {c('topics')}</span>
             <span><b>{course.concept_count}</b> {c('concepts')}</span>
@@ -53,8 +50,8 @@ export function CourseGrid({ graph, gaps, onOpen, onExam }: {
           {missing.length > 0 && <span className="brain-course-gap"><TriangleAlert size={15} aria-hidden="true" />
             {missing.map(gap => c(MISSING_LABEL[gap.sequence_kind]).replace('{n}', String(gap.missing))).join(' · ')}</span>}
           <span className="brain-course-actions">
-            <button type="button" className="brain-secondary-button" onClick={() => onOpen(course.id)}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
             <button type="button" className="brain-primary-button" onClick={() => onExam(course.id)}><GraduationCap size={17} aria-hidden="true" />{c('Exam in 3 days')}</button>
+            <button type="button" className="brain-secondary-button" onClick={() => onOpen(course.id)}>{c('Open course')}<ChevronRight size={16} aria-hidden="true" /></button>
           </span>
         </article>
       </li>
@@ -63,8 +60,9 @@ export function CourseGrid({ graph, gaps, onOpen, onExam }: {
 }
 
 /** Full course page: topics in order with their sources, inline gaps, and the exam entry. */
-export function CourseDetailView({ api, courseId, version, onBack, onStartExam }: {
-  api: BrainApi; courseId: string; version: number; onBack: () => void; onStartExam: (courseId: string) => void
+export function CourseDetailView({ api, catalog = null, courseId, version, onBack, onStartExam }: {
+  api: BrainApi; catalog?: { courses: BrainCourse[]; topics: BrainTopic[] } | null; courseId: string; version: number
+  onBack: () => void; onStartExam: (courseId: string) => void
 }) {
   const c = useCopy()
   const [detail, setDetail] = useState<CourseDetail | null>(null)
@@ -143,7 +141,6 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
     <button type="button" className="brain-text-button brain-course-back" onClick={onBack}><ArrowLeft size={16} aria-hidden="true" />{c('Back to your Brain')}</button>
     <header className="brain-course-header">
       <div>
-        <p className="brain-section-kicker">{course.code ?? c('Course')}</p>
         <div className="brain-course-title-row">
           <h2 id="brain-course-title">{course.title}</h2>
           {!renaming && <button ref={renameButton} type="button" className="brain-text-button" onClick={() => { setTitle(course.title); setRenameError(null); setRenaming(true) }}>{c('Rename')}</button>}
@@ -161,6 +158,7 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
           {renameError && <p id="brain-course-rename-error" className="brain-item-action-error" role="alert">{c(renameError)}</p>}
         </form>}
         <p className="brain-course-counts">
+          {course.code && <span className="brain-course-code">{course.code}</span>}
           <span><b>{course.item_count}</b> {c('sources')}</span>
           <span><b>{course.topic_count}</b> {c('topics')}</span>
           <span><b>{course.concept_count}</b> {c('concepts')}</span>
@@ -184,7 +182,7 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
               <span className="brain-topic-meta">{items.length} {c('sources')} · {topic.concept_count} {c('concepts')}</span>
             </header>
             {items.length > 0
-              ? <div className="brain-item-list">{items.map(item => <BrainItemCard key={item.id} item={item} api={api} courseColor={course.color_index} onItemChange={replaceItem} />)}</div>
+              ? <div className="brain-item-list">{items.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} showPath={false} courseColor={course.color_index} onItemChange={replaceItem} />)}</div>
               : <p className="brain-no-recent">{c('No sources in this topic yet.')}</p>}
           </section>
         </li>
@@ -194,7 +192,7 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
 
     {detail.loose_items.length > 0 && <section className="brain-topic" aria-labelledby="brain-loose-title">
       <header><h3 id="brain-loose-title">{c('Not in a topic yet')}</h3></header>
-      <div className="brain-item-list">{detail.loose_items.map(item => <BrainItemCard key={item.id} item={item} api={api} courseColor={course.color_index} onItemChange={replaceItem} />)}</div>
+      <div className="brain-item-list">{detail.loose_items.map(item => <BrainItemCard key={item.id} item={item} api={api} catalog={catalog} courseColor={course.color_index} onItemChange={replaceItem} />)}</div>
     </section>}
   </section>
 }

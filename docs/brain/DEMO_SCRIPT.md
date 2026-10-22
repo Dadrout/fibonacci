@@ -37,7 +37,7 @@ Status: **rehearsed — 3 full UI runs in a row passed (R7–R9), plus an offlin
 | 0:00 | Brain inbox on the projector | Demo student's brain: 3 courses, 38 sources | "This is Aruzhan's second brain. She never organized any of it." |
 | 0:08 | Forwards the **slide photo, YouTube link, PDF** to the bot (one after another) | Three cards appear instantly (*Reading → Filing → Linking*) | "I'm forwarding a blurry photo of a slide, a lecture link, and a PDF — straight from Telegram." |
 | 0:15 | — | Each card lands on **Econometrics → Heteroskedasticity** with confidence; the bot replies "Filed under Econometrics → Heteroskedasticity ✓" | "No folders. It read the slide, transcribed the lecture, and filed all three under Week 6." |
-| 0:25 | Under *Your courses*, switch **Courses → Map** | New Week 6 cluster; a **cross-course link** lights up Econometrics ↔ Probability (e.g. Heteroskedasticity ↔ Variance / Standard error) | "And it noticed that this is the same variance she learned in Probability." |
+| 0:25 | Press **See on the map** in the *New connections* panel (or switch **Courses → Map** under *Your courses*) | New Week 6 cluster; a **cross-course link** lights up Econometrics ↔ Probability (e.g. Heteroskedasticity ↔ Variance / Standard error) | "And it noticed that this is the same variance she learned in Probability." |
 | 0:40 | Back to **Courses**, tap **Exam in 3 days** on the Econometrics card (one tap — the plan builds immediately) | Day-by-day plan + quiz; every line has a source chip (slide 7, page 4, 14:32) | "One tap: a three-day plan and a quiz built only from her own material — every line cites where it came from." |
 | 0:55 | Open **Quiz**, answer a question **wrong** (pick "coefficients become biased") | *See where this was explained* → **slide 7** of her photo opens (or the video at the cited timestamp) | "Wrong answer? It takes her to the exact slide — the one she photographed — that explains it." |
 | 1:10 | Back to your Brain; point at the Econometrics card | **"Week 7 is missing"** chip on the card (and in the plan's coverage line) | "And it knows what's missing: she has weeks 1 to 8 — except 7." |
@@ -73,6 +73,7 @@ Measured backend timings (local stack, 2026-10-22): three items filed in **7.7�
 | **R8** | 2026-10-22 05:0x | Full UI, recorded | ✅ filed 1.8 s · 5 new links · Week 7 gap · plan 0.9 s · moment opened · 0 page errors | `rehearsal-r8-*` |
 | **R9** | 2026-10-22 05:0x | Full UI, recorded | ✅ filed 1.8 s · 5 new links · Week 7 gap · plan 0.4 s · moment opened · 0 page errors | `rehearsal-r9-*` — three in a row ✅ |
 | **R10** | 2026-10-22 05:1x | Full UI, **no AI key**, AI cache cleared | ✅ filed 1.9 s · 5 new links · Week 7 gap · plan 0.6 s · moment opened | Proves the "Wi-Fi down" backup: recorded outputs alone carry the whole demo |
+| **R12–R14** | 2026-10-22 06:4x | Full UI after the design polish (D19) | ✅ ×3 in a row: filed 1.6 s · 5 new links · Week 7 gap · plan 0.3–0.4 s · moment opened · 0 page errors | New layout: compact source rows, one *New connections* panel, compact citations |
 
 Not yet rehearsed: forwarding through Telegram from the presenter's phone (needs the phone linked once — see §4). The rehearsals above send the same three files through the web capture path, which runs the same pipeline.
 

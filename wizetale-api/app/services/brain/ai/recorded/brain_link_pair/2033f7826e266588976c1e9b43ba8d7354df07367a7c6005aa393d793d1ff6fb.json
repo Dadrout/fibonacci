@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.85,
+ "rationale": "Standard errors remain reliable under homoskedasticity, whereas heteroskedasticity causes them to become underrepresented and unreliable."
+}

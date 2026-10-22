@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.75,
+ "rationale": "Detecting heteroskedasticity with the Breusch-Pagan test can guide your decision to use weighted least squares to correct it."
+}

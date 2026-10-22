@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "builds_on",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "The Goldfeld-Quandt test checks the null hypothesis of homoskedasticity against the alternative of changing error variance."
+}

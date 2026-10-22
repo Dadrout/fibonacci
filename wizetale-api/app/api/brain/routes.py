@@ -108,7 +108,7 @@ async def overview(uid: str = Depends(owner), user: dict = Depends(brain_user)):
         from app.services.brain.telegram import linking
 
         return {
-            "counts": {"items": counts["items"], "processing": counts["processing"], "courses": len(catalog.courses),
+            "counts": {"items": counts["items"], "processing": counts["processing"], "failed": counts.get("failed", 0), "courses": len(catalog.courses),
                        "concepts": len(catalog.concepts), "cross_links": sum(1 for l in catalog.graph["links"] if l["cross_course"])},
             "recent_items": catalog.items(recent), "gaps": gap_alerts(catalog.graph),
             "telegram": linking.status(uid), "demo_mode": bool(user.get("demo")) or settings.DEMO_MODE,

@@ -78,15 +78,14 @@ export function BrainSearch({ api, courses, onOpenConcept, presentation = false 
             ? <li key={`k-${hit.concept.id}`}>
               <button type="button" className="brain-search-hit" data-course-color={courseOf(hit.concept.course_id)?.color_index ?? 0}
                 onClick={() => { setOpen(false); onOpenConcept(hit.concept.id) }}>
-                <span className="brain-search-kind">{c('Concept')}</span>
-                <strong>{hit.concept.name}</strong>
-                <span className="brain-search-meta">{courseOf(hit.concept.course_id)?.title}</span>
+                <strong><span className="brain-search-dot" aria-hidden="true" />{hit.concept.name}</strong>
+                <span className="brain-search-meta">{c('Concept')}{courseOf(hit.concept.course_id) ? ` · ${courseOf(hit.concept.course_id)?.title}` : ''}</span>
                 <span className="brain-search-summary">{hit.concept.summary}</span>
               </button>
             </li>
             : <li key={`p-${hit.source.chunk_id}`} className="brain-search-passage" data-course-color={courseOf(hit.source.course_id)?.color_index ?? 0}>
-              <span className="brain-search-kind">{courseOf(hit.source.course_id)?.title ?? c('Source')}</span>
-              <strong>{hit.source.item_title}</strong>
+              <strong><span className="brain-search-dot" aria-hidden="true" />{hit.source.item_title}</strong>
+              <span className="brain-search-meta">{courseOf(hit.source.course_id)?.title ?? c('Source')}</span>
               <span className="brain-search-summary">“{hit.source.quote}”</span>
               <CitationChip source={hit.source} onOpen={setViewing} presentation={presentation} />
             </li>)}

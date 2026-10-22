@@ -77,6 +77,9 @@ export const examCopy: Record<string, [string, string]> = {
   'Show answer': ['Показать ответ', 'Жауабын көрсету'],
   'Show question': ['Показать вопрос', 'Сұрақты көрсету'],
 
+  '+{n} more': ['Ещё {n}', 'Тағы {n}'],
+  'Show fewer sources': ['Свернуть источники', 'Дереккөздерді жию'],
+
   // Quiz + mistake → moment
   'This plan has no quiz questions.': ['В этом плане нет вопросов теста.', 'Бұл жоспарда тест сұрақтары жоқ.'],
   'Question {n}': ['Вопрос {n}', '{n}-сұрақ'],

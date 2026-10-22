@@ -22,7 +22,7 @@ export function CitationChip({ source, onOpen, presentation = false }: { source:
   const label = useSourceLabel(source)
   const [open, setOpen] = useState(false)
   return <>
-    <button type="button" className="brain-citation-chip" aria-label={`${label} · ${source.item_title}`} onClick={() => onOpen ? onOpen(source) : setOpen(true)}>
+    <button type="button" className={`brain-citation-chip${presentation ? ' is-presentation' : ''}`} aria-label={`${label} · ${source.item_title}`} onClick={() => onOpen ? onOpen(source) : setOpen(true)}>
       <Quote size={15} aria-hidden="true" /><span>{label}</span>
     </button>
     {!onOpen && <SourceViewer source={open ? source : null} onClose={() => setOpen(false)} presentation={presentation} />}

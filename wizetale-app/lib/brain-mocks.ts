@@ -529,6 +529,7 @@ export class MockBrain {
         concepts: this.concepts.size,
         cross_links: [...this.links.values()].filter((l) => l.cross_course).length,
         processing: items.filter((i) => !['filed', 'failed'].includes(i.status)).length,
+        failed: items.filter((i) => i.status === 'failed').length,
       },
       recent_items: items.slice(0, 20),
       gaps: this.gaps(),

@@ -1,0 +1,8 @@
+{
+ "pair": 0,
+ "related": true,
+ "relation": "contrasts",
+ "direction": "a_to_b",
+ "strength": 0.8,
+ "rationale": "Both are diagnostic tests for heteroskedasticity, offering alternative approaches to checking variance assumptions in regression models."
+}

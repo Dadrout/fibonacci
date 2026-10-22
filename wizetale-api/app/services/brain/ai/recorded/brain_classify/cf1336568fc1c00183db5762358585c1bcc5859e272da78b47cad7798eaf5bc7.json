@@ -1,0 +1,46 @@
+{
+ "title": "Lecture — Heteroskedasticity",
+ "summary": "Covers the definition of heteroskedasticity, its consequences for OLS estimation, methods for detection, and potential corrections.",
+ "language": "en-US",
+ "placement": {
+  "course_id": null,
+  "course_title": "Econometrics",
+  "course_code": null,
+  "topic_id": null,
+  "topic_title": "Heteroskedasticity",
+  "sequence": null,
+  "sequence_kind": null,
+  "confidence": 0.85
+ },
+ "alternatives": [],
+ "concepts": [
+  {
+   "name": "Homoskedasticity",
+   "summary": "Homoskedasticity assumes that the error variance conditional on explanatory variables is constant.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the error variance changes across observations with the explanatory variables.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Breusch-Pagan test",
+   "summary": "The Breusch-Pagan test is a statistical method used to detect heteroskedasticity in regression models.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "White test",
+   "summary": "The White test detects heteroskedasticity by checking if the squared residuals depend on the regressors and their squares and cross-products.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}
