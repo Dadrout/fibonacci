@@ -1,0 +1,3179 @@
+{
+ "meta": {
+  "title": "What is Heteroskedasticity?",
+  "author_name": "zedstatistics",
+  "author_url": "https://www.youtube.com/@zedstatistics",
+  "type": "video",
+  "height": 113,
+  "width": 200,
+  "version": "1.0",
+  "provider_name": "YouTube",
+  "provider_url": "https://www.youtube.com/",
+  "thumbnail_height": 360,
+  "thumbnail_width": 480,
+  "thumbnail_url": "https://i.ytimg.com/vi/2xcUup_-K6c/hqdefault.jpg",
+  "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/2xcUup_-K6c?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"What is Heteroskedasticity?\"></iframe>"
+ },
+ "segments": [
+  {
+   "start_sec": 0.0,
+   "end_sec": 5.43,
+   "text": "hi guys it's Justin zeltser here from"
+  },
+  {
+   "start_sec": 2.61,
+   "end_sec": 7.68,
+   "text": "Zed statistics now doing a suite of"
+  },
+  {
+   "start_sec": 5.43,
+   "end_sec": 10.92,
+   "text": "videos looking at the assumptions"
+  },
+  {
+   "start_sec": 7.68,
+   "end_sec": 13.59,
+   "text": "underlying regression and more to the"
+  },
+  {
+   "start_sec": 10.92,
+   "end_sec": 17.609,
+   "text": "point what happens when we violate those"
+  },
+  {
+   "start_sec": 13.59,
+   "end_sec": 20.1,
+   "text": "assumptions so this first video is to do"
+  },
+  {
+   "start_sec": 17.609,
+   "end_sec": 22.859,
+   "text": "with heteroscedasticity that's the name"
+  },
+  {
+   "start_sec": 20.1,
+   "end_sec": 24.39,
+   "text": "of the game today and in this video"
+  },
+  {
+   "start_sec": 22.859,
+   "end_sec": 26.160000000000004,
+   "text": "we're going to be looking at the"
+  },
+  {
+   "start_sec": 24.39,
+   "end_sec": 28.109,
+   "text": "technical definition of"
+  },
+  {
+   "start_sec": 26.16,
+   "end_sec": 29.91,
+   "text": "heteroscedasticity we'll be asking"
+  },
+  {
+   "start_sec": 28.109,
+   "end_sec": 32.099000000000004,
+   "text": "ourselves why we care about it in the"
+  },
+  {
+   "start_sec": 29.91,
+   "end_sec": 34.230000000000004,
+   "text": "first place at all"
+  },
+  {
+   "start_sec": 32.099,
+   "end_sec": 38.43,
+   "text": "we'll discuss three different ways of"
+  },
+  {
+   "start_sec": 34.23,
+   "end_sec": 41.25,
+   "text": "detecting it in your data from very"
+  },
+  {
+   "start_sec": 38.43,
+   "end_sec": 44.789,
+   "text": "simple ways to more statistically robust"
+  },
+  {
+   "start_sec": 41.25,
+   "end_sec": 46.559,
+   "text": "means of detection and then incidentally"
+  },
+  {
+   "start_sec": 44.789,
+   "end_sec": 50.25,
+   "text": "we'll have three different remedies we"
+  },
+  {
+   "start_sec": 46.559,
+   "end_sec": 52.86,
+   "text": "can utilize to correct for"
+  },
+  {
+   "start_sec": 50.25,
+   "end_sec": 54.480000000000004,
+   "text": "heteroscedasticity and finally I'll"
+  },
+  {
+   "start_sec": 52.86,
+   "end_sec": 57.36,
+   "text": "provide you with a few real-world"
+  },
+  {
+   "start_sec": 54.48,
+   "end_sec": 62.899,
+   "text": "examples of where heteroscedasticity"
+  },
+  {
+   "start_sec": 57.36,
+   "end_sec": 62.899,
+   "text": "would exist so let's tuck in shall we"
+  },
+  {
+   "start_sec": 64.07,
+   "end_sec": 69.80999999999999,
+   "text": "now the example we are going to be using"
+  },
+  {
+   "start_sec": 66.39,
+   "end_sec": 72.84,
+   "text": "in this video is of Sydney property sale"
+  },
+  {
+   "start_sec": 69.81,
+   "end_sec": 74.88,
+   "text": "prices and we've got the sale price the"
+  },
+  {
+   "start_sec": 72.84,
+   "end_sec": 78.99000000000001,
+   "text": "house sale price here on the left in"
+  },
+  {
+   "start_sec": 74.88,
+   "end_sec": 82.79899999999999,
+   "text": "millions of Australian dollars and a lot"
+  },
+  {
+   "start_sec": 78.99,
+   "end_sec": 84.689,
+   "text": "size on the bottom here the theory"
+  },
+  {
+   "start_sec": 82.799,
+   "end_sec": 87.27000000000001,
+   "text": "obviously being that for a greater lot"
+  },
+  {
+   "start_sec": 84.689,
+   "end_sec": 89.13,
+   "text": "size you might expect a larger house"
+  },
+  {
+   "start_sec": 87.27,
+   "end_sec": 90.92999999999999,
+   "text": "price but of course there's a whole lot"
+  },
+  {
+   "start_sec": 89.13,
+   "end_sec": 93.479,
+   "text": "of other variables that will intervene"
+  },
+  {
+   "start_sec": 90.93,
+   "end_sec": 95.46000000000001,
+   "text": "in that relationship such as location"
+  },
+  {
+   "start_sec": 93.479,
+   "end_sec": 97.35,
+   "text": "for example but we're gonna keep it real"
+  },
+  {
+   "start_sec": 95.46,
+   "end_sec": 100.02,
+   "text": "simple in this video we're just gonna"
+  },
+  {
+   "start_sec": 97.35,
+   "end_sec": 105.17999999999999,
+   "text": "look at house price as a function of lot"
+  },
+  {
+   "start_sec": 100.02,
+   "end_sec": 109.28999999999999,
+   "text": "size so what's the technical definition"
+  },
+  {
+   "start_sec": 105.18,
+   "end_sec": 112.71000000000001,
+   "text": "of heteroscedasticity well it's said to"
+  },
+  {
+   "start_sec": 109.29,
+   "end_sec": 116.79,
+   "text": "occur when the variance of Y given X is"
+  },
+  {
+   "start_sec": 112.71,
+   "end_sec": 118.5,
+   "text": "not constant so looking back at our plot"
+  },
+  {
+   "start_sec": 116.79,
+   "end_sec": 121.38000000000001,
+   "text": "here on our left that's our scatter plot"
+  },
+  {
+   "start_sec": 118.5,
+   "end_sec": 123.479,
+   "text": "of the house prices versus a lot size if"
+  },
+  {
+   "start_sec": 121.38,
+   "end_sec": 127.11,
+   "text": "we're going to assess the variance of Y"
+  },
+  {
+   "start_sec": 123.479,
+   "end_sec": 129.78,
+   "text": "given X it's often good to put together"
+  },
+  {
+   "start_sec": 127.11,
+   "end_sec": 131.819,
+   "text": "a residual plot so to do that imagine"
+  },
+  {
+   "start_sec": 129.78,
+   "end_sec": 133.44,
+   "text": "you've drawn a line of best fit through"
+  },
+  {
+   "start_sec": 131.819,
+   "end_sec": 136.98,
+   "text": "our left plot"
+  },
+  {
+   "start_sec": 133.44,
+   "end_sec": 141.15,
+   "text": "over here and in doing so we create an"
+  },
+  {
+   "start_sec": 136.98,
+   "end_sec": 144.95999999999998,
+   "text": "expected value of y along that line for"
+  },
+  {
+   "start_sec": 141.15,
+   "end_sec": 147.33,
+   "text": "a given value of x now if you take that"
+  },
+  {
+   "start_sec": 144.96,
+   "end_sec": 149.43,
+   "text": "line and kind of bend it sideways so"
+  },
+  {
+   "start_sec": 147.33,
+   "end_sec": 151.68,
+   "text": "that it's horizontal you'll get what's"
+  },
+  {
+   "start_sec": 149.43,
+   "end_sec": 153.54000000000002,
+   "text": "called a residual plot so these points"
+  },
+  {
+   "start_sec": 151.68,
+   "end_sec": 155.4,
+   "text": "here represent the distance from that"
+  },
+  {
+   "start_sec": 153.54,
+   "end_sec": 157.79999999999998,
+   "text": "line of best fit for each of the"
+  },
+  {
+   "start_sec": 155.4,
+   "end_sec": 158.70000000000002,
+   "text": "observations and you can really in a"
+  },
+  {
+   "start_sec": 157.8,
+   "end_sec": 161.01000000000002,
+   "text": "sense that especially at the beginning"
+  },
+  {
+   "start_sec": 158.7,
+   "end_sec": 163.53,
+   "text": "as you increase your value of x the"
+  },
+  {
+   "start_sec": 161.01,
+   "end_sec": 165.35999999999999,
+   "text": "variance of Y which is kind of like that"
+  },
+  {
+   "start_sec": 163.53,
+   "end_sec": 168.96,
+   "text": "vertical distance the vertical spread"
+  },
+  {
+   "start_sec": 165.36,
+   "end_sec": 170.79000000000002,
+   "text": "keeps increasing arguably it might sort"
+  },
+  {
+   "start_sec": 168.96,
+   "end_sec": 172.71,
+   "text": "of stop around here but nonetheless"
+  },
+  {
+   "start_sec": 170.79,
+   "end_sec": 176.28,
+   "text": "there appears to be this increasing"
+  },
+  {
+   "start_sec": 172.71,
+   "end_sec": 178.02,
+   "text": "variance of Y as x increases across the"
+  },
+  {
+   "start_sec": 176.28,
+   "end_sec": 181.61,
+   "text": "vertical cross sections become more and"
+  },
+  {
+   "start_sec": 178.02,
+   "end_sec": 185.13000000000002,
+   "text": "more spread out and that's known as"
+  },
+  {
+   "start_sec": 181.61,
+   "end_sec": 187.76000000000002,
+   "text": "heteroscedasticity hetro meaning more"
+  },
+  {
+   "start_sec": 185.13,
+   "end_sec": 190.71,
+   "text": "than one and skin s tissa t meaning well"
+  },
+  {
+   "start_sec": 187.76,
+   "end_sec": 192.39,
+   "text": "variance for whatever reason in fact if"
+  },
+  {
+   "start_sec": 190.71,
+   "end_sec": 194.13,
+   "text": "you know where the words get as disa d"
+  },
+  {
+   "start_sec": 192.39,
+   "end_sec": 195.66,
+   "text": "comes from feel free to write a comment"
+  },
+  {
+   "start_sec": 194.13,
+   "end_sec": 197.459,
+   "text": "down at the bottom of this video because"
+  },
+  {
+   "start_sec": 195.66,
+   "end_sec": 201.78,
+   "text": "i am keen to know because that's a"
+  },
+  {
+   "start_sec": 197.459,
+   "end_sec": 203.51,
+   "text": "ridiculous word nonetheless this"
+  },
+  {
+   "start_sec": 201.78,
+   "end_sec": 206.43,
+   "text": "relationship suffers from"
+  },
+  {
+   "start_sec": 203.51,
+   "end_sec": 207.54,
+   "text": "heteroscedasticity I'm going to just"
+  },
+  {
+   "start_sec": 206.43,
+   "end_sec": 209.52,
+   "text": "provide you with a couple of other"
+  },
+  {
+   "start_sec": 207.54,
+   "end_sec": 211.62,
+   "text": "examples of heteroscedastic"
+  },
+  {
+   "start_sec": 209.52,
+   "end_sec": 214.83,
+   "text": "relationships between theoretical"
+  },
+  {
+   "start_sec": 211.62,
+   "end_sec": 216.03,
+   "text": "variables Y and X so in our scatter plot"
+  },
+  {
+   "start_sec": 214.83,
+   "end_sec": 217.95000000000002,
+   "text": "on the left here you can see you've"
+  },
+  {
+   "start_sec": 216.03,
+   "end_sec": 219.84,
+   "text": "almost got this positive relationship"
+  },
+  {
+   "start_sec": 217.95,
+   "end_sec": 221.73,
+   "text": "between y and x but if we were to look"
+  },
+  {
+   "start_sec": 219.84,
+   "end_sec": 223.26,
+   "text": "at the residuals you definitely get a"
+  },
+  {
+   "start_sec": 221.73,
+   "end_sec": 225.69,
+   "text": "sense that there's a sort of bowtie"
+  },
+  {
+   "start_sec": 223.26,
+   "end_sec": 229.04999999999998,
+   "text": "effect where the smaller variances exist"
+  },
+  {
+   "start_sec": 225.69,
+   "end_sec": 230.57999999999998,
+   "text": "for sort of mean values of X and as X"
+  },
+  {
+   "start_sec": 229.05,
+   "end_sec": 233.91000000000003,
+   "text": "gets a bit more extreme on both sides"
+  },
+  {
+   "start_sec": 230.58,
+   "end_sec": 236.73000000000002,
+   "text": "you get a larger variance and that's"
+  },
+  {
+   "start_sec": 233.91,
+   "end_sec": 239.07,
+   "text": "still heteroscedastic although perhaps a"
+  },
+  {
+   "start_sec": 236.73,
+   "end_sec": 243.0,
+   "text": "different form for now property price"
+  },
+  {
+   "start_sec": 239.07,
+   "end_sec": 244.92,
+   "text": "example you might see something like"
+  },
+  {
+   "start_sec": 243.0,
+   "end_sec": 246.72,
+   "text": "this which is almost the reverse you've"
+  },
+  {
+   "start_sec": 244.92,
+   "end_sec": 248.39999999999998,
+   "text": "got this funnel going the other way"
+  },
+  {
+   "start_sec": 246.72,
+   "end_sec": 250.44,
+   "text": "where if you look at our residual plot"
+  },
+  {
+   "start_sec": 248.4,
+   "end_sec": 253.92000000000002,
+   "text": "here the variance is larger for small"
+  },
+  {
+   "start_sec": 250.44,
+   "end_sec": 255.84,
+   "text": "values of X so I guess I'm just trying"
+  },
+  {
+   "start_sec": 253.92,
+   "end_sec": 257.959,
+   "text": "to show you that there's not one size"
+  },
+  {
+   "start_sec": 255.84,
+   "end_sec": 263.07,
+   "text": "fits all for"
+  },
+  {
+   "start_sec": 257.959,
+   "end_sec": 266.52,
+   "text": "heteroskedastic errors this particular"
+  },
+  {
+   "start_sec": 263.07,
+   "end_sec": 267.15999999999997,
+   "text": "example has a kind of might you might"
+  },
+  {
+   "start_sec": 266.52,
+   "end_sec": 269.22999999999996,
+   "text": "argue"
+  },
+  {
+   "start_sec": 267.16,
+   "end_sec": 271.3,
+   "text": "as a constant variance up into a point"
+  },
+  {
+   "start_sec": 269.23,
+   "end_sec": 274.36,
+   "text": "and then it blows out after a certain"
+  },
+  {
+   "start_sec": 271.3,
+   "end_sec": 275.98,
+   "text": "value of X and that could happen in real"
+  },
+  {
+   "start_sec": 274.36,
+   "end_sec": 277.54,
+   "text": "life I mean say you're taking some"
+  },
+  {
+   "start_sec": 275.98,
+   "end_sec": 281.73,
+   "text": "measurements from a rocket or something"
+  },
+  {
+   "start_sec": 277.54,
+   "end_sec": 284.92,
+   "text": "like that and at some speed the rocket"
+  },
+  {
+   "start_sec": 281.73,
+   "end_sec": 287.38,
+   "text": "engages another engine you can see I"
+  },
+  {
+   "start_sec": 284.92,
+   "end_sec": 289.09000000000003,
+   "text": "don't know anything about mechanics or"
+  },
+  {
+   "start_sec": 287.38,
+   "end_sec": 291.04,
+   "text": "engineering but you can imagine that"
+  },
+  {
+   "start_sec": 289.09,
+   "end_sec": 293.97999999999996,
+   "text": "there would be some scenario where after"
+  },
+  {
+   "start_sec": 291.04,
+   "end_sec": 301.63,
+   "text": "a certain point of X your variance blows"
+  },
+  {
+   "start_sec": 293.98,
+   "end_sec": 304.0,
+   "text": "out like this so in reality we're"
+  },
+  {
+   "start_sec": 301.63,
+   "end_sec": 306.1,
+   "text": "looking for something a little bit like"
+  },
+  {
+   "start_sec": 304.0,
+   "end_sec": 312.07,
+   "text": "this in our residual plot and this is"
+  },
+  {
+   "start_sec": 306.1,
+   "end_sec": 314.46000000000004,
+   "text": "what's called homoscedasticity the error"
+  },
+  {
+   "start_sec": 312.07,
+   "end_sec": 317.77,
+   "text": "terms or the residuals to be"
+  },
+  {
+   "start_sec": 314.46,
+   "end_sec": 319.46999999999997,
+   "text": "homoscedasticity a nice even spread of"
+  },
+  {
+   "start_sec": 317.77,
+   "end_sec": 323.04999999999995,
+   "text": "these error terms"
+  },
+  {
+   "start_sec": 319.47,
+   "end_sec": 327.82000000000005,
+   "text": "so if our regression violates this we're"
+  },
+  {
+   "start_sec": 323.05,
+   "end_sec": 330.85,
+   "text": "gonna have problems so let's find out"
+  },
+  {
+   "start_sec": 327.82,
+   "end_sec": 334.33,
+   "text": "what problems we're going to have why do"
+  },
+  {
+   "start_sec": 330.85,
+   "end_sec": 336.34000000000003,
+   "text": "we care about this at all or more"
+  },
+  {
+   "start_sec": 334.33,
+   "end_sec": 339.07,
+   "text": "specifically what happens if we just run"
+  },
+  {
+   "start_sec": 336.34,
+   "end_sec": 342.23999999999995,
+   "text": "the model and ignore the violation of"
+  },
+  {
+   "start_sec": 339.07,
+   "end_sec": 342.24,
+   "text": "this regression assumption"
+  },
+  {
+   "start_sec": 343.57,
+   "end_sec": 348.52,
+   "text": "so we've got heteroscedasticity and we"
+  },
+  {
+   "start_sec": 346.42,
+   "end_sec": 352.78000000000003,
+   "text": "run property price as a function of lot"
+  },
+  {
+   "start_sec": 348.52,
+   "end_sec": 356.10999999999996,
+   "text": "size let's draw a line of best fit"
+  },
+  {
+   "start_sec": 352.78,
+   "end_sec": 359.04999999999995,
+   "text": "because that really in reality is what a"
+  },
+  {
+   "start_sec": 356.11,
+   "end_sec": 360.49,
+   "text": "regression is now if you've just come to"
+  },
+  {
+   "start_sec": 359.05,
+   "end_sec": 362.41,
+   "text": "this video cold you might want to have a"
+  },
+  {
+   "start_sec": 360.49,
+   "end_sec": 365.14,
+   "text": "look at my first few videos on"
+  },
+  {
+   "start_sec": 362.41,
+   "end_sec": 367.87,
+   "text": "regression the basics of regression in"
+  },
+  {
+   "start_sec": 365.14,
+   "end_sec": 369.66999999999996,
+   "text": "this series so feel free to have a look"
+  },
+  {
+   "start_sec": 367.87,
+   "end_sec": 374.31,
+   "text": "at those I'm not going to double up on"
+  },
+  {
+   "start_sec": 369.67,
+   "end_sec": 374.31,
+   "text": "that material so I'll take that as read"
+  },
+  {
+   "start_sec": 374.79,
+   "end_sec": 379.08000000000004,
+   "text": "imagine that our output from this"
+  },
+  {
+   "start_sec": 377.14,
+   "end_sec": 381.25,
+   "text": "regression is given below"
+  },
+  {
+   "start_sec": 379.08,
+   "end_sec": 383.5,
+   "text": "so we have our estimates here that's our"
+  },
+  {
+   "start_sec": 381.25,
+   "end_sec": 388.63,
+   "text": "coefficients that's the the intercept"
+  },
+  {
+   "start_sec": 383.5,
+   "end_sec": 394.03,
+   "text": "here is 800,000 and our lot size the"
+  },
+  {
+   "start_sec": 388.63,
+   "end_sec": 396.21999999999997,
+   "text": "coefficient of lot size is 455 so if you"
+  },
+  {
+   "start_sec": 394.03,
+   "end_sec": 399.15,
+   "text": "run the model your coefficients those"
+  },
+  {
+   "start_sec": 396.22,
+   "end_sec": 401.68,
+   "text": "that I just read out are still unbiased"
+  },
+  {
+   "start_sec": 399.15,
+   "end_sec": 403.53999999999996,
+   "text": "and what that means is it's still an"
+  },
+  {
+   "start_sec": 401.68,
+   "end_sec": 406.18,
+   "text": "accurate reflection of what it's trying"
+  },
+  {
+   "start_sec": 403.54,
+   "end_sec": 408.58000000000004,
+   "text": "to estimate our best estimate for the"
+  },
+  {
+   "start_sec": 406.18,
+   "end_sec": 410.8,
+   "text": "true effect of lot size on house price"
+  },
+  {
+   "start_sec": 408.58,
+   "end_sec": 413.28999999999996,
+   "text": "is still four hundred fifty five point"
+  },
+  {
+   "start_sec": 410.8,
+   "end_sec": 417.88,
+   "text": "nine five that's the coefficient or the"
+  },
+  {
+   "start_sec": 413.29,
+   "end_sec": 419.26000000000005,
+   "text": "gradient of this line of best fit but"
+  },
+  {
+   "start_sec": 417.88,
+   "end_sec": 421.09,
+   "text": "what happens in the presence of"
+  },
+  {
+   "start_sec": 419.26,
+   "end_sec": 423.52,
+   "text": "heteroscedasticity is that the standard"
+  },
+  {
+   "start_sec": 421.09,
+   "end_sec": 427.45,
+   "text": "errors are incorrect so everything else"
+  },
+  {
+   "start_sec": 423.52,
+   "end_sec": 428.89,
+   "text": "in this output you can't rely on so"
+  },
+  {
+   "start_sec": 427.45,
+   "end_sec": 431.56,
+   "text": "these standard errors provided here"
+  },
+  {
+   "start_sec": 428.89,
+   "end_sec": 435.96999999999997,
+   "text": "which in turn provide us the T values"
+  },
+  {
+   "start_sec": 431.56,
+   "end_sec": 439.33,
+   "text": "and the P values over here these are"
+  },
+  {
+   "start_sec": 435.97,
+   "end_sec": 440.77000000000004,
+   "text": "suspect now we can't rely on them I mean"
+  },
+  {
+   "start_sec": 439.33,
+   "end_sec": 442.18,
+   "text": "in reality you can look at these P"
+  },
+  {
+   "start_sec": 440.77,
+   "end_sec": 445.06,
+   "text": "values and you'll note that they're very"
+  },
+  {
+   "start_sec": 442.18,
+   "end_sec": 447.61,
+   "text": "very very small indeed so we can be"
+  },
+  {
+   "start_sec": 445.06,
+   "end_sec": 449.77,
+   "text": "quite confident there's a positive"
+  },
+  {
+   "start_sec": 447.61,
+   "end_sec": 454.0,
+   "text": "relationship between lot size and house"
+  },
+  {
+   "start_sec": 449.77,
+   "end_sec": 456.76,
+   "text": "price but the principle still stands we"
+  },
+  {
+   "start_sec": 454.0,
+   "end_sec": 458.56,
+   "text": "can't really rely statistically speaking"
+  },
+  {
+   "start_sec": 456.76,
+   "end_sec": 460.89,
+   "text": "on anything else"
+  },
+  {
+   "start_sec": 458.56,
+   "end_sec": 463.24,
+   "text": "in the output and that's a problem right"
+  },
+  {
+   "start_sec": 460.89,
+   "end_sec": 465.49,
+   "text": "what tends to happen is that in the"
+  },
+  {
+   "start_sec": 463.24,
+   "end_sec": 468.61,
+   "text": "presence of heteroscedasticity the"
+  },
+  {
+   "start_sec": 465.49,
+   "end_sec": 470.38,
+   "text": "standard errors are under represented"
+  },
+  {
+   "start_sec": 468.61,
+   "end_sec": 473.2,
+   "text": "meaning that your output will give you"
+  },
+  {
+   "start_sec": 470.38,
+   "end_sec": 475.6,
+   "text": "smaller standard errors then should be"
+  },
+  {
+   "start_sec": 473.2,
+   "end_sec": 477.28,
+   "text": "the case I guess that means that if your"
+  },
+  {
+   "start_sec": 475.6,
+   "end_sec": 477.49,
+   "text": "variables turn out to be significant you"
+  },
+  {
+   "start_sec": 477.28,
+   "end_sec": 479.61999999999995,
+   "text": "have"
+  },
+  {
+   "start_sec": 477.49,
+   "end_sec": 483.009,
+   "text": "think yourself or maybe it's just the"
+  },
+  {
+   "start_sec": 479.62,
+   "end_sec": 484.21,
+   "text": "model making it seem more significant"
+  },
+  {
+   "start_sec": 483.009,
+   "end_sec": 487.33000000000004,
+   "text": "because with lower standard errors"
+  },
+  {
+   "start_sec": 484.21,
+   "end_sec": 489.81899999999996,
+   "text": "you're gonna have more significant"
+  },
+  {
+   "start_sec": 487.33,
+   "end_sec": 492.21,
+   "text": "variables so you can see how we'd get"
+  },
+  {
+   "start_sec": 489.819,
+   "end_sec": 492.21000000000004,
+   "text": "confusing"
+  },
+  {
+   "start_sec": 497.11,
+   "end_sec": 502.09000000000003,
+   "text": "so how do we detect heteroscedasticity"
+  },
+  {
+   "start_sec": 499.99,
+   "end_sec": 503.889,
+   "text": "well we've already seen one of those"
+  },
+  {
+   "start_sec": 502.09,
+   "end_sec": 506.31899999999996,
+   "text": "methods of detection which is just to"
+  },
+  {
+   "start_sec": 503.889,
+   "end_sec": 507.729,
+   "text": "look at the residual plot so if you saw"
+  },
+  {
+   "start_sec": 506.319,
+   "end_sec": 510.219,
+   "text": "one that looks a bit like this you'd go"
+  },
+  {
+   "start_sec": 507.729,
+   "end_sec": 512.649,
+   "text": "you know what heteroscedasticity is not"
+  },
+  {
+   "start_sec": 510.219,
+   "end_sec": 515.89,
+   "text": "a problem but for our version if you"
+  },
+  {
+   "start_sec": 512.649,
+   "end_sec": 517.0,
+   "text": "recall it from the previous slide we did"
+  },
+  {
+   "start_sec": 515.89,
+   "end_sec": 521.169,
+   "text": "have a problem you can see quite clearly"
+  },
+  {
+   "start_sec": 517.0,
+   "end_sec": 525.55,
+   "text": "there was a sort of funnel effect for"
+  },
+  {
+   "start_sec": 521.169,
+   "end_sec": 527.529,
+   "text": "our residual plot but if you wanted to"
+  },
+  {
+   "start_sec": 525.55,
+   "end_sec": 529.75,
+   "text": "get a little bit more statistical about"
+  },
+  {
+   "start_sec": 527.529,
+   "end_sec": 530.5889999999999,
+   "text": "your testing you can conduct the"
+  },
+  {
+   "start_sec": 529.75,
+   "end_sec": 533.05,
+   "text": "gold-filled"
+  },
+  {
+   "start_sec": 530.589,
+   "end_sec": 536.37,
+   "text": "quant test which was something created"
+  },
+  {
+   "start_sec": 533.05,
+   "end_sec": 538.99,
+   "text": "in 1965 by a couple of statisticians"
+  },
+  {
+   "start_sec": 536.37,
+   "end_sec": 541.72,
+   "text": "I'll give you a brief overview of how"
+  },
+  {
+   "start_sec": 538.99,
+   "end_sec": 544.2090000000001,
+   "text": "this works the first thing you're going"
+  },
+  {
+   "start_sec": 541.72,
+   "end_sec": 546.19,
+   "text": "to do is order the data by the offending"
+  },
+  {
+   "start_sec": 544.209,
+   "end_sec": 548.829,
+   "text": "variable which in this case would be lot"
+  },
+  {
+   "start_sec": 546.19,
+   "end_sec": 551.44,
+   "text": "size and you'll split the data into two"
+  },
+  {
+   "start_sec": 548.829,
+   "end_sec": 553.81,
+   "text": "separate segments so here we've got a"
+  },
+  {
+   "start_sec": 551.44,
+   "end_sec": 555.7900000000001,
+   "text": "segment here on the left-hand side and"
+  },
+  {
+   "start_sec": 553.81,
+   "end_sec": 557.5,
+   "text": "on the right-hand side now you don't"
+  },
+  {
+   "start_sec": 555.79,
+   "end_sec": 560.14,
+   "text": "need to split it right in the middle but"
+  },
+  {
+   "start_sec": 557.5,
+   "end_sec": 561.76,
+   "text": "maybe for ease sake you just have the"
+  },
+  {
+   "start_sec": 560.14,
+   "end_sec": 563.23,
+   "text": "data and put half of it on the left-hand"
+  },
+  {
+   "start_sec": 561.76,
+   "end_sec": 566.11,
+   "text": "side half of it on the right hand side"
+  },
+  {
+   "start_sec": 563.23,
+   "end_sec": 567.82,
+   "text": "of lot size then what you're going to do"
+  },
+  {
+   "start_sec": 566.11,
+   "end_sec": 570.04,
+   "text": "is run separate regressions on each"
+  },
+  {
+   "start_sec": 567.82,
+   "end_sec": 572.0500000000001,
+   "text": "segment so you can see here I've got a"
+  },
+  {
+   "start_sec": 570.04,
+   "end_sec": 574.6899999999999,
+   "text": "regression on the left and a regression"
+  },
+  {
+   "start_sec": 572.05,
+   "end_sec": 577.51,
+   "text": "on the right now these two regressions"
+  },
+  {
+   "start_sec": 574.69,
+   "end_sec": 580.72,
+   "text": "need not meet up and they also need not"
+  },
+  {
+   "start_sec": 577.51,
+   "end_sec": 585.0699999999999,
+   "text": "have the same variance of error turns"
+  },
+  {
+   "start_sec": 580.72,
+   "end_sec": 586.48,
+   "text": "around them and guess what you're going"
+  },
+  {
+   "start_sec": 585.07,
+   "end_sec": 589.23,
+   "text": "to do you got to compare the variance"
+  },
+  {
+   "start_sec": 586.48,
+   "end_sec": 591.5500000000001,
+   "text": "estimates for each of these regressions"
+  },
+  {
+   "start_sec": 589.23,
+   "end_sec": 593.649,
+   "text": "so if the variance of our pink"
+  },
+  {
+   "start_sec": 591.55,
+   "end_sec": 596.019,
+   "text": "regression over here is a lot smaller"
+  },
+  {
+   "start_sec": 593.649,
+   "end_sec": 599.41,
+   "text": "than the variance of the observations"
+  },
+  {
+   "start_sec": 596.019,
+   "end_sec": 602.19,
+   "text": "around our yellow regression then that"
+  },
+  {
+   "start_sec": 599.41,
+   "end_sec": 604.39,
+   "text": "might be evidence of heteroscedasticity"
+  },
+  {
+   "start_sec": 602.19,
+   "end_sec": 606.519,
+   "text": "so technically what you're trying to"
+  },
+  {
+   "start_sec": 604.39,
+   "end_sec": 609.9399999999999,
+   "text": "find is this F statistic which is the"
+  },
+  {
+   "start_sec": 606.519,
+   "end_sec": 613.68,
+   "text": "mean squared error of regression a and"
+  },
+  {
+   "start_sec": 609.94,
+   "end_sec": 618.3100000000001,
+   "text": "the mean squared error of regression B"
+  },
+  {
+   "start_sec": 613.68,
+   "end_sec": 621.3389999999999,
+   "text": "in a ratio now just be aware that when I"
+  },
+  {
+   "start_sec": 618.31,
+   "end_sec": 624.4899999999999,
+   "text": "use the letters MSE in this video and in"
+  },
+  {
+   "start_sec": 621.339,
+   "end_sec": 630.4490000000001,
+   "text": "fact in all of my videos if I use MSE or"
+  },
+  {
+   "start_sec": 624.49,
+   "end_sec": 633.089,
+   "text": "SSA the e stands for error not explained"
+  },
+  {
+   "start_sec": 630.449,
+   "end_sec": 634.29,
+   "text": "it's very easy to confuse the two and I"
+  },
+  {
+   "start_sec": 633.089,
+   "end_sec": 636.5,
+   "text": "appreciate there's two different"
+  },
+  {
+   "start_sec": 634.29,
+   "end_sec": 639.66,
+   "text": "conventions that sort of go either way"
+  },
+  {
+   "start_sec": 636.5,
+   "end_sec": 643.74,
+   "text": "so I'll be very explicit here as to when"
+  },
+  {
+   "start_sec": 639.66,
+   "end_sec": 647.029,
+   "text": "I'm using letters like MSE and SSA that"
+  },
+  {
+   "start_sec": 643.74,
+   "end_sec": 650.279,
+   "text": "the e stands for error so indeed"
+  },
+  {
+   "start_sec": 647.029,
+   "end_sec": 653.639,
+   "text": "likewise here the e in SS e stands for"
+  },
+  {
+   "start_sec": 650.279,
+   "end_sec": 655.8,
+   "text": "the sum of squared errors of regression"
+  },
+  {
+   "start_sec": 653.639,
+   "end_sec": 657.42,
+   "text": "a divided by the degrees of freedom of"
+  },
+  {
+   "start_sec": 655.8,
+   "end_sec": 659.519,
+   "text": "regression a and the sum of squared"
+  },
+  {
+   "start_sec": 657.42,
+   "end_sec": 661.38,
+   "text": "errors of regression B divided by the"
+  },
+  {
+   "start_sec": 659.519,
+   "end_sec": 662.819,
+   "text": "degrees of freedom of regression B so"
+  },
+  {
+   "start_sec": 661.38,
+   "end_sec": 665.04,
+   "text": "that that is actually the mean squared"
+  },
+  {
+   "start_sec": 662.819,
+   "end_sec": 667.56,
+   "text": "error on top and bottom they're just"
+  },
+  {
+   "start_sec": 665.04,
+   "end_sec": 669.0889999999999,
+   "text": "expanding it out for you and if I was to"
+  },
+  {
+   "start_sec": 667.56,
+   "end_sec": 673.4399999999999,
+   "text": "expand it out further the degrees of"
+  },
+  {
+   "start_sec": 669.089,
+   "end_sec": 676.009,
+   "text": "freedom becomes n minus P minus 1 where"
+  },
+  {
+   "start_sec": 673.44,
+   "end_sec": 678.0290000000001,
+   "text": "P is just the number of X variables"
+  },
+  {
+   "start_sec": 676.009,
+   "end_sec": 680.85,
+   "text": "we're just going to be the same in both"
+  },
+  {
+   "start_sec": 678.029,
+   "end_sec": 684.389,
+   "text": "a and B regressions P is just gonna be 1"
+  },
+  {
+   "start_sec": 680.85,
+   "end_sec": 685.8000000000001,
+   "text": "in both of those so I'm just showing you"
+  },
+  {
+   "start_sec": 684.389,
+   "end_sec": 687.35,
+   "text": "that if you needed to you could"
+  },
+  {
+   "start_sec": 685.8,
+   "end_sec": 690.449,
+   "text": "calculate this well"
+  },
+  {
+   "start_sec": 687.35,
+   "end_sec": 694.23,
+   "text": "almost by hand you'd hopefully be given"
+  },
+  {
+   "start_sec": 690.449,
+   "end_sec": 698.639,
+   "text": "from your regression output SS e of"
+  },
+  {
+   "start_sec": 694.23,
+   "end_sec": 702.3000000000001,
+   "text": "aggression a and SSE of aggression B but"
+  },
+  {
+   "start_sec": 698.639,
+   "end_sec": 706.3100000000001,
+   "text": "this equation MSE of regression a"
+  },
+  {
+   "start_sec": 702.3,
+   "end_sec": 709.2589999999999,
+   "text": "divided by M s a of regression B that is"
+  },
+  {
+   "start_sec": 706.31,
+   "end_sec": 711.2689999999999,
+   "text": "distributed that's distributed as an F"
+  },
+  {
+   "start_sec": 709.259,
+   "end_sec": 713.2090000000001,
+   "text": "statistic so you could use that to"
+  },
+  {
+   "start_sec": 711.269,
+   "end_sec": 719.069,
+   "text": "assess whether you would reject a null"
+  },
+  {
+   "start_sec": 713.209,
+   "end_sec": 721.29,
+   "text": "hypothesis of homoscedasticity so in"
+  },
+  {
+   "start_sec": 719.069,
+   "end_sec": 723.2299999999999,
+   "text": "reality you will find in all of your"
+  },
+  {
+   "start_sec": 721.29,
+   "end_sec": 726.93,
+   "text": "statistical software and ability to"
+  },
+  {
+   "start_sec": 723.23,
+   "end_sec": 730.889,
+   "text": "provide a Goldfield quant test on your"
+  },
+  {
+   "start_sec": 726.93,
+   "end_sec": 732.42,
+   "text": "data and you might have to provide a cut"
+  },
+  {
+   "start_sec": 730.889,
+   "end_sec": 734.449,
+   "text": "point that you want to use or something"
+  },
+  {
+   "start_sec": 732.42,
+   "end_sec": 739.5889999999999,
+   "text": "like that it might also ask you for a"
+  },
+  {
+   "start_sec": 734.449,
+   "end_sec": 741.5089999999999,
+   "text": "cut out region the cut out region would"
+  },
+  {
+   "start_sec": 739.589,
+   "end_sec": 743.5790000000001,
+   "text": "just be some kind of like no-man's land"
+  },
+  {
+   "start_sec": 741.509,
+   "end_sec": 745.769,
+   "text": "in between that's neither in regression"
+  },
+  {
+   "start_sec": 743.579,
+   "end_sec": 747.81,
+   "text": "a or regression B so it gives a nice"
+  },
+  {
+   "start_sec": 745.769,
+   "end_sec": 750.0600000000001,
+   "text": "nice buffer between the two regressions"
+  },
+  {
+   "start_sec": 747.81,
+   "end_sec": 751.7399999999999,
+   "text": "but if you specify that in your"
+  },
+  {
+   "start_sec": 750.06,
+   "end_sec": 754.1099999999999,
+   "text": "statistical software it'll provide you"
+  },
+  {
+   "start_sec": 751.74,
+   "end_sec": 755.5790000000001,
+   "text": "with the Goldfield quant test and in"
+  },
+  {
+   "start_sec": 754.11,
+   "end_sec": 758.069,
+   "text": "reality all you need to do is look at"
+  },
+  {
+   "start_sec": 755.579,
+   "end_sec": 760.6099999999999,
+   "text": "that p-value that it's providing you and"
+  },
+  {
+   "start_sec": 758.069,
+   "end_sec": 763.18,
+   "text": "if it's less than 0.05 we know that"
+  },
+  {
+   "start_sec": 760.61,
+   "end_sec": 767.61,
+   "text": "heteroscedasticity is a problem"
+  },
+  {
+   "start_sec": 763.18,
+   "end_sec": 767.6099999999999,
+   "text": "at least at the 5% level of significance"
+  },
+  {
+   "start_sec": 770.49,
+   "end_sec": 776.98,
+   "text": "all right so what's another way of"
+  },
+  {
+   "start_sec": 773.47,
+   "end_sec": 780.01,
+   "text": "detecting heteroscedasticity well this"
+  },
+  {
+   "start_sec": 776.98,
+   "end_sec": 781.9,
+   "text": "is called the brush pagon test or it was"
+  },
+  {
+   "start_sec": 780.01,
+   "end_sec": 783.52,
+   "text": "modified to call to be called White's"
+  },
+  {
+   "start_sec": 781.9,
+   "end_sec": 786.37,
+   "text": "test in 1980 but it's pretty much the"
+  },
+  {
+   "start_sec": 783.52,
+   "end_sec": 789.49,
+   "text": "same thing essentially what happens here"
+  },
+  {
+   "start_sec": 786.37,
+   "end_sec": 793.27,
+   "text": "is that the first step is you estimate a"
+  },
+  {
+   "start_sec": 789.49,
+   "end_sec": 795.97,
+   "text": "single linear regression as you might if"
+  },
+  {
+   "start_sec": 793.27,
+   "end_sec": 798.76,
+   "text": "there was no heteroscedasticity present"
+  },
+  {
+   "start_sec": 795.97,
+   "end_sec": 801.82,
+   "text": "and you'll get a line of best fit or a"
+  },
+  {
+   "start_sec": 798.76,
+   "end_sec": 803.67,
+   "text": "regression line like so the next thing"
+  },
+  {
+   "start_sec": 801.82,
+   "end_sec": 806.8000000000001,
+   "text": "you're going to do is save the residuals"
+  },
+  {
+   "start_sec": 803.67,
+   "end_sec": 809.53,
+   "text": "so whenever you run a regression you can"
+  },
+  {
+   "start_sec": 806.8,
+   "end_sec": 811.93,
+   "text": "actually capture the residuals of each"
+  },
+  {
+   "start_sec": 809.53,
+   "end_sec": 813.67,
+   "text": "of these observations so this residual"
+  },
+  {
+   "start_sec": 811.93,
+   "end_sec": 816.6999999999999,
+   "text": "will be positive some of these will be"
+  },
+  {
+   "start_sec": 813.67,
+   "end_sec": 818.74,
+   "text": "negatives etc you're gonna save those"
+  },
+  {
+   "start_sec": 816.7,
+   "end_sec": 822.58,
+   "text": "residuals and then what you're gonna do"
+  },
+  {
+   "start_sec": 818.74,
+   "end_sec": 824.65,
+   "text": "is actually run a new regression using"
+  },
+  {
+   "start_sec": 822.58,
+   "end_sec": 827.4100000000001,
+   "text": "the squared errors as your new Y"
+  },
+  {
+   "start_sec": 824.65,
+   "end_sec": 829.51,
+   "text": "variable so in other words we're gonna"
+  },
+  {
+   "start_sec": 827.41,
+   "end_sec": 831.67,
+   "text": "run a regression where we try to explain"
+  },
+  {
+   "start_sec": 829.51,
+   "end_sec": 833.86,
+   "text": "the squared errors or in other words"
+  },
+  {
+   "start_sec": 831.67,
+   "end_sec": 836.4399999999999,
+   "text": "some measure of the variance of the"
+  },
+  {
+   "start_sec": 833.86,
+   "end_sec": 841.51,
+   "text": "errors we're gonna try to explain the"
+  },
+  {
+   "start_sec": 836.44,
+   "end_sec": 844.1500000000001,
+   "text": "variance of the errors by X now try to"
+  },
+  {
+   "start_sec": 841.51,
+   "end_sec": 847.0,
+   "text": "appreciate what that means if X is"
+  },
+  {
+   "start_sec": 844.15,
+   "end_sec": 850.9599999999999,
+   "text": "significant in explaining the variance"
+  },
+  {
+   "start_sec": 847.0,
+   "end_sec": 854.11,
+   "text": "of the errors then heteroscedasticity"
+  },
+  {
+   "start_sec": 850.96,
+   "end_sec": 856.51,
+   "text": "must be present so if we run this with"
+  },
+  {
+   "start_sec": 854.11,
+   "end_sec": 861.61,
+   "text": "this new regression and we find the"
+  },
+  {
+   "start_sec": 856.51,
+   "end_sec": 865.33,
+   "text": "r-squared of this regression we can"
+  },
+  {
+   "start_sec": 861.61,
+   "end_sec": 867.07,
+   "text": "construct what's called a an LM"
+  },
+  {
+   "start_sec": 865.33,
+   "end_sec": 869.95,
+   "text": "statistic it's called a Lagrange"
+  },
+  {
+   "start_sec": 867.07,
+   "end_sec": 872.2900000000001,
+   "text": "multiplier but look let's not let's not"
+  },
+  {
+   "start_sec": 869.95,
+   "end_sec": 875.0500000000001,
+   "text": "get fancy you can find the r-squared and"
+  },
+  {
+   "start_sec": 872.29,
+   "end_sec": 876.91,
+   "text": "multiply that by n which is the number"
+  },
+  {
+   "start_sec": 875.05,
+   "end_sec": 880.0899999999999,
+   "text": "of observations and that is distributed"
+  },
+  {
+   "start_sec": 876.91,
+   "end_sec": 883.3299999999999,
+   "text": "as a chi-squared statistic with p"
+  },
+  {
+   "start_sec": 880.09,
+   "end_sec": 886.45,
+   "text": "degrees of freedom now here i'm using p"
+  },
+  {
+   "start_sec": 883.33,
+   "end_sec": 889.09,
+   "text": "to be the number of x variables to keep"
+  },
+  {
+   "start_sec": 886.45,
+   "end_sec": 891.5200000000001,
+   "text": "it consistent with my previous usage of"
+  },
+  {
+   "start_sec": 889.09,
+   "end_sec": 894.34,
+   "text": "the letter P you might find some"
+  },
+  {
+   "start_sec": 891.52,
+   "end_sec": 896.93,
+   "text": "resources saying P minus 1 degrees of"
+  },
+  {
+   "start_sec": 894.34,
+   "end_sec": 899.1800000000001,
+   "text": "freedom here where they've defined"
+  },
+  {
+   "start_sec": 896.93,
+   "end_sec": 903.2299999999999,
+   "text": "he to be the total number of variables"
+  },
+  {
+   "start_sec": 899.18,
+   "end_sec": 903.8,
+   "text": "which includes Y so just keep that in"
+  },
+  {
+   "start_sec": 903.23,
+   "end_sec": 907.04,
+   "text": "mind"
+  },
+  {
+   "start_sec": 903.8,
+   "end_sec": 910.8499999999999,
+   "text": "P for me is the number of X variables"
+  },
+  {
+   "start_sec": 907.04,
+   "end_sec": 912.4399999999999,
+   "text": "which is one so much like last time"
+  },
+  {
+   "start_sec": 910.85,
+   "end_sec": 914.8100000000001,
+   "text": "we'll have a null hypothesis which is"
+  },
+  {
+   "start_sec": 912.44,
+   "end_sec": 917.0290000000001,
+   "text": "that there is no heteroscedasticity or"
+  },
+  {
+   "start_sec": 914.81,
+   "end_sec": 919.04,
+   "text": "we could say homoscedasticity and in"
+  },
+  {
+   "start_sec": 917.029,
+   "end_sec": 920.57,
+   "text": "your output you might get from your"
+  },
+  {
+   "start_sec": 919.04,
+   "end_sec": 923.63,
+   "text": "statistical software if you were to run"
+  },
+  {
+   "start_sec": 920.57,
+   "end_sec": 925.13,
+   "text": "a price payin test or Whites test you"
+  },
+  {
+   "start_sec": 923.63,
+   "end_sec": 927.74,
+   "text": "just have a look at the p-value again if"
+  },
+  {
+   "start_sec": 925.13,
+   "end_sec": 931.209,
+   "text": "the p-value is less than 0.05 you got"
+  },
+  {
+   "start_sec": 927.74,
+   "end_sec": 937.01,
+   "text": "problems in other words you've got"
+  },
+  {
+   "start_sec": 931.209,
+   "end_sec": 939.41,
+   "text": "heteroscedasticity cool so now that we"
+  },
+  {
+   "start_sec": 937.01,
+   "end_sec": 941.529,
+   "text": "know we have heteroscedasticity in our"
+  },
+  {
+   "start_sec": 939.41,
+   "end_sec": 945.11,
+   "text": "model what the hell do we do about it"
+  },
+  {
+   "start_sec": 941.529,
+   "end_sec": 947.87,
+   "text": "one really easy remedy for you is to use"
+  },
+  {
+   "start_sec": 945.11,
+   "end_sec": 949.399,
+   "text": "whites standard errors and I say it's"
+  },
+  {
+   "start_sec": 947.87,
+   "end_sec": 951.5,
+   "text": "easy because all you need to do is find"
+  },
+  {
+   "start_sec": 949.399,
+   "end_sec": 954.38,
+   "text": "out how to do it using your statistical"
+  },
+  {
+   "start_sec": 951.5,
+   "end_sec": 957.17,
+   "text": "software and then just add it to your"
+  },
+  {
+   "start_sec": 954.38,
+   "end_sec": 959.33,
+   "text": "code as an option and it will provide"
+  },
+  {
+   "start_sec": 957.17,
+   "end_sec": 962.209,
+   "text": "for you regression output that has"
+  },
+  {
+   "start_sec": 959.33,
+   "end_sec": 964.01,
+   "text": "White's standard errors in there and"
+  },
+  {
+   "start_sec": 962.209,
+   "end_sec": 968.0,
+   "text": "essentially what it does is it corrects"
+  },
+  {
+   "start_sec": 964.01,
+   "end_sec": 969.97,
+   "text": "for that heteroscedasticity remember how"
+  },
+  {
+   "start_sec": 968.0,
+   "end_sec": 972.41,
+   "text": "a few slides ago I mentioned that"
+  },
+  {
+   "start_sec": 969.97,
+   "end_sec": 976.1600000000001,
+   "text": "heteroscedasticity effects our standard"
+  },
+  {
+   "start_sec": 972.41,
+   "end_sec": 980.15,
+   "text": "errors well white attempt to correct for"
+  },
+  {
+   "start_sec": 976.16,
+   "end_sec": 980.66,
+   "text": "that now if you're not down with matrix"
+  },
+  {
+   "start_sec": 980.15,
+   "end_sec": 982.0699999999999,
+   "text": "algebra"
+  },
+  {
+   "start_sec": 980.66,
+   "end_sec": 985.13,
+   "text": "feel free to skip to the next section"
+  },
+  {
+   "start_sec": 982.07,
+   "end_sec": 987.2900000000001,
+   "text": "but if you like me you don't enjoy using"
+  },
+  {
+   "start_sec": 985.13,
+   "end_sec": 989.63,
+   "text": "black box solutions and you want to know"
+  },
+  {
+   "start_sec": 987.29,
+   "end_sec": 991.76,
+   "text": "a little bit about how say whites"
+  },
+  {
+   "start_sec": 989.63,
+   "end_sec": 994.49,
+   "text": "standard errors are created and I'm"
+  },
+  {
+   "start_sec": 991.76,
+   "end_sec": 997.99,
+   "text": "gonna do my best very quickly to explain"
+  },
+  {
+   "start_sec": 994.49,
+   "end_sec": 1001.0600000000001,
+   "text": "how that would work using matrix algebra"
+  },
+  {
+   "start_sec": 997.99,
+   "end_sec": 1004.15,
+   "text": "so this expression tells us the variance"
+  },
+  {
+   "start_sec": 1001.06,
+   "end_sec": 1005.9499999999999,
+   "text": "of the beta's which is a vector of"
+  },
+  {
+   "start_sec": 1004.15,
+   "end_sec": 1007.47,
+   "text": "beaters here so this is a general"
+  },
+  {
+   "start_sec": 1005.95,
+   "end_sec": 1010.69,
+   "text": "equation for where you might have"
+  },
+  {
+   "start_sec": 1007.47,
+   "end_sec": 1013.36,
+   "text": "numerous X variables in your model so"
+  },
+  {
+   "start_sec": 1010.69,
+   "end_sec": 1015.1300000000001,
+   "text": "numerous coefficients we only have two"
+  },
+  {
+   "start_sec": 1013.36,
+   "end_sec": 1017.7090000000001,
+   "text": "coefficients in our model the constant"
+  },
+  {
+   "start_sec": 1015.13,
+   "end_sec": 1019.36,
+   "text": "term and the slope coefficient but this"
+  },
+  {
+   "start_sec": 1017.709,
+   "end_sec": 1023.04,
+   "text": "could be generalized to as many as you"
+  },
+  {
+   "start_sec": 1019.36,
+   "end_sec": 1027.26,
+   "text": "like now X is just a matrix of all the X"
+  },
+  {
+   "start_sec": 1023.04,
+   "end_sec": 1029.089,
+   "text": "values that you have in your model"
+  },
+  {
+   "start_sec": 1027.26,
+   "end_sec": 1030.77,
+   "text": "and this little fellow in the middle is"
+  },
+  {
+   "start_sec": 1029.089,
+   "end_sec": 1035.36,
+   "text": "what's called the variance-covariance"
+  },
+  {
+   "start_sec": 1030.77,
+   "end_sec": 1036.98,
+   "text": "matrix of all of the observations so if"
+  },
+  {
+   "start_sec": 1035.36,
+   "end_sec": 1039.02,
+   "text": "we have say a hundred observations this"
+  },
+  {
+   "start_sec": 1036.98,
+   "end_sec": 1042.079,
+   "text": "matrix is a hundred by a hundred and"
+  },
+  {
+   "start_sec": 1039.02,
+   "end_sec": 1044.209,
+   "text": "what's on the positive diagonal here is"
+  },
+  {
+   "start_sec": 1042.079,
+   "end_sec": 1048.1989999999998,
+   "text": "the variance of each of the observations"
+  },
+  {
+   "start_sec": 1044.209,
+   "end_sec": 1050.63,
+   "text": "and off that diagonal these are all the"
+  },
+  {
+   "start_sec": 1048.199,
+   "end_sec": 1053.27,
+   "text": "covariances between each pair of"
+  },
+  {
+   "start_sec": 1050.63,
+   "end_sec": 1055.5800000000002,
+   "text": "observations so if we assume that the"
+  },
+  {
+   "start_sec": 1053.27,
+   "end_sec": 1059.21,
+   "text": "observations are independent so one"
+  },
+  {
+   "start_sec": 1055.58,
+   "end_sec": 1062.09,
+   "text": "doesn't depend on another one then all"
+  },
+  {
+   "start_sec": 1059.21,
+   "end_sec": 1064.72,
+   "text": "of those off diagonal elements are 0"
+  },
+  {
+   "start_sec": 1062.09,
+   "end_sec": 1068.6599999999999,
+   "text": "because there is no covariance between"
+  },
+  {
+   "start_sec": 1064.72,
+   "end_sec": 1070.16,
+   "text": "pairings of observations so we only have"
+  },
+  {
+   "start_sec": 1068.66,
+   "end_sec": 1072.92,
+   "text": "this positive diagonal to worry about"
+  },
+  {
+   "start_sec": 1070.16,
+   "end_sec": 1084.71,
+   "text": "and as this is the variance of each"
+  },
+  {
+   "start_sec": 1072.92,
+   "end_sec": 1086.18,
+   "text": "observation if we have homoscedasticity"
+  },
+  {
+   "start_sec": 1084.71,
+   "end_sec": 1088.8500000000001,
+   "text": "the same thing and we can call them"
+  },
+  {
+   "start_sec": 1086.18,
+   "end_sec": 1091.8200000000002,
+   "text": "Sigma squared or even simpler we can say"
+  },
+  {
+   "start_sec": 1088.85,
+   "end_sec": 1094.82,
+   "text": "that our variance covariance matrix is"
+  },
+  {
+   "start_sec": 1091.82,
+   "end_sec": 1096.05,
+   "text": "just Sigma squared times what's called"
+  },
+  {
+   "start_sec": 1094.82,
+   "end_sec": 1100.04,
+   "text": "the identity matrix but it's just a"
+  },
+  {
+   "start_sec": 1096.05,
+   "end_sec": 1101.74,
+   "text": "whole lot of one's on that diagonal now"
+  },
+  {
+   "start_sec": 1100.04,
+   "end_sec": 1105.26,
+   "text": "if you were to put that into our"
+  },
+  {
+   "start_sec": 1101.74,
+   "end_sec": 1109.25,
+   "text": "expression for the variance of the beta"
+  },
+  {
+   "start_sec": 1105.26,
+   "end_sec": 1111.8,
+   "text": "vector things will simplify really"
+  },
+  {
+   "start_sec": 1109.25,
+   "end_sec": 1113.81,
+   "text": "nicely let's see how that works if I put"
+  },
+  {
+   "start_sec": 1111.8,
+   "end_sec": 1117.74,
+   "text": "in Sigma squared I instead of our"
+  },
+  {
+   "start_sec": 1113.81,
+   "end_sec": 1120.02,
+   "text": "variance covariance matrix there because"
+  },
+  {
+   "start_sec": 1117.74,
+   "end_sec": 1121.49,
+   "text": "it's a scalar it's just a number it can"
+  },
+  {
+   "start_sec": 1120.02,
+   "end_sec": 1124.22,
+   "text": "come out the front and everything"
+  },
+  {
+   "start_sec": 1121.49,
+   "end_sec": 1126.8,
+   "text": "reduces really really sweetly and we get"
+  },
+  {
+   "start_sec": 1124.22,
+   "end_sec": 1128.3600000000001,
+   "text": "this expression here for the variance of"
+  },
+  {
+   "start_sec": 1126.8,
+   "end_sec": 1130.01,
+   "text": "our beaters and the variance of our"
+  },
+  {
+   "start_sec": 1128.36,
+   "end_sec": 1132.5,
+   "text": "beaters that'll help us find the"
+  },
+  {
+   "start_sec": 1130.01,
+   "end_sec": 1134.45,
+   "text": "standard errors because all we need to"
+  },
+  {
+   "start_sec": 1132.5,
+   "end_sec": 1137.17,
+   "text": "do essentially is square root the final"
+  },
+  {
+   "start_sec": 1134.45,
+   "end_sec": 1139.73,
+   "text": "answer we get to get our standard error"
+  },
+  {
+   "start_sec": 1137.17,
+   "end_sec": 1143.42,
+   "text": "so this is what's happening behind the"
+  },
+  {
+   "start_sec": 1139.73,
+   "end_sec": 1144.89,
+   "text": "scenes in your regression output you"
+  },
+  {
+   "start_sec": 1143.42,
+   "end_sec": 1147.0800000000002,
+   "text": "just press the button and it provides"
+  },
+  {
+   "start_sec": 1144.89,
+   "end_sec": 1149.21,
+   "text": "you with a standard error of each of"
+  },
+  {
+   "start_sec": 1147.08,
+   "end_sec": 1151.1599999999999,
+   "text": "those coefficients but it does this"
+  },
+  {
+   "start_sec": 1149.21,
+   "end_sec": 1152.99,
+   "text": "calculation and it comes up with the"
+  },
+  {
+   "start_sec": 1151.16,
+   "end_sec": 1155.1200000000001,
+   "text": "standard errors using all of the data"
+  },
+  {
+   "start_sec": 1152.99,
+   "end_sec": 1157.25,
+   "text": "that it's been provided now let's go"
+  },
+  {
+   "start_sec": 1155.12,
+   "end_sec": 1160.1689999999999,
+   "text": "back a step and and ask what happens if"
+  },
+  {
+   "start_sec": 1157.25,
+   "end_sec": 1164.129,
+   "text": "we cannot assume that the vary"
+  },
+  {
+   "start_sec": 1160.169,
+   "end_sec": 1166.259,
+   "text": "is constant so this diagonal here you"
+  },
+  {
+   "start_sec": 1164.129,
+   "end_sec": 1169.019,
+   "text": "can see now has subscripts meaning that"
+  },
+  {
+   "start_sec": 1166.259,
+   "end_sec": 1172.559,
+   "text": "each observation may have a different"
+  },
+  {
+   "start_sec": 1169.019,
+   "end_sec": 1174.889,
+   "text": "variance so to get White's standard"
+  },
+  {
+   "start_sec": 1172.559,
+   "end_sec": 1177.45,
+   "text": "errors what happens is that the"
+  },
+  {
+   "start_sec": 1174.889,
+   "end_sec": 1179.549,
+   "text": "regression the initial regression has"
+  },
+  {
+   "start_sec": 1177.45,
+   "end_sec": 1181.95,
+   "text": "run and the standard errors are"
+  },
+  {
+   "start_sec": 1179.549,
+   "end_sec": 1184.83,
+   "text": "estimated for each of the individual"
+  },
+  {
+   "start_sec": 1181.95,
+   "end_sec": 1187.289,
+   "text": "observations so we now have a squared"
+  },
+  {
+   "start_sec": 1184.83,
+   "end_sec": 1189.989,
+   "text": "for observation one a squared for"
+  },
+  {
+   "start_sec": 1187.289,
+   "end_sec": 1193.109,
+   "text": "observation 2 a squared for observation"
+  },
+  {
+   "start_sec": 1189.989,
+   "end_sec": 1195.299,
+   "text": "in and those estimated values gets"
+  },
+  {
+   "start_sec": 1193.109,
+   "end_sec": 1197.9399999999998,
+   "text": "plunked in to our variance covariance"
+  },
+  {
+   "start_sec": 1195.299,
+   "end_sec": 1199.71,
+   "text": "part of this whole formula and then what"
+  },
+  {
+   "start_sec": 1197.94,
+   "end_sec": 1202.23,
+   "text": "happens is it just executes that whole"
+  },
+  {
+   "start_sec": 1199.71,
+   "end_sec": 1205.799,
+   "text": "thing to calculate the new variance of"
+  },
+  {
+   "start_sec": 1202.23,
+   "end_sec": 1207.269,
+   "text": "this beta vector so that's it that's as"
+  },
+  {
+   "start_sec": 1205.799,
+   "end_sec": 1209.789,
+   "text": "deep as I'm getting but I kind of wanted"
+  },
+  {
+   "start_sec": 1207.269,
+   "end_sec": 1211.679,
+   "text": "to give you a quick overview as to how"
+  },
+  {
+   "start_sec": 1209.789,
+   "end_sec": 1214.109,
+   "text": "it all fits together but in reality what"
+  },
+  {
+   "start_sec": 1211.679,
+   "end_sec": 1218.009,
+   "text": "you're gonna do if you are in SAS or"
+  },
+  {
+   "start_sec": 1214.109,
+   "end_sec": 1220.019,
+   "text": "you're in R or SPSS or Stata or whatever"
+  },
+  {
+   "start_sec": 1218.009,
+   "end_sec": 1222.21,
+   "text": "you're just gonna ask the software to"
+  },
+  {
+   "start_sec": 1220.019,
+   "end_sec": 1224.809,
+   "text": "provide you with whites standard errors"
+  },
+  {
+   "start_sec": 1222.21,
+   "end_sec": 1227.94,
+   "text": "they're also known as heteroscedastic"
+  },
+  {
+   "start_sec": 1224.809,
+   "end_sec": 1229.71,
+   "text": "corrected errors or robust errors"
+  },
+  {
+   "start_sec": 1227.94,
+   "end_sec": 1233.029,
+   "text": "there's a few words for him but"
+  },
+  {
+   "start_sec": 1229.71,
+   "end_sec": 1239.009,
+   "text": "essentially they correct for"
+  },
+  {
+   "start_sec": 1233.029,
+   "end_sec": 1242.279,
+   "text": "heteroscedasticity remedy - let's see"
+  },
+  {
+   "start_sec": 1239.009,
+   "end_sec": 1245.46,
+   "text": "what else we can do this is weighted"
+  },
+  {
+   "start_sec": 1242.279,
+   "end_sec": 1246.69,
+   "text": "least squares it's quite interesting"
+  },
+  {
+   "start_sec": 1245.46,
+   "end_sec": 1250.08,
+   "text": "this one actually so let's go back to"
+  },
+  {
+   "start_sec": 1246.69,
+   "end_sec": 1252.779,
+   "text": "our example unlike using White's"
+  },
+  {
+   "start_sec": 1250.08,
+   "end_sec": 1254.9399999999998,
+   "text": "standard errors here we must know or at"
+  },
+  {
+   "start_sec": 1252.779,
+   "end_sec": 1258.929,
+   "text": "least specify the form of the"
+  },
+  {
+   "start_sec": 1254.94,
+   "end_sec": 1260.8500000000001,
+   "text": "heteroscedasticity so in our original"
+  },
+  {
+   "start_sec": 1258.929,
+   "end_sec": 1264.0800000000002,
+   "text": "regression model we have house price as"
+  },
+  {
+   "start_sec": 1260.85,
+   "end_sec": 1267.059,
+   "text": "a function of lot size lot size being X"
+  },
+  {
+   "start_sec": 1264.08,
+   "end_sec": 1270.029,
+   "text": "now let's say that the variance we know"
+  },
+  {
+   "start_sec": 1267.059,
+   "end_sec": 1272.279,
+   "text": "that the variance increases with X but"
+  },
+  {
+   "start_sec": 1270.029,
+   "end_sec": 1275.309,
+   "text": "let's just say that it in fact increases"
+  },
+  {
+   "start_sec": 1272.279,
+   "end_sec": 1278.07,
+   "text": "linearly with X so as x increases the"
+  },
+  {
+   "start_sec": 1275.309,
+   "end_sec": 1281.369,
+   "text": "variance of the error term will increase"
+  },
+  {
+   "start_sec": 1278.07,
+   "end_sec": 1283.769,
+   "text": "linearly so we've got Sigma Sigma"
+  },
+  {
+   "start_sec": 1281.369,
+   "end_sec": 1288.029,
+   "text": "squared which is our constant term times"
+  },
+  {
+   "start_sec": 1283.769,
+   "end_sec": 1290.97,
+   "text": "our x value now if we specify this as"
+  },
+  {
+   "start_sec": 1288.029,
+   "end_sec": 1293.309,
+   "text": "our form of heteroscedasticity what"
+  },
+  {
+   "start_sec": 1290.97,
+   "end_sec": 1293.88,
+   "text": "happens is the variance of our error"
+  },
+  {
+   "start_sec": 1293.309,
+   "end_sec": 1296.09,
+   "text": "term"
+  },
+  {
+   "start_sec": 1293.88,
+   "end_sec": 1300.0590000000002,
+   "text": "in the end of this equation is no longer"
+  },
+  {
+   "start_sec": 1296.09,
+   "end_sec": 1301.4099999999999,
+   "text": "constant and that's a problem so bear"
+  },
+  {
+   "start_sec": 1300.059,
+   "end_sec": 1303.87,
+   "text": "with me here what we're going to do is"
+  },
+  {
+   "start_sec": 1301.41,
+   "end_sec": 1306.809,
+   "text": "we're going to divide everything in the"
+  },
+  {
+   "start_sec": 1303.87,
+   "end_sec": 1309.2399999999998,
+   "text": "equation by the square root of the"
+  },
+  {
+   "start_sec": 1306.809,
+   "end_sec": 1310.559,
+   "text": "problem what let me say that again we're"
+  },
+  {
+   "start_sec": 1309.24,
+   "end_sec": 1313.23,
+   "text": "going to divide everything in the"
+  },
+  {
+   "start_sec": 1310.559,
+   "end_sec": 1315.96,
+   "text": "equation by the square root of the"
+  },
+  {
+   "start_sec": 1313.23,
+   "end_sec": 1317.3700000000001,
+   "text": "problem and the problem here is X X I"
+  },
+  {
+   "start_sec": 1315.96,
+   "end_sec": 1320.789,
+   "text": "right we want to get rid of that from"
+  },
+  {
+   "start_sec": 1317.37,
+   "end_sec": 1322.3999999999999,
+   "text": "our variance of the error term so just"
+  },
+  {
+   "start_sec": 1320.789,
+   "end_sec": 1325.2,
+   "text": "run with me for a second okay before you"
+  },
+  {
+   "start_sec": 1322.4,
+   "end_sec": 1327.539,
+   "text": "before you flip out I've got that same"
+  },
+  {
+   "start_sec": 1325.2,
+   "end_sec": 1331.49,
+   "text": "regression here but now I divide"
+  },
+  {
+   "start_sec": 1327.539,
+   "end_sec": 1333.33,
+   "text": "everything by the square root of x"
+  },
+  {
+   "start_sec": 1331.49,
+   "end_sec": 1335.1,
+   "text": "realistically that's not so difficult"
+  },
+  {
+   "start_sec": 1333.33,
+   "end_sec": 1337.62,
+   "text": "all you're doing is you're you can"
+  },
+  {
+   "start_sec": 1335.1,
+   "end_sec": 1340.86,
+   "text": "create a new variable which is just our"
+  },
+  {
+   "start_sec": 1337.62,
+   "end_sec": 1342.289,
+   "text": "original Y variable divided by whatever"
+  },
+  {
+   "start_sec": 1340.86,
+   "end_sec": 1345.6899999999998,
+   "text": "X variable you had for that observation"
+  },
+  {
+   "start_sec": 1342.289,
+   "end_sec": 1348.11,
+   "text": "with a square root on it you're"
+  },
+  {
+   "start_sec": 1345.69,
+   "end_sec": 1354.5700000000002,
+   "text": "essentially creating for yourself a new"
+  },
+  {
+   "start_sec": 1348.11,
+   "end_sec": 1356.34,
+   "text": "weighted value of Y similarly for our X"
+  },
+  {
+   "start_sec": 1354.57,
+   "end_sec": 1357.99,
+   "text": "variable is now just the original X"
+  },
+  {
+   "start_sec": 1356.34,
+   "end_sec": 1360.24,
+   "text": "variable divided by the square root of x"
+  },
+  {
+   "start_sec": 1357.99,
+   "end_sec": 1362.58,
+   "text": "and notice the original error term is"
+  },
+  {
+   "start_sec": 1360.24,
+   "end_sec": 1365.429,
+   "text": "there also divided by the square root of"
+  },
+  {
+   "start_sec": 1362.58,
+   "end_sec": 1370.32,
+   "text": "x now I'm gonna zoom in on this because"
+  },
+  {
+   "start_sec": 1365.429,
+   "end_sec": 1373.289,
+   "text": "it's gonna get a little bit funky what's"
+  },
+  {
+   "start_sec": 1370.32,
+   "end_sec": 1374.3999999999999,
+   "text": "the variance of this new error term all"
+  },
+  {
+   "start_sec": 1373.289,
+   "end_sec": 1376.53,
+   "text": "right"
+  },
+  {
+   "start_sec": 1374.4,
+   "end_sec": 1380.159,
+   "text": "the new error term is the original error"
+  },
+  {
+   "start_sec": 1376.53,
+   "end_sec": 1381.1499999999999,
+   "text": "term on the square root of x now"
+  },
+  {
+   "start_sec": 1380.159,
+   "end_sec": 1384.48,
+   "text": "hopefully you know a little bit about"
+  },
+  {
+   "start_sec": 1381.15,
+   "end_sec": 1387.99,
+   "text": "rules around variance but any constant"
+  },
+  {
+   "start_sec": 1384.48,
+   "end_sec": 1391.169,
+   "text": "term inside a variance can come out the"
+  },
+  {
+   "start_sec": 1387.99,
+   "end_sec": 1395.3700000000001,
+   "text": "front and get squared so say I have the"
+  },
+  {
+   "start_sec": 1391.169,
+   "end_sec": 1398.909,
+   "text": "variance of 3z that's 9 times the"
+  },
+  {
+   "start_sec": 1395.37,
+   "end_sec": 1401.07,
+   "text": "variance of Z so this case I have the"
+  },
+  {
+   "start_sec": 1398.909,
+   "end_sec": 1402.96,
+   "text": "variance of the error term over the"
+  },
+  {
+   "start_sec": 1401.07,
+   "end_sec": 1405.1789999999999,
+   "text": "square root of x now this is a constant"
+  },
+  {
+   "start_sec": 1402.96,
+   "end_sec": 1406.95,
+   "text": "term for every given observation it"
+  },
+  {
+   "start_sec": 1405.179,
+   "end_sec": 1411.0900000000001,
+   "text": "sounds a bit strange but if I tell you"
+  },
+  {
+   "start_sec": 1406.95,
+   "end_sec": 1413.419,
+   "text": "that hey this X observation is 30 then"
+  },
+  {
+   "start_sec": 1411.09,
+   "end_sec": 1416.01,
+   "text": "that's constant you can't change that"
+  },
+  {
+   "start_sec": 1413.419,
+   "end_sec": 1418.0800000000002,
+   "text": "the error associated with that value"
+  },
+  {
+   "start_sec": 1416.01,
+   "end_sec": 1421.289,
+   "text": "changes depending on the regression but"
+  },
+  {
+   "start_sec": 1418.08,
+   "end_sec": 1423.48,
+   "text": "the x value doesn't so that's constant"
+  },
+  {
+   "start_sec": 1421.289,
+   "end_sec": 1427.2,
+   "text": "and can come out the front as long as we"
+  },
+  {
+   "start_sec": 1423.48,
+   "end_sec": 1427.77,
+   "text": "square it so we square the square root"
+  },
+  {
+   "start_sec": 1427.2,
+   "end_sec": 1432.03,
+   "text": "of x and"
+  },
+  {
+   "start_sec": 1427.77,
+   "end_sec": 1435.03,
+   "text": "comes one on x times the variance of the"
+  },
+  {
+   "start_sec": 1432.03,
+   "end_sec": 1436.41,
+   "text": "error term now what's the variance of"
+  },
+  {
+   "start_sec": 1435.03,
+   "end_sec": 1438.51,
+   "text": "the original error term we already"
+  },
+  {
+   "start_sec": 1436.41,
+   "end_sec": 1440.43,
+   "text": "established it was Sigma squared X and"
+  },
+  {
+   "start_sec": 1438.51,
+   "end_sec": 1441.9,
+   "text": "guess what happens they're gonna cancel"
+  },
+  {
+   "start_sec": 1440.43,
+   "end_sec": 1445.0800000000002,
+   "text": "out and you're going to get a constant"
+  },
+  {
+   "start_sec": 1441.9,
+   "end_sec": 1448.95,
+   "text": "term for your variance of the error term"
+  },
+  {
+   "start_sec": 1445.08,
+   "end_sec": 1450.27,
+   "text": "now so if we backtrack a little bit the"
+  },
+  {
+   "start_sec": 1448.95,
+   "end_sec": 1453.15,
+   "text": "whole reason why we divided by the"
+  },
+  {
+   "start_sec": 1450.27,
+   "end_sec": 1454.86,
+   "text": "square root of the problem was that we"
+  },
+  {
+   "start_sec": 1453.15,
+   "end_sec": 1457.5,
+   "text": "knew it was kind of gonna square itself"
+  },
+  {
+   "start_sec": 1454.86,
+   "end_sec": 1458.6699999999998,
+   "text": "when we looked at the variance and so"
+  },
+  {
+   "start_sec": 1457.5,
+   "end_sec": 1462.3,
+   "text": "all you really need to do is run a"
+  },
+  {
+   "start_sec": 1458.67,
+   "end_sec": 1464.73,
+   "text": "regression using a new Y variable which"
+  },
+  {
+   "start_sec": 1462.3,
+   "end_sec": 1466.44,
+   "text": "is divided by the square root of x and a"
+  },
+  {
+   "start_sec": 1464.73,
+   "end_sec": 1469.26,
+   "text": "new X variable which is divided by the"
+  },
+  {
+   "start_sec": 1466.44,
+   "end_sec": 1471.06,
+   "text": "square root of x so you're essentially"
+  },
+  {
+   "start_sec": 1469.26,
+   "end_sec": 1473.57,
+   "text": "creating two new variables for yourself"
+  },
+  {
+   "start_sec": 1471.06,
+   "end_sec": 1475.47,
+   "text": "and running the regression on that"
+  },
+  {
+   "start_sec": 1473.57,
+   "end_sec": 1478.53,
+   "text": "what's the problem with that you might"
+  },
+  {
+   "start_sec": 1475.47,
+   "end_sec": 1480.06,
+   "text": "think well it's interpreting your"
+  },
+  {
+   "start_sec": 1478.53,
+   "end_sec": 1481.8899999999999,
+   "text": "regression output it's gonna be a little"
+  },
+  {
+   "start_sec": 1480.06,
+   "end_sec": 1485.4199999999998,
+   "text": "bit more difficult in that situation but"
+  },
+  {
+   "start_sec": 1481.89,
+   "end_sec": 1489.1100000000001,
+   "text": "at least for the purposes of creating a"
+  },
+  {
+   "start_sec": 1485.42,
+   "end_sec": 1494.91,
+   "text": "heteroscedasticity free your regression"
+  },
+  {
+   "start_sec": 1489.11,
+   "end_sec": 1496.6799999999998,
+   "text": "you'll be on fire finally another remedy"
+  },
+  {
+   "start_sec": 1494.91,
+   "end_sec": 1498.89,
+   "text": "for heteroscedasticity is just to log"
+  },
+  {
+   "start_sec": 1496.68,
+   "end_sec": 1501.3300000000002,
+   "text": "things and you'll find that for a lot of"
+  },
+  {
+   "start_sec": 1498.89,
+   "end_sec": 1504.1200000000001,
+   "text": "statistical problems if you log"
+  },
+  {
+   "start_sec": 1501.33,
+   "end_sec": 1506.82,
+   "text": "variables the problems just disappear"
+  },
+  {
+   "start_sec": 1504.12,
+   "end_sec": 1508.1,
+   "text": "and there's good reasons for that now"
+  },
+  {
+   "start_sec": 1506.82,
+   "end_sec": 1510.74,
+   "text": "I'm not going to get too philosophical"
+  },
+  {
+   "start_sec": 1508.1,
+   "end_sec": 1513.87,
+   "text": "about it and get real deep in it but"
+  },
+  {
+   "start_sec": 1510.74,
+   "end_sec": 1515.85,
+   "text": "there's clearly something that is quite"
+  },
+  {
+   "start_sec": 1513.87,
+   "end_sec": 1517.9799999999998,
+   "text": "helpful about logging variables so let's"
+  },
+  {
+   "start_sec": 1515.85,
+   "end_sec": 1521.07,
+   "text": "just see what happens I mean have a look"
+  },
+  {
+   "start_sec": 1517.98,
+   "end_sec": 1522.75,
+   "text": "at the original scatter plot which is"
+  },
+  {
+   "start_sec": 1521.07,
+   "end_sec": 1524.76,
+   "text": "price versus lot size if I logged"
+  },
+  {
+   "start_sec": 1522.75,
+   "end_sec": 1526.26,
+   "text": "everything look it doesn't cure the"
+  },
+  {
+   "start_sec": 1524.76,
+   "end_sec": 1528.36,
+   "text": "problem completely but you can see it"
+  },
+  {
+   "start_sec": 1526.26,
+   "end_sec": 1530.07,
+   "text": "already makes things a lot more sort of"
+  },
+  {
+   "start_sec": 1528.36,
+   "end_sec": 1532.3799999999999,
+   "text": "even across the whole across the board"
+  },
+  {
+   "start_sec": 1530.07,
+   "end_sec": 1533.85,
+   "text": "these first few ones might still be the"
+  },
+  {
+   "start_sec": 1532.38,
+   "end_sec": 1536.49,
+   "text": "exception but if you sort of start the"
+  },
+  {
+   "start_sec": 1533.85,
+   "end_sec": 1539.34,
+   "text": "regression around here it kind of looks"
+  },
+  {
+   "start_sec": 1536.49,
+   "end_sec": 1540.54,
+   "text": "pretty even really looking at the"
+  },
+  {
+   "start_sec": 1539.34,
+   "end_sec": 1542.37,
+   "text": "residuals yeah you really have that"
+  },
+  {
+   "start_sec": 1540.54,
+   "end_sec": 1545.1,
+   "text": "impression that where there was a"
+  },
+  {
+   "start_sec": 1542.37,
+   "end_sec": 1547.9199999999998,
+   "text": "definite funneling that happens in the"
+  },
+  {
+   "start_sec": 1545.1,
+   "end_sec": 1550.4099999999999,
+   "text": "original regression a lot of that"
+  },
+  {
+   "start_sec": 1547.92,
+   "end_sec": 1555.5700000000002,
+   "text": "funneling has been mitigated if I've"
+  },
+  {
+   "start_sec": 1550.41,
+   "end_sec": 1557.1000000000001,
+   "text": "logged both variables so again something"
+  },
+  {
+   "start_sec": 1555.57,
+   "end_sec": 1559.53,
+   "text": "you might want to consider if you've got"
+  },
+  {
+   "start_sec": 1557.1,
+   "end_sec": 1562.12,
+   "text": "a problem of heteroscedasticity in your"
+  },
+  {
+   "start_sec": 1559.53,
+   "end_sec": 1564.59,
+   "text": "model"
+  },
+  {
+   "start_sec": 1562.12,
+   "end_sec": 1566.9299999999998,
+   "text": "so finally now let's just have a look at"
+  },
+  {
+   "start_sec": 1564.59,
+   "end_sec": 1569.2099999999998,
+   "text": "some examples of heteroscedasticity that"
+  },
+  {
+   "start_sec": 1566.93,
+   "end_sec": 1570.95,
+   "text": "you might see in real life because it's"
+  },
+  {
+   "start_sec": 1569.21,
+   "end_sec": 1573.6200000000001,
+   "text": "all because we could talk theoretically"
+  },
+  {
+   "start_sec": 1570.95,
+   "end_sec": 1574.88,
+   "text": "about things but why bother learning"
+  },
+  {
+   "start_sec": 1573.62,
+   "end_sec": 1578.8899999999999,
+   "text": "about this stuff if it's never going to"
+  },
+  {
+   "start_sec": 1574.88,
+   "end_sec": 1580.8500000000001,
+   "text": "come up in your statistical adventures"
+  },
+  {
+   "start_sec": 1578.89,
+   "end_sec": 1583.7,
+   "text": "whenever you're looking at expenditure"
+  },
+  {
+   "start_sec": 1580.85,
+   "end_sec": 1586.12,
+   "text": "as a function of income you'll tend to"
+  },
+  {
+   "start_sec": 1583.7,
+   "end_sec": 1590.78,
+   "text": "get heteroscedasticity as when your"
+  },
+  {
+   "start_sec": 1586.12,
+   "end_sec": 1592.33,
+   "text": "income increases it allows for extra"
+  },
+  {
+   "start_sec": 1590.78,
+   "end_sec": 1596.66,
+   "text": "expenditure but it doesn't necessitate"
+  },
+  {
+   "start_sec": 1592.33,
+   "end_sec": 1598.49,
+   "text": "extra expenditure expenditure income as"
+  },
+  {
+   "start_sec": 1596.66,
+   "end_sec": 1601.93,
+   "text": "a function of age might also exhibit"
+  },
+  {
+   "start_sec": 1598.49,
+   "end_sec": 1604.7,
+   "text": "that same heteroscedastic flavor because"
+  },
+  {
+   "start_sec": 1601.93,
+   "end_sec": 1607.3700000000001,
+   "text": "because people on when they're gonna say"
+  },
+  {
+   "start_sec": 1604.7,
+   "end_sec": 1609.3500000000001,
+   "text": "20 year olds and 21 year olds there's"
+  },
+  {
+   "start_sec": 1607.37,
+   "end_sec": 1611.6,
+   "text": "only so much that they can possibly earn"
+  },
+  {
+   "start_sec": 1609.35,
+   "end_sec": 1614.6,
+   "text": "without much experience right but as"
+  },
+  {
+   "start_sec": 1611.6,
+   "end_sec": 1616.6699999999998,
+   "text": "your age increases you get a lot of"
+  },
+  {
+   "start_sec": 1614.6,
+   "end_sec": 1618.5,
+   "text": "people that earn you can earn a lot more"
+  },
+  {
+   "start_sec": 1616.67,
+   "end_sec": 1620.66,
+   "text": "money but again you can get people that"
+  },
+  {
+   "start_sec": 1618.5,
+   "end_sec": 1622.91,
+   "text": "earn not so much money so you'll get"
+  },
+  {
+   "start_sec": 1620.66,
+   "end_sec": 1627.8600000000001,
+   "text": "that variance increasing with increasing"
+  },
+  {
+   "start_sec": 1622.91,
+   "end_sec": 1629.77,
+   "text": "age here's one that enters the realms of"
+  },
+  {
+   "start_sec": 1627.86,
+   "end_sec": 1632.87,
+   "text": "safe physics but if you're trying to"
+  },
+  {
+   "start_sec": 1629.77,
+   "end_sec": 1635.54,
+   "text": "measure the speed of something the"
+  },
+  {
+   "start_sec": 1632.87,
+   "end_sec": 1637.4299999999998,
+   "text": "faster that thing goes the more variance"
+  },
+  {
+   "start_sec": 1635.54,
+   "end_sec": 1639.6499999999999,
+   "text": "you'll have in your estimates of that"
+  },
+  {
+   "start_sec": 1637.43,
+   "end_sec": 1640.8200000000002,
+   "text": "speed because it's just harder to"
+  },
+  {
+   "start_sec": 1639.65,
+   "end_sec": 1642.5900000000001,
+   "text": "measure so say you're trying to measure"
+  },
+  {
+   "start_sec": 1640.82,
+   "end_sec": 1644.9299999999998,
+   "text": "the speed of a rocket or something right"
+  },
+  {
+   "start_sec": 1642.59,
+   "end_sec": 1646.37,
+   "text": "when it's lifting off pretty easy to"
+  },
+  {
+   "start_sec": 1644.93,
+   "end_sec": 1648.5900000000001,
+   "text": "measure the speed when it's going quite"
+  },
+  {
+   "start_sec": 1646.37,
+   "end_sec": 1651.62,
+   "text": "slowly and your margin of error will be"
+  },
+  {
+   "start_sec": 1648.59,
+   "end_sec": 1654.3799999999999,
+   "text": "quite small but after it's out in space"
+  },
+  {
+   "start_sec": 1651.62,
+   "end_sec": 1657.26,
+   "text": "which is not only far away from you but"
+  },
+  {
+   "start_sec": 1654.38,
+   "end_sec": 1660.0800000000002,
+   "text": "it's traveling at huge speeds your"
+  },
+  {
+   "start_sec": 1657.26,
+   "end_sec": 1663.44,
+   "text": "margin of error of your speed estimates"
+  },
+  {
+   "start_sec": 1660.08,
+   "end_sec": 1666.77,
+   "text": "will be a lot larger there you have it"
+  },
+  {
+   "start_sec": 1663.44,
+   "end_sec": 1668.6000000000001,
+   "text": "that is heteroscedasticity if you've got"
+  },
+  {
+   "start_sec": 1666.77,
+   "end_sec": 1671.05,
+   "text": "any questions at all feel free to post"
+  },
+  {
+   "start_sec": 1668.6,
+   "end_sec": 1673.58,
+   "text": "them down below in the comment section"
+  },
+  {
+   "start_sec": 1671.05,
+   "end_sec": 1677.02,
+   "text": "I'm Justin zeltser if you want to get in"
+  },
+  {
+   "start_sec": 1673.58,
+   "end_sec": 1680.5,
+   "text": "contact otherwise here are my socials"
+  },
+  {
+   "start_sec": 1677.02,
+   "end_sec": 1680.5,
+   "text": "I'll catch you around"
+  }
+ ]
+}
