@@ -12,6 +12,7 @@ import { BrainDialog } from '@/components/brain/brain-dialog'
 import { BrainDemoTools } from '@/components/brain/brain-demo-tools'
 import { BrainPresentation } from '@/components/brain/brain-presentation'
 import { BrainExam } from '@/components/brain/brain-exam'
+import { BrainTodos } from '@/components/brain/brain-todos'
 import { BrainTelegram } from '@/components/brain/brain-telegram'
 import { BrainSearch } from '@/components/brain/brain-search'
 import { FibonacciLogo, FibonacciMark } from '@/components/fibonacci-mark'
@@ -49,6 +50,7 @@ export function BrainWorkspace() {
   const [view, setView] = useState<View>({ name: 'home' })
   const [homeMode, setHomeMode] = useState<'courses' | 'map'>('courses')
   const [telegramOpen, setTelegramOpen] = useState(false)
+  const [todosVersion, setTodosVersion] = useState(0)
   const [overview, setOverview] = useState<BrainOverview | null>(null)
   const [loadingOverview, setLoadingOverview] = useState(true)
   const [overviewError, setOverviewError] = useState(false)
@@ -147,6 +149,7 @@ export function BrainWorkspace() {
   }, [])
 
   const handleEvent = useCallback((event: BrainEvent) => {
+    if (event.type === 'todos.changed') { setTodosVersion(version => version + 1); return }
     if (seenEvents.current.has(event.id)) return
     seenEvents.current.add(event.id)
     if (seenEvents.current.size > 2000) seenEvents.current.delete(seenEvents.current.values().next().value!)
@@ -325,6 +328,8 @@ export function BrainWorkspace() {
             </li>)}
           </ul>
         </section>}
+
+        <BrainTodos api={api} refreshVersion={todosVersion} />
 
         {loadingOverview && !overview ? <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading sources')}>
           {[0, 1].map((number) => <div className="brain-source-skeleton" key={number}><span /><div><i /><i /><i /></div></div>)}

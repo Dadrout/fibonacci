@@ -1,5 +1,20 @@
 /** Brain courses + Telegram connect copy: English key → [Russian, Kazakh]. Merged into localizedCopy by lib/copy.ts. */
 export const coursesCopy: Record<string, [string, string]> = {
+  "To do": ["Дела", "Істер"],
+  "{count} open": ["Осталось: {count}", "Қалғаны: {count}"],
+  "Add a to-do": ["Добавить дело", "Іс қосу"],
+  "Due": ["Срок", "Мерзімі"],
+  "Due (optional)": ["Срок (необязательно)", "Мерзімі (міндетті емес)"],
+  "Add": ["Добавить", "Қосу"],
+  "Adding…": ["Добавляем…", "Қосылуда…"],
+  "Telegram": ["Telegram", "Telegram"],
+  "Delete to-do {title}": ["Удалить дело «{title}»", "«{title}» ісін жою"],
+  "Loading to-dos…": ["Загружаем дела…", "Істер жүктелуде…"],
+  "Could not load to-dos. Try again.": ["Не удалось загрузить дела. Попробуйте ещё раз.", "Істер жүктелмеді. Қайталап көріңіз."],
+  "Could not save this to-do. Try again.": ["Не удалось сохранить дело. Попробуйте ещё раз.", "Істі сақтау мүмкін болмады. Қайталап көріңіз."],
+  "Could not delete this to-do. Try again.": ["Не удалось удалить дело. Попробуйте ещё раз.", "Істі жою мүмкін болмады. Қайталап көріңіз."],
+  "Nothing to do. Send the bot a message like “read chapter 9 by Friday” and it lands here.": ["Пока дел нет. Напишите боту, например: «прочитать главу 9 до пятницы» — и дело появится здесь.", "Әзірге іс жоқ. Ботқа «жұмаға дейін 9-тарауды оқу» деп жазыңыз — іс осында пайда болады."],
+
   "Delete source": ["Удалить материал", "Материалды жою"],
   "Delete this source? This can't be undone.": ["Удалить этот материал? Это действие нельзя отменить.", "Бұл материал жойылсын ба? Бұл әрекетті қайтару мүмкін емес."],
   "Delete": ["Удалить", "Жою"],

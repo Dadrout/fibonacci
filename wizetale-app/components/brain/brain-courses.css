@@ -272,3 +272,28 @@ html:has(.brain-app:is([data-brain-view="exam"], [data-brain-view="presentation"
 .brain-source-delete .brain-delete-confirm { margin: 0; }
 .brain-delete-trigger:focus-visible, .brain-delete-button:focus-visible, .brain-delete-actions > button:focus-visible,
 .brain-course-detail #brain-course-title:focus { outline: 3px solid var(--studio-accent); outline-offset: 2px; }
+
+/* Home to-dos: quiet rows with native checkboxes. */
+.brain-todos { margin: 24px 0; padding: 20px; border: 1px solid var(--studio-line); border-radius: 12px; background: var(--studio-surface); }
+.brain-todos-count, .brain-todos-note { color: var(--studio-muted); font-size: 14px; }
+.brain-todos-note { margin: 12px 0; max-width: 65ch; line-height: 1.6; }
+.brain-todos-list { list-style: none; margin: 10px 0; padding: 0; }
+.brain-todos-list > li { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.brain-todo-label { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; min-height: 44px; cursor: pointer; }
+.brain-todo-label input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--studio-green); cursor: pointer; }
+.brain-todo-content { display: grid; gap: 2px; min-width: 0; padding: 8px 0; overflow-wrap: anywhere; }
+.brain-todo-title { color: var(--studio-ink); font-size: 15px; line-height: 1.45; }
+.brain-todo-content small { color: var(--studio-muted); font-size: 12px; }
+.brain-todos-list .is-done .brain-todo-title { text-decoration: line-through; color: var(--studio-muted); }
+.brain-todo-source { flex: none; padding: 3px 7px; border-radius: 5px; background: var(--studio-paper); color: var(--studio-muted); font-size: 11px; }
+.brain-todo-delete { display: grid; place-items: center; flex: none; min-height: 44px; width: 44px; padding: 0; border: 0; border-radius: 6px; color: var(--studio-muted); background: transparent; cursor: pointer; }
+.brain-todo-delete:hover { background: var(--studio-paper); color: var(--studio-ink); }
+.brain-todos-form { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.brain-todos-form input { box-sizing: border-box; flex: 1 1 180px; width: 0; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid var(--studio-line); border-radius: 7px; background: var(--studio-paper); color: var(--studio-ink); font: inherit; font-size: 14px; }
+.brain-todos-form .brain-todo-due { flex: 0 1 160px; }
+.brain-todos-form button { min-height: 44px; }
+.brain-todos-error { margin: 10px 0 0; color: var(--studio-danger, var(--studio-ink)); font-size: 14px; }
+.brain-todos :is(input, button):focus-visible { outline: 3px solid var(--studio-accent); outline-offset: 2px; }
+.brain-todos :disabled { opacity: .6; cursor: wait; }
+.is-presentation .brain-todo-title { font-size: 19px; }
+@media (max-width: 560px) { .brain-todos { padding: 16px; } .brain-todos-form > input:first-child { flex-basis: 100%; } .brain-todos-form .brain-todo-due { flex: 1 1 100px; } .brain-todos-list > li { gap: 6px; } }

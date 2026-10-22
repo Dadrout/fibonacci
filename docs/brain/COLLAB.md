@@ -159,6 +159,7 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 
 | # | Task | Status | Files |
 |---|---|---|---|
+| H11 | Home To do list: web add, Telegram events, toggle/delete, trilingual copy | review — Astra, 2026-10-22; typecheck passes | `components/brain/brain-todos.tsx`, `brain-workspace.tsx`, `brain-courses.css`, `lib/copy-brain/courses.ts` |
 | H10 | Adaptive exam date chooser (1–30 days), course entry and ready-plan focus | review — Astra, 2026-10-22; typecheck + all 25 test files pass | `components/brain/brain-exam*`, `brain-{courses,workspace}.tsx`, exam copy and UI tests |
 | H9 | Source, lesson and course deletion with inline confirmation | review — Astra, 2026-10-22; typecheck + all 25 test files pass | `components/brain/brain-{item-card,courses,workspace}*`, deletion confirmation, `lib/copy-brain/courses.ts` |
 | H8 | Student landing at `/`: approved split hero, real screenshots, browser sample, Telegram, trilingual | review — Astra, 2026-10-22; typecheck + all 25 test files pass; Claude browser/build pending | `app/page.tsx`, `components/landing/**`, `lib/copy-brain/landing.ts`, copy merge |
@@ -189,6 +190,11 @@ Status: `todo` · `doing` · `blocked` · `review` · `done`. Ordered by the her
 ## 5. Handoff log (Claude → Astra via `codex exec`)
 
 _Format: `- H<n> (date) task → outcome (review result, commit)`_
+
+- **H11 (2026-10-22, Astra) — Home To do section ready for review.** Separate calm section after capture/connections and before Just added, with localized open count, native checkbox rows, original due text, Telegram source tags, labelled delete buttons and inline title/optional-due add form. Uses only the supplied `BrainTodo` / todos API contract. `todos.changed` in the existing workspace handler refreshes the list; optimistic toggles roll back on failure, concurrent refreshes retain pending checkbox state, and all writes reconcile from the server. Completed tasks sort below open tasks. Inline load/write errors, load retry, 44px controls, wrapped phone form, theme tokens, ru/kk/en copy; no eyebrows or stripes.
+  - **Files:** new `components/brain/brain-todos.tsx`, `brain-workspace.tsx`, appended `brain-courses.css`, `lib/copy-brain/courses.ts`, this board.
+  - **Verification:** `npm run typecheck` in `wizetale-app/` passes. Browser/build not run in the requested seven-minute single pass; Claude review remains. No git, environment, contracts, hooks, backend or landing edits. — Astra
+
 
 - **H10 (2026-10-22, Astra) — Adaptive exam/deadline date chooser ready for review.** Shared native-radio segmented chooser (tomorrow / 3 days / 1 week / 2 weeks / native date), tomorrow through +30 days, live localized adaptation hint and Build my plan. Setup retains course and plan-language controls. Ready plan adds inline Change date next to New plan, preserves course/language on rebuild, shows optional backend coverage focus under meta; Escape closes the editor and restores focus. Course cards/pages add Choose date with preselected course and no auto-start; 3-day one-tap and direct Flashcards/Quiz/Presentation paths stay intact. Calendar helpers reject invalid/past/out-of-range dates and ignore DST hour changes. Semantic theme tokens, 44px controls, native keyboard radio navigation, visible focus and narrow-screen header stacking.
   - **Files:** `components/brain/brain-exam-logic.ts`, new `brain-exam-date-chooser.tsx`, `brain-exam.tsx`, `brain-exam-plan.tsx`, `brain-exam.css`, `brain-courses.tsx`, `brain-workspace.tsx`, `lib/copy-brain/exam.ts`, `scripts/brain-ui-exam.test.mjs`, this board.
