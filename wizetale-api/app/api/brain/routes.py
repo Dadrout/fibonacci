@@ -225,6 +225,58 @@ async def delete_item(item_id: UUID, uid: str = Depends(owner)):
     return Response(status_code=204)
 
 
+def _delete_items(uid: str, rows: list[dict]) -> list[str]:
+    """Delete sources one by one (same path as DELETE /items: rows, files, orphan concepts)."""
+    deleted = []
+    for row in rows:
+        brain_store.delete_item(uid, row["id"])
+        try:
+            blob_store.delete_prefix(f"{uid}/{row['id']}/")
+        except Exception as error:  # noqa: BLE001 — orphaned blobs are cleaned with the account
+            logger.warning("brain_delete blob_cleanup_failed error_type=%s", type(error).__name__)
+        deleted.append(row["id"])
+    return deleted
+
+
+@router.delete("/topics/{topic_id}", status_code=204)
+async def delete_topic(topic_id: UUID, uid: str = Depends(owner)):
+    """Delete one lesson (topic) and every source filed under it."""
+    def run():
+        topic = Catalog(brain_store, uid).topics.get(str(topic_id))
+        if not topic:
+            return None
+        rows = brain_store.items(uid, topic_ids=[str(topic_id)], limit=500)
+        deleted = _delete_items(uid, rows)
+        brain_store.request("DELETE", "brain_topics", params={"id": f"eq.{topic_id}", "user_id": f"eq.{uid}"})
+        brain_store.rpc("brain_prune_concepts", {"p_uid": uid})
+        return deleted
+    deleted = await call(run)
+    if deleted is None:
+        raise BrainError(404, "not_found", "Lesson not found.")
+    for item_id in deleted:
+        events.publish(uid, "item.deleted", item_id=item_id)
+    return Response(status_code=204)
+
+
+@router.delete("/courses/{course_id}", status_code=204)
+async def delete_course(course_id: UUID, uid: str = Depends(owner)):
+    """Delete a course with its lessons, sources, concepts and plans."""
+    def run():
+        if str(course_id) not in Catalog(brain_store, uid).courses:
+            return None
+        rows = brain_store.items(uid, course_id=str(course_id), limit=1000)
+        deleted = _delete_items(uid, rows)
+        brain_store.request("DELETE", "brain_courses", params={"id": f"eq.{course_id}", "user_id": f"eq.{uid}"})
+        brain_store.rpc("brain_prune_concepts", {"p_uid": uid})
+        return deleted
+    deleted = await call(run)
+    if deleted is None:
+        raise BrainError(404, "not_found", "Course not found.")
+    for item_id in deleted:
+        events.publish(uid, "item.deleted", item_id=item_id)
+    return Response(status_code=204)
+
+
 @router.post("/items/{item_id}/refile")
 async def refile(item_id: UUID, body: RefileRequest, uid: str = Depends(owner)):
     row = await _item(uid, item_id)

@@ -618,6 +618,21 @@ export class MockBrain {
     this.emit({ type: 'item.deleted', item_id: id })
   }
 
+  async deleteTopic(id: UUID): Promise<void> {
+    if (!this.topics.delete(id)) throw new MockNotFound()
+    for (const item of [...this.items.values()]) if (item.topic_id === id) await this.deleteItem(item.id)
+    this.recount()
+  }
+
+  async deleteCourse(id: UUID): Promise<void> {
+    if (!this.courses.delete(id)) throw new MockNotFound()
+    for (const item of [...this.items.values()]) if (item.course_id === id) await this.deleteItem(item.id)
+    for (const [topicId, topic] of this.topics) if (topic.course_id === id) this.topics.delete(topicId)
+    for (const [conceptId, concept] of this.concepts) if (concept.course_id === id) this.concepts.delete(conceptId)
+    for (const [linkId, link] of this.links) if (!this.concepts.has(link.source_concept_id) || !this.concepts.has(link.target_concept_id)) this.links.delete(linkId)
+    this.recount()
+  }
+
   async retryItem(id: UUID): Promise<BrainItem> {
     const item = this.items.get(id)
     if (!item) throw new MockNotFound()

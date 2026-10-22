@@ -1,0 +1,39 @@
+{
+ "title": "Basic Formulas and Geometry",
+ "summary": "This material reviews basic formulas for area, volume, and speed involving length, width, height, distance, and time.",
+ "language": "en-US",
+ "placement": {
+  "course_id": null,
+  "course_title": "Mathematics",
+  "course_code": null,
+  "topic_id": null,
+  "topic_title": "Basic Formulas",
+  "sequence": null,
+  "sequence_kind": null,
+  "confidence": 0.5
+ },
+ "alternatives": [],
+ "concepts": [
+  {
+   "name": "Area",
+   "summary": "Area is calculated as the product of length and width.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Volume",
+   "summary": "Volume is calculated as the product of length, width, and height.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Speed",
+   "summary": "Speed is calculated as distance divided by time.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}

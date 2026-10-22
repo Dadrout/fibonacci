@@ -1,0 +1,55 @@
+{
+ "title": "IELTS Speaking Collocations Collection",
+ "summary": "A collection of 1,500 real-life English collocations across 15 distinct topics designed for IELTS Speaking B2–C1 vocabulary practice.",
+ "language": "en-US",
+ "placement": {
+  "course_id": null,
+  "course_title": "English Vocabulary and IELTS Preparation",
+  "course_code": null,
+  "topic_id": null,
+  "topic_title": "Everyday Life and Routines",
+  "sequence": 1,
+  "sequence_kind": "chapter",
+  "confidence": 0.5
+ },
+ "alternatives": [
+  {
+   "course_id": null,
+   "course_title": "Spoken English Collection",
+   "course_code": null,
+   "topic_id": null,
+   "topic_title": "Collocations for Real Life",
+   "sequence": null,
+   "sequence_kind": null,
+   "confidence": 0.4
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Collocation",
+   "summary": "A natural combination of words frequently used together in spoken English, essential for achieving natural fluency in IELTS Speaking.",
+   "chunk_ordinals": [
+    0,
+    1,
+    5
+   ]
+  },
+  {
+   "name": "Daily Routines",
+   "summary": "Practical phrases and expressions used to describe everyday schedules, time management, and habits.",
+   "chunk_ordinals": [
+    1,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "Decision Making",
+   "summary": "Expressions related to evaluating options, assessing risks, and handling unexpected problems or dilemmas.",
+   "chunk_ordinals": [
+    7,
+    8
+   ]
+  }
+ ]
+}

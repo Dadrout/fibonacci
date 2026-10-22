@@ -104,6 +104,10 @@ export interface BrainApi {
   items(params?: { status?: ItemStatus; course_id?: UUID; limit?: number; cursor?: string }): Promise<ItemPage>
   item(id: UUID): Promise<BrainItemDetail>
   deleteItem(id: UUID): Promise<void>
+  /** Delete a lesson (topic) and every source filed under it. 404 if it no longer exists. */
+  deleteTopic(id: UUID): Promise<void>
+  /** Delete a course with its lessons, sources, concepts and plans. */
+  deleteCourse(id: UUID): Promise<void>
   retryItem(id: UUID): Promise<BrainItem>
   refile(id: UUID, request: RefileRequest): Promise<RefileResult>
   captureLink(url: string, channel?: Extract<CaptureChannel, 'web_drop' | 'web_paste' | 'web_picker'>): Promise<BrainItem>
@@ -246,6 +250,8 @@ function createLiveApi(getToken: TokenGetter): BrainApi {
     },
     item: (id) => request(`items/${encodeURIComponent(id)}`),
     deleteItem: (id) => request(`items/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+    deleteTopic: (id) => request(`topics/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+    deleteCourse: (id) => request(`courses/${encodeURIComponent(id)}`, { method: 'DELETE' }),
     retryItem: (id) => request(`items/${encodeURIComponent(id)}/retry`, { method: 'POST' }),
     refile: (id, body) => request(`items/${encodeURIComponent(id)}/refile`, { method: 'POST', body }),
     captureLink: (url, channel = 'web_paste') => capture({ url, channel }),
@@ -411,6 +417,8 @@ function createMockApi(): BrainApi {
     items: (params) => wrapMock(() => brain.listItems(params)),
     item: (id) => wrapMock(() => brain.item(id)),
     deleteItem: (id) => wrapMock(() => brain.deleteItem(id)),
+    deleteTopic: (id) => wrapMock(() => brain.deleteTopic(id)),
+    deleteCourse: (id) => wrapMock(() => brain.deleteCourse(id)),
     retryItem: (id) => wrapMock(() => brain.retryItem(id)),
     refile: (id, body) => wrapMock(() => brain.refile(id, body)),
     captureLink: (url, channel) => wrapMock(() => {

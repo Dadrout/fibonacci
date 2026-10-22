@@ -338,3 +338,23 @@ def test_deck_slide_count_stays_between_five_and_twelve():
     from app.services.brain import decks
 
     assert decks.slide_count(0) == "5" and decks.slide_count(7) == "9" and decks.slide_count(40) == "12"
+
+
+# ---------------------------------------------------------------- telegram text → tasks
+
+def test_text_tasks_reply_lists_only_given_tasks_and_falls_back_quietly():
+    from app.services.brain.telegram import tasks
+
+    analysis = tasks.TextAnalysis(summary="Econometrics homework for Friday.", kind="tasks", tasks=[
+        tasks.TaskItem(title="Solve problems 1–10 from chapter 8", due="Friday"), tasks.TaskItem(title="Read chapter 9")])
+    reply = tasks.format_reply(analysis, "ru")
+    assert reply.splitlines()[0] == "Econometrics homework for Friday."
+    assert "Задачи:" in reply and "☐ Solve problems 1–10 from chapter 8 — срок: Friday" in reply and "☐ Read chapter 9" in reply
+    assert reply.endswith("Сохранено в ваш Brain.")
+    assert tasks.format_reply(tasks.TextAnalysis(summary="A note."), "en") == "A note.\n\nSaved to your Brain."
+
+    class Down:
+        def generate(self, **_):
+            raise RuntimeError("down")
+    assert tasks.analyze("Homework: read chapter 9 by Friday", "en", ai=Down()) is None
+    assert tasks.analyze("hi", "en", ai=Down()) is None

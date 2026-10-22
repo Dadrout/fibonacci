@@ -86,6 +86,8 @@ services:
     volumes:
       - brain_media:/app/brain-media:z
       - ./wizetale-api/app:/app/app:ro,z
+      # Text → tasks replies are recorded too, so they replay offline.
+      - ./wizetale-api/app/services/brain/ai/recorded:/app/app/services/brain/ai/recorded:z
     networks:
       - webnet
 

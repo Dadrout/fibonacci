@@ -209,6 +209,12 @@ def _handle(message: dict, chat: int, language: str, client: TelegramClient, cap
         _send(client, chat, t(language, _reply_for(rejection or "internal")), message_id)
     elif all(row.get("status") == "failed" for row in rows):  # stored but could not be queued
         _send(client, chat, t(language, "failed", reason=t(language, "reason.internal")), message_id)
+    elif not file and not _urls(message) and text:
+        # Plain text (notes, homework, a teacher's message): reply with a summary and its tasks.
+        from app.services.brain.telegram.tasks import analyze
+
+        client.typing(chat)
+        _send(client, chat, analyze(text, language) or t(language, "got_it"), message_id)
     elif _first_of_album(chat, message):
         _send(client, chat, t(language, "got_it"), message_id)
 

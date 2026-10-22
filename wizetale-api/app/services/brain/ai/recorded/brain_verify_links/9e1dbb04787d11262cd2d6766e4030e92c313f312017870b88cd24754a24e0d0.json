@@ -1,0 +1,100 @@
+{
+ "verdicts": [
+  {
+   "pair": 0,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 1,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 2,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 3,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 4,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 5,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 6,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 7,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 8,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 9,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 10,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  },
+  {
+   "pair": 11,
+   "related": false,
+   "relation": null,
+   "direction": "a_to_b",
+   "strength": 0.0,
+   "rationale": ""
+  }
+ ]
+}

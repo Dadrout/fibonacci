@@ -1,0 +1,43 @@
+{
+ "title": "Short note about heteroskedasticity and White standard errors",
+ "summary": "A brief overview covering heteroskedasticity in econometric models and the application of White standard errors.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": "0550b2b8-8676-45d2-9440-e31fc41e601a",
+  "topic_title": "Heteroskedasticity",
+  "sequence": 6,
+  "sequence_kind": "week",
+  "confidence": 0.95
+ },
+ "alternatives": [
+  {
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "course_title": "Econometrics",
+   "course_code": "ECON 301",
+   "topic_id": null,
+   "topic_title": "Autocorrelation",
+   "sequence": 8,
+   "sequence_kind": "week",
+   "confidence": 0.15
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Heteroskedasticity",
+   "summary": "Heteroskedasticity occurs when the variance of the error terms differs across observations in a regression model.",
+   "chunk_ordinals": [
+    0
+   ]
+  },
+  {
+   "name": "Heteroskedasticity-robust standard error",
+   "summary": "White standard errors provide a reliable way to conduct inference in the presence of unknown heteroskedasticity.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}

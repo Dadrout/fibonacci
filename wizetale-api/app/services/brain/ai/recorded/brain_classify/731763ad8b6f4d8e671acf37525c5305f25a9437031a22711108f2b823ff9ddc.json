@@ -1,0 +1,36 @@
+{
+ "title": "Idempotency test note about OLS regression",
+ "summary": "A short note regarding the idempotency test in the context of OLS regression.",
+ "language": "en-US",
+ "placement": {
+  "course_id": "00000000-0000-4000-8000-000000000101",
+  "course_title": "Econometrics",
+  "course_code": "ECON 301",
+  "topic_id": "00000000-0000-4000-8000-000000000202",
+  "topic_title": "OLS assumptions (Gauss–Markov)",
+  "sequence": 2,
+  "sequence_kind": "week",
+  "confidence": 0.75
+ },
+ "alternatives": [
+  {
+   "course_id": "00000000-0000-4000-8000-000000000101",
+   "course_title": "Econometrics",
+   "course_code": "ECON 301",
+   "topic_id": "00000000-0000-4000-8000-000000000201",
+   "topic_title": "Simple linear regression",
+   "sequence": 1,
+   "sequence_kind": "week",
+   "confidence": 0.6
+  }
+ ],
+ "concepts": [
+  {
+   "name": "Ordinary least squares",
+   "summary": "Ordinary least squares is a method for estimating the unknown parameters in a linear regression model.",
+   "chunk_ordinals": [
+    0
+   ]
+  }
+ ]
+}
