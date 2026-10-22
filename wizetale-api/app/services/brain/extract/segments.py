@@ -34,7 +34,9 @@ def windows(segments: list[Segment], *, max_chunks: int = 400, max_seconds: floa
         if not text or segment.start_sec > max_seconds:
             continue
         if start is None:
-            start = segment.start_sec
+            # Each window starts fresh: a stale `end` from an earlier (possibly bogus, over-long)
+            # segment would otherwise stretch every later anchor to that end time.
+            start, end = segment.start_sec, segment.start_sec
         words.append(text)
         end = max(end, segment.end_sec, segment.start_sec)
         if end - start >= WINDOW or (end - start >= 45 and text.endswith((".", "?", "!"))) or end - start >= MAX_WINDOW:

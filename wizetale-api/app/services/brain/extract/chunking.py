@@ -15,13 +15,19 @@ def split_long(text: str, limit: int = LIMIT) -> list[str]:
     text = " ".join(text.split())
     if len(text) <= limit:
         return [text] if text else []
+    target = min(TARGET, limit)
     parts, current = [], ""
     for sentence in re.split(r"(?<=[.!?;:])\s+", text):
+        if len(sentence) > limit and current:
+            # Flush first: joining `current` to a cut of an over-long sentence would exceed `limit`.
+            parts.append(current)
+            current = ""
         while len(sentence) > limit:
-            cut = sentence.rfind(" ", 0, limit) if " " in sentence[:limit] else limit
-            parts.append((current + " " + sentence[:cut]).strip() if current else sentence[:cut].strip())
-            current, sentence = "", sentence[cut:].strip()
-        if len(current) + len(sentence) + 1 > TARGET and current:
+            cut = sentence.rfind(" ", 0, limit + 1)
+            cut = cut if cut > 0 else limit
+            parts.append(sentence[:cut].strip())
+            sentence = sentence[cut:].strip()
+        if len(current) + len(sentence) + 1 > target and current:
             parts.append(current.strip())
             current = sentence
         else:

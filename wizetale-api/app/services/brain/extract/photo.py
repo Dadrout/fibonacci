@@ -31,12 +31,18 @@ def _tesseract(jpeg: bytes) -> str:
     binary = shutil.which("tesseract")
     if not binary:
         raise ExtractionError("ai_unavailable", "No OCR available offline")
-    langs = subprocess.run([binary, "--list-langs"], capture_output=True, text=True, timeout=10).stdout.split()
-    wanted = "+".join(l for l in ("eng", "rus", "kaz") if l in langs) or "eng"
-    with tempfile.NamedTemporaryFile(suffix=".jpg") as handle:
-        handle.write(jpeg)
-        handle.flush()
-        result = subprocess.run([binary, handle.name, "stdout", "-l", wanted], capture_output=True, text=True, timeout=40)
+    try:
+        langs = subprocess.run([binary, "--list-langs"], capture_output=True, text=True, timeout=10).stdout.split()
+        wanted = "+".join(l for l in ("eng", "rus", "kaz") if l in langs) or "eng"
+        with tempfile.NamedTemporaryFile(suffix=".jpg") as handle:
+            handle.write(jpeg)
+            handle.flush()
+            result = subprocess.run([binary, handle.name, "stdout", "-l", wanted], capture_output=True, text=True,
+                                    timeout=40)
+    except (OSError, subprocess.SubprocessError) as error:  # timeout, not executable, crashed
+        raise ExtractionError("ai_unavailable", "Offline OCR failed") from error
+    if result.returncode != 0:
+        raise ExtractionError("ai_unavailable", "Offline OCR failed")
     return result.stdout
 
 

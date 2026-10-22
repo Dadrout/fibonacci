@@ -6,6 +6,7 @@ import logging
 import re
 from typing import Optional
 
+from celery.exceptions import SoftTimeLimitExceeded
 from pydantic import BaseModel, Field
 
 from app.core.config import settings
@@ -15,6 +16,7 @@ from app.services.brain.extract.chunking import anchored
 
 logger = logging.getLogger(__name__)
 MAX_PAGES = 200
+THUMBNAIL_BYTES = 200_000
 
 
 class OCRPage(BaseModel):
@@ -27,20 +29,49 @@ class PdfOCR(BaseModel):
 
 
 def _thumbnail(data: bytes) -> Optional[bytes]:
+    document = None
     try:
         import pypdfium2 as pdfium
 
         document = pdfium.PdfDocument(data)
         page = document[0]
-        scale = 480 / max(page.get_width(), 1)
+        # Bound both sides: a scale from the width alone renders a very tall page into a huge bitmap.
+        scale = min(480 / max(page.get_width(), 1), 960 / max(page.get_height(), 1))
         image = page.render(scale=scale).to_pil().convert("RGB")
         out = io.BytesIO()
         image.save(out, format="JPEG", quality=78)
-        document.close()
-        return out.getvalue()
+        thumbnail = out.getvalue()
+        return thumbnail if len(thumbnail) <= THUMBNAIL_BYTES else None
+    except SoftTimeLimitExceeded:
+        raise
     except Exception as error:  # noqa: BLE001 — a thumbnail is optional
         logger.info("brain_pdf thumbnail_failed error_type=%s", type(error).__name__)
         return None
+    finally:
+        if document is not None:
+            document.close()
+
+
+def _page_text(page) -> str:
+    try:
+        return (page.extract_text() or "").replace("\x00", "")
+    except SoftTimeLimitExceeded:
+        raise
+    except Exception as error:  # noqa: BLE001 — one malformed page must not sink the document
+        logger.info("brain_pdf page_text_failed error_type=%s", type(error).__name__)
+        return ""
+
+
+def _title(reader) -> Optional[str]:
+    try:
+        meta_title = reader.metadata.title if reader.metadata else None
+    except Exception:  # noqa: BLE001 — broken metadata is not a broken document
+        return None
+    meta_title = meta_title.strip() if isinstance(meta_title, str) else ""
+    # Ignore titles that are really file names or tool defaults ("week6.html", "Microsoft Word - x.docx").
+    if len(meta_title) > 3 and not re.search(r"\.(html?|docx?|pptx?|pdf|txt|tex)$|^(untitled|microsoft word|document\d*$)", meta_title, re.I):
+        return meta_title[:300]
+    return None
 
 
 def _pages(data: bytes) -> tuple[list[str], Optional[str]]:
@@ -51,17 +82,18 @@ def _pages(data: bytes) -> tuple[list[str], Optional[str]]:
     try:
         reader = PdfReader(io.BytesIO(data))
         if reader.is_encrypted:
-            raise ExtractionError("unreadable", "Encrypted PDF")
+            # Owner-password-only PDFs (print/copy restrictions) open with an empty user password.
+            try:
+                opened = reader.decrypt("")
+            except Exception as error:  # noqa: BLE001 — unsupported cipher
+                raise ExtractionError("unreadable", "Encrypted PDF") from error
+            if not opened:
+                raise ExtractionError("unreadable", "Encrypted PDF")
         if len(reader.pages) > MAX_PAGES:
             raise ExtractionError("too_large", "PDF has more than 200 pages")
-        texts = [(page.extract_text() or "").replace("\x00", "") for page in reader.pages]
-        title = None
-        meta_title = (reader.metadata.title or "").strip() if reader.metadata else ""
-        # Ignore titles that are really file names or tool defaults ("week6.html", "Microsoft Word - x.docx").
-        if len(meta_title) > 3 and not re.search(r"\.(html?|docx?|pptx?|pdf|txt|tex)$|^(untitled|microsoft word|document\d*$)", meta_title, re.I):
-            title = meta_title[:300]
-        return texts, title
-    except ExtractionError:
+        texts = [_page_text(page) for page in reader.pages]
+        return texts, _title(reader)
+    except (ExtractionError, SoftTimeLimitExceeded):
         raise
     except Exception as error:  # noqa: BLE001
         raise ExtractionError("unreadable", "PDF could not be parsed") from error
@@ -70,6 +102,8 @@ def _pages(data: bytes) -> tuple[list[str], Optional[str]]:
 def extract(inp: ExtractInput, ai: BrainAI) -> Extraction:
     data = inp.data or b""
     texts, title = _pages(data)
+    if not texts:
+        raise ExtractionError("unreadable", "PDF has no pages")
     readable = sum(len(t.strip()) for t in texts)
     method = "text"
     if readable < 40 * max(len(texts), 1):
@@ -78,7 +112,8 @@ def extract(inp: ExtractInput, ai: BrainAI) -> Extraction:
                               parts=[Part(mime_type="application/pdf", data=data)], model=settings.BRAIN_VISION_MODEL,
                               max_output_tokens=16384, timeout=60)
             by_page = {p.page: p.text for p in ocr.pages if 1 <= p.page <= len(texts)}
-            texts = [by_page.get(i + 1, texts[i]) for i in range(len(texts))]
+            # Keep the embedded text where OCR returned nothing for a page.
+            texts = [by_page.get(i + 1) or texts[i] for i in range(len(texts))]
             method = "vision"
         except AIUnavailable:
             if readable == 0:

@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 import json
+import math
 import shutil
 import subprocess
 import tempfile
 from typing import Optional
+
+from celery.exceptions import SoftTimeLimitExceeded
 
 from app.core.config import settings
 from app.domain.brain.pipeline import Extraction, ExtractInput, ExtractionError
@@ -23,13 +26,18 @@ def _duration(data: bytes) -> Optional[float]:
         try:
             result = subprocess.run([binary, "-v", "error", "-show_entries", "format=duration", "-of", "json", handle.name],
                                     capture_output=True, text=True, timeout=15)
-            return float(json.loads(result.stdout)["format"]["duration"])
+            duration = float(json.loads(result.stdout)["format"]["duration"])
+        except SoftTimeLimitExceeded:
+            raise
         except Exception:  # noqa: BLE001
             return None
+    return duration if math.isfinite(duration) and duration >= 0 else None
 
 
 def extract(inp: ExtractInput, ai: BrainAI) -> Extraction:
     data = inp.data or b""
+    if not data:
+        raise ExtractionError("unreadable", "Empty audio file")
     duration = _duration(data)
     if duration is not None and duration > 7200:
         raise ExtractionError("too_large", "Audio longer than 2 hours")

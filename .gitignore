@@ -45,8 +45,3 @@ docker-logs.txt
 /data/brain/
 /user-stats.html
 **/.venv3*/
-
-# Materials of the separate TaleSpark project (kept on disk, not in this repo)
-/artifacts/presentations/TaleSpark_*
-/artifacts/local-audit/talespark-*
-/wizetale-app/public/talespark-logo*.png

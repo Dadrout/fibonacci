@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import logging
+import time
 from typing import Optional
 
 import requests
+from celery.exceptions import SoftTimeLimitExceeded
 
 from app.core.config import settings
 from app.domain.brain.pipeline import Anchor, ExtractedChunk, Extraction, ExtractInput, ExtractionError
@@ -34,6 +36,8 @@ def _captions(video_id: str) -> Optional[list[Segment]]:
             return None
         fetched = transcript.fetch()
         return [Segment(start_sec=s.start, end_sec=s.start + s.duration, text=s.text) for s in fetched]
+    except SoftTimeLimitExceeded:
+        raise
     except Exception as error:  # noqa: BLE001 — blocked IPs, no captions, network
         logger.info("brain_youtube captions_unavailable error_type=%s", type(error).__name__)
         return None
@@ -50,7 +54,10 @@ def _oembed(video_id: str) -> dict:
     try:
         response = requests.get("https://www.youtube.com/oembed",
                                 params={"url": f"https://www.youtube.com/watch?v={video_id}", "format": "json"}, timeout=5)
-        return response.json() if response.ok else {}
+        data = response.json() if response.ok else {}
+        return data if isinstance(data, dict) else {}
+    except SoftTimeLimitExceeded:
+        raise
     except Exception:  # noqa: BLE001
         return {}
 
@@ -60,6 +67,8 @@ def _thumbnail(video_id: str) -> Optional[bytes]:
         response = requests.get(f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg", timeout=5)
         if response.ok and len(response.content) <= 300_000:
             return response.content
+    except SoftTimeLimitExceeded:
+        raise
     except Exception:  # noqa: BLE001
         pass
     return None
@@ -68,6 +77,8 @@ def _thumbnail(video_id: str) -> Optional[bytes]:
 CLIP_SECONDS = 300
 CLIPS_PER_BATCH = 3
 MAX_SECONDS = 7200
+#: Stop starting new clip batches after this long, so filing finishes inside the task's 170 s soft limit.
+CLIP_BUDGET_SECONDS = 110
 
 
 def _clip(video_id: str, start: int, ai: BrainAI) -> Transcript:
@@ -86,7 +97,9 @@ def _transcribe_clips(video_id: str, ai: BrainAI) -> Transcript:
     segments: list[Segment] = []
     title, language = None, "en-US"
     start = 0
-    with ThreadPoolExecutor(max_workers=CLIPS_PER_BATCH) as pool:
+    started = time.monotonic()
+    pool = ThreadPoolExecutor(max_workers=CLIPS_PER_BATCH)
+    try:
         while start < MAX_SECONDS:
             starts = list(range(start, min(start + CLIP_SECONDS * CLIPS_PER_BATCH, MAX_SECONDS), CLIP_SECONDS))
             futures = {s: pool.submit(_clip, video_id, s, ai) for s in starts}
@@ -95,6 +108,8 @@ def _transcribe_clips(video_id: str, ai: BrainAI) -> Transcript:
             for s in starts:
                 try:
                     result = futures[s].result()
+                except SoftTimeLimitExceeded:
+                    raise
                 except Exception:  # noqa: BLE001 — past the end, rate-limited, or transient
                     last_has_speech = False
                     continue
@@ -106,11 +121,17 @@ def _transcribe_clips(video_id: str, ai: BrainAI) -> Transcript:
                 language = result.language
                 for seg in result.segments:
                     if seg.start_sec < CLIP_SECONDS + 5:
-                        segments.append(Segment(start_sec=s + seg.start_sec,
-                                                end_sec=s + min(max(seg.end_sec, seg.start_sec), CLIP_SECONDS), text=seg.text))
+                        end = max(min(seg.end_sec, CLIP_SECONDS), seg.start_sec)
+                        segments.append(Segment(start_sec=s + seg.start_sec, end_sec=s + end, text=seg.text))
             if not found_any or not last_has_speech:
                 break
             start = starts[-1] + CLIP_SECONDS
+            if time.monotonic() - started > CLIP_BUDGET_SECONDS and start < MAX_SECONDS:
+                logger.info("brain_youtube clip_budget_reached transcribed_sec=%d", start)
+                break
+    finally:
+        # Never block on in-flight clips (e.g. after a soft time limit): drop queued work and return.
+        pool.shutdown(wait=False, cancel_futures=True)
     if not segments:
         raise AIUnavailable("No clip could be transcribed")
     return Transcript(title=title, language=language, segments=sorted(segments, key=lambda seg: seg.start_sec))
@@ -124,13 +145,15 @@ def extract(inp: ExtractInput, ai: BrainAI) -> Extraction:
     cache_key = ai.cache.key("youtube_captions", "v1", video_id)
     recorded = ai.cache.get("youtube_captions", cache_key)
     if recorded:
-        meta, segments = recorded.get("meta", {}), [Segment(**s) for s in recorded.get("segments", [])]
+        meta, segments = recorded.get("meta") or {}, [Segment(**s) for s in recorded.get("segments") or []]
     else:
         meta, segments = _oembed(video_id), _captions(video_id)
         if segments:
             ai.cache.put("youtube_captions", cache_key, {"meta": meta, "segments": [s.model_dump() for s in segments]})
-    method, language, title = "captions", None, meta.get("title")
-    if not segments:
+    method, language = "captions", None
+    title = str(meta.get("title") or "").strip()[:300] or None
+    chunks = windows(segments) if segments else []
+    if not chunks:  # no captions, or captions with no words: transcribe instead
         try:
             transcript = _transcribe_clips(video_id, ai)
         except AIUnavailable as error:
@@ -142,9 +165,9 @@ def extract(inp: ExtractInput, ai: BrainAI) -> Extraction:
             return Extraction(title=title, chunks=[ExtractedChunk(anchor=Anchor(kind="section", heading="YouTube"), text=text)],
                               thumbnail=_thumbnail(video_id), thumbnail_mime="image/jpeg",
                               metadata={"transcript": "title_only", "channel": (meta.get("author_name") or "")[:120]})
-        segments, method, language = transcript.segments, "ai", transcript.language
+        method, language = "ai", transcript.language
         title = title or transcript.title
-    chunks = windows(segments)
+        chunks = windows(transcript.segments)
     if not chunks:
         raise ExtractionError("transcript_unavailable", "Empty transcript")
     duration = max(c.anchor.end_sec or 0 for c in chunks)
