@@ -21,15 +21,20 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
   const [status, setStatus] = useState<TelegramStatus | null>(null)
   const [code, setCode] = useState<TelegramLinkCode | null>(null)
   const [qr, setQr] = useState<string | null>(null)
+  const [qrFailed, setQrFailed] = useState(false)
+  const [statusFailed, setStatusFailed] = useState(false)
   const [now, setNow] = useState(() => Date.now())
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const load = useCallback(async () => {
+    setStatusFailed(false)
+    setError(null)
     try {
       setStatus(await api.telegramStatus())
       setError(null)
     } catch {
+      setStatusFailed(true)
       setError('Telegram status could not load.')
     }
   }, [api])
@@ -39,6 +44,8 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
   useBrainEvents((event) => {
     if (event.type === 'telegram.linked') {
       setStatus(event.telegram)
+      setStatusFailed(false)
+      setError(null)
       setCode(null)
     }
   })
@@ -51,10 +58,12 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
 
   useEffect(() => {
     let alive = true
+    setQr(null)
+    setQrFailed(false)
     if (!code) { setQr(null); return }
     QRCode.toDataURL(code.deep_link, { margin: 1, width: 232, errorCorrectionLevel: 'M', color: { dark: '#14231c', light: '#ffffff' } })
       .then(url => { if (alive) setQr(url) })
-      .catch(() => { if (alive) setQr(null) })
+      .catch(() => { if (alive) setQrFailed(true) })
     return () => { alive = false }
   }, [code])
 
@@ -96,9 +105,12 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
       </div>
     </div>
 
-    {error && <p className="brain-item-action-error" role="alert"><TriangleAlert size={16} aria-hidden="true" />{c(error)}</p>}
+    {error && <div className="brain-telegram-error">
+      <p className="brain-item-action-error" role="alert"><TriangleAlert size={16} aria-hidden="true" />{c(error)}</p>
+      {statusFailed && <button type="button" className="brain-secondary-button" onClick={() => void load()}>{c('Try again')}</button>}
+    </div>}
 
-    {!status ? <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading')}><div className="brain-source-skeleton"><span /><div><i /><i /></div></div></div>
+    {!status ? statusFailed ? null : <div className="brain-source-skeletons" aria-busy="true" aria-label={c('Loading')}><div className="brain-source-skeleton"><span /><div><i /><i /></div></div></div>
       : !status.bot_configured ? <div className="brain-telegram-card" role="status">
         <Send size={26} aria-hidden="true" />
         <div><strong>{c('The Telegram bot is not set up on this server yet.')}</strong>
@@ -122,13 +134,15 @@ export function BrainTelegram({ api }: { api: BrainApi }) {
         </button>
       </div>
       : <div className="brain-telegram-link">
-        <div className="brain-telegram-qr">{qr ? <img src={qr} width={232} height={232} alt={c('QR code that opens the Fibonacci bot in Telegram')} /> : <span aria-hidden="true" />}</div>
+        <div className={`brain-telegram-qr${qrFailed ? ' is-unavailable' : ''}`}>{qrFailed
+          ? <p role="status">{c('QR code unavailable. Open the link below or send your code to the bot.')}</p>
+          : qr ? <img src={qr} width={232} height={232} alt={c('QR code that opens the Fibonacci bot in Telegram')} onError={() => setQrFailed(true)} /> : <span aria-hidden="true" />}</div>
         <div className="brain-telegram-steps">
           <p className="brain-section-kicker">{c('Your code')}</p>
           <p className="brain-telegram-code" aria-label={code.code.split('').join(' ')}>{code.code.slice(0, 3)}<span aria-hidden="true"> </span>{code.code.slice(3)}</p>
           <p className="brain-telegram-expiry" role="timer" aria-live="off">{c('Expires in')} {countdown}</p>
           <ol>
-            <li>{c('Scan the QR code, or open the bot:')} <a href={code.deep_link} target="_blank" rel="noreferrer">@{code.bot_username}<ExternalLink size={14} aria-hidden="true" /></a></li>
+            <li>{c('Scan the QR code, or open the bot:')} <a href={code.deep_link} target="_blank" rel="noreferrer">{qrFailed ? code.deep_link : `@${code.bot_username}`}<ExternalLink size={14} aria-hidden="true" /></a></li>
             <li>{c('Press Start, or send the code to the bot.')}</li>
             <li>{c('This page updates as soon as you are connected.')}</li>
           </ol>

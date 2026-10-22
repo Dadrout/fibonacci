@@ -150,7 +150,7 @@ function AnswerFeedback({ question, answer, headingRef, onOpen, onNext, onPrevio
     {result.explanation.sources.length > 0 && <SourceChips sources={result.explanation.sources} onOpen={onOpen} presentation={presentation} label={c('Sources for this explanation')} />}
 
     {result.moment && (result.correct
-      ? <button type="button" className="brain-secondary-button brain-exam-moment-secondary" onClick={() => onOpen(result.moment!.source, result.moment!.reason)}><LocateFixed size={18} aria-hidden="true" />{c('See where this was explained')}</button>
+      ? <button type="button" className="brain-secondary-button brain-exam-moment-secondary" onClick={() => onOpen(result.moment!.source, result.moment!.reason)}><LocateFixed size={18} aria-hidden="true" />{c(result.moment.confidence < 0.7 ? 'Open closest match' : 'See where this was explained')}</button>
       : <MomentCard moment={result.moment} onOpen={onOpen} />)}
 
     {(onNext || onPrevious) && <div className="brain-exam-feedback-nav">
@@ -176,12 +176,12 @@ function MomentCard({ moment, onOpen }: { moment: SourceMoment; onOpen: OpenSour
       <img src={thumbnail} alt="" loading="lazy" onError={() => setThumbFailed(true)} />
     </span>}
     <div className="brain-exam-moment-copy">
-      <p className="brain-section-kicker">{c('Where you learned it')}</p>
+      <p className="brain-section-kicker">{c(moment.confidence < 0.7 ? 'Closest match in your material' : 'Where you learned it')}</p>
       <p className="brain-exam-moment-reason">{moment.reason}</p>
       <p className="brain-exam-moment-source"><Icon size={17} aria-hidden="true" /><span><strong>{label}</strong> · {source.item_title}</span></p>
     </div>
     <button type="button" className="brain-primary-button brain-exam-moment-button" onClick={() => onOpen(source, moment.reason)}>
-      <LocateFixed size={22} aria-hidden="true" />{c('See where this was explained')}
+      <LocateFixed size={22} aria-hidden="true" />{c(moment.confidence < 0.7 ? 'Open closest match' : 'See where this was explained')}
     </button>
   </div>
 }

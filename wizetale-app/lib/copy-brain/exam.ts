@@ -98,6 +98,8 @@ export const examCopy: Record<string, [string, string]> = {
   'Not quite. This one is easy to mix up.': ['Не совсем. Здесь легко перепутать.', 'Дәл емес. Мұнда шатастыру оңай.'],
   'The correct answer is': ['Правильный ответ:', 'Дұрыс жауап:'],
   'Sources for this explanation': ['Источники объяснения', 'Түсіндірменің дереккөздері'],
+  'Closest match in your material': ['Наиболее подходящий фрагмент в ваших материалах', 'Материалдарыңыздағы ең сәйкес үзінді'],
+  'Open closest match': ['Открыть подходящий фрагмент', 'Ең сәйкес үзіндіні ашу'],
   'Where you learned it': ['Где вы это проходили', 'Мұны қайдан өткеніңіз'],
   'See where this was explained': ['Посмотреть, где это объяснялось', 'Бұл қай жерде түсіндірілгенін көру'],
   'Previous question': ['Предыдущий вопрос', 'Алдыңғы сұрақ'],

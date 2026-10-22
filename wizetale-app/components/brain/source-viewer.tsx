@@ -110,9 +110,10 @@ function SourceContents({ source }: { source: SourceRef }) {
   </div>
 }
 
-export function SourceViewer({ source, onClose, presentation = false }: { source: SourceRef | null; onClose: () => void; presentation?: boolean }) {
+export function SourceViewer({ source, onClose, presentation = false, note }: { source: SourceRef | null; onClose: () => void; presentation?: boolean; note?: { title: string; text: string } }) {
   const c = useCopy()
   return <BrainDialog open={Boolean(source)} onClose={onClose} title={source?.item_title ?? c('Source')} description={c('The exact place in your material.')} presentation={presentation}>
+    {source && note && <div className="brain-exam-moment-note"><p>{note.title}</p><strong>{note.text}</strong></div>}
     {source && <SourceContents key={`${source.item_id}:${source.chunk_id}`} source={source} />}
   </BrainDialog>
 }

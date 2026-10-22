@@ -5,7 +5,7 @@
  * Course cards for the Brain home and the course page: topics in sequence order, their sources,
  * inline gap alerts, one-tap re-file (via BrainItemCard), and the "Exam in 3 days" entry.
  */
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ChevronRight, FilePlus2, GraduationCap, TriangleAlert } from 'lucide-react'
 import { BrainItemCard } from '@/components/brain/brain-item-card'
 import { useCopy } from '@/hooks/use-copy'
@@ -69,6 +69,44 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
   const c = useCopy()
   const [detail, setDetail] = useState<CourseDetail | null>(null)
   const [error, setError] = useState(false)
+  const [renaming, setRenaming] = useState(false)
+  const [title, setTitle] = useState('')
+  const [renameBusy, setRenameBusy] = useState(false)
+  const [renameError, setRenameError] = useState<string | null>(null)
+  const renameButton = useRef<HTMLButtonElement>(null)
+  const renameInput = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (renaming) { renameInput.current?.focus(); renameInput.current?.select() }
+  }, [renaming])
+
+  const closeRename = () => {
+    setRenaming(false)
+    setRenameError(null)
+    window.requestAnimationFrame(() => renameButton.current?.focus())
+  }
+
+  const saveTitle = async () => {
+    if (renameBusy) return
+    const nextTitle = title.trim()
+    if (!nextTitle) {
+      setRenameError('Enter a course title.')
+      renameInput.current?.focus()
+      return
+    }
+    setRenameBusy(true)
+    setRenameError(null)
+    try {
+      const course = await api.renameCourse(courseId, nextTitle)
+      setDetail(current => current && { ...current, course })
+      closeRename()
+    } catch {
+      setRenameError('The course could not be renamed. Try again.')
+      renameInput.current?.focus()
+    } finally {
+      setRenameBusy(false)
+    }
+  }
 
   const load = useCallback(async () => {
     setError(false)
@@ -81,17 +119,10 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
 
   useEffect(() => { void load() }, [load, version])
 
-  const replaceItem = useCallback((next: BrainItem) => {
-    if (next.course_id !== courseId) {
-      void load() // moved to another course by a re-file
-      return
-    }
-    setDetail(current => current && {
-      ...current,
-      topics: current.topics.map(entry => ({ ...entry, items: entry.items.map(item => item.id === next.id ? next : item) })),
-      loose_items: current.loose_items.map(item => item.id === next.id ? next : item),
-    })
-  }, [courseId, load])
+  const replaceItem = useCallback((_next: BrainItem) => {
+    // Re-file can change topic, course, counts and gaps; reload the authoritative grouping.
+    void load()
+  }, [load])
 
   if (error) {
     return <div className="brain-load-error" role="alert"><TriangleAlert size={24} aria-hidden="true" />
@@ -113,7 +144,22 @@ export function CourseDetailView({ api, courseId, version, onBack, onStartExam }
     <header className="brain-course-header">
       <div>
         <p className="brain-section-kicker">{course.code ?? c('Course')}</p>
-        <h2 id="brain-course-title">{course.title}</h2>
+        <div className="brain-course-title-row">
+          <h2 id="brain-course-title">{course.title}</h2>
+          {!renaming && <button ref={renameButton} type="button" className="brain-text-button" onClick={() => { setTitle(course.title); setRenameError(null); setRenaming(true) }}>{c('Rename')}</button>}
+        </div>
+        {renaming && <form className="brain-course-rename" aria-busy={renameBusy} onSubmit={event => { event.preventDefault(); void saveTitle() }}>
+          <label htmlFor="brain-course-rename-title">{c('Course title')}</label>
+          <input ref={renameInput} id="brain-course-rename-title" value={title} readOnly={renameBusy}
+            aria-invalid={Boolean(renameError)} aria-describedby={renameError ? 'brain-course-rename-error' : undefined}
+            onChange={event => { setTitle(event.target.value); setRenameError(null) }}
+            onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); if (!renameBusy) closeRename() } }} />
+          <div className="brain-course-rename-actions">
+            <button type="submit" className="brain-secondary-button" disabled={renameBusy}>{c('Save course title')}</button>
+            <button type="button" className="brain-text-button" disabled={renameBusy} onClick={closeRename}>{c('Cancel rename')}</button>
+          </div>
+          {renameError && <p id="brain-course-rename-error" className="brain-item-action-error" role="alert">{c(renameError)}</p>}
+        </form>}
         <p className="brain-course-counts">
           <span><b>{course.item_count}</b> {c('sources')}</span>
           <span><b>{course.topic_count}</b> {c('topics')}</span>

@@ -6,7 +6,6 @@
  * answer opens that viewer at the returned source moment, with the reason shown inside it.
  */
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { createPortal } from 'react-dom'
 import { ArrowLeft, BookOpen, CalendarDays, CirclePlay, Clock3, FilePlus2, Layers, ListChecks, PencilLine, RotateCcw, TriangleAlert, type LucideIcon } from 'lucide-react'
 import { useCopy } from '@/hooks/use-copy'
 import { useLanguage } from '@/hooks/use-language'
@@ -92,39 +91,8 @@ export function BrainExamPlan({ api, plan, course, presentation, onNewPlan }: {
         : <BrainExamQuiz api={api} planId={plan.id} questions={content.quiz} answers={answers} setAnswers={setAnswers} index={questionIndex} setIndex={setQuestionIndex} onOpen={openSource} presentation={presentation} />}
     </div>)}
 
-    <SourceViewer source={viewing?.source ?? null} onClose={() => setViewing(null)} presentation={presentation} />
-    {viewing?.reason && <MomentNote key={`${viewing.source.chunk_id}:${viewing.reason}`} reason={viewing.reason} />}
+    <SourceViewer source={viewing?.source ?? null} onClose={() => setViewing(null)} presentation={presentation} note={viewing?.reason ? { title: c('Why this moment'), text: viewing.reason } : undefined} />
   </div>
-}
-
-/**
- * Shows why the moment explains the answer inside the shared source viewer, right under its
- * heading. SourceViewer has no slot for it, so this attaches a node to the open dialog.
- */
-function MomentNote({ reason }: { reason: string }) {
-  const c = useCopy()
-  const [slot, setSlot] = useState<HTMLElement | null>(null)
-  useEffect(() => {
-    let frame = 0
-    let tries = 0
-    let node: HTMLElement | null = null
-    const attach = () => {
-      const headings = document.querySelectorAll('.brain-dialog .brain-dialog-heading')
-      const heading = headings[headings.length - 1]
-      if (!heading) {
-        if (++tries < 120) frame = window.requestAnimationFrame(attach)
-        return
-      }
-      node = document.createElement('div')
-      node.className = 'brain-exam-moment-note'
-      heading.insertAdjacentElement('afterend', node)
-      setSlot(node)
-    }
-    attach()
-    return () => { window.cancelAnimationFrame(frame); node?.remove() }
-  }, [])
-  if (!slot) return null
-  return createPortal(<><p>{c('Why this moment')}</p><strong>{reason}</strong></>, slot)
 }
 
 function PlanDays({ days, onOpen, presentation, onStartQuiz }: { days: PlanDay[]; onOpen: OpenSource; presentation: boolean; onStartQuiz?: () => void }) {
