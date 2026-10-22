@@ -73,8 +73,14 @@ def poll(client: TelegramClient, store: Any, *, keep_running: Callable[[], bool]
         try:
             offset = run_once(client, store, offset, handler=handler)
             backoff = 1.0
-        except Exception as error:  # noqa: BLE001 — type only: Telegram errors never carry the token
-            logger.warning("poll error_type=%s; retry in %.0fs", type(error).__name__, backoff)
+        except Exception as error:  # noqa: BLE001 — never log the URL: it contains the token
+            status = getattr(error, "status", None)
+            if status == 409:
+                logger.warning("poll conflict: another copy of this bot is polling with the same token "
+                               "(stop it, or revoke the token in BotFather); retry in %.0fs", backoff)
+            else:
+                logger.warning("poll error_type=%s status=%s description=%s; retry in %.0fs", type(error).__name__,
+                               status, getattr(error, "description", "")[:120], backoff)
             sleep(backoff)
             backoff = min(backoff * 2, MAX_BACKOFF)
 
