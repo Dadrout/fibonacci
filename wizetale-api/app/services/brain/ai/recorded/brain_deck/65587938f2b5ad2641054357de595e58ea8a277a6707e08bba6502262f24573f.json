@@ -1,0 +1,249 @@
+{
+ "title": "Econometrics Course Presentation",
+ "slides": [
+  {
+   "title": "Econometrics Course Overview",
+   "bullets": [
+    {
+     "text": "The course covers regression analysis starting from simple linear models up to multiple regression and violations of standard assumptions.",
+     "passage_ids": [
+      "P1",
+      "P10",
+      "P18"
+     ]
+    },
+    {
+     "text": "We study estimation methods like OLS and WLS, hypothesis testing using t and F statistics, and diagnostic checks for issues like heteroskedasticity.",
+     "passage_ids": [
+      "P1",
+      "P13",
+      "P21",
+      "P26"
+     ]
+    },
+    {
+     "text": "Time series analysis introduces autocorrelation and how it impacts standard errors and estimation.",
+     "passage_ids": [
+      "P27",
+      "P28",
+      "P29"
+     ]
+    }
+   ],
+   "notes": "Welcome to the course overview. We will journey from basic linear models through multiple regression, and tackle real-world complications like heteroskedasticity and autocorrelation.",
+   "topic_id": null
+  },
+  {
+   "title": "Simple linear regression",
+   "bullets": [
+    {
+     "text": "OLS estimates minimize the sum of squared residuals Σ(yᵢ − b₀ − b₁xᵢ)².",
+     "passage_ids": [
+      "P1"
+     ]
+    },
+    {
+     "text": "The slope b₁ = Cov(x, y) / Var(x) tells us how much y changes on average when x goes up by one unit.",
+     "passage_ids": [
+      "P2",
+      "P3"
+     ]
+    },
+    {
+     "text": "The residual is what is left over: the actual value minus the fitted value.",
+     "passage_ids": [
+      "P4"
+     ]
+    }
+   ],
+   "notes": "In simple linear regression, we fit a line by minimizing squared residuals. The slope shows the average change in y per unit change in x.",
+   "topic_id": "00000000-0000-4000-8000-000000000201"
+  },
+  {
+   "title": "OLS assumptions (Gauss–Markov)",
+   "bullets": [
+    {
+     "text": "The first assumption is that the population process is linear in parameters (MLR.1).",
+     "passage_ids": [
+      "P6"
+     ]
+    },
+    {
+     "text": "MLR.5 assumes homoskedasticity: Var(u | x₁, …, xₖ) = σ², meaning the error variance does not depend on the regressors.",
+     "passage_ids": [
+      "P7"
+     ]
+    },
+    {
+     "text": "Under MLR.1–MLR.5, OLS is BLUE: the best linear unbiased estimator.",
+     "passage_ids": [
+      "P8"
+     ]
+    },
+    {
+     "text": "Unbiasedness requires MLR.1–4, while homoskedasticity gives OLS maximum efficiency.",
+     "passage_ids": [
+      "P9"
+     ]
+    }
+   ],
+   "notes": "The Gauss-Markov assumptions establish the theoretical properties of OLS. When homoskedasticity holds along with the other assumptions, OLS is BLUE.",
+   "topic_id": "00000000-0000-4000-8000-000000000202"
+  },
+  {
+   "title": "Multiple regression",
+   "bullets": [
+    {
+     "text": "β₁ measures the effect of x₁ on y holding x₂ fixed, providing a ceteris paribus interpretation.",
+     "passage_ids": [
+      "P10"
+     ]
+    },
+    {
+     "text": "Omitting a relevant variable that is correlated with x₁ makes the OLS slope b₁ biased.",
+     "passage_ids": [
+      "P11"
+     ]
+    },
+    {
+     "text": "Omitted variable bias is quantified as Bias(b̃₁) = β₂ · δ̃₁, where δ̃₁ is the slope from regressing x₂ on x₁.",
+     "passage_ids": [
+      "P12"
+     ]
+    }
+   ],
+   "notes": "Multiple regression lets us hold other factors constant. Leaving out key variables that correlate with our regressors creates omitted variable bias.",
+   "topic_id": "00000000-0000-4000-8000-000000000203"
+  },
+  {
+   "title": "Hypothesis testing: t and F",
+   "bullets": [
+    {
+     "text": "The t-test statistic is the estimate divided by its standard error, compared to a t distribution with n − 2 degrees of freedom.",
+     "passage_ids": [
+      "P14"
+     ]
+    },
+    {
+     "text": "An F-test evaluates multiple restrictions simultaneously, such as testing H₀: β₂ = β₃ = 0 using restricted and unrestricted R².",
+     "passage_ids": [
+      "P13"
+     ]
+    },
+    {
+     "text": "The F-test intuition asks: if I force these coefficients to zero, how much worse does the model fit get?",
+     "passage_ids": [
+      "P15"
+     ]
+    }
+   ],
+   "notes": "We use t-tests for individual coefficients and F-tests for joint restrictions. The F-test checks how much worse the fit gets when parameters are set to zero.",
+   "topic_id": "00000000-0000-4000-8000-000000000204"
+  },
+  {
+   "title": "Dummy variables and interactions",
+   "bullets": [
+    {
+     "text": "An interaction term lets the effect of one variable on the outcome depend on the value of another variable.",
+     "passage_ids": [
+      "P16"
+     ]
+    },
+    {
+     "text": "When an intercept is included, you must use g − 1 dummy variables for g groups to avoid the dummy variable trap.",
+     "passage_ids": [
+      "P17"
+     ]
+    },
+    {
+     "text": "Including all g dummy variables creates perfect collinearity.",
+     "passage_ids": [
+      "P17"
+     ]
+    }
+   ],
+   "notes": "Dummy variables handle categorical data, but remember to omit one category to prevent perfect collinearity. Interactions let effects vary across groups.",
+   "topic_id": "00000000-0000-4000-8000-000000000205"
+  },
+  {
+   "title": "Heteroskedasticity",
+   "bullets": [
+    {
+     "text": "Heteroskedasticity occurs when the error variance depends on the regressors: Var(uᵢ | xᵢ) = σᵢ².",
+     "passage_ids": [
+      "P18",
+      "P26"
+     ]
+    },
+    {
+     "text": "While OLS estimates remain unbiased, the usual standard errors are biased, invalidating t-tests, F-tests, and intervals.",
+     "passage_ids": [
+      "P26"
+     ]
+    },
+    {
+     "text": "We can detect it using residual plots, the Breusch-Pagan test, or the White test, and fix it using robust standard errors or WLS.",
+     "passage_ids": [
+      "P20",
+      "P26"
+     ]
+    }
+   ],
+   "notes": "When error variance changes across observations, OLS standard errors fail. We use robust standard errors or weighted least squares to fix inference.",
+   "topic_id": "9ee6ade2-83ab-4cd4-b984-2e210f71176f"
+  },
+  {
+   "title": "Autocorrelation",
+   "bullets": [
+    {
+     "text": "Autocorrelation means that the error in the current period is correlated with the error in the previous period.",
+     "passage_ids": [
+      "P27"
+     ]
+    },
+    {
+     "text": "With AR(1) errors expressed as uₜ = ρuₜ₋₁ + eₜ, OLS remains unbiased but standard errors are invalid.",
+     "passage_ids": [
+      "P28"
+     ]
+    },
+    {
+     "text": "The Durbin–Watson statistic d ≈ 2(1 − ρ̂) helps detect autocorrelation, with values near 2 indicating no first-order autocorrelation.",
+     "passage_ids": [
+      "P29"
+     ]
+    }
+   ],
+   "notes": "In time series, errors can be correlated over time. This leaves OLS unbiased but invalidates standard errors, so we rely on diagnostics like Durbin-Watson.",
+   "topic_id": "00000000-0000-4000-8000-000000000208"
+  },
+  {
+   "title": "Key takeaways",
+   "bullets": [
+    {
+     "text": "OLS coefficients measure ceteris paribus partial effects when assumptions like linearity and exogeneity hold.",
+     "passage_ids": [
+      "P10"
+     ]
+    },
+    {
+     "text": "Variance concepts and expected values from probability underpin how we evaluate estimator efficiency and derive statistical properties.",
+     "passage_ids": [
+      "P31",
+      "P33"
+     ]
+    },
+    {
+     "text": "Always check assumptions: standard errors are only valid under homoskedasticity and no autocorrelation.",
+     "passage_ids": [
+      "P18",
+      "P26",
+      "P28"
+     ]
+    }
+   ],
+   "notes": "To ace the exam, remember that OLS relies heavily on its underlying assumptions. Connect your knowledge of variance from probability to understand efficiency and robust standard errors.",
+   "topic_id": null
+  }
+ ]
+}

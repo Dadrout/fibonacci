@@ -17,7 +17,7 @@ Status: **rehearsed — 3 full UI runs in a row passed (R7–R9), plus an offlin
 3. **Fresh demo brain:** in the app, *Demo* (badge next to the logo) → **Start over** → click again to confirm. Or from a terminal: `docker exec fibonacci-local-api-1 python -m app.services.brain.demo.seed`
    → expect `{"courses": 3, "topics": 16, "concepts": 35, "items": 38, ... "missing_embeddings": 0}`.
    The seed keeps the Telegram link, so you don't need to re-link the phone.
-4. Open **http://localhost:3001** (it opens the Brain) — the demo student loads (badge *Demo*). Check: 3 courses, the Econometrics card shows "Week 6 is missing · Week 7 is missing", *Live* is on.
+4. Open **http://localhost:3001/brain** (the site root `/` is now the landing page) — the demo student loads (badge *Demo*). Check: 3 courses, the Econometrics card shows "Week 6 is missing · Week 7 is missing", *Live* is on.
 5. Telegram: open the chat with **@eduhack2026_bot** on the presenter's phone; the three hero files are ready to forward (below). Send `/start` once — the bot must answer within 2 s.
 6. Confirm `DEMO_MODE=true` in `.env.brain` (recorded AI outputs replay first; live AI only for anything new).
 
@@ -57,6 +57,7 @@ Measured backend timings (local stack, 2026-10-22): three items filed in **7.7�
 | **YouTube transcript blocked** | Handled: captions → Gemini clip transcription → recorded transcript. Worst case the video files by its title (no timestamps); use slide 7 for the mistake → moment step. |
 | **Exam plan slow** | It streams progress (*Gathering → Planning → Citing*). Live it takes 10–15 s; from recordings ~1 s. Fill with: "It's reading everything she filed for Econometrics." |
 | **Laptop/browser crash** | Restart the browser → `localhost:3001/brain`. Data is in the local database; nothing is lost. |
+| **Want to show more** | On any course card: **Flashcards**, **Quiz**, or **Slides** (a deck built from the course's own sources, every bullet cited; **Present** goes fullscreen). Slides are recorded in en/ru/kk, so they open in about a second. |
 | **Need a clean slate between rehearsals / video takes** | *Demo* → **Start over** (click twice). Telegram stays linked. |
 | **Recording a video fast** | *Demo* → **Send the 3 demo items** instead of forwarding from the phone; everything after that is identical. |
 
