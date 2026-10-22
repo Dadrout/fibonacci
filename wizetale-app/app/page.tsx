@@ -1,6 +1,11 @@
-import { redirect } from 'next/navigation'
+import type { Metadata } from 'next'
+import { FibonacciLanding } from '@/components/landing/fibonacci-landing'
 
-/** Fibonacci opens straight into the Brain. */
+export const metadata: Metadata = {
+  title: 'Fibonacci — Stop organizing. Start learning.',
+  description: 'Your lecture photos, links and PDFs, filed into courses. Connect ideas and prepare for exams with citations to your own sources.',
+}
+
 export default function HomePage() {
-  redirect('/brain')
+  return <FibonacciLanding />
 }
